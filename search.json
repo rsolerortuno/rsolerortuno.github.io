@@ -1,0 +1,184 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Rafael Soler Ortuño",
+    "section": "",
+    "text": "I am a computational biologist working at the intersection of immuno-oncology, single-cell and spatial genomics, biomarker discovery, and explainable AI-assisted research.\nMy work focuses on a simple principle: computational predictions are most useful when the evidence behind them remains visible, testable, and biologically interpretable.\nExplore my projects Read the blog"
+  },
+  {
+    "objectID": "index.html#from-complex-biological-data-to-traceable-therapeutic-hypotheses",
+    "href": "index.html#from-complex-biological-data-to-traceable-therapeutic-hypotheses",
+    "title": "Rafael Soler Ortuño",
+    "section": "",
+    "text": "I am a computational biologist working at the intersection of immuno-oncology, single-cell and spatial genomics, biomarker discovery, and explainable AI-assisted research.\nMy work focuses on a simple principle: computational predictions are most useful when the evidence behind them remains visible, testable, and biologically interpretable.\nExplore my projects Read the blog"
+  },
+  {
+    "objectID": "index.html#featured-project",
+    "href": "index.html#featured-project",
+    "title": "Rafael Soler Ortuño",
+    "section": "Featured project",
+    "text": "Featured project\n\nTargetIntel-IO\nAn explainable, therapeutic-intent-aware framework for triaging candidate targets in anti-PD-1-resistant melanoma.\nInstead of producing one universal ranking, TargetIntel-IO separates different translational questions: combination targets, resistance biomarkers, tumor-intrinsic drivers, and poor direct therapeutic targets.\nProject overview · GitHub repository"
+  },
+  {
+    "objectID": "index.html#recent-writing",
+    "href": "index.html#recent-writing",
+    "title": "Rafael Soler Ortuño",
+    "section": "Recent writing",
+    "text": "Recent writing\n\n\nWhy Target Ranking Is Not Enough in Immuno-Oncology"
+  },
+  {
+    "objectID": "projects/targetintel-io.html",
+    "href": "projects/targetintel-io.html",
+    "title": "TargetIntel-IO",
+    "section": "",
+    "text": "A high disease-association score does not tell us how a gene should be used therapeutically.\nA candidate may be:\n\na plausible combination target;\na predictive or resistance biomarker;\na tumor-intrinsic driver;\na mechanistic marker with limited direct tractability;\nor a biologically relevant but poor direct therapeutic target.\n\nCollapsing these roles into one ranking obscures the translational question."
+  },
+  {
+    "objectID": "projects/targetintel-io.html#the-problem",
+    "href": "projects/targetintel-io.html#the-problem",
+    "title": "TargetIntel-IO",
+    "section": "",
+    "text": "A high disease-association score does not tell us how a gene should be used therapeutically.\nA candidate may be:\n\na plausible combination target;\na predictive or resistance biomarker;\na tumor-intrinsic driver;\na mechanistic marker with limited direct tractability;\nor a biologically relevant but poor direct therapeutic target.\n\nCollapsing these roles into one ranking obscures the translational question."
+  },
+  {
+    "objectID": "projects/targetintel-io.html#what-targetintel-io-does",
+    "href": "projects/targetintel-io.html#what-targetintel-io-does",
+    "title": "TargetIntel-IO",
+    "section": "What TargetIntel-IO does",
+    "text": "What TargetIntel-IO does\nTargetIntel-IO combines disease association with a curated resistance ontology, rule-based role classification, modality reasoning, evidence auditing, confidence assessment, and intent-specific ranking.\n\n\n\n\n\nflowchart LR\n    A[Open Targets] --&gt; B[Resistance ontology]\n    B --&gt; C[Role classification]\n    C --&gt; D[Modality reasoning]\n    D --&gt; E1[Antibody / IO ranking]\n    D --&gt; E2[Biomarker ranking]\n    D --&gt; E3[Small-molecule ranking]\n    E1 --&gt; F[Evidence audit]\n    E2 --&gt; F\n    E3 --&gt; F\n    F --&gt; G[Hypothesis cards]"
+  },
+  {
+    "objectID": "projects/targetintel-io.html#why-three-rankings",
+    "href": "projects/targetintel-io.html#why-three-rankings",
+    "title": "TargetIntel-IO",
+    "section": "Why three rankings?",
+    "text": "Why three rankings?\nThe same gene can have very different value depending on therapeutic intent.\n\n\n\nExample\nPrimary interpretation\n\n\n\n\nLAG3\nCombination target with PD-1 blockade\n\n\nB2M\nResistance biomarker or mechanistic marker\n\n\nBRAF\nTumor-intrinsic driver and small-molecule target\n\n\nCDKN2A\nMechanistically important but difficult to target directly"
+  },
+  {
+    "objectID": "projects/targetintel-io.html#current-scope",
+    "href": "projects/targetintel-io.html#current-scope",
+    "title": "TargetIntel-IO",
+    "section": "Current scope",
+    "text": "Current scope\nThe current version is a transparent triage framework. It does not claim to predict clinical response, discover targets de novo, or replace experimental validation.\nIts value lies in making the reasoning explicit and separating evidence from interpretation."
+  },
+  {
+    "objectID": "projects/targetintel-io.html#validation",
+    "href": "projects/targetintel-io.html#validation",
+    "title": "TargetIntel-IO",
+    "section": "Validation",
+    "text": "Validation\nThe project includes:\n\na curated benchmark;\nrole and intent evaluation;\nsensitivity analysis;\nautomated tests and continuous integration;\nreproducible CLI outputs;\nstructured evidence-for and evidence-against fields;\nhypothesis cards designed for auditability."
+  },
+  {
+    "objectID": "projects/targetintel-io.html#next-steps",
+    "href": "projects/targetintel-io.html#next-steps",
+    "title": "TargetIntel-IO",
+    "section": "Next steps",
+    "text": "Next steps\nThe immediate priority is not to add every possible data modality. It is to improve external validity while preserving interpretability. The most valuable future extension is a focused external evidence layer, such as a public anti-PD-1 response cohort, followed later by functional and cellular context.\nView the repository"
+  },
+  {
+    "objectID": "posts/why-target-ranking-is-not-enough/index.html",
+    "href": "posts/why-target-ranking-is-not-enough/index.html",
+    "title": "Why Target Ranking Is Not Enough in Immuno-Oncology",
+    "section": "",
+    "text": "Target-discovery workflows often end with a familiar output: a table of genes ordered by a composite score. The highest-ranked genes are then treated as the most promising candidates.\nThat is useful, but incomplete.\nA gene can be strongly associated with melanoma and still be unsuitable as a direct therapeutic target. Another gene may have only moderate disease-association evidence but be highly relevant as a resistance biomarker, a combination partner, or a marker of a specific suppressive cell population.\nThe central problem is therefore not only:\n\nWhich genes are associated with the disease?\n\nIt is also:\n\nWhat translational role does each gene play, and under which therapeutic intent should it be prioritised?\n\nThis distinction motivated TargetIntel-IO, an explainable framework for triaging candidate genes in anti-PD-1-resistant melanoma."
+  },
+  {
+    "objectID": "posts/why-target-ranking-is-not-enough/index.html#a-ranked-list-can-hide-the-most-important-question",
+    "href": "posts/why-target-ranking-is-not-enough/index.html#a-ranked-list-can-hide-the-most-important-question",
+    "title": "Why Target Ranking Is Not Enough in Immuno-Oncology",
+    "section": "",
+    "text": "Target-discovery workflows often end with a familiar output: a table of genes ordered by a composite score. The highest-ranked genes are then treated as the most promising candidates.\nThat is useful, but incomplete.\nA gene can be strongly associated with melanoma and still be unsuitable as a direct therapeutic target. Another gene may have only moderate disease-association evidence but be highly relevant as a resistance biomarker, a combination partner, or a marker of a specific suppressive cell population.\nThe central problem is therefore not only:\n\nWhich genes are associated with the disease?\n\nIt is also:\n\nWhat translational role does each gene play, and under which therapeutic intent should it be prioritised?\n\nThis distinction motivated TargetIntel-IO, an explainable framework for triaging candidate genes in anti-PD-1-resistant melanoma."
+  },
+  {
+    "objectID": "posts/why-target-ranking-is-not-enough/index.html#one-gene-several-possible-meanings",
+    "href": "posts/why-target-ranking-is-not-enough/index.html#one-gene-several-possible-meanings",
+    "title": "Why Target Ranking Is Not Enough in Immuno-Oncology",
+    "section": "One gene, several possible meanings",
+    "text": "One gene, several possible meanings\nConsider four familiar genes:\n\n\n\n\n\n\n\n\nGene\nBiological relevance\nTranslational interpretation\n\n\n\n\nLAG3\nAlternative immune checkpoint\nPotential combination target with PD-1 blockade\n\n\nB2M\nAntigen-presentation machinery\nResistance mechanism and biomarker, not necessarily a direct target\n\n\nBRAF\nTumor-intrinsic melanoma driver\nStrong fit for small-molecule intervention\n\n\nCDKN2A\nTumor-suppressor biology\nMechanistically important but difficult to restore directly\n\n\n\nA single universal score may place all four genes in the same list. But a scientist deciding which antibody to develop, which biomarker to measure, or which tumor-intrinsic dependency to inhibit is asking three different questions.\nTargetIntel-IO therefore separates the problem into three intent-specific rankings:\n\nAntibody and immuno-oncology combination targets\nResistance biomarkers\nTumor-intrinsic and small-molecule targets\n\nThe goal is not to create more scores for their own sake. It is to make the biological decision represented by each score explicit."
+  },
+  {
+    "objectID": "posts/why-target-ranking-is-not-enough/index.html#the-architecture-rules-before-rhetoric",
+    "href": "posts/why-target-ranking-is-not-enough/index.html#the-architecture-rules-before-rhetoric",
+    "title": "Why Target Ranking Is Not Enough in Immuno-Oncology",
+    "section": "The architecture: rules before rhetoric",
+    "text": "The architecture: rules before rhetoric\nThe current version of TargetIntel-IO is deliberately transparent. It does not ask a language model to decide whether a gene is a good target. Instead, it applies an auditable sequence of steps.\n\n\n\n\n\nflowchart TD\n    A[Disease-associated genes] --&gt; B[Resistance-axis annotation]\n    B --&gt; C[Stable biological role]\n    C --&gt; D[Therapeutic direction]\n    D --&gt; E[Modality fit]\n    E --&gt; F1[Antibody / IO score]\n    E --&gt; F2[Biomarker score]\n    E --&gt; F3[Small-molecule score]\n    F1 --&gt; G[Evidence for / against]\n    F2 --&gt; G\n    F3 --&gt; G\n    G --&gt; H[Confidence and hypothesis card]\n\n\n\n\n\n\nThe distinction between a stable role and an intent-specific ranking is important.\nFor example, B2M remains part of antigen-presentation biology regardless of which ranking is being inspected. What changes is its usefulness under a particular objective. It may rank highly as a resistance biomarker while remaining a poor direct therapeutic target."
+  },
+  {
+    "objectID": "posts/why-target-ranking-is-not-enough/index.html#evidence-should-remain-visible",
+    "href": "posts/why-target-ranking-is-not-enough/index.html#evidence-should-remain-visible",
+    "title": "Why Target Ranking Is Not Enough in Immuno-Oncology",
+    "section": "Evidence should remain visible",
+    "text": "Evidence should remain visible\nComposite scores are convenient, but they can obscure why a candidate moved up or down.\nFor each gene, TargetIntel-IO preserves intermediate information such as:\n\ndisease-association evidence;\nresistance mechanism;\nbiological compartment;\ntherapeutic direction;\nantibody, biomarker, or small-molecule fit;\nevidence supporting the interpretation;\nevidence arguing against it;\nmissing information;\nand overall confidence.\n\nThis produces a structured target card rather than a naked rank.\nA useful target card should answer questions such as:\n\nWhy is this candidate being prioritised?\nIs it a target, a biomarker, or mainly a mechanistic marker?\nWhat evidence weakens the recommendation?\nWhich modality is biologically plausible?\nWhat experiment would most reduce uncertainty?"
+  },
+  {
+    "objectID": "posts/why-target-ranking-is-not-enough/index.html#what-the-system-does-not-claim",
+    "href": "posts/why-target-ranking-is-not-enough/index.html#what-the-system-does-not-claim",
+    "title": "Why Target Ranking Is Not Enough in Immuno-Oncology",
+    "section": "What the system does not claim",
+    "text": "What the system does not claim\nTransparency also requires being explicit about limitations.\nThe current framework does not claim to:\n\npredict patient response;\ndiscover targets de novo;\ninfer causal biology from association alone;\nreplace experimental validation;\nor provide a clinically validated recommendation.\n\nIts benchmark measures whether the rule-based system reproduces curated translational roles and intentions. That is useful for testing internal consistency, but it is not equivalent to validation in an independent clinical cohort.\nThis distinction matters. A system can be reproducible and biologically coherent without yet being clinically predictive."
+  },
+  {
+    "objectID": "posts/why-target-ranking-is-not-enough/index.html#why-build-the-transparent-core-first",
+    "href": "posts/why-target-ranking-is-not-enough/index.html#why-build-the-transparent-core-first",
+    "title": "Why Target Ranking Is Not Enough in Immuno-Oncology",
+    "section": "Why build the transparent core first?",
+    "text": "Why build the transparent core first?\nIt would be easy to begin with a large language model that reads papers and produces polished summaries. But fluent text does not guarantee that the underlying evidence is correct, independent, or relevant.\nA more defensible architecture is:\nstructured evidence\n        ↓\ndeterministic classification and scoring\n        ↓\ntraceable target card\n        ↓\noptional language-model synthesis\nIn that design, a language model can eventually help retrieve literature, identify contradictions, and explain the evidence. It should not silently replace the evidence or the decision logic."
+  },
+  {
+    "objectID": "posts/why-target-ranking-is-not-enough/index.html#what-comes-next",
+    "href": "posts/why-target-ranking-is-not-enough/index.html#what-comes-next",
+    "title": "Why Target Ranking Is Not Enough in Immuno-Oncology",
+    "section": "What comes next",
+    "text": "What comes next\nThe next scientifically meaningful step is not to add every available omics modality at once. It is to introduce one carefully selected external evidence layer and test whether it changes the conclusions in a useful way.\nA public cohort of patients treated with anti-PD-1 would allow us to ask:\n\nAre the proposed resistance biomarkers associated with response?\nDo combination-target candidates show coherent clinical patterns?\nWhich classifications are contradicted by external data?\nDoes the additional evidence improve confidence or merely duplicate existing knowledge?\n\nLater extensions could add functional dependency, single-cell expression, spatial organisation, and structured literature evidence. Each layer should earn its place through an ablation analysis rather than being included because it is fashionable."
+  },
+  {
+    "objectID": "posts/why-target-ranking-is-not-enough/index.html#the-broader-lesson",
+    "href": "posts/why-target-ranking-is-not-enough/index.html#the-broader-lesson",
+    "title": "Why Target Ranking Is Not Enough in Immuno-Oncology",
+    "section": "The broader lesson",
+    "text": "The broader lesson\nTarget prioritisation is not only a ranking problem. It is a problem of role, context, modality, uncertainty, and therapeutic intent.\nA useful system should therefore do more than say:\n\nGene A ranks above Gene B.\n\nIt should explain:\n\nGene A is a plausible combination target because of this mechanism and modality, whereas Gene B is more useful as a resistance biomarker and should not be interpreted as a direct therapeutic target.\n\nThat is the principle behind TargetIntel-IO: not replacing scientific reasoning with a score, but making the reasoning easier to inspect.\n\nProject: TargetIntel-IO on GitHub"
+  },
+  {
+    "objectID": "projects.html",
+    "href": "projects.html",
+    "title": "Projects",
+    "section": "",
+    "text": "Explainable therapeutic-intent-aware target triage for anti-PD-1-resistant melanoma\nTargetIntel-IO classifies genes by their translational role and ranks them differently depending on whether the intended use is an antibody or IO combination, a resistance biomarker, or a tumor-intrinsic small-molecule strategy.\nRead the project page · View the code"
+  },
+  {
+    "objectID": "projects.html#targetintel-io",
+    "href": "projects.html#targetintel-io",
+    "title": "Projects",
+    "section": "",
+    "text": "Explainable therapeutic-intent-aware target triage for anti-PD-1-resistant melanoma\nTargetIntel-IO classifies genes by their translational role and ranks them differently depending on whether the intended use is an antibody or IO combination, a resistance biomarker, or a tumor-intrinsic small-molecule strategy.\nRead the project page · View the code"
+  },
+  {
+    "objectID": "projects.html#additional-work",
+    "href": "projects.html#additional-work",
+    "title": "Projects",
+    "section": "Additional work",
+    "text": "Additional work\nMore projects in single-cell, spatial transcriptomics, comparative genomics, and translational bioinformatics will be added here."
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "I am a computational biologist with experience in immuno-oncology, translational research, single-cell and spatial transcriptomics, multi-omics integration, and biomarker discovery.\nMy research has spanned developmental neurobiology, cancer biology, antibody discovery, and the design of computational workflows that connect molecular evidence to experimentally testable hypotheses.\nI am especially interested in building systems that combine statistical analysis, biological knowledge, and language models without losing provenance, uncertainty, or interpretability."
+  },
+  {
+    "objectID": "about.html#areas-of-interest",
+    "href": "about.html#areas-of-interest",
+    "title": "About",
+    "section": "Areas of interest",
+    "text": "Areas of interest\n\nComputational target discovery and validation\nImmuno-oncology and therapeutic resistance\nSingle-cell and spatial transcriptomics\nBiomarker discovery and translational genomics\nExplainable AI and evidence-grounded scientific reasoning"
+  },
+  {
+    "objectID": "blog.html",
+    "href": "blog.html",
+    "title": "Blog",
+    "section": "",
+    "text": "Why Target Ranking Is Not Enough in Immuno-Oncology\n\n\n\nTarget discovery\n\nImmuno-oncology\n\nExplainable AI\n\nComputational biology\n\n\n\nA disease-associated gene is not automatically a good therapeutic target. Its value depends on biological role, modality, and therapeutic intent.\n\n\n\nJul 10, 2026\n\n\n\n\n\n\nNo matching items"
+  }
+]
