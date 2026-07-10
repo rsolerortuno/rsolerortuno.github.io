@@ -1,0 +1,75 @@
+:root {
+  --ti-navy: #0f3d56;
+  --ti-cyan: #0e7490;
+  --ti-light: #ecfeff;
+  --ti-border: #cbd5e1;
+}
+
+body {
+  font-size: 1.04rem;
+  line-height: 1.7;
+}
+
+.navbar-brand {
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+
+.hero {
+  padding: 4.5rem 3rem;
+  margin: 0 0 3rem 0;
+  border-radius: 1.25rem;
+  background: linear-gradient(135deg, #071b2b 0%, #0f3d56 58%, #155e75 100%);
+  color: white;
+}
+
+.hero h2 {
+  max-width: 900px;
+  font-size: clamp(2rem, 4vw, 3.7rem);
+  line-height: 1.08;
+  margin-bottom: 1.25rem;
+}
+
+.hero p {
+  max-width: 850px;
+  font-size: 1.2rem;
+  color: #dff8ff;
+}
+
+.hero .btn {
+  margin-right: 0.65rem;
+  margin-top: 0.65rem;
+}
+
+.project-card {
+  padding: 1.8rem;
+  margin: 1.5rem 0 2.5rem 0;
+  border: 1px solid var(--ti-border);
+  border-left: 6px solid var(--ti-cyan);
+  border-radius: 0.8rem;
+  background: rgba(236, 254, 255, 0.45);
+}
+
+.project-card h3 {
+  margin-top: 0;
+}
+
+blockquote {
+  border-left-color: var(--ti-cyan);
+  background: rgba(14, 116, 144, 0.06);
+  padding: 1rem 1.25rem;
+}
+
+table {
+  font-size: 0.96rem;
+}
+
+.quarto-title-banner {
+  background: linear-gradient(135deg, #071b2b, #155e75);
+}
+
+@media (max-width: 700px) {
+  .hero {
+    padding: 2.5rem 1.4rem;
+  }
+}

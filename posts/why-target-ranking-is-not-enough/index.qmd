@@ -1,0 +1,165 @@
+---
+title: "Why Target Ranking Is Not Enough in Immuno-Oncology"
+description: "A disease-associated gene is not automatically a good therapeutic target. Its value depends on biological role, modality, and therapeutic intent."
+date: "2026-07-10"
+categories:
+  - Target discovery
+  - Immuno-oncology
+  - Explainable AI
+  - Computational biology
+image: featured.svg
+page-layout: article
+---
+
+## A ranked list can hide the most important question
+
+Target-discovery workflows often end with a familiar output: a table of genes ordered by a composite score. The highest-ranked genes are then treated as the most promising candidates.
+
+That is useful, but incomplete.
+
+A gene can be strongly associated with melanoma and still be unsuitable as a direct therapeutic target. Another gene may have only moderate disease-association evidence but be highly relevant as a resistance biomarker, a combination partner, or a marker of a specific suppressive cell population.
+
+The central problem is therefore not only:
+
+> Which genes are associated with the disease?
+
+It is also:
+
+> What translational role does each gene play, and under which therapeutic intent should it be prioritised?
+
+This distinction motivated **TargetIntel-IO**, an explainable framework for triaging candidate genes in anti-PD-1-resistant melanoma.
+
+## One gene, several possible meanings
+
+Consider four familiar genes:
+
+| Gene | Biological relevance | Translational interpretation |
+|---|---|---|
+| **LAG3** | Alternative immune checkpoint | Potential combination target with PD-1 blockade |
+| **B2M** | Antigen-presentation machinery | Resistance mechanism and biomarker, not necessarily a direct target |
+| **BRAF** | Tumor-intrinsic melanoma driver | Strong fit for small-molecule intervention |
+| **CDKN2A** | Tumor-suppressor biology | Mechanistically important but difficult to restore directly |
+
+A single universal score may place all four genes in the same list. But a scientist deciding which antibody to develop, which biomarker to measure, or which tumor-intrinsic dependency to inhibit is asking three different questions.
+
+TargetIntel-IO therefore separates the problem into three intent-specific rankings:
+
+1. **Antibody and immuno-oncology combination targets**
+2. **Resistance biomarkers**
+3. **Tumor-intrinsic and small-molecule targets**
+
+The goal is not to create more scores for their own sake. It is to make the biological decision represented by each score explicit.
+
+## The architecture: rules before rhetoric
+
+The current version of TargetIntel-IO is deliberately transparent. It does not ask a language model to decide whether a gene is a good target. Instead, it applies an auditable sequence of steps.
+
+```{mermaid}
+flowchart TD
+    A[Disease-associated genes] --> B[Resistance-axis annotation]
+    B --> C[Stable biological role]
+    C --> D[Therapeutic direction]
+    D --> E[Modality fit]
+    E --> F1[Antibody / IO score]
+    E --> F2[Biomarker score]
+    E --> F3[Small-molecule score]
+    F1 --> G[Evidence for / against]
+    F2 --> G
+    F3 --> G
+    G --> H[Confidence and hypothesis card]
+```
+
+The distinction between a stable role and an intent-specific ranking is important.
+
+For example, **B2M** remains part of antigen-presentation biology regardless of which ranking is being inspected. What changes is its usefulness under a particular objective. It may rank highly as a resistance biomarker while remaining a poor direct therapeutic target.
+
+## Evidence should remain visible
+
+Composite scores are convenient, but they can obscure why a candidate moved up or down.
+
+For each gene, TargetIntel-IO preserves intermediate information such as:
+
+- disease-association evidence;
+- resistance mechanism;
+- biological compartment;
+- therapeutic direction;
+- antibody, biomarker, or small-molecule fit;
+- evidence supporting the interpretation;
+- evidence arguing against it;
+- missing information;
+- and overall confidence.
+
+This produces a structured target card rather than a naked rank.
+
+A useful target card should answer questions such as:
+
+- Why is this candidate being prioritised?
+- Is it a target, a biomarker, or mainly a mechanistic marker?
+- What evidence weakens the recommendation?
+- Which modality is biologically plausible?
+- What experiment would most reduce uncertainty?
+
+## What the system does not claim
+
+Transparency also requires being explicit about limitations.
+
+The current framework does **not** claim to:
+
+- predict patient response;
+- discover targets de novo;
+- infer causal biology from association alone;
+- replace experimental validation;
+- or provide a clinically validated recommendation.
+
+Its benchmark measures whether the rule-based system reproduces curated translational roles and intentions. That is useful for testing internal consistency, but it is not equivalent to validation in an independent clinical cohort.
+
+This distinction matters. A system can be reproducible and biologically coherent without yet being clinically predictive.
+
+## Why build the transparent core first?
+
+It would be easy to begin with a large language model that reads papers and produces polished summaries. But fluent text does not guarantee that the underlying evidence is correct, independent, or relevant.
+
+A more defensible architecture is:
+
+```text
+structured evidence
+        ↓
+deterministic classification and scoring
+        ↓
+traceable target card
+        ↓
+optional language-model synthesis
+```
+
+In that design, a language model can eventually help retrieve literature, identify contradictions, and explain the evidence. It should not silently replace the evidence or the decision logic.
+
+## What comes next
+
+The next scientifically meaningful step is not to add every available omics modality at once. It is to introduce one carefully selected external evidence layer and test whether it changes the conclusions in a useful way.
+
+A public cohort of patients treated with anti-PD-1 would allow us to ask:
+
+- Are the proposed resistance biomarkers associated with response?
+- Do combination-target candidates show coherent clinical patterns?
+- Which classifications are contradicted by external data?
+- Does the additional evidence improve confidence or merely duplicate existing knowledge?
+
+Later extensions could add functional dependency, single-cell expression, spatial organisation, and structured literature evidence. Each layer should earn its place through an ablation analysis rather than being included because it is fashionable.
+
+## The broader lesson
+
+Target prioritisation is not only a ranking problem. It is a problem of **role, context, modality, uncertainty, and therapeutic intent**.
+
+A useful system should therefore do more than say:
+
+> Gene A ranks above Gene B.
+
+It should explain:
+
+> Gene A is a plausible combination target because of this mechanism and modality, whereas Gene B is more useful as a resistance biomarker and should not be interpreted as a direct therapeutic target.
+
+That is the principle behind TargetIntel-IO: not replacing scientific reasoning with a score, but making the reasoning easier to inspect.
+
+---
+
+**Project:** [TargetIntel-IO on GitHub](https://github.com/rsolerortuno/TargetIntel-IO)

@@ -1,0 +1,33 @@
+---
+title: "Rafael Soler Ortuño"
+subtitle: "Computational biology for translational research and drug discovery"
+page-layout: full
+---
+
+::: {.hero}
+## From complex biological data to traceable therapeutic hypotheses
+
+I am a computational biologist working at the intersection of immuno-oncology, single-cell and spatial genomics, biomarker discovery, and explainable AI-assisted research.
+
+My work focuses on a simple principle: computational predictions are most useful when the evidence behind them remains visible, testable, and biologically interpretable.
+
+[Explore my projects](projects.qmd){.btn .btn-primary} [Read the blog](blog.qmd){.btn .btn-outline-primary}
+:::
+
+## Featured project
+
+::: {.project-card}
+### TargetIntel-IO
+
+An explainable, therapeutic-intent-aware framework for triaging candidate targets in anti-PD-1-resistant melanoma.
+
+Instead of producing one universal ranking, TargetIntel-IO separates different translational questions: combination targets, resistance biomarkers, tumor-intrinsic drivers, and poor direct therapeutic targets.
+
+[Project overview](projects/targetintel-io.qmd) · [GitHub repository](https://github.com/rsolerortuno/TargetIntel-IO)
+:::
+
+## Recent writing
+
+::: {.latest-posts}
+- [Why Target Ranking Is Not Enough in Immuno-Oncology](posts/why-target-ranking-is-not-enough/index.qmd)
+:::

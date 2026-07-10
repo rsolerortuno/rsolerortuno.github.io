@@ -1,0 +1,73 @@
+---
+title: "TargetIntel-IO"
+subtitle: "Explainable therapeutic-intent-aware target triage"
+description: "A rule-based and traceable framework for interpreting candidate targets in anti-PD-1-resistant melanoma."
+page-layout: article
+---
+
+## The problem
+
+A high disease-association score does not tell us how a gene should be used therapeutically.
+
+A candidate may be:
+
+- a plausible combination target;
+- a predictive or resistance biomarker;
+- a tumor-intrinsic driver;
+- a mechanistic marker with limited direct tractability;
+- or a biologically relevant but poor direct therapeutic target.
+
+Collapsing these roles into one ranking obscures the translational question.
+
+## What TargetIntel-IO does
+
+TargetIntel-IO combines disease association with a curated resistance ontology, rule-based role classification, modality reasoning, evidence auditing, confidence assessment, and intent-specific ranking.
+
+```{mermaid}
+flowchart LR
+    A[Open Targets] --> B[Resistance ontology]
+    B --> C[Role classification]
+    C --> D[Modality reasoning]
+    D --> E1[Antibody / IO ranking]
+    D --> E2[Biomarker ranking]
+    D --> E3[Small-molecule ranking]
+    E1 --> F[Evidence audit]
+    E2 --> F
+    E3 --> F
+    F --> G[Hypothesis cards]
+```
+
+## Why three rankings?
+
+The same gene can have very different value depending on therapeutic intent.
+
+| Example | Primary interpretation |
+|---|---|
+| LAG3 | Combination target with PD-1 blockade |
+| B2M | Resistance biomarker or mechanistic marker |
+| BRAF | Tumor-intrinsic driver and small-molecule target |
+| CDKN2A | Mechanistically important but difficult to target directly |
+
+## Current scope
+
+The current version is a transparent triage framework. It does not claim to predict clinical response, discover targets de novo, or replace experimental validation.
+
+Its value lies in making the reasoning explicit and separating evidence from interpretation.
+
+## Validation
+
+The project includes:
+
+- a curated benchmark;
+- role and intent evaluation;
+- sensitivity analysis;
+- automated tests and continuous integration;
+- reproducible CLI outputs;
+- structured evidence-for and evidence-against fields;
+- hypothesis cards designed for auditability.
+
+## Next steps
+
+The immediate priority is not to add every possible data modality. It is to improve external validity while preserving interpretability. The most valuable future extension is a focused external evidence layer, such as a public anti-PD-1 response cohort, followed later by functional and cellular context.
+
+[View the repository](https://github.com/rsolerortuno/TargetIntel-IO){.btn .btn-primary}
