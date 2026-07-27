@@ -231,8 +231,8 @@ Based in Lund, Sweden · Open to opportunities from September 2026
 <div class="button-row">
 <a class="button button-light" href="mailto:rafaelsolersanblas@gmail.com">rafaelsolersanblas@gmail.com <span aria-hidden="true">↗</span></a>
 <a class="button button-ghost" href="https://www.linkedin.com/in/rafael-soler-ortuno/">LinkedIn</a>
-<a class="button button-ghost" href="https://github.com/rsolerortuno">GitHub</a>
 </div>
 </section>
 
 </div>
+

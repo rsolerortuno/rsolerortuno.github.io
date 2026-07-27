@@ -18,12 +18,7 @@ website:
         text: Tools
       - href: about.qmd
         text: Experience
-      - href: blog.qmd
-        text: Writing
     right:
-      - icon: github
-        href: https://github.com/rsolerortuno
-        aria-label: GitHub profile
       - icon: linkedin
         href: https://www.linkedin.com/in/rafael-soler-ortuno/
         aria-label: LinkedIn profile
@@ -51,3 +46,4 @@ format:
 
 execute:
   freeze: auto
+
