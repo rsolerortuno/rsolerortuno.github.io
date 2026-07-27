@@ -1,0 +1,67 @@
+---
+title: "MTF Prediction"
+subtitle: "Topology-aware deep-learning screening of mammalian membrane proteins"
+description: "A research analysis using DeepTFactor and Captum to identify and interpret transcription-factor-like sequence features."
+page-layout: article
+toc: true
+toc-title: "On this page"
+---
+
+<div class="article-status">
+  <span class="status-pill status-archive">v1.0.0 · Research analysis</span>
+  <a href="https://github.com/rsolerortuno/MTF_prediction">View repository <span aria-hidden="true">↗</span></a>
+</div>
+
+## The scientific question
+
+Some membrane proteins release intracellular fragments that participate in nuclear signalling. Could topological domains of mammalian membrane proteins contain sequence patterns that a deep-learning model recognises as transcription-factor-like?
+
+MTF Prediction is a research-analysis archive built to generate candidates and explore how strongly the result depends on protein-domain boundaries.
+
+## Analysis design
+
+Reviewed human and mouse membrane proteins from UniProtKB 2022_05 were separated into cytoplasmic, extracellular and lumenal domains. Each eligible domain was evaluated under three boundary definitions:
+
+| Condition | Sequence submitted to the model |
+|---|---|
+| No TMD | Annotated topological domain only |
+| Half TMD | Domain extended by approximately half of each adjacent transmembrane segment |
+| Full TMD | Domain extended across the complete adjacent transmembrane segment |
+
+```{mermaid}
+flowchart LR
+    A[UniProtKB topology] --> B[Cytoplasmic, extracellular, lumenal]
+    B --> C[No, half or full TMD]
+    C --> D[Coordinate-aware FASTA]
+    D --> E[DeepTFactor]
+    E --> F[Candidate predictions]
+    F --> G[Captum Integrated Gradients]
+```
+
+## Interpretation
+
+DeepTFactor assigns transcription-factor-like scores to protein fragments. For selected candidates, Captum Integrated Gradients provides residue-level attribution, helping identify which positions influenced the model.
+
+The public repository preserves:
+
+- human and mouse processed inputs;
+- GFF-to-domain coordinate transformations;
+- FASTA fragments across boundary conditions;
+- prediction outputs and filtered candidate tables;
+- attribution tables and sequence-logo figures;
+- the original scripts and a machine-readable citation.
+
+## What the project demonstrates
+
+This project connects biological annotation, command-line data processing, protein deep learning and model interpretation. It also exposes a biologically important sensitivity question: if a prediction changes when the boundary moves by a few residues, it should be interpreted differently from one that is stable across all three definitions.
+
+## Scientific boundary
+
+A positive prediction only means that a fragment contains sequence features associated with transcription factors by the selected model. It does not establish DNA binding, nuclear localisation, proteolytic activation or transcriptional function in vivo. Orthogonal experimental validation is required.
+
+The repository is a research archive, not a packaged end-to-end application, and remains tied to the 2022_05 UniProtKB release and the original DeepTFactor checkpoint.
+
+<div class="article-cta">
+  <p><strong>Explore the full analysis matrix, processed inputs and residue-attribution outputs.</strong></p>
+  <a class="button button-primary" href="https://github.com/rsolerortuno/MTF_prediction">Open MTF Prediction on GitHub <span aria-hidden="true">↗</span></a>
+</div>

@@ -8,6 +8,7 @@ categories:
   - Explainable AI
   - Computational biology
 image: featured.svg
+image-alt: "TargetIntel-IO therapeutic-intent target triage diagram"
 page-layout: article
 ---
 

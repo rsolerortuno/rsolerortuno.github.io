@@ -1,6 +1,14 @@
-# Rafael Soler Ortuño — personal scientific website
+# Rafael Soler Ortuño — scientific portfolio
 
-Quarto source for `rsolerortuno.github.io`.
+Source for [rsolerortuno.github.io](https://rsolerortuno.github.io), built with Quarto and published with GitHub Pages.
+
+## What is included
+
+- a responsive professional homepage;
+- public research-software case studies;
+- a concise experience and capabilities page;
+- selected peer-reviewed publications;
+- a Quarto blog with an RSS feed.
 
 ## Local preview
 
@@ -8,22 +16,19 @@ Quarto source for `rsolerortuno.github.io`.
 quarto preview
 ```
 
-## First publication
-
-1. Create a public GitHub repository named `rsolerortuno.github.io`.
-2. Push this project to the `main` branch.
-3. From the local repository, run once:
+## Production build
 
 ```bash
-quarto publish gh-pages
+quarto render
 ```
 
-4. In GitHub, open **Settings → Pages** and select the `gh-pages` branch as the publishing source.
-5. In **Settings → Actions → General → Workflow permissions**, enable **Read and write permissions**.
+Every push to `main` renders the site and publishes `_site/` to the `gh-pages` branch through the pinned GitHub Actions workflow.
 
-After the first setup, every push to `main` will trigger the Quarto publishing workflow.
+## Add a project
 
-## Add a new post
+Create a new `.qmd` file under `projects/`, link it from `projects.qmd`, and add a corresponding card to `index.qmd`.
+
+## Add a post
 
 Create:
 
@@ -31,4 +36,4 @@ Create:
 posts/my-new-post/index.qmd
 ```
 
-The blog listing will update automatically when the site is rendered.
+The writing page and RSS feed update automatically at render time.

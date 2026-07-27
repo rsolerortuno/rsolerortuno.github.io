@@ -1,6 +1,7 @@
 ---
-title: "Blog"
-description: "Notes on computational biology, target discovery, single-cell and spatial genomics, and explainable AI."
+title: "Writing"
+subtitle: "Notes on computational biology, target discovery, single-cell and spatial genomics, and explainable AI."
+description: "Writing by Rafael Soler Ortuño on computational biology, translational research, and interpretable scientific software."
 listing:
   contents: posts
   sort: "date desc"
@@ -8,5 +9,5 @@ listing:
   categories: true
   feed: true
   fields: [image, date, title, description, categories]
-page-layout: full
+page-layout: article
 ---

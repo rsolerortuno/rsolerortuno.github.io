@@ -1,73 +1,97 @@
 ---
 title: "TargetIntel-IO"
-subtitle: "Explainable therapeutic-intent-aware target triage"
-description: "A rule-based and traceable framework for interpreting candidate targets in anti-PD-1-resistant melanoma."
+subtitle: "Explainable, therapeutic-intent-aware target triage"
+description: "A deterministic research platform for classifying and ranking candidate targets in anti-PD-1-resistant melanoma."
+image: ../assets/favicon.svg
 page-layout: article
+toc: true
+toc-title: "On this page"
 ---
+
+<div class="article-status">
+  <span class="status-pill status-preview">v0.5.0 · Research preview</span>
+  <a href="https://github.com/rsolerortuno/TargetIntel-IO">View repository <span aria-hidden="true">↗</span></a>
+</div>
 
 ## The problem
 
-A high disease-association score does not tell us how a gene should be used therapeutically.
+A gene can be highly relevant to disease and still be the wrong direct therapeutic target. In anti-PD-1-resistant melanoma, the same candidate might instead be a resistance biomarker, an immune-context marker, a tumour-intrinsic dependency or a mechanism with poor tractability.
 
-A candidate may be:
+TargetIntel-IO does not compress those possibilities into one universal score. It asks a more useful question: **valuable for what therapeutic purpose?**
 
-- a plausible combination target;
-- a predictive or resistance biomarker;
-- a tumor-intrinsic driver;
-- a mechanistic marker with limited direct tractability;
-- or a biologically relevant but poor direct therapeutic target.
+## What the tool does
 
-Collapsing these roles into one ranking obscures the translational question.
+The platform retrieves and structures evidence, assigns stable biological roles, and produces separate rankings for:
 
-## What TargetIntel-IO does
-
-TargetIntel-IO combines disease association with a curated resistance ontology, rule-based role classification, modality reasoning, evidence auditing, confidence assessment, and intent-specific ranking.
+1. **Antibody / IO combination** strategies;
+2. **Resistance biomarker** strategies;
+3. **Tumour-intrinsic small-molecule** strategies.
 
 ```{mermaid}
 flowchart LR
-    A[Open Targets] --> B[Resistance ontology]
-    B --> C[Role classification]
-    C --> D[Modality reasoning]
-    D --> E1[Antibody / IO ranking]
-    D --> E2[Biomarker ranking]
-    D --> E3[Small-molecule ranking]
-    E1 --> F[Evidence audit]
-    E2 --> F
-    E3 --> F
-    F --> G[Hypothesis cards]
+    A[Open Targets + curated rules] --> B[Deterministic features]
+    B --> C[Stable role]
+    C --> D[Three intent rankings]
+    D --> E[Cards, reports and figures]
+    F[Reviewed evidence] --> G[Read-only report layers]
+    H[DepMap 26Q1] --> G
+    G --> E
 ```
 
-## Why three rankings?
+The deterministic baseline remains authoritative. Optional evidence, feasibility and functional-dependency layers can decorate a report, but they cannot silently change baseline features, roles, scores or ranks.
 
-The same gene can have very different value depending on therapeutic intent.
+## Why this design matters
 
-| Example | Primary interpretation |
+| Candidate pattern | More defensible interpretation |
 |---|---|
-| LAG3 | Combination target with PD-1 blockade |
-| B2M | Resistance biomarker or mechanistic marker |
-| BRAF | Tumor-intrinsic driver and small-molecule target |
-| CDKN2A | Mechanistically important but difficult to target directly |
+| Immune checkpoint with combination rationale | Antibody / IO-combination candidate |
+| Loss associated with resistance | Biomarker or mechanistic marker |
+| Selective tumour-cell dependency | Tumour-intrinsic intervention candidate |
+| Broad essentiality or poor modality fit | Biologically relevant, but weak direct target |
 
-## Current scope
+This separation makes a result easier to challenge, reproduce and discuss with experimental teams.
 
-The current version is a transparent triage framework. It does not claim to predict clinical response, discover targets de novo, or replace experimental validation.
+## Current release
 
-Its value lies in making the reasoning explicit and separating evidence from interpretation.
+TargetIntel-IO has progressed through five released layers:
 
-## Validation
+- **v0.1.3:** deterministic role classification and intent-specific ranking;
+- **v0.2.0:** typed, source-linked Common Evidence Layer;
+- **v0.3.0:** audited extraction, review and grounded-synthesis infrastructure;
+- **v0.4.0:** modality-specific target feasibility;
+- **v0.5.0:** optional DepMap/CRISPR functional-dependency architecture and portable reports.
 
-The project includes:
+The productive baseline contains **300 genes**. The current discovery universe contains **331 unique identities**. The full **18,531-gene DepMap background** is context only—not a new productive ranking.
 
-- a curated benchmark;
-- role and intent evaluation;
-- sensitivity analysis;
-- automated tests and continuous integration;
-- reproducible CLI outputs;
-- structured evidence-for and evidence-against fields;
-- hypothesis cards designed for auditability.
+## Validation without overclaiming
 
-## Next steps
+The internal 56-target benchmark measures implementation consistency:
 
-The immediate priority is not to add every possible data modality. It is to improve external validity while preserving interpretability. The most valuable future extension is a focused external evidence layer, such as a public anti-PD-1 response cohort, followed later by functional and cellular context.
+| Metric | Current snapshot |
+|---|---:|
+| Open Targets retrieval coverage | 25 / 56 (44.6%) |
+| Stable-role accuracy on covered targets | 100.0% |
+| Strict primary-intent accuracy | 91.1% |
+| Acceptable-intent accuracy | 100.0% |
 
-[View the repository](https://github.com/rsolerortuno/TargetIntel-IO){.btn .btn-primary}
+A 42-scenario local sensitivity analysis produced a minimum Spearman rank correlation of **0.8762**. These results test deterministic behaviour around curated rules. They are not independent biological or clinical validation.
+
+## Outputs
+
+The CLI generates:
+
+- deterministic feature tables and three ranked target lists;
+- target cards and HTML reports;
+- score and rank-shift figures;
+- benchmark and sensitivity snapshots;
+- optional reviewed-evidence and feasibility sections;
+- optional portable DepMap/CRISPR reports.
+
+## Scientific boundary
+
+TargetIntel-IO is research-use software. It does not recommend treatment, establish causality, validate a therapeutic target or biomarker, or predict patient response. The immediate future direction is external validation with public clinical response cohorts and single-cell/spatial context while preserving the same evidence boundaries.
+
+<div class="article-cta">
+  <p><strong>Explore the implementation, reports and versioned examples.</strong></p>
+  <a class="button button-primary" href="https://github.com/rsolerortuno/TargetIntel-IO">Open TargetIntel-IO on GitHub <span aria-hidden="true">↗</span></a>
+</div>

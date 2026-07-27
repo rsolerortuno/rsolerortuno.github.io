@@ -1,33 +1,227 @@
 ---
-title: "Rafael Soler Ortuño"
-subtitle: "Computational biology for translational research and drug discovery"
+pagetitle: "Rafael Soler Ortuño | Computational Biologist"
+description: "Computational biologist turning multi-omic evidence into clear, traceable decisions for drug discovery and translational research."
 page-layout: full
 ---
 
-::: {.hero}
-## From complex biological data to traceable therapeutic hypotheses
+<div class="portfolio-home">
 
-I am a computational biologist working at the intersection of immuno-oncology, single-cell and spatial genomics, biomarker discovery, and explainable AI-assisted research.
+<section class="hero-shell" aria-labelledby="hero-title">
+<div class="hero-copy">
+<p class="eyebrow">Computational biology · Translational AI</p>
+<h1 id="hero-title">Turning complex biology into decisions you can defend.</h1>
+<p class="hero-lead">I am Rafael, a computational biologist who connects single-cell, spatial and multi-omic data with interpretable machine learning to support target discovery, biomarker strategy and patient stratification.</p>
+<p class="hero-personal">Curious by nature and rigorous by training, I enjoy the difficult space between data, mechanism and therapeutic decisions. I build analyses and tools that make the evidence visible—not just the final answer.</p>
+<div class="button-row" aria-label="Primary links">
+<a class="button button-primary" href="projects.html">Explore my tools <span aria-hidden="true">↗</span></a>
+<a class="button button-secondary" href="mailto:rafaelsolersanblas@gmail.com">Get in touch</a>
+</div>
+<div class="availability-line">
+<span class="status-dot" aria-hidden="true"></span>
+Based in Lund, Sweden · Open to opportunities from September 2026
+</div>
+</div>
+<figure class="portrait-wrap">
+<div class="portrait-photo" role="img" aria-label="Portrait of Rafael Soler Ortuño"></div>
+<figcaption>Computational Biologist · PhD</figcaption>
+</figure>
+</section>
 
-My work focuses on a simple principle: computational predictions are most useful when the evidence behind them remains visible, testable, and biologically interpretable.
+<section class="current-role" aria-labelledby="current-role-title">
+<div class="role-heading">
+<p class="section-index">01 / Now</p>
+<h2 id="current-role-title">Bioinformatics Research Scientist</h2>
+<p>BioInvent International AB · Lund, Sweden</p>
+</div>
+<div class="role-facts">
+<div>
+<span class="fact-label">Appointment</span>
+<strong>Aug 2025 — Aug 2026</strong>
+</div>
+<div>
+<span class="fact-label">Programs</span>
+<strong>Anti-TNFR2 · Anti-FcγRIIB</strong>
+</div>
+<div>
+<span class="fact-label">Role</span>
+<strong>Multi-omics lead · Biomarkers · Mode of action</strong>
+</div>
+</div>
+<p class="role-summary">I lead computational work across antibody programs, integrating clinical, mouse and in-vitro evidence to resolve response and resistance mechanisms. My day-to-day spans scRNA-seq, CITE-seq, spatial transcriptomics, proteomics, clinical metadata and reproducible AWS/HPC workflows.</p>
+</section>
 
-[Explore my projects](projects.qmd){.btn .btn-primary} [Read the blog](blog.qmd){.btn .btn-outline-primary}
-:::
+<section class="section-shell" id="selected-tools" aria-labelledby="tools-title">
+<div class="section-heading">
+<div>
+<p class="section-index">02 / Selected tools</p>
+<h2 id="tools-title">Research software built around honest evidence.</h2>
+</div>
+<p>Four public projects spanning target discovery, pharmacogenomics, safe agentic development and explainable protein-sequence modelling.</p>
+</div>
 
-## Featured project
+<div class="project-grid">
+<article class="project-card project-card-featured">
+<div class="card-topline">
+<span class="project-number">01</span>
+<span class="status-pill status-released">v1.0.1 · Released</span>
+</div>
+<h3>DrugMatch-Confidence</h3>
+<p class="project-kicker">Interpretable cancer drug-response prediction</p>
+<p>Predicts sensitivity in preclinical cancer cell lines from DepMap multi-omics and PRISM response data, with SHAP drivers, calibrated uncertainty, prediction intervals and out-of-distribution warnings.</p>
+<div class="metric-row" aria-label="DrugMatch validation highlights">
+<span><strong>5</strong> real drug models</span>
+<span><strong>2</strong> validated demos</span>
+<span><strong>GDSC2</strong> external test</span>
+</div>
+<div class="tag-list"><span>XGBoost</span><span>SHAP</span><span>DepMap</span><span>PRISM</span></div>
+<div class="card-links">
+<a href="projects/drugmatch-confidence.html">Case study <span aria-hidden="true">→</span></a>
+<a href="https://github.com/rsolerortuno/DrugMatch-Confidence">GitHub <span aria-hidden="true">↗</span></a>
+</div>
+</article>
 
-::: {.project-card}
-### TargetIntel-IO
+<article class="project-card project-card-featured">
+<div class="card-topline">
+<span class="project-number">02</span>
+<span class="status-pill status-preview">v0.5.0 · Research preview</span>
+</div>
+<h3>TargetIntel-IO</h3>
+<p class="project-kicker">Explainable target discovery and prioritisation</p>
+<p>Separates therapeutic targets, biomarkers, resistance mechanisms and poor direct targets in anti-PD-1-resistant melanoma—then ranks them according to antibody/IO, biomarker or small-molecule intent.</p>
+<div class="metric-row" aria-label="TargetIntel validation highlights">
+<span><strong>3</strong> intent rankings</span>
+<span><strong>56</strong> benchmark targets</span>
+<span><strong>26Q1</strong> DepMap layer</span>
+</div>
+<div class="tag-list"><span>Target discovery</span><span>CRISPR</span><span>Evidence audit</span></div>
+<div class="card-links">
+<a href="projects/targetintel-io.html">Case study <span aria-hidden="true">→</span></a>
+<a href="https://github.com/rsolerortuno/TargetIntel-IO">GitHub <span aria-hidden="true">↗</span></a>
+</div>
+</article>
 
-An explainable, therapeutic-intent-aware framework for triaging candidate targets in anti-PD-1-resistant melanoma.
+<article class="project-card">
+<div class="card-topline">
+<span class="project-number">03</span>
+<span class="status-pill status-alpha">v0.1.1 · Alpha</span>
+</div>
+<h3>Dev Autopilot</h3>
+<p class="project-kicker">Auditable AI-agent workflow for scientific software</p>
+<p>A persistent Python/SQLite orchestrator that separates implementation, adversarial audit and independent review, with deterministic gates and final human authority.</p>
+<div class="tag-list"><span>Agentic AI</span><span>SQLite</span><span>Safety gates</span></div>
+<div class="card-links">
+<a href="projects/dev-autopilot.html">Case study <span aria-hidden="true">→</span></a>
+<a href="https://github.com/rsolerortuno/dev-autopilot">GitHub <span aria-hidden="true">↗</span></a>
+</div>
+</article>
 
-Instead of producing one universal ranking, TargetIntel-IO separates different translational questions: combination targets, resistance biomarkers, tumor-intrinsic drivers, and poor direct therapeutic targets.
+<article class="project-card">
+<div class="card-topline">
+<span class="project-number">04</span>
+<span class="status-pill status-archive">v1.0.0 · Research analysis</span>
+</div>
+<h3>MTF Prediction</h3>
+<p class="project-kicker">Topology-aware protein deep learning</p>
+<p>Screens human and mouse membrane-protein domains for transcription-factor-like sequence features using DeepTFactor, then interprets selected predictions with Captum Integrated Gradients.</p>
+<div class="tag-list"><span>PyTorch</span><span>Captum</span><span>UniProt</span></div>
+<div class="card-links">
+<a href="projects/mtf-prediction.html">Case study <span aria-hidden="true">→</span></a>
+<a href="https://github.com/rsolerortuno/MTF_prediction">GitHub <span aria-hidden="true">↗</span></a>
+</div>
+</article>
+</div>
+<a class="text-link" href="projects.html">View the complete project portfolio <span aria-hidden="true">→</span></a>
+</section>
 
-[Project overview](projects/targetintel-io.qmd) · [GitHub repository](https://github.com/rsolerortuno/TargetIntel-IO)
-:::
+<section class="section-shell experience-preview" aria-labelledby="experience-title">
+<div class="section-heading">
+<div>
+<p class="section-index">03 / Experience</p>
+<h2 id="experience-title">From fundamental biology to therapeutic programs.</h2>
+</div>
+<p>Six-plus years working across industry and academia, with a consistent focus on translating complex molecular data into useful biological conclusions.</p>
+</div>
 
-## Recent writing
+<div class="timeline">
+<article class="timeline-item">
+<div class="timeline-date">2025—2026</div>
+<div><h3>BioInvent International</h3><p>Computational lead for translational multi-omics across anti-TNFR2 and anti-FcγRIIB antibody programs.</p></div>
+<span class="timeline-place">Lund</span>
+</article>
+<article class="timeline-item">
+<div class="timeline-date">2024—2025</div>
+<div><h3>Bristol Myers Squibb</h3><p>Precision oncology, preclinical-to-clinical model mapping and spatial transcriptomics across tumour cohorts.</p></div>
+<span class="timeline-place">Seville</span>
+</article>
+<article class="timeline-item">
+<div class="timeline-date">2020—2024</div>
+<div><h3>Institute of Neurosciences, CSIC–UMH</h3><p>Cross-species single-cell and epigenomic analysis of cortical development, plus paediatric brain-tumour genomics.</p></div>
+<span class="timeline-place">Alicante</span>
+</article>
+<article class="timeline-item">
+<div class="timeline-date">2023</div>
+<div><h3>Helmholtz Munich</h3><p>Hi-C, chromatin accessibility and sequence-to-signal deep learning with ChromBPNet.</p></div>
+<span class="timeline-place">Munich</span>
+</article>
+</div>
+<a class="text-link" href="about.html">Read the full experience summary <span aria-hidden="true">→</span></a>
+</section>
 
-::: {.latest-posts}
-- [Why Target Ranking Is Not Enough in Immuno-Oncology](posts/why-target-ranking-is-not-enough/index.qmd)
-:::
+<section class="section-shell expertise-section" aria-labelledby="expertise-title">
+<div class="section-heading">
+<div>
+<p class="section-index">04 / What I bring</p>
+<h2 id="expertise-title">Biology, modelling and engineering in one workflow.</h2>
+</div>
+</div>
+<div class="expertise-grid">
+<article>
+<span class="expertise-icon" aria-hidden="true">01</span>
+<h3>Translational science</h3>
+<p>Immuno-oncology, inflammation, tumour biology, mechanism of action, target validation, biomarkers and patient stratification.</p>
+</article>
+<article>
+<span class="expertise-icon" aria-hidden="true">02</span>
+<h3>Multi-omic evidence</h3>
+<p>scRNA-seq, CITE-seq, spatial transcriptomics, bulk RNA-seq, epigenomics, proteomics and functional genomics.</p>
+</article>
+<article>
+<span class="expertise-icon" aria-hidden="true">03</span>
+<h3>Models that explain themselves</h3>
+<p>XGBoost, survival analysis, variational autoencoders, foundation models and sequence-to-signal deep learning, with uncertainty and provenance.</p>
+</article>
+<article>
+<span class="expertise-icon" aria-hidden="true">04</span>
+<h3>Reproducible delivery</h3>
+<p>Python, R, Bash, Nextflow, Snakemake, Docker, AWS and HPC—with versioned inputs, automated tests and stakeholder-ready reporting.</p>
+</article>
+</div>
+</section>
+
+<section class="section-shell publications-section" aria-labelledby="publications-title">
+<div class="section-heading">
+<div>
+<p class="section-index">05 / Selected publications</p>
+<h2 id="publications-title">Peer-reviewed work in developmental neurobiology.</h2>
+</div>
+</div>
+<ol class="publication-list">
+<li><span class="publication-year">2024</span><a href="https://doi.org/10.1126/sciadv.adn1640">Gene regulatory landscape of cerebral cortex folding</a><span>Science Advances</span></li>
+<li><span class="publication-year">2024</span><a href="https://doi.org/10.1126/sciadv.adn9998">Multiple parallel cell lineages in the developing mammalian cerebral cortex</a><span>Science Advances</span></li>
+<li><span class="publication-year">2022</span><a href="https://doi.org/10.1126/sciadv.abj4010">Secondary loss of miR-3607 reduced cortical progenitor amplification during rodent evolution</a><span>Science Advances</span></li>
+<li><span class="publication-year">2020</span><a href="https://doi.org/10.15252/embj.2020105479">Repression of Irs2 by let-7 miRNAs is essential for homeostasis of the telencephalic neuroepithelium</a><span>The EMBO Journal</span></li>
+</ol>
+</section>
+
+<section class="contact-panel" aria-labelledby="contact-title">
+<p class="section-index">06 / Contact</p>
+<h2 id="contact-title">Have a difficult biological question?</h2>
+<p>I am interested in computational biology and translational data-science roles where rigorous analysis can shape therapeutic decisions.</p>
+<div class="button-row">
+<a class="button button-light" href="mailto:rafaelsolersanblas@gmail.com">rafaelsolersanblas@gmail.com <span aria-hidden="true">↗</span></a>
+<a class="button button-ghost" href="https://www.linkedin.com/in/rafael-soler-ortuno/">LinkedIn</a>
+<a class="button button-ghost" href="https://github.com/rsolerortuno">GitHub</a>
+</div>
+</section>
+
+</div>

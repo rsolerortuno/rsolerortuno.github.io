@@ -1,0 +1,92 @@
+---
+title: "DrugMatch-Confidence"
+subtitle: "Interpretable and uncertainty-aware preclinical drug-response prediction"
+description: "An XGBoost tool trained on DepMap and PRISM that explains predictions, quantifies uncertainty, and exposes weak models."
+page-layout: article
+toc: true
+toc-title: "On this page"
+---
+
+<div class="article-status">
+  <span class="status-pill status-released">v1.0.1 · Released</span>
+  <a href="https://github.com/rsolerortuno/DrugMatch-Confidence">View repository <span aria-hidden="true">↗</span></a>
+</div>
+
+## The question
+
+Can molecular profiles from cancer cell lines help predict which models will respond to a drug—and can the tool say when its own prediction should not be trusted?
+
+DrugMatch-Confidence combines DepMap molecular features with PRISM dose-response measurements. For a supported drug and cell line, it returns more than a sensitive/resistant label:
+
+- a continuous response prediction;
+- a calibrated sensitivity probability;
+- an uncertainty interval;
+- agreement between regression and classification heads;
+- an out-of-distribution warning;
+- input-coverage checks;
+- SHAP features that pushed the prediction in either direction.
+
+## Data and modelling
+
+```{mermaid}
+flowchart LR
+    A[DepMap expression, mutation, copy number] --> C[Stable ModelID join]
+    B[PRISM drug-response AUC] --> C
+    C --> D[Grouped split + training-only selection]
+    D --> E[Baselines + Elastic Net + XGBoost]
+    E --> F[Calibration, conformal interval, OOD, SHAP]
+    F --> G[Locked GDSC2 validation]
+```
+
+The safeguards are central to the project:
+
+1. The same cell line cannot appear in both training and test data.
+2. Test data never select genes.
+3. GDSC2 is locked and cannot tune the model.
+4. XGBoost is compared against lineage-only and Elastic Net baselines.
+5. Weak results remain visible instead of being reframed as successes.
+
+## What is validated
+
+Five real model bundles are included, but they do not receive the same release label.
+
+| Drug | Status | OOF AUROC | OOF balanced accuracy | Strict GDSC2 AUROC | External n |
+|---|---|---:|---:|---:|---:|
+| Trametinib | Validated demo | 0.86 | 0.78 | 0.84 | 20 |
+| Afatinib | Validated demo | 0.92 | 0.85 | 0.83 | 22 |
+| Palbociclib | Exploratory | 0.75 | 0.64 | 0.51 | 22 |
+| Olaparib | Insufficient evidence | 0.54 | 0.52 | 0.68 | 24 |
+| Gemcitabine | Insufficient evidence | 0.48 | 0.49 | 0.70 | 18 |
+
+Trametinib and afatinib are the portfolio demonstrations. Palbociclib is exploratory. Olaparib and gemcitabine are retained as transparent negative or weak results.
+
+## What makes the output useful
+
+The model explanations recover biologically plausible associations:
+
+- **Trametinib:** MAPK feedback and mesenchymal-state features;
+- **Afatinib:** epithelial and ERBB-associated features;
+- **Palbociclib:** RB1 and cell-cycle signals, but weak external transfer;
+- **Olaparib and gemcitabine:** plausible features without sufficient predictive stability.
+
+These SHAP signals describe associations learned from cell lines. They are not causal biomarkers.
+
+## How it is delivered
+
+DrugMatch-Confidence is a tested Python package with:
+
+- a command-line interface for prediction and training;
+- five compact real-model bundles;
+- a Streamlit interface;
+- versioned metrics, figures and provenance manifests;
+- technical and non-technical documentation;
+- offline unit and integration tests.
+
+## Scientific boundary
+
+This is preclinical research software. Cell lines do not reproduce the full tumour microenvironment, pharmacokinetics or patient heterogeneity, and the strict external subsets are small. The model cannot predict an unseen compound and must never be used to choose treatment for a person.
+
+<div class="article-cta">
+  <p><strong>Inspect the models, external validation, example predictions and complete model card.</strong></p>
+  <a class="button button-primary" href="https://github.com/rsolerortuno/DrugMatch-Confidence">Open DrugMatch-Confidence on GitHub <span aria-hidden="true">↗</span></a>
+</div>

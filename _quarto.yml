@@ -4,42 +4,48 @@ project:
 website:
   title: "Rafael Soler Ortuño"
   site-url: "https://rsolerortuno.github.io"
-  description: "Computational biology, immuno-oncology, spatial and single-cell genomics, and explainable AI for drug discovery."
+  description: "Computational biologist working across immuno-oncology, multi-omics, biomarker discovery, patient stratification, and interpretable AI."
   favicon: assets/favicon.svg
+  open-graph:
+    locale: en_GB
+  twitter-card: true
   navbar:
-    background: light
+    pinned: true
+    title: "RSO."
+    collapse-below: lg
     left:
-      - href: index.qmd
-        text: Home
       - href: projects.qmd
-        text: Projects
-      - href: blog.qmd
-        text: Blog
+        text: Tools
       - href: about.qmd
-        text: About
+        text: Experience
+      - href: blog.qmd
+        text: Writing
     right:
       - icon: github
         href: https://github.com/rsolerortuno
-        aria-label: GitHub
-      - icon: rss
-        href: blog.xml
-        aria-label: RSS
+        aria-label: GitHub profile
+      - icon: linkedin
+        href: https://www.linkedin.com/in/rafael-soler-ortuno/
+        aria-label: LinkedIn profile
+      - icon: envelope
+        href: mailto:rafaelsolersanblas@gmail.com
+        aria-label: Email Rafael
   page-footer:
     left: "© 2026 Rafael Soler Ortuño"
-    right: "Built with Quarto and GitHub Pages"
-  search: true
+    right: "Computational biology · Translational science · Research software"
+  search: false
+  page-navigation: true
 
 format:
   html:
-    theme:
-      light: cosmo
-      dark: darkly
+    theme: cosmo
     css: styles.css
-    toc: true
+    toc: false
     code-copy: true
     code-overflow: wrap
     link-external-newwindow: true
     smooth-scroll: true
+    lang: en-GB
 
 execute:
   freeze: auto

@@ -1,0 +1,74 @@
+---
+title: "Dev Autopilot"
+subtitle: "Persistent, auditable orchestration for scientific software development"
+description: "A fail-closed Python and SQLite workflow coordinating implementation, adversarial audit, independent review, and final human approval."
+page-layout: article
+toc: true
+toc-title: "On this page"
+---
+
+<div class="article-status">
+  <span class="status-pill status-alpha">v0.1.1 · Alpha</span>
+  <a href="https://github.com/rsolerortuno/dev-autopilot">View repository <span aria-hidden="true">↗</span></a>
+</div>
+
+## The problem
+
+AI coding agents can produce useful work, but a scientific software project also needs durable state, explicit permissions, reproducible tests, independent review and a clear boundary around human authority.
+
+Dev Autopilot turns those requirements into a workflow instead of relying on one long prompt or one agent grading its own work.
+
+## Authority is separated
+
+```{mermaid}
+flowchart LR
+    A[Planning advice] --> B[Implementation]
+    B --> C[Deterministic gates]
+    C --> D[Adversarial audit]
+    D --> E[Independent review]
+    E --> F[Bounded correction]
+    F --> C
+    E --> G[Ready for human review]
+```
+
+Planning advice is not approval. The implementation agent cannot approve its own diff. Review agents cannot override mechanical gates. The system stops at `READY_FOR_HUMAN_REVIEW`, leaving commit, pull-request and merge decisions to a person.
+
+## What persists
+
+SQLite records:
+
+- every legal state transition;
+- append-only events and stop reasons;
+- retry counts for each agent role;
+- quota pauses and exact resume states;
+- idempotency hashes and diff-keyed review caches;
+- expiring exclusive run locks.
+
+This allows a workflow to recover after process restarts without guessing where it left off.
+
+## Safety design
+
+Version 0.1.1 includes:
+
+- validated YAML jobs with explicit file, tree and glob permissions;
+- scope, test, context-size and Git-metadata gates;
+- fail-closed transitions;
+- deterministic jitter and quota-reset support;
+- bounded review/correction rounds;
+- fake adapters for complete offline integration tests;
+- a generic file-based bridge for real subscription agents.
+
+Real execution requires an explicit network opt-in. Shell syntax inside test commands also requires an explicit opt-in because it expands the trust boundary.
+
+## Why it belongs in a scientific portfolio
+
+The project is not a claim that automation removes scientific judgment. It demonstrates the opposite: agentic workflows become more useful when scientific scope, mechanical correctness, adversarial review and human authority are represented as different responsibilities.
+
+## Current boundary
+
+Dev Autopilot is alpha software. It coordinates and audits work, but never stages, commits, pushes, tags or merges product code. A human must inspect the final diff and evidence.
+
+<div class="article-cta">
+  <p><strong>Review the state machine, job schema, offline smoke run and TargetIntel example profile.</strong></p>
+  <a class="button button-primary" href="https://github.com/rsolerortuno/dev-autopilot">Open Dev Autopilot on GitHub <span aria-hidden="true">↗</span></a>
+</div>

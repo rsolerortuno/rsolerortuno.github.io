@@ -1,23 +1,145 @@
 ---
-title: "About"
-about:
-  template: jolla
-  links:
-    - icon: github
-      text: GitHub
-      href: https://github.com/rsolerortuno
+pagetitle: "Experience | Rafael Soler Ortuño"
+description: "Experience across computational biology, immuno-oncology, multi-omics, translational research, and research software."
+page-layout: full
 ---
 
-I am a computational biologist with experience in immuno-oncology, translational research, single-cell and spatial transcriptomics, multi-omics integration, and biomarker discovery.
+<div class="portfolio-page">
 
-My research has spanned developmental neurobiology, cancer biology, antibody discovery, and the design of computational workflows that connect molecular evidence to experimentally testable hypotheses.
+<header class="page-hero about-hero">
+<p class="eyebrow">Experience & approach</p>
+<h1>I work where biological complexity meets therapeutic decisions.</h1>
+<p>My background spans antibody immunotherapies, precision oncology, developmental neurobiology and computational tool building. Across those settings, my role is consistent: structure ambiguous questions, connect evidence across modalities and communicate what the data can—and cannot—support.</p>
+</header>
 
-I am especially interested in building systems that combine statistical analysis, biological knowledge, and language models without losing provenance, uncertainty, or interpretability.
+<section class="about-intro" aria-labelledby="profile-title">
+<figure>
+<div class="about-photo" role="img" aria-label="Portrait of Rafael Soler Ortuño"></div>
+</figure>
+<div>
+<p class="section-index">Profile</p>
+<h2 id="profile-title">Computational biologist with 6+ years across industry and academia.</h2>
+<p>I combine deep biological context with hands-on analysis and software engineering. That means I can move from experimental design and QC to multi-omic integration, statistical modelling, interpretation and a result that an experimental or clinical team can use.</p>
+<p>I hold a PhD in Bioinformatics and two MSc degrees in Bioinformatics & Biostatistics and Molecular Biology. I have worked in Spain, Germany, the United Kingdom and Sweden, and collaborate comfortably across disciplines and cultures.</p>
+<div class="mini-facts">
+<span><strong>Current</strong> BioInvent International</span>
+<span><strong>Based</strong> Lund, Sweden</span>
+<span><strong>Available</strong> September 2026</span>
+</div>
+</div>
+</section>
 
-## Areas of interest
+<section class="section-shell" aria-labelledby="career-title">
+<div class="section-heading">
+<div>
+<p class="section-index">Career</p>
+<h2 id="career-title">Professional experience</h2>
+</div>
+</div>
 
-- Computational target discovery and validation
-- Immuno-oncology and therapeutic resistance
-- Single-cell and spatial transcriptomics
-- Biomarker discovery and translational genomics
-- Explainable AI and evidence-grounded scientific reasoning
+<div class="experience-list">
+<article class="experience-entry">
+<div class="experience-meta"><span>Aug 2025 — Aug 2026</span><span>Lund, Sweden</span></div>
+<div class="experience-content">
+<p class="company">BioInvent International AB</p>
+<h3>Bioinformatics Research Scientist</h3>
+<ul>
+<li>Lead multi-omic analysis across the BI-1206 anti-FcγRIIB and BI-1808 anti-TNFR2 antibody programs, connecting patient, mouse and in-vitro evidence.</li>
+<li>Resolve response mechanisms, immune-cell states and tissue niches using scRNA-seq, CITE-seq, spatial transcriptomics, bulk RNA-seq, proteomics and clinical metadata.</li>
+<li>Support target validation, biomarker strategy, patient selection and go/no-go decisions while building reusable AWS/HPC analysis environments.</li>
+</ul>
+</div>
+</article>
+
+<article class="experience-entry">
+<div class="experience-meta"><span>Sep 2024 — Jan 2025</span><span>Seville, Spain</span></div>
+<div class="experience-content">
+<p class="company">Bristol Myers Squibb</p>
+<h3>Visiting Scientist, Computational Biology</h3>
+<ul>
+<li>Designed patient-derived gene signatures across lung, pancreatic and breast cancers for precision-medicine and resistance questions.</li>
+<li>Mapped cell lines, xenografts and organoids to clinical tumour subtypes using TCGA and DepMap/Celligner.</li>
+<li>Analysed NanoString CosMx and 10x Visium HD spatial transcriptomics across tumour cohorts.</li>
+</ul>
+</div>
+</article>
+
+<article class="experience-entry">
+<div class="experience-meta"><span>Sep 2020 — Sep 2024</span><span>Alicante, Spain</span></div>
+<div class="experience-content">
+<p class="company">Institute of Neurosciences, CSIC–UMH</p>
+<h3>Bioinformatics Research Scientist · PhD</h3>
+<ul>
+<li>Integrated cross-species scRNA-seq, RNA-seq and ATAC-seq to define conserved cortical stem-cell programs and regulatory elements.</li>
+<li>Identified gene signatures in paediatric brain tumours through public-data meta-analysis and mouse-model benchmarking.</li>
+<li>Built and published an R Shiny single-cell atlas and mentored two MSc students.</li>
+</ul>
+</div>
+</article>
+
+<article class="experience-entry">
+<div class="experience-meta"><span>Mar 2023 — Jun 2023</span><span>Munich, Germany</span></div>
+<div class="experience-content">
+<p class="company">Helmholtz Munich</p>
+<h3>Visiting Scientist, Bioinformatics</h3>
+<ul>
+<li>Combined Hi-C and ATAC-seq to study open chromatin, enhancer contacts and transcription-factor motifs.</li>
+<li>Trained ChromBPNet to predict chromatin accessibility and sequence motifs directly from DNA sequence.</li>
+</ul>
+</div>
+</article>
+
+<article class="experience-entry experience-entry-compact">
+<div class="experience-meta"><span>2017 — 2019</span><span>Madrid · London</span></div>
+<div class="experience-content">
+<p class="company">IMDEA · SUEZ</p>
+<h3>Junior Scientist</h3>
+<p>Early scientific roles that built my foundations in experimental biology, data analysis and cross-functional research.</p>
+</div>
+</article>
+</div>
+</section>
+
+<section class="section-shell capabilities" aria-labelledby="capabilities-title">
+<div class="section-heading">
+<div>
+<p class="section-index">Capabilities</p>
+<h2 id="capabilities-title">A practical, end-to-end toolkit</h2>
+</div>
+</div>
+<div class="capability-list">
+<div><h3>Domains</h3><p>Immuno-oncology · Inflammation · Tumour biology · Translational research · Neuroscience</p></div>
+<div><h3>Decisions</h3><p>Target discovery · Biomarker validation · Patient stratification · Mode of action · Resistance mechanisms</p></div>
+<div><h3>Single-cell & spatial</h3><p>scRNA-seq · CITE-seq · scATAC-seq · RNA velocity · Seurat WNN · totalVI · MultiVI · Visium HD · CosMx</p></div>
+<div><h3>Bulk & functional genomics</h3><p>RNA-seq · ATAC-seq · ChIP-seq · CUT&Tag/CUT&RUN · Hi-C · Proteomics · DepMap · CCLE · PRISM</p></div>
+<div><h3>ML & AI</h3><p>XGBoost · Random Forest · Survival analysis · Variational autoencoders · Geneformer · scGPT · Cell2Sentence · ChromBPNet</p></div>
+<div><h3>Engineering</h3><p>Python · R · Bash · Nextflow · Snakemake · Docker · AWS · HPC/Slurm · Git</p></div>
+</div>
+</section>
+
+<section class="section-shell education-section" aria-labelledby="education-title">
+<div class="section-heading">
+<div>
+<p class="section-index">Education</p>
+<h2 id="education-title">Training</h2>
+</div>
+</div>
+<div class="education-grid">
+<article><span>2020—2025</span><h3>PhD, Bioinformatics</h3><p>Helmholtz Munich · CSIC · Miguel Hernández University</p></article>
+<article><span>2018—2020</span><h3>MSc, Bioinformatics & Biostatistics</h3><p>University of Barcelona</p></article>
+<article><span>2017—2018</span><h3>MSc, Molecular Biology</h3><p>Autonomous University of Madrid</p></article>
+<article><span>2013—2017</span><h3>BSc, Biology</h3><p>University of Alicante</p></article>
+</div>
+</section>
+
+<section class="contact-panel compact-contact">
+<p class="section-index">Next chapter</p>
+<h2>Open to computational biology opportunities from September 2026.</h2>
+<p>I am especially interested in roles that connect human biology, multi-omic data and therapeutic development.</p>
+<div class="button-row">
+<a class="button button-light" href="mailto:rafaelsolersanblas@gmail.com">Start a conversation</a>
+<a class="button button-ghost" href="https://www.linkedin.com/in/rafael-soler-ortuno/">LinkedIn</a>
+</div>
+</section>
+
+</div>
