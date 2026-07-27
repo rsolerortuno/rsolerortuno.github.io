@@ -6,9 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="description" content="Experience across computational biology, immuno-oncology, multi-omics, translational research, and research software.">
+<meta name="description" content="A research analysis using DeepTFactor and Captum to identify and interpret transcription-factor-like sequence features.">
 
-<title>Experience | Rafael Soler Ortuño – Rafael Soler Ortuño</title>
+<title>MTF Prediction – Rafael Soler Ortuño</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -30,19 +30,19 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<link href="./assets/favicon.svg" rel="icon" type="image/svg+xml">
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-3d1b6502958a38d6b4d29f0899443d12.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<link href="../assets/favicon.svg" rel="icon" type="image/svg+xml">
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-3d1b6502958a38d6b4d29f0899443d12.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "language": {
     "search-no-results-text": "No results",
@@ -59,15 +59,18 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 <style>html{ scroll-behavior: smooth; }</style>
+<script src="../site_libs/quarto-diagram/mermaid.min.js"></script>
+<script src="../site_libs/quarto-diagram/mermaid-init.js"></script>
+<link href="../site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
 
 
-<link rel="stylesheet" href="styles.css">
-<meta property="og:title" content="Experience | Rafael Soler Ortuño">
-<meta property="og:description" content="Experience across computational biology, immuno-oncology, multi-omics, translational research, and research software.">
+<link rel="stylesheet" href="../styles.css">
+<meta property="og:title" content="MTF Prediction – Rafael Soler Ortuño">
+<meta property="og:description" content="A research analysis using DeepTFactor and Captum to identify and interpret transcription-factor-like sequence features.">
 <meta property="og:site_name" content="Rafael Soler Ortuño">
 <meta property="og:locale" content="en_GB">
-<meta name="twitter:title" content="Experience | Rafael Soler Ortuño">
-<meta name="twitter:description" content="Experience across computational biology, immuno-oncology, multi-omics, translational research, and research software.">
+<meta name="twitter:title" content="MTF Prediction – Rafael Soler Ortuño">
+<meta name="twitter:description" content="A research analysis using DeepTFactor and Captum to identify and interpret transcription-factor-like sequence features.">
 <meta name="twitter:card" content="summary">
 </head>
 
@@ -78,7 +81,7 @@ ul.task-list li input[type="checkbox"] {
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="./index.html">
+    <a class="navbar-brand" href="../index.html">
     <span class="navbar-title">RSO.</span>
     </a>
   </div>
@@ -88,15 +91,15 @@ ul.task-list li input[type="checkbox"] {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./projects.html"> 
+    <a class="nav-link" href="../projects.html"> 
 <span class="menu-text">Tools</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="./about.html" aria-current="page"> 
+    <a class="nav-link" href="../about.html"> 
 <span class="menu-text">Experience</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./blog.html"> 
+    <a class="nav-link" href="../blog.html"> 
 <span class="menu-text">Writing</span></a>
   </li>  
 </ul>
@@ -124,304 +127,136 @@ ul.task-list li input[type="checkbox"] {
     </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#the-scientific-question" id="toc-the-scientific-question" class="nav-link active" data-scroll-target="#the-scientific-question">The scientific question</a></li>
+  <li><a href="#analysis-design" id="toc-analysis-design" class="nav-link" data-scroll-target="#analysis-design">Analysis design</a></li>
+  <li><a href="#interpretation" id="toc-interpretation" class="nav-link" data-scroll-target="#interpretation">Interpretation</a></li>
+  <li><a href="#what-the-project-demonstrates" id="toc-what-the-project-demonstrates" class="nav-link" data-scroll-target="#what-the-project-demonstrates">What the project demonstrates</a></li>
+  <li><a href="#scientific-boundary" id="toc-scientific-boundary" class="nav-link" data-scroll-target="#scientific-boundary">Scientific boundary</a></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
-<main class="content column-page" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">MTF Prediction</h1>
+<p class="subtitle lead">Topology-aware deep-learning screening of mammalian membrane proteins</p>
+</div>
+
+<div>
+  <div class="description">
+    A research analysis using DeepTFactor and Captum to identify and interpret transcription-factor-like sequence features.
+  </div>
+</div>
 
 
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
 
 
-<div class="portfolio-page">
-<header class="page-hero about-hero">
-<p class="eyebrow">
-Experience &amp; approach
-</p>
-<h1>
-I work where biological complexity meets therapeutic decisions.
-</h1>
-<p>
-My background spans antibody immunotherapies, precision oncology, developmental neurobiology and computational tool building. Across those settings, my role is consistent: structure ambiguous questions, connect evidence across modalities and communicate what the data can—and cannot—support.
-</p>
 </header>
-<section class="about-intro" aria-labelledby="profile-title">
-<figure class="figure">
-<div class="about-photo" role="img" aria-label="Portrait of Rafael Soler Ortuño">
 
+
+<div class="article-status">
+<p><span class="status-pill status-archive">v1.0.0 · Research analysis</span> <a href="https://github.com/rsolerortuno/MTF_prediction">View repository <span aria-hidden="true">↗</span></a></p>
 </div>
-</figure>
+<section id="the-scientific-question" class="level2">
+<h2 class="anchored" data-anchor-id="the-scientific-question">The scientific question</h2>
+<p>Some membrane proteins release intracellular fragments that participate in nuclear signalling. Could topological domains of mammalian membrane proteins contain sequence patterns that a deep-learning model recognises as transcription-factor-like?</p>
+<p>MTF Prediction is a research-analysis archive built to generate candidates and explore how strongly the result depends on protein-domain boundaries.</p>
+</section>
+<section id="analysis-design" class="level2">
+<h2 class="anchored" data-anchor-id="analysis-design">Analysis design</h2>
+<p>Reviewed human and mouse membrane proteins from UniProtKB 2022_05 were separated into cytoplasmic, extracellular and lumenal domains. Each eligible domain was evaluated under three boundary definitions:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Condition</th>
+<th>Sequence submitted to the model</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>No TMD</td>
+<td>Annotated topological domain only</td>
+</tr>
+<tr class="even">
+<td>Half TMD</td>
+<td>Domain extended by approximately half of each adjacent transmembrane segment</td>
+</tr>
+<tr class="odd">
+<td>Full TMD</td>
+<td>Domain extended across the complete adjacent transmembrane segment</td>
+</tr>
+</tbody>
+</table>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
 <div>
-<p class="section-index">
-Profile
-</p>
-<h2 id="profile-title" class="anchored">
-Computational biologist with 6+ years across industry and academia.
-</h2>
-<p>
-I combine deep biological context with hands-on analysis and software engineering. That means I can move from experimental design and QC to multi-omic integration, statistical modelling, interpretation and a result that an experimental or clinical team can use.
-</p>
-<p>
-I hold a PhD in Bioinformatics and two MSc degrees in Bioinformatics &amp; Biostatistics and Molecular Biology. I have worked in Spain, Germany, the United Kingdom and Sweden, and collaborate comfortably across disciplines and cultures.
-</p>
-<div class="mini-facts">
-<p><span><strong>Current</strong> BioInvent International</span> <span><strong>Based</strong> Lund, Sweden</span> <span><strong>Available</strong> September 2026</span></p>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart LR
+    A[UniProtKB topology] --&gt; B[Cytoplasmic, extracellular, lumenal]
+    B --&gt; C[No, half or full TMD]
+    C --&gt; D[Coordinate-aware FASTA]
+    D --&gt; E[DeepTFactor]
+    E --&gt; F[Candidate predictions]
+    F --&gt; G[Captum Integrated Gradients]
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
 </div>
 </div>
 </section>
-<section class="section-shell" aria-labelledby="career-title">
-<div class="section-heading">
-<div>
-<p class="section-index">
-Career
-</p>
-<h2 id="career-title" class="anchored">
-Professional experience
-</h2>
-</div>
-</div>
-<div class="experience-list">
-<article class="experience-entry">
-<div class="experience-meta">
-<span>Aug 2025 — Aug 2026</span><span>Lund, Sweden</span>
-</div>
-<div class="experience-content">
-<p class="company">
-BioInvent International AB
-</p>
-<h3 class="anchored">
-Bioinformatics Research Scientist
-</h3>
+<section id="interpretation" class="level2">
+<h2 class="anchored" data-anchor-id="interpretation">Interpretation</h2>
+<p>DeepTFactor assigns transcription-factor-like scores to protein fragments. For selected candidates, Captum Integrated Gradients provides residue-level attribution, helping identify which positions influenced the model.</p>
+<p>The public repository preserves:</p>
 <ul>
-<li>
-Lead multi-omic analysis across the BI-1206 anti-FcγRIIB and BI-1808 anti-TNFR2 antibody programs, connecting patient, mouse and in-vitro evidence.
-</li>
-<li>
-Resolve response mechanisms, immune-cell states and tissue niches using scRNA-seq, CITE-seq, spatial transcriptomics, bulk RNA-seq, proteomics and clinical metadata.
-</li>
-<li>
-Support target validation, biomarker strategy, patient selection and go/no-go decisions while building reusable AWS/HPC analysis environments.
-</li>
+<li>human and mouse processed inputs;</li>
+<li>GFF-to-domain coordinate transformations;</li>
+<li>FASTA fragments across boundary conditions;</li>
+<li>prediction outputs and filtered candidate tables;</li>
+<li>attribution tables and sequence-logo figures;</li>
+<li>the original scripts and a machine-readable citation.</li>
 </ul>
-</div>
-</article>
-<article class="experience-entry">
-<div class="experience-meta">
-<span>Sep 2024 — Jan 2025</span><span>Seville, Spain</span>
-</div>
-<div class="experience-content">
-<p class="company">
-Bristol Myers Squibb
-</p>
-<h3 class="anchored">
-Visiting Scientist, Computational Biology
-</h3>
-<ul>
-<li>
-Designed patient-derived gene signatures across lung, pancreatic and breast cancers for precision-medicine and resistance questions.
-</li>
-<li>
-Mapped cell lines, xenografts and organoids to clinical tumour subtypes using TCGA and DepMap/Celligner.
-</li>
-<li>
-Analysed NanoString CosMx and 10x Visium HD spatial transcriptomics across tumour cohorts.
-</li>
-</ul>
-</div>
-</article>
-<article class="experience-entry">
-<div class="experience-meta">
-<span>Sep 2020 — Sep 2024</span><span>Alicante, Spain</span>
-</div>
-<div class="experience-content">
-<p class="company">
-Institute of Neurosciences, CSIC–UMH
-</p>
-<h3 class="anchored">
-Bioinformatics Research Scientist · PhD
-</h3>
-<ul>
-<li>
-Integrated cross-species scRNA-seq, RNA-seq and ATAC-seq to define conserved cortical stem-cell programs and regulatory elements.
-</li>
-<li>
-Identified gene signatures in paediatric brain tumours through public-data meta-analysis and mouse-model benchmarking.
-</li>
-<li>
-Built and published an R Shiny single-cell atlas and mentored two MSc students.
-</li>
-</ul>
-</div>
-</article>
-<article class="experience-entry">
-<div class="experience-meta">
-<span>Mar 2023 — Jun 2023</span><span>Munich, Germany</span>
-</div>
-<div class="experience-content">
-<p class="company">
-Helmholtz Munich
-</p>
-<h3 class="anchored">
-Visiting Scientist, Bioinformatics
-</h3>
-<ul>
-<li>
-Combined Hi-C and ATAC-seq to study open chromatin, enhancer contacts and transcription-factor motifs.
-</li>
-<li>
-Trained ChromBPNet to predict chromatin accessibility and sequence motifs directly from DNA sequence.
-</li>
-</ul>
-</div>
-</article>
-<article class="experience-entry experience-entry-compact">
-<div class="experience-meta">
-<span>2017 — 2019</span><span>Madrid · London</span>
-</div>
-<div class="experience-content">
-<p class="company">
-IMDEA · SUEZ
-</p>
-<h3 class="anchored">
-Junior Scientist
-</h3>
-<p>
-Early scientific roles that built my foundations in experimental biology, data analysis and cross-functional research.
-</p>
-</div>
-</article>
-</div>
 </section>
-<section class="section-shell capabilities" aria-labelledby="capabilities-title">
-<div class="section-heading">
-<div>
-<p class="section-index">
-Capabilities
-</p>
-<h2 id="capabilities-title" class="anchored">
-A practical, end-to-end toolkit
-</h2>
-</div>
-</div>
-<div class="capability-list">
-<div>
-<h3 class="anchored">
-Domains
-</h3>
-<p>
-Immuno-oncology · Inflammation · Tumour biology · Translational research · Neuroscience
-</p>
-</div>
-<div>
-<h3 class="anchored">
-Decisions
-</h3>
-<p>
-Target discovery · Biomarker validation · Patient stratification · Mode of action · Resistance mechanisms
-</p>
-</div>
-<div>
-<h3 class="anchored">
-Single-cell &amp; spatial
-</h3>
-<p>
-scRNA-seq · CITE-seq · scATAC-seq · RNA velocity · Seurat WNN · totalVI · MultiVI · Visium HD · CosMx
-</p>
-</div>
-<div>
-<h3 class="anchored">
-Bulk &amp; functional genomics
-</h3>
-<p>
-RNA-seq · ATAC-seq · ChIP-seq · CUT&amp;Tag/CUT&amp;RUN · Hi-C · Proteomics · DepMap · CCLE · PRISM
-</p>
-</div>
-<div>
-<h3 class="anchored">
-ML &amp; AI
-</h3>
-<p>
-XGBoost · Random Forest · Survival analysis · Variational autoencoders · Geneformer · scGPT · Cell2Sentence · ChromBPNet
-</p>
-</div>
-<div>
-<h3 class="anchored">
-Engineering
-</h3>
-<p>
-Python · R · Bash · Nextflow · Snakemake · Docker · AWS · HPC/Slurm · Git
-</p>
-</div>
-</div>
+<section id="what-the-project-demonstrates" class="level2">
+<h2 class="anchored" data-anchor-id="what-the-project-demonstrates">What the project demonstrates</h2>
+<p>This project connects biological annotation, command-line data processing, protein deep learning and model interpretation. It also exposes a biologically important sensitivity question: if a prediction changes when the boundary moves by a few residues, it should be interpreted differently from one that is stable across all three definitions.</p>
 </section>
-<section class="section-shell education-section" aria-labelledby="education-title">
-<div class="section-heading">
-<div>
-<p class="section-index">
-Education
-</p>
-<h2 id="education-title" class="anchored">
-Training
-</h2>
-</div>
-</div>
-<div class="education-grid">
-<article>
-<span>2020—2025</span>
-<h3 class="anchored">
-PhD, Bioinformatics
-</h3>
+<section id="scientific-boundary" class="level2">
+<h2 class="anchored" data-anchor-id="scientific-boundary">Scientific boundary</h2>
+<p>A positive prediction only means that a fragment contains sequence features associated with transcription factors by the selected model. It does not establish DNA binding, nuclear localisation, proteolytic activation or transcriptional function in vivo. Orthogonal experimental validation is required.</p>
+<p>The repository is a research archive, not a packaged end-to-end application, and remains tied to the 2022_05 UniProtKB release and the original DeepTFactor checkpoint.</p>
+<div class="article-cta">
 <p>
-Helmholtz Munich · CSIC · Miguel Hernández University
+<strong>Explore the full analysis matrix, processed inputs and residue-attribution outputs.</strong>
 </p>
-</article>
-<article>
-<span>2018—2020</span>
-<h3 class="anchored">
-MSc, Bioinformatics &amp; Biostatistics
-</h3>
-<p>
-University of Barcelona
-</p>
-</article>
-<article>
-<span>2017—2018</span>
-<h3 class="anchored">
-MSc, Molecular Biology
-</h3>
-<p>
-Autonomous University of Madrid
-</p>
-</article>
-<article>
-<span>2013—2017</span>
-<h3 class="anchored">
-BSc, Biology
-</h3>
-<p>
-University of Alicante
-</p>
-</article>
-</div>
-</section>
-<section class="contact-panel compact-contact">
-<p class="section-index">
-Next chapter
-</p>
-<h2 class="anchored">
-Open to computational biology opportunities from September 2026.
-</h2>
-<p>
-I am especially interested in roles that connect human biology, multi-omic data and therapeutic development.
-</p>
-<div class="button-row">
-<p><a class="button button-light" href="mailto:rafaelsolersanblas@gmail.com">Start a conversation</a> <a class="button button-ghost" href="https://www.linkedin.com/in/rafael-soler-ortuno/">LinkedIn</a></p>
-</div>
-</section>
+<p><a class="button button-primary" href="https://github.com/rsolerortuno/MTF_prediction">Open MTF Prediction on GitHub <span aria-hidden="true">↗</span></a></p>
 </div>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -847,5 +682,5 @@ I am especially interested in roles that connect human biology, multi-omic data 
 
 
 
-<script src="site_libs/quarto-html/zenscroll-min.js"></script>
+<script src="../site_libs/quarto-html/zenscroll-min.js"></script>
 </body></html>

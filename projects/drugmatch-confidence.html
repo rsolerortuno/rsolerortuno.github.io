@@ -6,9 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="description" content="Experience across computational biology, immuno-oncology, multi-omics, translational research, and research software.">
+<meta name="description" content="An XGBoost tool trained on DepMap and PRISM that explains predictions, quantifies uncertainty, and exposes weak models.">
 
-<title>Experience | Rafael Soler Ortuño – Rafael Soler Ortuño</title>
+<title>DrugMatch-Confidence – Rafael Soler Ortuño</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -30,19 +30,19 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<link href="./assets/favicon.svg" rel="icon" type="image/svg+xml">
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-3d1b6502958a38d6b4d29f0899443d12.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<link href="../assets/favicon.svg" rel="icon" type="image/svg+xml">
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-3d1b6502958a38d6b4d29f0899443d12.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "language": {
     "search-no-results-text": "No results",
@@ -59,15 +59,18 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 <style>html{ scroll-behavior: smooth; }</style>
+<script src="../site_libs/quarto-diagram/mermaid.min.js"></script>
+<script src="../site_libs/quarto-diagram/mermaid-init.js"></script>
+<link href="../site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
 
 
-<link rel="stylesheet" href="styles.css">
-<meta property="og:title" content="Experience | Rafael Soler Ortuño">
-<meta property="og:description" content="Experience across computational biology, immuno-oncology, multi-omics, translational research, and research software.">
+<link rel="stylesheet" href="../styles.css">
+<meta property="og:title" content="DrugMatch-Confidence – Rafael Soler Ortuño">
+<meta property="og:description" content="An XGBoost tool trained on DepMap and PRISM that explains predictions, quantifies uncertainty, and exposes weak models.">
 <meta property="og:site_name" content="Rafael Soler Ortuño">
 <meta property="og:locale" content="en_GB">
-<meta name="twitter:title" content="Experience | Rafael Soler Ortuño">
-<meta name="twitter:description" content="Experience across computational biology, immuno-oncology, multi-omics, translational research, and research software.">
+<meta name="twitter:title" content="DrugMatch-Confidence – Rafael Soler Ortuño">
+<meta name="twitter:description" content="An XGBoost tool trained on DepMap and PRISM that explains predictions, quantifies uncertainty, and exposes weak models.">
 <meta name="twitter:card" content="summary">
 </head>
 
@@ -78,7 +81,7 @@ ul.task-list li input[type="checkbox"] {
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="./index.html">
+    <a class="navbar-brand" href="../index.html">
     <span class="navbar-title">RSO.</span>
     </a>
   </div>
@@ -88,15 +91,15 @@ ul.task-list li input[type="checkbox"] {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./projects.html"> 
+    <a class="nav-link" href="../projects.html"> 
 <span class="menu-text">Tools</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="./about.html" aria-current="page"> 
+    <a class="nav-link" href="../about.html"> 
 <span class="menu-text">Experience</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./blog.html"> 
+    <a class="nav-link" href="../blog.html"> 
 <span class="menu-text">Writing</span></a>
   </li>  
 </ul>
@@ -124,304 +127,199 @@ ul.task-list li input[type="checkbox"] {
     </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#the-question" id="toc-the-question" class="nav-link active" data-scroll-target="#the-question">The question</a></li>
+  <li><a href="#data-and-modelling" id="toc-data-and-modelling" class="nav-link" data-scroll-target="#data-and-modelling">Data and modelling</a></li>
+  <li><a href="#what-is-validated" id="toc-what-is-validated" class="nav-link" data-scroll-target="#what-is-validated">What is validated</a></li>
+  <li><a href="#what-makes-the-output-useful" id="toc-what-makes-the-output-useful" class="nav-link" data-scroll-target="#what-makes-the-output-useful">What makes the output useful</a></li>
+  <li><a href="#how-it-is-delivered" id="toc-how-it-is-delivered" class="nav-link" data-scroll-target="#how-it-is-delivered">How it is delivered</a></li>
+  <li><a href="#scientific-boundary" id="toc-scientific-boundary" class="nav-link" data-scroll-target="#scientific-boundary">Scientific boundary</a></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
-<main class="content column-page" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">DrugMatch-Confidence</h1>
+<p class="subtitle lead">Interpretable and uncertainty-aware preclinical drug-response prediction</p>
+</div>
+
+<div>
+  <div class="description">
+    An XGBoost tool trained on DepMap and PRISM that explains predictions, quantifies uncertainty, and exposes weak models.
+  </div>
+</div>
 
 
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
 
 
-<div class="portfolio-page">
-<header class="page-hero about-hero">
-<p class="eyebrow">
-Experience &amp; approach
-</p>
-<h1>
-I work where biological complexity meets therapeutic decisions.
-</h1>
-<p>
-My background spans antibody immunotherapies, precision oncology, developmental neurobiology and computational tool building. Across those settings, my role is consistent: structure ambiguous questions, connect evidence across modalities and communicate what the data can—and cannot—support.
-</p>
 </header>
-<section class="about-intro" aria-labelledby="profile-title">
-<figure class="figure">
-<div class="about-photo" role="img" aria-label="Portrait of Rafael Soler Ortuño">
 
+
+<div class="article-status">
+<p><span class="status-pill status-released">v1.0.1 · Released</span> <a href="https://github.com/rsolerortuno/DrugMatch-Confidence">View repository <span aria-hidden="true">↗</span></a></p>
 </div>
-</figure>
-<div>
-<p class="section-index">
-Profile
-</p>
-<h2 id="profile-title" class="anchored">
-Computational biologist with 6+ years across industry and academia.
-</h2>
-<p>
-I combine deep biological context with hands-on analysis and software engineering. That means I can move from experimental design and QC to multi-omic integration, statistical modelling, interpretation and a result that an experimental or clinical team can use.
-</p>
-<p>
-I hold a PhD in Bioinformatics and two MSc degrees in Bioinformatics &amp; Biostatistics and Molecular Biology. I have worked in Spain, Germany, the United Kingdom and Sweden, and collaborate comfortably across disciplines and cultures.
-</p>
-<div class="mini-facts">
-<p><span><strong>Current</strong> BioInvent International</span> <span><strong>Based</strong> Lund, Sweden</span> <span><strong>Available</strong> September 2026</span></p>
-</div>
-</div>
-</section>
-<section class="section-shell" aria-labelledby="career-title">
-<div class="section-heading">
-<div>
-<p class="section-index">
-Career
-</p>
-<h2 id="career-title" class="anchored">
-Professional experience
-</h2>
-</div>
-</div>
-<div class="experience-list">
-<article class="experience-entry">
-<div class="experience-meta">
-<span>Aug 2025 — Aug 2026</span><span>Lund, Sweden</span>
-</div>
-<div class="experience-content">
-<p class="company">
-BioInvent International AB
-</p>
-<h3 class="anchored">
-Bioinformatics Research Scientist
-</h3>
+<section id="the-question" class="level2">
+<h2 class="anchored" data-anchor-id="the-question">The question</h2>
+<p>Can molecular profiles from cancer cell lines help predict which models will respond to a drug—and can the tool say when its own prediction should not be trusted?</p>
+<p>DrugMatch-Confidence combines DepMap molecular features with PRISM dose-response measurements. For a supported drug and cell line, it returns more than a sensitive/resistant label:</p>
 <ul>
-<li>
-Lead multi-omic analysis across the BI-1206 anti-FcγRIIB and BI-1808 anti-TNFR2 antibody programs, connecting patient, mouse and in-vitro evidence.
-</li>
-<li>
-Resolve response mechanisms, immune-cell states and tissue niches using scRNA-seq, CITE-seq, spatial transcriptomics, bulk RNA-seq, proteomics and clinical metadata.
-</li>
-<li>
-Support target validation, biomarker strategy, patient selection and go/no-go decisions while building reusable AWS/HPC analysis environments.
-</li>
+<li>a continuous response prediction;</li>
+<li>a calibrated sensitivity probability;</li>
+<li>an uncertainty interval;</li>
+<li>agreement between regression and classification heads;</li>
+<li>an out-of-distribution warning;</li>
+<li>input-coverage checks;</li>
+<li>SHAP features that pushed the prediction in either direction.</li>
 </ul>
+</section>
+<section id="data-and-modelling" class="level2">
+<h2 class="anchored" data-anchor-id="data-and-modelling">Data and modelling</h2>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart LR
+    A[DepMap expression, mutation, copy number] --&gt; C[Stable ModelID join]
+    B[PRISM drug-response AUC] --&gt; C
+    C --&gt; D[Grouped split + training-only selection]
+    D --&gt; E[Baselines + Elastic Net + XGBoost]
+    E --&gt; F[Calibration, conformal interval, OOD, SHAP]
+    F --&gt; G[Locked GDSC2 validation]
+</pre>
 </div>
-</article>
-<article class="experience-entry">
-<div class="experience-meta">
-<span>Sep 2024 — Jan 2025</span><span>Seville, Spain</span>
+<p></p></figure><p></p>
 </div>
-<div class="experience-content">
-<p class="company">
-Bristol Myers Squibb
-</p>
-<h3 class="anchored">
-Visiting Scientist, Computational Biology
-</h3>
+</div>
+</div>
+<p>The safeguards are central to the project:</p>
+<ol type="1">
+<li>The same cell line cannot appear in both training and test data.</li>
+<li>Test data never select genes.</li>
+<li>GDSC2 is locked and cannot tune the model.</li>
+<li>XGBoost is compared against lineage-only and Elastic Net baselines.</li>
+<li>Weak results remain visible instead of being reframed as successes.</li>
+</ol>
+</section>
+<section id="what-is-validated" class="level2">
+<h2 class="anchored" data-anchor-id="what-is-validated">What is validated</h2>
+<p>Five real model bundles are included, but they do not receive the same release label.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 13%">
+<col style="width: 13%">
+<col style="width: 18%">
+<col style="width: 18%">
+<col style="width: 18%">
+<col style="width: 18%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Drug</th>
+<th>Status</th>
+<th style="text-align: right;">OOF AUROC</th>
+<th style="text-align: right;">OOF balanced accuracy</th>
+<th style="text-align: right;">Strict GDSC2 AUROC</th>
+<th style="text-align: right;">External n</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Trametinib</td>
+<td>Validated demo</td>
+<td style="text-align: right;">0.86</td>
+<td style="text-align: right;">0.78</td>
+<td style="text-align: right;">0.84</td>
+<td style="text-align: right;">20</td>
+</tr>
+<tr class="even">
+<td>Afatinib</td>
+<td>Validated demo</td>
+<td style="text-align: right;">0.92</td>
+<td style="text-align: right;">0.85</td>
+<td style="text-align: right;">0.83</td>
+<td style="text-align: right;">22</td>
+</tr>
+<tr class="odd">
+<td>Palbociclib</td>
+<td>Exploratory</td>
+<td style="text-align: right;">0.75</td>
+<td style="text-align: right;">0.64</td>
+<td style="text-align: right;">0.51</td>
+<td style="text-align: right;">22</td>
+</tr>
+<tr class="even">
+<td>Olaparib</td>
+<td>Insufficient evidence</td>
+<td style="text-align: right;">0.54</td>
+<td style="text-align: right;">0.52</td>
+<td style="text-align: right;">0.68</td>
+<td style="text-align: right;">24</td>
+</tr>
+<tr class="odd">
+<td>Gemcitabine</td>
+<td>Insufficient evidence</td>
+<td style="text-align: right;">0.48</td>
+<td style="text-align: right;">0.49</td>
+<td style="text-align: right;">0.70</td>
+<td style="text-align: right;">18</td>
+</tr>
+</tbody>
+</table>
+<p>Trametinib and afatinib are the portfolio demonstrations. Palbociclib is exploratory. Olaparib and gemcitabine are retained as transparent negative or weak results.</p>
+</section>
+<section id="what-makes-the-output-useful" class="level2">
+<h2 class="anchored" data-anchor-id="what-makes-the-output-useful">What makes the output useful</h2>
+<p>The model explanations recover biologically plausible associations:</p>
 <ul>
-<li>
-Designed patient-derived gene signatures across lung, pancreatic and breast cancers for precision-medicine and resistance questions.
-</li>
-<li>
-Mapped cell lines, xenografts and organoids to clinical tumour subtypes using TCGA and DepMap/Celligner.
-</li>
-<li>
-Analysed NanoString CosMx and 10x Visium HD spatial transcriptomics across tumour cohorts.
-</li>
+<li><strong>Trametinib:</strong> MAPK feedback and mesenchymal-state features;</li>
+<li><strong>Afatinib:</strong> epithelial and ERBB-associated features;</li>
+<li><strong>Palbociclib:</strong> RB1 and cell-cycle signals, but weak external transfer;</li>
+<li><strong>Olaparib and gemcitabine:</strong> plausible features without sufficient predictive stability.</li>
 </ul>
-</div>
-</article>
-<article class="experience-entry">
-<div class="experience-meta">
-<span>Sep 2020 — Sep 2024</span><span>Alicante, Spain</span>
-</div>
-<div class="experience-content">
-<p class="company">
-Institute of Neurosciences, CSIC–UMH
-</p>
-<h3 class="anchored">
-Bioinformatics Research Scientist · PhD
-</h3>
+<p>These SHAP signals describe associations learned from cell lines. They are not causal biomarkers.</p>
+</section>
+<section id="how-it-is-delivered" class="level2">
+<h2 class="anchored" data-anchor-id="how-it-is-delivered">How it is delivered</h2>
+<p>DrugMatch-Confidence is a tested Python package with:</p>
 <ul>
-<li>
-Integrated cross-species scRNA-seq, RNA-seq and ATAC-seq to define conserved cortical stem-cell programs and regulatory elements.
-</li>
-<li>
-Identified gene signatures in paediatric brain tumours through public-data meta-analysis and mouse-model benchmarking.
-</li>
-<li>
-Built and published an R Shiny single-cell atlas and mentored two MSc students.
-</li>
+<li>a command-line interface for prediction and training;</li>
+<li>five compact real-model bundles;</li>
+<li>a Streamlit interface;</li>
+<li>versioned metrics, figures and provenance manifests;</li>
+<li>technical and non-technical documentation;</li>
+<li>offline unit and integration tests.</li>
 </ul>
-</div>
-</article>
-<article class="experience-entry">
-<div class="experience-meta">
-<span>Mar 2023 — Jun 2023</span><span>Munich, Germany</span>
-</div>
-<div class="experience-content">
-<p class="company">
-Helmholtz Munich
-</p>
-<h3 class="anchored">
-Visiting Scientist, Bioinformatics
-</h3>
-<ul>
-<li>
-Combined Hi-C and ATAC-seq to study open chromatin, enhancer contacts and transcription-factor motifs.
-</li>
-<li>
-Trained ChromBPNet to predict chromatin accessibility and sequence motifs directly from DNA sequence.
-</li>
-</ul>
-</div>
-</article>
-<article class="experience-entry experience-entry-compact">
-<div class="experience-meta">
-<span>2017 — 2019</span><span>Madrid · London</span>
-</div>
-<div class="experience-content">
-<p class="company">
-IMDEA · SUEZ
-</p>
-<h3 class="anchored">
-Junior Scientist
-</h3>
-<p>
-Early scientific roles that built my foundations in experimental biology, data analysis and cross-functional research.
-</p>
-</div>
-</article>
-</div>
 </section>
-<section class="section-shell capabilities" aria-labelledby="capabilities-title">
-<div class="section-heading">
-<div>
-<p class="section-index">
-Capabilities
-</p>
-<h2 id="capabilities-title" class="anchored">
-A practical, end-to-end toolkit
-</h2>
-</div>
-</div>
-<div class="capability-list">
-<div>
-<h3 class="anchored">
-Domains
-</h3>
+<section id="scientific-boundary" class="level2">
+<h2 class="anchored" data-anchor-id="scientific-boundary">Scientific boundary</h2>
+<p>This is preclinical research software. Cell lines do not reproduce the full tumour microenvironment, pharmacokinetics or patient heterogeneity, and the strict external subsets are small. The model cannot predict an unseen compound and must never be used to choose treatment for a person.</p>
+<div class="article-cta">
 <p>
-Immuno-oncology · Inflammation · Tumour biology · Translational research · Neuroscience
+<strong>Inspect the models, external validation, example predictions and complete model card.</strong>
 </p>
-</div>
-<div>
-<h3 class="anchored">
-Decisions
-</h3>
-<p>
-Target discovery · Biomarker validation · Patient stratification · Mode of action · Resistance mechanisms
-</p>
-</div>
-<div>
-<h3 class="anchored">
-Single-cell &amp; spatial
-</h3>
-<p>
-scRNA-seq · CITE-seq · scATAC-seq · RNA velocity · Seurat WNN · totalVI · MultiVI · Visium HD · CosMx
-</p>
-</div>
-<div>
-<h3 class="anchored">
-Bulk &amp; functional genomics
-</h3>
-<p>
-RNA-seq · ATAC-seq · ChIP-seq · CUT&amp;Tag/CUT&amp;RUN · Hi-C · Proteomics · DepMap · CCLE · PRISM
-</p>
-</div>
-<div>
-<h3 class="anchored">
-ML &amp; AI
-</h3>
-<p>
-XGBoost · Random Forest · Survival analysis · Variational autoencoders · Geneformer · scGPT · Cell2Sentence · ChromBPNet
-</p>
-</div>
-<div>
-<h3 class="anchored">
-Engineering
-</h3>
-<p>
-Python · R · Bash · Nextflow · Snakemake · Docker · AWS · HPC/Slurm · Git
-</p>
-</div>
-</div>
-</section>
-<section class="section-shell education-section" aria-labelledby="education-title">
-<div class="section-heading">
-<div>
-<p class="section-index">
-Education
-</p>
-<h2 id="education-title" class="anchored">
-Training
-</h2>
-</div>
-</div>
-<div class="education-grid">
-<article>
-<span>2020—2025</span>
-<h3 class="anchored">
-PhD, Bioinformatics
-</h3>
-<p>
-Helmholtz Munich · CSIC · Miguel Hernández University
-</p>
-</article>
-<article>
-<span>2018—2020</span>
-<h3 class="anchored">
-MSc, Bioinformatics &amp; Biostatistics
-</h3>
-<p>
-University of Barcelona
-</p>
-</article>
-<article>
-<span>2017—2018</span>
-<h3 class="anchored">
-MSc, Molecular Biology
-</h3>
-<p>
-Autonomous University of Madrid
-</p>
-</article>
-<article>
-<span>2013—2017</span>
-<h3 class="anchored">
-BSc, Biology
-</h3>
-<p>
-University of Alicante
-</p>
-</article>
-</div>
-</section>
-<section class="contact-panel compact-contact">
-<p class="section-index">
-Next chapter
-</p>
-<h2 class="anchored">
-Open to computational biology opportunities from September 2026.
-</h2>
-<p>
-I am especially interested in roles that connect human biology, multi-omic data and therapeutic development.
-</p>
-<div class="button-row">
-<p><a class="button button-light" href="mailto:rafaelsolersanblas@gmail.com">Start a conversation</a> <a class="button button-ghost" href="https://www.linkedin.com/in/rafael-soler-ortuno/">LinkedIn</a></p>
-</div>
-</section>
+<p><a class="button button-primary" href="https://github.com/rsolerortuno/DrugMatch-Confidence">Open DrugMatch-Confidence on GitHub <span aria-hidden="true">↗</span></a></p>
 </div>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -847,5 +745,5 @@ I am especially interested in roles that connect human biology, multi-omic data 
 
 
 
-<script src="site_libs/quarto-html/zenscroll-min.js"></script>
+<script src="../site_libs/quarto-html/zenscroll-min.js"></script>
 </body></html>

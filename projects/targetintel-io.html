@@ -1,22 +1,25 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-GB" xml:lang="en-GB"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.38">
+<meta name="generator" content="quarto-1.10.18">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="description" content="A rule-based and traceable framework for interpreting candidate targets in anti-PD-1-resistant melanoma.">
+<meta name="description" content="A deterministic research platform for classifying and ranking candidate targets in anti-PD-1-resistant melanoma.">
 
 <title>TargetIntel-IO – Rafael Soler Ortuño</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
 */
-code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: min(4vw, 1.5em);}
-div.column{flex: auto; overflow-x: auto;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
@@ -28,40 +31,19 @@ ul.task-list li input[type="checkbox"] {
 
 
 <script src="../site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="../site_libs/quarto-nav/headroom.min.js"></script>
-<script src="../site_libs/clipboard/clipboard.min.js"></script>
-<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="../site_libs/quarto-search/fuse.min.js"></script>
-<script src="../site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="../">
 <link href="../assets/favicon.svg" rel="icon" type="image/svg+xml">
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-0a6b7249c26820e032cb0bd839ff02b1.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-fe7020910c808501f8c9f19b9545dcbc.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../site_libs/bootstrap/bootstrap-dark-da3a4e3bc3082f40b5d2ca839e14a93c.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../site_libs/bootstrap/bootstrap-fe7020910c808501f8c9f19b9545dcbc.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-3d1b6502958a38d6b4d29f0899443d12.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
-  "location": "navbar",
-  "copy-button": false,
-  "collapse-after": 3,
-  "panel-placement": "end",
-  "type": "overlay",
-  "limit": 50,
-  "keyboard-shortcut": [
-    "f",
-    "/",
-    "s"
-  ],
-  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -83,171 +65,18 @@ ul.task-list li input[type="checkbox"] {
 
 
 <link rel="stylesheet" href="../styles.css">
+<meta property="og:title" content="TargetIntel-IO – Rafael Soler Ortuño">
+<meta property="og:description" content="A deterministic research platform for classifying and ranking candidate targets in anti-PD-1-resistant melanoma.">
+<meta property="og:image" content="https://rsolerortuno.github.io/assets/favicon.svg">
+<meta property="og:site_name" content="Rafael Soler Ortuño">
+<meta property="og:locale" content="en_GB">
+<meta name="twitter:title" content="TargetIntel-IO – Rafael Soler Ortuño">
+<meta name="twitter:description" content="A deterministic research platform for classifying and ranking candidate targets in anti-PD-1-resistant melanoma.">
+<meta name="twitter:image" content="https://rsolerortuno.github.io/assets/favicon.svg">
+<meta name="twitter:card" content="summary_large_image">
 </head>
 
-<body class="nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
-    const toggleBodyColorMode = (bsSheetEl) => {
-      const mode = bsSheetEl.getAttribute("data-mode");
-      const bodyEl = window.document.querySelector("body");
-      if (mode === "dark") {
-        bodyEl.classList.add("quarto-dark");
-        bodyEl.classList.remove("quarto-light");
-      } else {
-        bodyEl.classList.add("quarto-light");
-        bodyEl.classList.remove("quarto-dark");
-      }
-    }
-    const toggleBodyColorPrimary = () => {
-      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
-      if (bsSheetEl) {
-        toggleBodyColorMode(bsSheetEl);
-      }
-    }
-    const setColorSchemeToggle = (alternate) => {
-      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
-      for (let i=0; i < toggles.length; i++) {
-        const toggle = toggles[i];
-        if (toggle) {
-          if (alternate) {
-            toggle.classList.add("alternate");
-          } else {
-            toggle.classList.remove("alternate");
-          }
-        }
-      }
-    };
-    const toggleColorMode = (alternate) => {
-      // Switch the stylesheets
-      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
-      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
-      manageTransitions('#quarto-margin-sidebar .nav-link', false);
-      if (alternate) {
-        // note: dark is layered on light, we don't disable primary!
-        enableStylesheet(alternateStylesheets);
-        for (const sheetNode of alternateStylesheets) {
-          if (sheetNode.id === "quarto-bootstrap") {
-            toggleBodyColorMode(sheetNode);
-          }
-        }
-      } else {
-        disableStylesheet(alternateStylesheets);
-        enableStylesheet(primaryStylesheets)
-        toggleBodyColorPrimary();
-      }
-      manageTransitions('#quarto-margin-sidebar .nav-link', true);
-      // Switch the toggles
-      setColorSchemeToggle(alternate)
-      // Hack to workaround the fact that safari doesn't
-      // properly recolor the scrollbar when toggling (#1455)
-      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
-        manageTransitions("body", false);
-        window.scrollTo(0, 1);
-        setTimeout(() => {
-          window.scrollTo(0, 0);
-          manageTransitions("body", true);
-        }, 40);
-      }
-    }
-    const disableStylesheet = (stylesheets) => {
-      for (let i=0; i < stylesheets.length; i++) {
-        const stylesheet = stylesheets[i];
-        stylesheet.rel = 'disabled-stylesheet';
-      }
-    }
-    const enableStylesheet = (stylesheets) => {
-      for (let i=0; i < stylesheets.length; i++) {
-        const stylesheet = stylesheets[i];
-        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
-          stylesheet.rel = 'stylesheet';
-        }
-      }
-    }
-    const manageTransitions = (selector, allowTransitions) => {
-      const els = window.document.querySelectorAll(selector);
-      for (let i=0; i < els.length; i++) {
-        const el = els[i];
-        if (allowTransitions) {
-          el.classList.remove('notransition');
-        } else {
-          el.classList.add('notransition');
-        }
-      }
-    }
-    const isFileUrl = () => {
-      return window.location.protocol === 'file:';
-    }
-    const hasAlternateSentinel = () => {
-      let styleSentinel = getColorSchemeSentinel();
-      if (styleSentinel !== null) {
-        return styleSentinel === "alternate";
-      } else {
-        return false;
-      }
-    }
-    const setStyleSentinel = (alternate) => {
-      const value = alternate ? "alternate" : "default";
-      if (!isFileUrl()) {
-        window.localStorage.setItem("quarto-color-scheme", value);
-      } else {
-        localAlternateSentinel = value;
-      }
-    }
-    const getColorSchemeSentinel = () => {
-      if (!isFileUrl()) {
-        const storageValue = window.localStorage.getItem("quarto-color-scheme");
-        return storageValue != null ? storageValue : localAlternateSentinel;
-      } else {
-        return localAlternateSentinel;
-      }
-    }
-    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
-      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
-      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
-      let newTheme = '';
-      if(authorPrefersDark) {
-        newTheme = isAlternate ? baseTheme : alternateTheme;
-      } else {
-        newTheme = isAlternate ? alternateTheme : baseTheme;
-      }
-      const changeGiscusTheme = () => {
-        // From: https://github.com/giscus/giscus/issues/336
-        const sendMessage = (message) => {
-          const iframe = document.querySelector('iframe.giscus-frame');
-          if (!iframe) return;
-          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
-        }
-        sendMessage({
-          setConfig: {
-            theme: newTheme
-          }
-        });
-      }
-      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
-      if (isGiscussLoaded) {
-        changeGiscusTheme();
-      }
-    };
-    const authorPrefersDark = false;
-    const darkModeDefault = authorPrefersDark;
-      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
-      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
-    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
-    // Dark / light mode switch
-    window.quartoToggleColorScheme = () => {
-      // Read the current dark / light value
-      let toAlternate = !hasAlternateSentinel();
-      toggleColorMode(toAlternate);
-      setStyleSentinel(toAlternate);
-      toggleGiscusIfUsed(toAlternate, darkModeDefault);
-      window.dispatchEvent(new Event('resize'));
-    };
-    // Switch to dark mode if need be
-    if (hasAlternateSentinel()) {
-      toggleColorMode(true);
-    } else {
-      toggleColorMode(false);
-    }
-  </script>
+<body class="nav-fixed quarto-light">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -255,47 +84,46 @@ ul.task-list li input[type="checkbox"] {
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="../index.html">
-    <span class="navbar-title">Rafael Soler Ortuño</span>
+    <span class="navbar-title">RSO.</span>
     </a>
   </div>
-            <div id="quarto-search" class="" title="Search"></div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../index.html"> 
-<span class="menu-text">Home</span></a>
-  </li>  
-  <li class="nav-item">
     <a class="nav-link" href="../projects.html"> 
-<span class="menu-text">Projects</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="../blog.html"> 
-<span class="menu-text">Blog</span></a>
+<span class="menu-text">Tools</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="../about.html"> 
-<span class="menu-text">About</span></a>
+<span class="menu-text">Experience</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../blog.html"> 
+<span class="menu-text">Writing</span></a>
   </li>  
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/rsolerortuno"> <i class="bi bi-github" role="img" aria-label="GitHub">
+    <a class="nav-link" href="https://github.com/rsolerortuno"> <i class="bi bi-github" role="img" aria-label="GitHub profile">
 </i> 
 <span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="../blog.xml"> <i class="bi bi-rss" role="img" aria-label="RSS">
+    <a class="nav-link" href="https://www.linkedin.com/in/rafael-soler-ortuno/"> <i class="bi bi-linkedin" role="img" aria-label="LinkedIn profile">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="mailto:rafaelsolersanblas@gmail.com"> <i class="bi bi-envelope" role="img" aria-label="Email Rafael">
 </i> 
 <span class="menu-text"></span></a>
   </li>  
 </ul>
           </div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
-  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
 </div>
       </div> <!-- /container-fluid -->
     </nav>
@@ -310,27 +138,27 @@ ul.task-list li input[type="checkbox"] {
    
   <ul>
   <li><a href="#the-problem" id="toc-the-problem" class="nav-link active" data-scroll-target="#the-problem">The problem</a></li>
-  <li><a href="#what-targetintel-io-does" id="toc-what-targetintel-io-does" class="nav-link" data-scroll-target="#what-targetintel-io-does">What TargetIntel-IO does</a></li>
-  <li><a href="#why-three-rankings" id="toc-why-three-rankings" class="nav-link" data-scroll-target="#why-three-rankings">Why three rankings?</a></li>
-  <li><a href="#current-scope" id="toc-current-scope" class="nav-link" data-scroll-target="#current-scope">Current scope</a></li>
-  <li><a href="#validation" id="toc-validation" class="nav-link" data-scroll-target="#validation">Validation</a></li>
-  <li><a href="#next-steps" id="toc-next-steps" class="nav-link" data-scroll-target="#next-steps">Next steps</a></li>
+  <li><a href="#what-the-tool-does" id="toc-what-the-tool-does" class="nav-link" data-scroll-target="#what-the-tool-does">What the tool does</a></li>
+  <li><a href="#why-this-design-matters" id="toc-why-this-design-matters" class="nav-link" data-scroll-target="#why-this-design-matters">Why this design matters</a></li>
+  <li><a href="#current-release" id="toc-current-release" class="nav-link" data-scroll-target="#current-release">Current release</a></li>
+  <li><a href="#validation-without-overclaiming" id="toc-validation-without-overclaiming" class="nav-link" data-scroll-target="#validation-without-overclaiming">Validation without overclaiming</a></li>
+  <li><a href="#outputs" id="toc-outputs" class="nav-link" data-scroll-target="#outputs">Outputs</a></li>
+  <li><a href="#scientific-boundary" id="toc-scientific-boundary" class="nav-link" data-scroll-target="#scientific-boundary">Scientific boundary</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
 <h1 class="title">TargetIntel-IO</h1>
-<p class="subtitle lead">Explainable therapeutic-intent-aware target triage</p>
+<p class="subtitle lead">Explainable, therapeutic-intent-aware target triage</p>
 </div>
 
 <div>
   <div class="description">
-    A rule-based and traceable framework for interpreting candidate targets in anti-PD-1-resistant melanoma.
+    A deterministic research platform for classifying and ranking candidate targets in anti-PD-1-resistant melanoma.
   </div>
 </div>
 
@@ -347,97 +175,141 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<div class="article-status">
+<p><span class="status-pill status-preview">v0.5.0 · Research preview</span> <a href="https://github.com/rsolerortuno/TargetIntel-IO">View repository <span aria-hidden="true">↗</span></a></p>
+</div>
 <section id="the-problem" class="level2">
 <h2 class="anchored" data-anchor-id="the-problem">The problem</h2>
-<p>A high disease-association score does not tell us how a gene should be used therapeutically.</p>
-<p>A candidate may be:</p>
-<ul>
-<li>a plausible combination target;</li>
-<li>a predictive or resistance biomarker;</li>
-<li>a tumor-intrinsic driver;</li>
-<li>a mechanistic marker with limited direct tractability;</li>
-<li>or a biologically relevant but poor direct therapeutic target.</li>
-</ul>
-<p>Collapsing these roles into one ranking obscures the translational question.</p>
+<p>A gene can be highly relevant to disease and still be the wrong direct therapeutic target. In anti-PD-1-resistant melanoma, the same candidate might instead be a resistance biomarker, an immune-context marker, a tumour-intrinsic dependency or a mechanism with poor tractability.</p>
+<p>TargetIntel-IO does not compress those possibilities into one universal score. It asks a more useful question: <strong>valuable for what therapeutic purpose?</strong></p>
 </section>
-<section id="what-targetintel-io-does" class="level2">
-<h2 class="anchored" data-anchor-id="what-targetintel-io-does">What TargetIntel-IO does</h2>
-<p>TargetIntel-IO combines disease association with a curated resistance ontology, rule-based role classification, modality reasoning, evidence auditing, confidence assessment, and intent-specific ranking.</p>
+<section id="what-the-tool-does" class="level2">
+<h2 class="anchored" data-anchor-id="what-the-tool-does">What the tool does</h2>
+<p>The platform retrieves and structures evidence, assigns stable biological roles, and produces separate rankings for:</p>
+<ol type="1">
+<li><strong>Antibody / IO combination</strong> strategies;</li>
+<li><strong>Resistance biomarker</strong> strategies;</li>
+<li><strong>Tumour-intrinsic small-molecule</strong> strategies.</li>
+</ol>
 <div class="cell" data-layout-align="default">
 <div class="cell-output-display">
 <div>
 <p></p><figure class="figure"><p></p>
 <div>
 <pre class="mermaid mermaid-js">flowchart LR
-    A[Open Targets] --&gt; B[Resistance ontology]
-    B --&gt; C[Role classification]
-    C --&gt; D[Modality reasoning]
-    D --&gt; E1[Antibody / IO ranking]
-    D --&gt; E2[Biomarker ranking]
-    D --&gt; E3[Small-molecule ranking]
-    E1 --&gt; F[Evidence audit]
-    E2 --&gt; F
-    E3 --&gt; F
-    F --&gt; G[Hypothesis cards]
+    A[Open Targets + curated rules] --&gt; B[Deterministic features]
+    B --&gt; C[Stable role]
+    C --&gt; D[Three intent rankings]
+    D --&gt; E[Cards, reports and figures]
+    F[Reviewed evidence] --&gt; G[Read-only report layers]
+    H[DepMap 26Q1] --&gt; G
+    G --&gt; E
 </pre>
 </div>
 <p></p></figure><p></p>
 </div>
 </div>
 </div>
+<p>The deterministic baseline remains authoritative. Optional evidence, feasibility and functional-dependency layers can decorate a report, but they cannot silently change baseline features, roles, scores or ranks.</p>
 </section>
-<section id="why-three-rankings" class="level2">
-<h2 class="anchored" data-anchor-id="why-three-rankings">Why three rankings?</h2>
-<p>The same gene can have very different value depending on therapeutic intent.</p>
+<section id="why-this-design-matters" class="level2">
+<h2 class="anchored" data-anchor-id="why-this-design-matters">Why this design matters</h2>
 <table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
 <thead>
 <tr class="header">
-<th>Example</th>
-<th>Primary interpretation</th>
+<th>Candidate pattern</th>
+<th>More defensible interpretation</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>LAG3</td>
-<td>Combination target with PD-1 blockade</td>
+<td>Immune checkpoint with combination rationale</td>
+<td>Antibody / IO-combination candidate</td>
 </tr>
 <tr class="even">
-<td>B2M</td>
-<td>Resistance biomarker or mechanistic marker</td>
+<td>Loss associated with resistance</td>
+<td>Biomarker or mechanistic marker</td>
 </tr>
 <tr class="odd">
-<td>BRAF</td>
-<td>Tumor-intrinsic driver and small-molecule target</td>
+<td>Selective tumour-cell dependency</td>
+<td>Tumour-intrinsic intervention candidate</td>
 </tr>
 <tr class="even">
-<td>CDKN2A</td>
-<td>Mechanistically important but difficult to target directly</td>
+<td>Broad essentiality or poor modality fit</td>
+<td>Biologically relevant, but weak direct target</td>
 </tr>
 </tbody>
 </table>
+<p>This separation makes a result easier to challenge, reproduce and discuss with experimental teams.</p>
 </section>
-<section id="current-scope" class="level2">
-<h2 class="anchored" data-anchor-id="current-scope">Current scope</h2>
-<p>The current version is a transparent triage framework. It does not claim to predict clinical response, discover targets de novo, or replace experimental validation.</p>
-<p>Its value lies in making the reasoning explicit and separating evidence from interpretation.</p>
-</section>
-<section id="validation" class="level2">
-<h2 class="anchored" data-anchor-id="validation">Validation</h2>
-<p>The project includes:</p>
+<section id="current-release" class="level2">
+<h2 class="anchored" data-anchor-id="current-release">Current release</h2>
+<p>TargetIntel-IO has progressed through five released layers:</p>
 <ul>
-<li>a curated benchmark;</li>
-<li>role and intent evaluation;</li>
-<li>sensitivity analysis;</li>
-<li>automated tests and continuous integration;</li>
-<li>reproducible CLI outputs;</li>
-<li>structured evidence-for and evidence-against fields;</li>
-<li>hypothesis cards designed for auditability.</li>
+<li><strong>v0.1.3:</strong> deterministic role classification and intent-specific ranking;</li>
+<li><strong>v0.2.0:</strong> typed, source-linked Common Evidence Layer;</li>
+<li><strong>v0.3.0:</strong> audited extraction, review and grounded-synthesis infrastructure;</li>
+<li><strong>v0.4.0:</strong> modality-specific target feasibility;</li>
+<li><strong>v0.5.0:</strong> optional DepMap/CRISPR functional-dependency architecture and portable reports.</li>
+</ul>
+<p>The productive baseline contains <strong>300 genes</strong>. The current discovery universe contains <strong>331 unique identities</strong>. The full <strong>18,531-gene DepMap background</strong> is context only—not a new productive ranking.</p>
+</section>
+<section id="validation-without-overclaiming" class="level2">
+<h2 class="anchored" data-anchor-id="validation-without-overclaiming">Validation without overclaiming</h2>
+<p>The internal 56-target benchmark measures implementation consistency:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Metric</th>
+<th style="text-align: right;">Current snapshot</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Open Targets retrieval coverage</td>
+<td style="text-align: right;">25 / 56 (44.6%)</td>
+</tr>
+<tr class="even">
+<td>Stable-role accuracy on covered targets</td>
+<td style="text-align: right;">100.0%</td>
+</tr>
+<tr class="odd">
+<td>Strict primary-intent accuracy</td>
+<td style="text-align: right;">91.1%</td>
+</tr>
+<tr class="even">
+<td>Acceptable-intent accuracy</td>
+<td style="text-align: right;">100.0%</td>
+</tr>
+</tbody>
+</table>
+<p>A 42-scenario local sensitivity analysis produced a minimum Spearman rank correlation of <strong>0.8762</strong>. These results test deterministic behaviour around curated rules. They are not independent biological or clinical validation.</p>
+</section>
+<section id="outputs" class="level2">
+<h2 class="anchored" data-anchor-id="outputs">Outputs</h2>
+<p>The CLI generates:</p>
+<ul>
+<li>deterministic feature tables and three ranked target lists;</li>
+<li>target cards and HTML reports;</li>
+<li>score and rank-shift figures;</li>
+<li>benchmark and sensitivity snapshots;</li>
+<li>optional reviewed-evidence and feasibility sections;</li>
+<li>optional portable DepMap/CRISPR reports.</li>
 </ul>
 </section>
-<section id="next-steps" class="level2">
-<h2 class="anchored" data-anchor-id="next-steps">Next steps</h2>
-<p>The immediate priority is not to add every possible data modality. It is to improve external validity while preserving interpretability. The most valuable future extension is a focused external evidence layer, such as a public anti-PD-1 response cohort, followed later by functional and cellular context.</p>
-<p><a href="https://github.com/rsolerortuno/TargetIntel-IO" class="btn btn-primary">View the repository</a></p>
+<section id="scientific-boundary" class="level2">
+<h2 class="anchored" data-anchor-id="scientific-boundary">Scientific boundary</h2>
+<p>TargetIntel-IO is research-use software. It does not recommend treatment, establish causality, validate a therapeutic target or biomarker, or predict patient response. The immediate future direction is external validation with public clinical response cohorts and single-cell/spatial context while preserving the same evidence boundaries.</p>
+<div class="article-cta">
+<p>
+<strong>Explore the implementation, reports and versioned examples.</strong>
+</p>
+<p><a class="button button-primary" href="https://github.com/rsolerortuno/TargetIntel-IO">Open TargetIntel-IO on GitHub <span aria-hidden="true">↗</span></a></p>
+</div>
 
 
 </section>
@@ -445,19 +317,6 @@ ul.task-list li input[type="checkbox"] {
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
-    // Ensure there is a toggle, if there isn't float one in the top right
-    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
-      const a = window.document.createElement('a');
-      a.classList.add('top-right');
-      a.classList.add('quarto-color-scheme-toggle');
-      a.href = "";
-      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
-      const i = window.document.createElement("i");
-      i.classList.add('bi');
-      a.appendChild(i);
-      window.document.body.appendChild(a);
-    }
-    setColorSchemeToggle(hasAlternateSentinel())
     const icon = "";
     const anchorJS = new window.AnchorJS();
     anchorJS.options = {
@@ -871,7 +730,7 @@ ul.task-list li input[type="checkbox"] {
       &nbsp;
     </div>
     <div class="nav-footer-right">
-<p>Built with Quarto and GitHub Pages</p>
+<p>Computational biology · Translational science · Research software</p>
 </div>
   </div>
 </footer>

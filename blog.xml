@@ -8,15 +8,14 @@
 <title>Rafael Soler Ortuño</title>
 <link>https://rsolerortuno.github.io/blog.html</link>
 <atom:link href="https://rsolerortuno.github.io/blog.xml" rel="self" type="application/rss+xml"/>
-<description>Notes on computational biology, target discovery, single-cell and spatial genomics, and explainable AI.</description>
-<generator>quarto-1.9.38</generator>
+<description>Writing by Rafael Soler Ortuño on computational biology, translational research, and interpretable scientific software.</description>
+<generator>quarto-1.10.18</generator>
 <lastBuildDate>Fri, 10 Jul 2026 00:00:00 GMT</lastBuildDate>
 <item>
   <title>Why Target Ranking Is Not Enough in Immuno-Oncology</title>
   <dc:creator>Rafael Soler Ortuño</dc:creator>
   <link>https://rsolerortuno.github.io/posts/why-target-ranking-is-not-enough/</link>
   <description><![CDATA[ 
-
 
 
 
