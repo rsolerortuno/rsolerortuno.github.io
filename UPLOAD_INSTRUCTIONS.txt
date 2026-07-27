@@ -1,22 +1,10 @@
-FILES TO UPLOAD
+UPLOAD ONLY THIS FILE
 
-Upload these files while preserving the folder structure:
+Replace the existing portrait inside the repository:
 
-index.qmd
-_quarto.yml
-role-fix.css
-assets/Rafael_Soler_Ortuno_CV_July_v4.pdf
+assets/Rafael_Soler_Ortuno_portrait.webp
 
-Replace the three existing root files. Inside the repository's existing
-assets folder, upload the PDF.
+The filename is unchanged, so no CSS or Quarto configuration changes are needed.
 
-The updated page includes:
-- A Download CV button in the opening section.
-- A Download CV button in the final contact section.
-- A wider right-hand current-role column.
-- One complete role phrase per line:
-  Multi-omics lead ·
-  Immunotherapy ·
-  Biomarker discovery ·
-  Patient stratification ·
-  Mode of action
+After uploading, commit the replacement. If the old image remains visible,
+refresh the page with Ctrl+Shift+R or open it in a private/incognito window.
