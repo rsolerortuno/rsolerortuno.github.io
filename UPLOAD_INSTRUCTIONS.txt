@@ -1,0 +1,22 @@
+FILES TO UPLOAD
+
+Upload these files while preserving the folder structure:
+
+index.qmd
+_quarto.yml
+role-fix.css
+assets/Rafael_Soler_Ortuno_CV_July_v4.pdf
+
+Replace the three existing root files. Inside the repository's existing
+assets folder, upload the PDF.
+
+The updated page includes:
+- A Download CV button in the opening section.
+- A Download CV button in the final contact section.
+- A wider right-hand current-role column.
+- One complete role phrase per line:
+  Multi-omics lead ·
+  Immunotherapy ·
+  Biomarker discovery ·
+  Patient stratification ·
+  Mode of action

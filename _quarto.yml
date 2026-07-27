@@ -1,49 +1,49 @@
 project:
   type: website
-
+  resources:
+  - assets/Rafael_Soler_Ortuno_CV_July_v4.pdf
 website:
-  title: "Rafael Soler Ortuño"
-  site-url: "https://rsolerortuno.github.io"
-  description: "Computational biologist working across immuno-oncology, multi-omics, biomarker discovery, patient stratification, and interpretable AI."
+  title: Rafael Soler Ortuño
+  site-url: https://rsolerortuno.github.io
+  description: Computational biologist working across immuno-oncology, multi-omics, biomarker discovery, patient stratification,
+    and interpretable AI.
   favicon: assets/favicon.svg
   open-graph:
     locale: en_GB
   twitter-card: true
   navbar:
     pinned: true
-    title: "RSO."
+    title: RSO.
     collapse-below: lg
     left:
-      - href: projects.qmd
-        text: Tools
-      - href: about.qmd
-        text: Experience
+    - href: projects.qmd
+      text: Tools
+    - href: about.qmd
+      text: Experience
     right:
-      - icon: linkedin
-        href: https://www.linkedin.com/in/rafael-soler-ortuno/
-        aria-label: LinkedIn profile
-      - icon: envelope
-        href: mailto:rafaelsolersanblas@gmail.com
-        aria-label: Email Rafael
+    - icon: linkedin
+      href: https://www.linkedin.com/in/rafael-soler-ortuno/
+      aria-label: LinkedIn profile
+    - icon: envelope
+      href: mailto:rafaelsolersanblas@gmail.com
+      aria-label: Email Rafael
   page-footer:
-    left: "© 2026 Rafael Soler Ortuño"
-    right: "Computational biology · Translational science · Research software"
+    left: © 2026 Rafael Soler Ortuño
+    right: Computational biology · Translational science · Research software
   search: false
   page-navigation: true
-
 format:
   html:
     theme: cosmo
     css:
-      - styles.css
-      - brand.css
-      - role-fix.css
+    - styles.css
+    - brand.css
+    - role-fix.css
     toc: false
     code-copy: true
     code-overflow: wrap
     link-external-newwindow: true
     smooth-scroll: true
     lang: en-GB
-
 execute:
   freeze: auto

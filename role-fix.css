@@ -5,8 +5,8 @@
 
 .current-role {
   display: grid;
-  grid-template-columns: minmax(480px, 0.9fr) minmax(0, 1.3fr);
-  column-gap: clamp(4.5rem, 6.5vw, 7rem);
+  grid-template-columns: minmax(430px, 0.78fr) minmax(560px, 1.42fr);
+  column-gap: clamp(4.5rem, 6vw, 6.5rem);
   row-gap: 2.75rem;
   align-items: start;
   padding: clamp(3rem, 5vw, 5rem);
@@ -24,7 +24,7 @@
 }
 
 .current-role h2 {
-  max-width: 500px;
+  max-width: 470px;
   margin: 0.9rem 0 3.5rem;
   font-size: clamp(3rem, 4.2vw, 4.25rem);
   line-height: 0.98;
@@ -91,6 +91,34 @@
   line-height: 1.75;
 }
 
+
+.role-fact-main {
+  min-height: 12.5rem;
+}
+
+.role-list {
+  display: grid !important;
+  gap: 0.32rem;
+  align-content: start;
+}
+
+.role-list .role-item {
+  display: block;
+  width: fit-content;
+  max-width: 100%;
+  white-space: nowrap;
+}
+
+.role-list .role-separator {
+  color: var(--signal);
+  font-weight: 700;
+}
+
+/* Keep the wider information column readable without making the paragraph too long. */
+.role-summary {
+  max-width: 900px;
+}
+
 /* Stack before the two columns become cramped. */
 @media (max-width: 1180px) {
   .current-role {
@@ -113,6 +141,10 @@
 }
 
 @media (max-width: 620px) {
+  .role-list .role-item {
+    white-space: normal;
+  }
+
   .role-facts > div:nth-child(1) strong,
   .role-facts > div:nth-child(2) strong {
     white-space: normal;

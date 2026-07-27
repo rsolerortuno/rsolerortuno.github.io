@@ -14,6 +14,7 @@ page-layout: full
 <p class="hero-personal">Curious by nature and rigorous by training, I enjoy the difficult space between data, mechanism and therapeutic decisions. I build analyses and tools that make the evidence visible—not just the final answer.</p>
 <div class="button-row" aria-label="Primary links">
 <a class="button button-primary" href="projects.html">Explore my tools <span aria-hidden="true">↗</span></a>
+<a class="button button-secondary" href="assets/Rafael_Soler_Ortuno_CV_July_v4.pdf" target="_blank" rel="noopener" download>Download CV <span aria-hidden="true">↓</span></a>
 <a class="button button-secondary" href="mailto:rafaelsolersanblas@gmail.com">Get in touch</a>
 </div>
 <div class="availability-line">
@@ -53,9 +54,15 @@ Based in Lund, Sweden · Open to opportunities from September 2026
 <span class="fact-label">Programs</span>
 <strong>Anti-TNFR2 · Anti-FcγRIIB</strong>
 </div>
-<div>
+<div class="role-fact-main">
 <span class="fact-label">Role</span>
-<strong>Multi-omics lead · Biomarkers · Mode of action</strong>
+<strong class="role-list">
+<span class="role-item">Multi-omics lead <span class="role-separator" aria-hidden="true">·</span></span>
+<span class="role-item">Immunotherapy <span class="role-separator" aria-hidden="true">·</span></span>
+<span class="role-item">Biomarker discovery <span class="role-separator" aria-hidden="true">·</span></span>
+<span class="role-item">Patient stratification <span class="role-separator" aria-hidden="true">·</span></span>
+<span class="role-item">Mode of action</span>
+</strong>
 </div>
 </div>
 <p class="role-summary">I lead computational work across antibody programs, integrating clinical, mouse and in-vitro evidence to resolve response and resistance mechanisms. My day-to-day spans scRNA-seq, CITE-seq, spatial transcriptomics, proteomics, clinical metadata and reproducible AWS/HPC workflows.</p>
@@ -230,6 +237,7 @@ Based in Lund, Sweden · Open to opportunities from September 2026
 <p>I am interested in computational biology and translational data-science roles where rigorous analysis can shape therapeutic decisions.</p>
 <div class="button-row">
 <a class="button button-light" href="mailto:rafaelsolersanblas@gmail.com">rafaelsolersanblas@gmail.com <span aria-hidden="true">↗</span></a>
+<a class="button button-ghost" href="assets/Rafael_Soler_Ortuno_CV_July_v4.pdf" target="_blank" rel="noopener" download>Download CV <span aria-hidden="true">↓</span></a>
 <a class="button button-ghost" href="https://www.linkedin.com/in/rafael-soler-ortuno/">LinkedIn</a>
 </div>
 </section>
