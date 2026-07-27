@@ -47,12 +47,12 @@ Based in Lund, Sweden · Open to opportunities from September 2026
 </div>
 <div class="role-facts">
 <div>
-<span class="fact-label">Appointment</span>
+<span class="fact-label">Contract period</span>
 <strong>Aug 2025 — Aug 2026</strong>
 </div>
-<div>
-<span class="fact-label">Programs</span>
-<strong>Anti-TNFR2 · Anti-FcγRIIB</strong>
+<div class="company-focus">
+<span class="fact-label">Company focus</span>
+<strong>Antibody therapeutics for oncology and autoimmune diseases</strong>
 </div>
 <div class="role-fact-main">
 <span class="fact-label">Role</span>

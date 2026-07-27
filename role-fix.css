@@ -5,8 +5,12 @@
 
 .current-role {
   display: grid;
-  grid-template-columns: minmax(430px, 0.78fr) minmax(560px, 1.42fr);
-  column-gap: clamp(4.5rem, 6vw, 6.5rem);
+  /*
+   * Both tracks can shrink inside the card. The previous hard 560px
+   * minimum forced the summary beyond the right edge on some screens.
+   */
+  grid-template-columns: minmax(350px, 0.82fr) minmax(0, 1.18fr);
+  column-gap: clamp(3.5rem, 5vw, 5.5rem);
   row-gap: 2.75rem;
   align-items: start;
   padding: clamp(3rem, 5vw, 5rem);
@@ -24,7 +28,7 @@
 }
 
 .current-role h2 {
-  max-width: 470px;
+  max-width: 440px;
   margin: 0.9rem 0 3.5rem;
   font-size: clamp(3rem, 4.2vw, 4.25rem);
   line-height: 0.98;
@@ -75,18 +79,27 @@
   line-height: 1.5;
 }
 
-/* Keep the short appointment and programme lines together on desktop. */
-.role-facts > div:nth-child(1) strong,
-.role-facts > div:nth-child(2) strong {
+
+.company-focus strong {
+  max-width: 36rem;
+  white-space: normal !important;
+  text-wrap: balance;
+}
+
+/* Keep the short contract period together on desktop. */
+.role-facts > div:first-child strong {
   white-space: nowrap;
 }
 
 .role-summary {
   grid-column: 2;
   grid-row: 2;
-  width: 100%;
-  max-width: none;
+  width: auto;
+  min-width: 0;
+  max-width: 100%;
   margin: 0;
+  padding-right: 0.25rem;
+  overflow-wrap: break-word;
   font-size: 1rem;
   line-height: 1.75;
 }
@@ -129,13 +142,20 @@
   font-weight: 700;
 }
 
-/* Keep the wider information column readable without making the paragraph too long. */
+/* Keep the summary inside the available grid track. */
 .role-summary {
-  max-width: 900px;
+  max-width: 100%;
+}
+
+
+.current-role .role-facts,
+.current-role .role-summary {
+  box-sizing: border-box;
+  overflow-x: hidden;
 }
 
 /* Stack before the two columns become cramped. */
-@media (max-width: 1180px) {
+@media (max-width: 1100px) {
   .current-role {
     grid-template-columns: 1fr;
     column-gap: 0;
@@ -156,8 +176,7 @@
 }
 
 @media (max-width: 620px) {
-  .role-facts > div:nth-child(1) strong,
-  .role-facts > div:nth-child(2) strong {
+  .role-facts > div:first-child strong {
     white-space: normal;
   }
 
