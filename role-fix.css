@@ -1,0 +1,120 @@
+/*
+ * Layout correction for the current-role section.
+ * Loaded after styles.css and brand.css so these rules take precedence.
+ */
+
+.current-role {
+  display: grid;
+  grid-template-columns: minmax(480px, 0.9fr) minmax(0, 1.3fr);
+  column-gap: clamp(4.5rem, 6.5vw, 7rem);
+  row-gap: 2.75rem;
+  align-items: start;
+  padding: clamp(3rem, 5vw, 5rem);
+}
+
+.role-heading,
+.role-facts,
+.role-summary {
+  min-width: 0;
+}
+
+.role-heading {
+  grid-column: 1;
+  grid-row: 1 / span 2;
+}
+
+.current-role h2 {
+  max-width: 500px;
+  margin: 0.9rem 0 3.5rem;
+  font-size: clamp(3rem, 4.2vw, 4.25rem);
+  line-height: 0.98;
+}
+
+/* The previous inherited light colour made this text almost invisible. */
+.current-role .role-heading > p:last-child {
+  max-width: 390px;
+  margin: 0;
+  padding-top: 1rem;
+  color: var(--text) !important;
+  border-top: 1px solid var(--hairline);
+  font-family: var(--humanist);
+  font-size: 0.98rem;
+  font-weight: 600;
+  line-height: 1.6;
+}
+
+.role-facts {
+  display: grid;
+  grid-column: 2;
+  grid-row: 1;
+  grid-template-columns: 1fr;
+  width: 100%;
+  gap: 0;
+  border-top: 1px solid var(--hairline);
+}
+
+.role-facts > div {
+  display: grid;
+  grid-template-columns: minmax(125px, 0.28fr) minmax(0, 1fr);
+  gap: 1.75rem;
+  align-items: start;
+  padding: 1.25rem 0;
+  border-bottom: 1px solid var(--hairline);
+}
+
+.role-facts .fact-label {
+  margin: 0;
+  padding-top: 0.12rem;
+}
+
+.role-facts strong {
+  display: block;
+  min-width: 0;
+  color: var(--text);
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+/* Keep the short appointment and programme lines together on desktop. */
+.role-facts > div:nth-child(1) strong,
+.role-facts > div:nth-child(2) strong {
+  white-space: nowrap;
+}
+
+.role-summary {
+  grid-column: 2;
+  grid-row: 2;
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.75;
+}
+
+/* Stack before the two columns become cramped. */
+@media (max-width: 1180px) {
+  .current-role {
+    grid-template-columns: 1fr;
+    column-gap: 0;
+    row-gap: 2.75rem;
+  }
+
+  .role-heading,
+  .role-facts,
+  .role-summary {
+    grid-column: 1;
+    grid-row: auto;
+  }
+
+  .current-role h2 {
+    max-width: 760px;
+    margin-bottom: 2rem;
+  }
+}
+
+@media (max-width: 620px) {
+  .role-facts > div:nth-child(1) strong,
+  .role-facts > div:nth-child(2) strong {
+    white-space: normal;
+  }
+}
