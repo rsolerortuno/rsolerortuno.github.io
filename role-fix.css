@@ -192,3 +192,11 @@
     white-space: nowrap !important;
   }
 }
+
+/* Updated portrait photograph. */
+.portrait-photo {
+  background-image: url("assets/Rafael_Soler_Ortuno_portrait.webp") !important;
+  background-position: center center !important;
+  background-size: cover !important;
+  background-repeat: no-repeat !important;
+}
