@@ -93,20 +93,35 @@
 
 
 .role-fact-main {
-  min-height: 12.5rem;
+  /*
+   * Unlike Appointment and Programs, the role list uses the full width
+   * of the right-hand panel. This prevents phrases such as
+   * “Multi-omics lead” and “Patient stratification” from splitting.
+   */
+  display: block !important;
+  min-height: 0;
+  padding: 1.25rem 0 1.5rem;
+}
+
+.role-fact-main .fact-label {
+  display: block;
+  margin: 0 0 0.7rem;
+  padding: 0;
 }
 
 .role-list {
-  display: grid !important;
-  gap: 0.32rem;
-  align-content: start;
+  display: flex !important;
+  flex-direction: column;
+  gap: 0.34rem;
+  width: 100%;
 }
 
 .role-list .role-item {
-  display: block;
-  width: fit-content;
-  max-width: 100%;
-  white-space: nowrap;
+  display: block !important;
+  width: max-content;
+  max-width: none;
+  white-space: nowrap !important;
+  line-height: 1.42;
 }
 
 .role-list .role-separator {
@@ -141,12 +156,20 @@
 }
 
 @media (max-width: 620px) {
-  .role-list .role-item {
-    white-space: normal;
-  }
-
   .role-facts > div:nth-child(1) strong,
   .role-facts > div:nth-child(2) strong {
     white-space: normal;
+  }
+
+  /*
+   * Role phrases remain intact. The font is reduced slightly only on
+   * very narrow screens instead of breaking a phrase across two lines.
+   */
+  .role-list {
+    font-size: 0.92rem;
+  }
+
+  .role-list .role-item {
+    white-space: nowrap !important;
   }
 }
