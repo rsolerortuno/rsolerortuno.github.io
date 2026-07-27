@@ -226,7 +226,7 @@ Based in Lund, Sweden · Open to opportunities from September 2026
 
 <section class="contact-panel" aria-labelledby="contact-title">
 <p class="section-index">06 / Contact</p>
-<h2 id="contact-title">Have a difficult biological question?</h2>
+<h2 id="contact-title">Looking for new roles from September 2026.</h2>
 <p>I am interested in computational biology and translational data-science roles where rigorous analysis can shape therapeutic decisions.</p>
 <div class="button-row">
 <a class="button button-light" href="mailto:rafaelsolersanblas@gmail.com">rafaelsolersanblas@gmail.com <span aria-hidden="true">↗</span></a>
@@ -235,4 +235,3 @@ Based in Lund, Sweden · Open to opportunities from September 2026
 </section>
 
 </div>
-

@@ -37,6 +37,7 @@ format:
     css:
       - styles.css
       - brand.css
+      - role-fix.css
     toc: false
     code-copy: true
     code-overflow: wrap
@@ -46,4 +47,3 @@ format:
 
 execute:
   freeze: auto
-
