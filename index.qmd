@@ -8,8 +8,8 @@ page-layout: full
 
 <section class="hero-shell" aria-labelledby="hero-title">
 <div class="hero-copy">
-<p class="eyebrow">Computational biology · Translational AI</p>
-<h1 id="hero-title">Turning complex biology into decisions you can defend.</h1>
+<p class="eyebrow">Rafael Soler Ortuño · Computational Biologist</p>
+<h1 id="hero-title">Biology,<br><span>decoded.</span></h1>
 <p class="hero-lead">I am Rafael, a computational biologist who connects single-cell, spatial and multi-omic data with interpretable machine learning to support target discovery, biomarker strategy and patient stratification.</p>
 <p class="hero-personal">Curious by nature and rigorous by training, I enjoy the difficult space between data, mechanism and therapeutic decisions. I build analyses and tools that make the evidence visible—not just the final answer.</p>
 <div class="button-row" aria-label="Primary links">
@@ -22,10 +22,21 @@ Based in Lund, Sweden · Open to opportunities from September 2026
 </div>
 </div>
 <figure class="portrait-wrap">
+<span class="orbit orbit-one" aria-hidden="true"></span>
+<span class="orbit orbit-two" aria-hidden="true"></span>
+<span class="orbit-dot" aria-hidden="true"></span>
 <div class="portrait-photo" role="img" aria-label="Portrait of Rafael Soler Ortuño"></div>
-<figcaption>Computational Biologist · PhD</figcaption>
+<figcaption><span>Currently</span> BioInvent International<br>Lund, Sweden</figcaption>
 </figure>
 </section>
+
+<nav class="section-dots" aria-label="Homepage sections">
+<a href="#hero-title" aria-label="Introduction"></a>
+<a href="#current-role-title" aria-label="Current role"></a>
+<a href="#tools-title" aria-label="Selected tools"></a>
+<a href="#experience-title" aria-label="Experience"></a>
+<a href="#contact-title" aria-label="Contact"></a>
+</nav>
 
 <section class="current-role" aria-labelledby="current-role-title">
 <div class="role-heading">
