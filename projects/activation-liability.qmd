@@ -1,0 +1,89 @@
+---
+title: "Activation Liability"
+subtitle: "Detecting hidden safety risk in surface targets"
+description: "An auditable pipeline that measures how much of a target's apparent tumour selectivity survives when healthy tissue is inflamed rather than resting."
+image: ../assets/favicon.svg
+page-layout: article
+toc: true
+toc-title: "On this page"
+---
+
+<div class="article-status">
+  <span class="status-pill status-preview">v0.5.0 · Research preview</span>
+  <a href="https://github.com/rsolerortuno/activation-liability">View repository <span aria-hidden="true">↗</span></a>
+</div>
+
+## The problem
+
+Surface targets are usually assessed against healthy tissue in its resting state. That reference is convenient, but it is not the state a patient is in.
+
+When normal cells meet interferons, innate immune activation, tissue damage or lymphocyte stimulation, expression can rise in places the resting reference said were quiet. A target that looked cleanly tumour-selective can quietly lose that selectivity exactly when a therapy is active.
+
+This matters for any modality that depends on a surface-accessible target: antibodies, ADCs, bispecifics and CAR-based approaches.
+
+## What the tool does
+
+`alia` asks one narrow, testable question:
+
+> How much does a target's normal-cell expression footprint expand when biologically matched resting tissue is replaced by activated or inflamed tissue?
+
+```{mermaid}
+flowchart LR
+    A[Public single-cell cohorts] --> B[Paired resting vs activated]
+    B --> C[Donor-level statistics]
+    C --> D[Footprint expansion]
+    D --> E{Enough evidence?}
+    E -->|Yes| F[Liability call]
+    E -->|No| G[Explicit abstention]
+```
+
+It does not attempt to rank every target or replace experimental safety work. It detects one specific, under-examined failure mode and says so plainly when the data cannot support a conclusion.
+
+## Scientific boundary
+
+The repository states the limit before it states the result:
+
+> This is a liability detector with abstention. It does **not** predict toxicity, establish a therapeutic window, or prove accessible surface protein from RNA.
+
+RNA is not protein, and expansion of an expression footprint is a flag for closer inspection—not a safety verdict.
+
+## Design choices
+
+| Choice | Reason |
+|---|---|
+| Biologically matched resting and activated tissue | An unmatched comparison confounds activation with tissue identity |
+| Donor-level robustness | A single donor can create an apparent effect that does not generalise |
+| Explicit negative controls | Without them, a pipeline that always finds something is indistinguishable from one that works |
+| Abstention as a first-class outcome | Reporting insufficient evidence is more useful than a confident guess |
+| Frozen manifests and checksums | The same public inputs can be retrieved and the analysis repeated |
+
+## Reproducibility
+
+Multi-gigabyte GEO archives are deliberately not vendored into the repository. What is committed is the identity of every input—official URLs, accessions and checksums—so another researcher can download the same files and re-run the analysis.
+
+Executed cohorts ship compact, auditable result artefacts rather than raw matrices: ingestion QC, donor robustness, claims, benchmark output and per-target scores.
+
+## Verified release
+
+| Item | Current state |
+|---|---|
+| Automated tests | 52 |
+| Non-I/O coverage | 85.38% |
+| Evidence types | RNA and paired tissue |
+| Continuous integration | GitHub Actions on every push |
+| Licence | Apache 2.0 |
+
+## How it complements TargetIntel-IO
+
+The two tools answer opposite halves of the same early-discovery decision.
+
+[TargetIntel-IO](targetintel-io.html) asks whether a candidate is *relevant and actionable* in a defined therapeutic context. Activation Liability asks whether that candidate stays *safe-looking* once the biology stops being quiet.
+
+A target can pass one and fail the other. Keeping the two questions separate is the point.
+
+## Honest limitations
+
+- Expression is measured from RNA; surface protein accessibility is not established here.
+- Public cohorts constrain which tissues and activation states can be examined.
+- A detected footprint expansion is a prompt for experimental follow-up, not a conclusion about patient risk.
+- Absence of a signal is not evidence of safety—it may simply mean the relevant activation state was never sampled.

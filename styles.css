@@ -1395,3 +1395,260 @@ code {
     animation-iteration-count: 1 !important;
   }
 }
+
+/* ============================================================
+   Tools overview table (projects page)
+   ============================================================ */
+
+.tools-overview {
+  margin: 0 0 5rem;
+}
+
+.overview-title {
+  margin: 0 0 0.6rem;
+  font-size: clamp(1.9rem, 3vw, 2.6rem);
+  line-height: 1.1;
+}
+
+.overview-lede {
+  max-width: 64ch;
+  margin: 0 0 2.2rem;
+  color: var(--ink-soft);
+}
+
+.overview-table-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+  box-shadow: var(--shadow-soft);
+}
+
+.overview-table {
+  width: 100%;
+  min-width: 62rem;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+  line-height: 1.5;
+}
+
+.overview-table thead th {
+  padding: 1rem 1.05rem;
+  border-bottom: 1px solid var(--line);
+  background: var(--surface-soft);
+  color: var(--ink-soft);
+  font-size: 0.68rem;
+  font-weight: 780;
+  letter-spacing: 0.08em;
+  text-align: left;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.overview-table tbody th,
+.overview-table tbody td {
+  padding: 1.2rem 1.05rem;
+  border-bottom: 1px solid var(--line);
+  color: var(--ink-soft);
+  text-align: left;
+  vertical-align: top;
+  overflow-wrap: break-word;
+}
+
+.overview-table tbody tr:last-child th,
+.overview-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* Field grouping column */
+.field-cell {
+  width: 9.5rem;
+  border-right: 1px solid var(--line);
+  background: var(--mint-light);
+  color: var(--forest-dark);
+  font-family: var(--font-serif);
+  font-size: 0.98rem;
+  font-weight: 500;
+  line-height: 1.3;
+  vertical-align: top;
+}
+
+.tool-name {
+  display: inline-block;
+  position: relative;
+  padding-bottom: 0.26rem;
+  color: var(--ink);
+  font-family: var(--font-serif);
+  font-size: 1.05rem;
+  line-height: 1.25;
+}
+
+.tool-name::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 2px;
+  background: var(--forest);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Skills column */
+.skill-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.34rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.skill-tags li {
+  padding: 0.24rem 0.52rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--surface-soft);
+  color: var(--ink-soft);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  line-height: 1.35;
+  white-space: nowrap;
+  transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+
+.overview-row:hover .skill-tags li {
+  border-color: var(--forest);
+  background: var(--white);
+}
+
+/* Staggered reveal */
+.overview-row {
+  animation: overview-row-in 0.62s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+  animation-delay: calc(var(--row-index, 0) * 110ms + 120ms);
+  transition: background-color 0.3s ease;
+}
+
+.overview-row:hover td {
+  background: var(--mint-light);
+}
+
+.overview-row:hover .tool-name::after {
+  transform: scaleX(1);
+}
+
+@keyframes overview-row-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 900px) {
+  .overview-table-wrap {
+    overflow-x: visible;
+    border: none;
+    border-radius: 0;
+    background: transparent;
+    box-shadow: none;
+  }
+
+  .overview-table,
+  .overview-table tbody,
+  .overview-table tr,
+  .overview-table th,
+  .overview-table td {
+    display: block;
+    width: 100%;
+    min-width: 0;
+  }
+
+  .overview-table thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+
+  /* rowspan cell does not translate to cards: show field as a badge instead.
+     Needs .overview-table prefix to outrank the display:block rule above. */
+  .overview-table .field-cell {
+    display: none;
+  }
+
+  .overview-row {
+    margin-bottom: 1.1rem;
+    padding: 1.5rem 1.4rem 0.6rem;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    background: var(--surface);
+    box-shadow: var(--shadow-soft);
+  }
+
+  .overview-row::before {
+    content: attr(data-field);
+    display: inline-block;
+    margin-bottom: 0.9rem;
+    padding: 0.34rem 0.66rem;
+    border-radius: 999px;
+    background: var(--mint);
+    color: var(--forest-dark);
+    font-size: 0.66rem;
+    font-weight: 780;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+  }
+
+  .overview-row:hover td {
+    background: transparent;
+  }
+
+  .overview-table tbody td {
+    padding: 0 0 1.1rem;
+    border-bottom: none;
+  }
+
+  .overview-table tbody td::before {
+    content: attr(data-label);
+    display: block;
+    margin-bottom: 0.28rem;
+    color: var(--ink-soft);
+    font-size: 0.66rem;
+    font-weight: 780;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .overview-table tbody td[data-label="Tool"]::before {
+    content: none;
+  }
+
+  .tool-name {
+    font-size: 1.28rem;
+  }
+
+  .tool-name::after {
+    transform: scaleX(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .overview-row {
+    animation: none;
+  }
+
+  .tool-name::after,
+  .skill-tags li {
+    transition: none;
+  }
+}
