@@ -74,7 +74,65 @@ Based in Lund, Sweden · Open to opportunities from September 2026
 <p class="section-index">02 / Selected tools</p>
 <h2 id="tools-title">Research software built around honest evidence.</h2>
 </div>
-<p>Four public projects spanning target discovery, pharmacogenomics, safe agentic development and explainable protein-sequence modelling.</p>
+<p>Five public projects spanning target discovery, target safety, pharmacogenomics, safe agentic development and explainable protein-sequence modelling.</p>
+</div>
+
+<div class="tools-overview tools-overview-compact">
+<div class="overview-table-wrap">
+<table class="overview-table">
+<thead>
+<tr>
+<th scope="col">Field</th>
+<th scope="col">Tool</th>
+<th scope="col">The problem</th>
+<th scope="col">What it is for</th>
+<th scope="col">What it adds</th>
+<th scope="col">Key skills applied</th>
+</tr>
+</thead>
+<tbody>
+<tr class="overview-row" style="--row-index: 0" data-field="Target discovery &amp; safety">
+<th scope="row" rowspan="2" class="field-cell">Target discovery &amp; safety</th>
+<td data-label="Tool"><span class="tool-name">TargetIntel-IO</span></td>
+<td data-label="The problem">A gene linked to disease is not automatically a good drug target, yet most tools collapse that judgement into a single score.</td>
+<td data-label="What it is for">Sorting candidate genes into genuine targets, biomarkers, resistance mechanisms and poor candidates.</td>
+<td data-label="What it adds">Three separate rankings, one per therapeutic strategy, plus the evidence for and against each call.</td>
+<td data-label="Key skills applied"><ul class="skill-tags"><li>Open Targets &amp; DepMap</li><li>DuckDB</li><li>Benchmarking</li><li>Sensitivity analysis</li><li>Grounded LLM synthesis</li><li>CI/CD</li></ul></td>
+</tr>
+<tr class="overview-row" style="--row-index: 1" data-field="Target discovery &amp; safety">
+<td data-label="Tool"><span class="tool-name">Activation Liability</span></td>
+<td data-label="The problem">A target can look safely tumour-specific in healthy resting tissue and stop looking that way once the tissue is inflamed.</td>
+<td data-label="What it is for">Spotting targets whose apparent safety margin shrinks under immune activation.</td>
+<td data-label="What it adds">A direct resting-versus-activated comparison in public data, with abstention when the evidence is too thin.</td>
+<td data-label="Key skills applied"><ul class="skill-tags"><li>Single-cell RNA-seq</li><li>Public GEO cohorts</li><li>Negative-binomial models</li><li>Donor-level robustness</li><li>Reproducible manifests</li></ul></td>
+</tr>
+<tr class="overview-row" style="--row-index: 2" data-field="Drug response prediction">
+<th scope="row" class="field-cell">Drug response prediction</th>
+<td data-label="Tool"><span class="tool-name">DrugMatch-Confidence</span></td>
+<td data-label="The problem">Cancer models respond very differently to the same drug, and predictions rarely say how much to trust them.</td>
+<td data-label="What it is for">Predicting how a preclinical cancer model will respond to a given drug.</td>
+<td data-label="What it adds">Every prediction carries a calibrated probability, an uncertainty interval and a warning when the input is unfamiliar.</td>
+<td data-label="Key skills applied"><ul class="skill-tags"><li>XGBoost</li><li>SHAP</li><li>Conformal prediction</li><li>Probability calibration</li><li>Grouped cross-validation</li><li>DepMap / PRISM / GDSC2</li></ul></td>
+</tr>
+<tr class="overview-row" style="--row-index: 3" data-field="Protein deep learning">
+<th scope="row" class="field-cell">Protein deep learning</th>
+<td data-label="Tool"><span class="tool-name">MTF Prediction</span></td>
+<td data-label="The problem">Whether a membrane protein carries transcription-factor-like features can change depending on where you draw its boundary.</td>
+<td data-label="What it is for">Screening human and mouse membrane-protein domains for those features under different boundary definitions.</td>
+<td data-label="What it adds">The same screen repeated across three boundary conditions, so a result that holds under only one is visible as such.</td>
+<td data-label="Key skills applied"><ul class="skill-tags"><li>PyTorch</li><li>DeepTFactor</li><li>Captum integrated gradients</li><li>UniProtKB</li></ul></td>
+</tr>
+<tr class="overview-row" style="--row-index: 4" data-field="Research engineering">
+<th scope="row" class="field-cell">Research engineering</th>
+<td data-label="Tool"><span class="tool-name">Dev Autopilot</span></td>
+<td data-label="The problem">AI coding agents can move fast through a repository and leave no reliable trail of what changed or why.</td>
+<td data-label="What it is for">Running AI agents on real code with hard limits on what they may touch.</td>
+<td data-label="What it adds">Separate agents implement, audit and review; deterministic gates decide whether work advances, and a person keeps merge authority.</td>
+<td data-label="Key skills applied"><ul class="skill-tags"><li>Agentic AI orchestration</li><li>Pydantic</li><li>SQLite</li><li>Strict typing (mypy)</li><li>State machines</li><li>CI/CD</li></ul></td>
+</tr>
+</tbody>
+</table>
+</div>
 </div>
 
 <div class="project-grid">

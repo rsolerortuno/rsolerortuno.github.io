@@ -1652,3 +1652,26 @@ code {
     transition: none;
   }
 }
+
+/* Compact variant of the overview table for the homepage.
+   The homepage column is narrower than the Tools page, so tighten the
+   horizontal rhythm slightly to avoid a few pixels of pointless scroll. */
+.tools-overview-compact {
+  margin: 0 0 2.6rem;
+}
+
+.tools-overview-compact .overview-table {
+  min-width: 58rem;
+  font-size: 0.85rem;
+}
+
+.tools-overview-compact .overview-table thead th,
+.tools-overview-compact .overview-table tbody th,
+.tools-overview-compact .overview-table tbody td {
+  padding-right: 0.8rem;
+  padding-left: 0.8rem;
+}
+
+.tools-overview-compact .field-cell {
+  width: 8.6rem;
+}
