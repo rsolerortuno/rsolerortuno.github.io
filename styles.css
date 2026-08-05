@@ -469,8 +469,11 @@ p {
 
 .project-card h3 {
   margin: 0 0 0.45rem;
-  font-size: clamp(1.9rem, 3vw, 3rem);
-  line-height: 1.05;
+  font-size: clamp(1.3rem, 2vw, 1.75rem);
+  line-height: 1.15;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .project-kicker {

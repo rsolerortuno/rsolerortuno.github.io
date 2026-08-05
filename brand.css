@@ -537,10 +537,13 @@ a:hover {
   margin: 0;
   color: var(--text);
   font-family: var(--editorial);
-  font-size: clamp(2.2rem, 4vw, 4rem);
+  font-size: clamp(1.3rem, 2vw, 1.75rem);
   font-weight: 500;
-  letter-spacing: -0.05em;
-  line-height: 0.98;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .project-kicker {
@@ -945,7 +948,7 @@ code {
   }
 
   .project-card h3 {
-    font-size: clamp(2.2rem, 11vw, 3.2rem);
+    font-size: clamp(1.2rem, 5.5vw, 1.6rem);
   }
 
   .metric-row {
