@@ -1,7 +1,7 @@
 project:
   type: website
   resources:
-  - assets/Rafael_Soler_Ortuno_CV_July_v4.pdf
+  - assets/Rafael_Soler_Ortuno_CV.pdf
   - assets/Rafael_Soler_Ortuno_portrait.webp
 website:
   title: Rafael Soler Ortuño
