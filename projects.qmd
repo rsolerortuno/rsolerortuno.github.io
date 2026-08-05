@@ -35,7 +35,7 @@ page-layout: full
 <td data-label="The problem">A gene linked to disease is not automatically a good drug target, yet most tools collapse that judgement into a single score.</td>
 <td data-label="What it is for">Sorting candidate genes into genuine targets, biomarkers, resistance mechanisms and poor candidates.</td>
 <td data-label="What it adds">Three separate rankings, one per therapeutic strategy, plus the evidence for and against each call.</td>
-<td data-label="Key skills applied"><ul class="skill-tags"><li>Open Targets &amp; DepMap</li><li>DuckDB</li><li>Benchmarking</li><li>Sensitivity analysis</li><li>Grounded LLM synthesis</li><li>CI/CD</li></ul></td>
+<td data-label="Key skills applied"><ul class="skill-tags"><li>Open Targets &amp; DepMap</li><li>DuckDB</li><li>Benchmarking</li><li>Sensitivity analysis</li><li>Grounded LLM synthesis</li><li>GraphRAG</li><li>CI/CD</li></ul></td>
 </tr>
 <tr class="overview-row" style="--row-index: 1" data-field="Target discovery &amp; safety">
 <td data-label="Tool"><span class="tool-name">Activation Liability</span></td>
@@ -99,7 +99,7 @@ page-layout: full
 <div class="showcase-copy">
 <div class="card-topline">
 <span class="project-number">01</span>
-<span class="status-pill status-preview">v0.5.0 · Research preview</span>
+<span class="status-pill status-preview">v0.6.0 · Research preview</span>
 </div>
 <h2 id="targetintel-title">TargetIntel-IO</h2>
 <p class="project-kicker">Therapeutic-intent-aware target triage</p>
@@ -108,6 +108,7 @@ page-layout: full
 <li>Stable role classification and three intent-specific rankings</li>
 <li>Typed, source-linked evidence with mandatory human-review boundaries</li>
 <li>Real DepMap Public 26Q1 dependency layer that never silently changes the baseline</li>
+<li>Graph-native evidence with a deterministic, GraphRAG-compatible research-preview export</li>
 </ul>
 <div class="button-row">
 <a class="button button-primary" href="projects/targetintel-io.html">Read the case study</a>

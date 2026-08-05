@@ -97,7 +97,7 @@ Based in Lund, Sweden · Open to opportunities from September 2026
 <td data-label="The problem">A gene linked to disease is not automatically a good drug target, yet most tools collapse that judgement into a single score.</td>
 <td data-label="What it is for">Sorting candidate genes into genuine targets, biomarkers, resistance mechanisms and poor candidates.</td>
 <td data-label="What it adds">Three separate rankings, one per therapeutic strategy, plus the evidence for and against each call.</td>
-<td data-label="Key skills applied"><ul class="skill-tags"><li>Open Targets &amp; DepMap</li><li>DuckDB</li><li>Benchmarking</li><li>Sensitivity analysis</li><li>Grounded LLM synthesis</li><li>CI/CD</li></ul></td>
+<td data-label="Key skills applied"><ul class="skill-tags"><li>Open Targets &amp; DepMap</li><li>DuckDB</li><li>Benchmarking</li><li>Sensitivity analysis</li><li>Grounded LLM synthesis</li><li>GraphRAG</li><li>CI/CD</li></ul></td>
 </tr>
 <tr class="overview-row" style="--row-index: 1" data-field="Target discovery &amp; safety">
 <td data-label="Tool"><span class="tool-name">Activation Liability</span></td>
@@ -161,7 +161,7 @@ Based in Lund, Sweden · Open to opportunities from September 2026
 <article class="project-card project-card-featured">
 <div class="card-topline">
 <span class="project-number">01</span>
-<span class="status-pill status-preview">v0.5.0 · Research preview</span>
+<span class="status-pill status-preview">v0.6.0 · Research preview</span>
 </div>
 <h3>TargetIntel-IO</h3>
 <p class="project-kicker">Explainable target discovery and prioritisation</p>
@@ -171,7 +171,7 @@ Based in Lund, Sweden · Open to opportunities from September 2026
 <span><strong>331</strong> discovery universe</span>
 <span><strong>26Q1</strong> real DepMap layer</span>
 </div>
-<div class="tag-list"><span>Target discovery</span><span>CRISPR</span><span>Evidence audit</span></div>
+<div class="tag-list"><span>Target discovery</span><span>CRISPR</span><span>Evidence audit</span><span>GraphRAG</span></div>
 <div class="card-links">
 <a href="projects/targetintel-io.html">Case study <span aria-hidden="true">→</span></a>
 <a href="https://github.com/rsolerortuno/TargetIntel-IO">GitHub <span aria-hidden="true">↗</span></a>
