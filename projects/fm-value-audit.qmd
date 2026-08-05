@@ -1,0 +1,95 @@
+---
+title: "FM Value Audit"
+subtitle: "Do foundation models actually add value?"
+description: "A leakage-aware benchmark testing whether single-cell foundation model representations improve a real target-prioritisation decision over cheaper baselines."
+image: ../assets/favicon.svg
+page-layout: article
+toc: true
+toc-title: "On this page"
+---
+
+<div class="article-status">
+  <span class="status-pill status-alpha">v0.5.0a1 · Pre-release</span>
+  <a href="https://github.com/rsolerortuno/FM-Value-Audit">View repository <span aria-hidden="true">↗</span></a>
+</div>
+
+## The question
+
+Foundation models produce impressive high-dimensional embeddings of single-cell data. Whether those embeddings *help* is a separate question, and it is often left unanswered:
+
+- are the embeddings contextual, or only static token vectors?
+- were test outcomes used indirectly during feature selection or tuning?
+- does the model beat a cheap historical or expression-based baseline?
+
+FM Value Audit tests whether representations from models such as **Geneformer** and **scGPT** add measurable value beyond simpler, easier-to-explain alternatives in immuno-oncology target prioritisation.
+
+## The design
+
+The project is built to be able to say no.
+
+```{mermaid}
+flowchart TB
+    A[Prespecified decision metric] --> B[Historical baseline]
+    A --> C[Expression baseline]
+    A --> D[Foundation-model representation]
+    B --> E[Temporal holdout<br/>unseen future outcomes]
+    C --> E
+    D --> E
+    E --> F{Does FM improve AUPRC?}
+    F -->|No| G[Report negative result]
+    F -->|Yes| H[Report improvement with CI]
+```
+
+A sophisticated embedding is not treated as useful merely because it looks biologically structured. It has to improve a prespecified decision metric on outcomes that were not available when the features were built.
+
+## Current status — read this carefully
+
+**v0.5.0a1 is a pre-release containing two clearly separated evidence layers.**
+
+**1. Final v0.4 result.** Static Geneformer token geometry did **not** improve the prespecified AUPRC contrast over the historical baseline.
+
+| Metric | Value |
+|---|---:|
+| Primary conclusion | `NOT_SUPPORTED` |
+| Point delta (AUPRC) | −0.00033 |
+| 95% CI | −0.0095 to +0.0014 |
+| Temporal holdout rows | 79,542 |
+| Holdout positives | 14 |
+
+**2. Prospective v0.5 protocol.** Contextual cell-state embeddings are preregistered, but the GPU runs and future-outcome evaluation are not complete.
+
+This release must therefore **not** be described as evidence that contextual foundation-model representations improve target prioritisation. It is evidence about static token geometry only.
+
+## Why a negative result is the point
+
+Most published comparisons appear when a method wins. That selection pressure makes the literature look more favourable to new methods than the underlying evidence supports.
+
+A benchmark designed in advance, with a declared metric and a leakage-controlled holdout, produces a usable answer either way. Here the answer was no — and reporting it plainly is more useful to anyone deciding whether to invest GPU time than a reframed positive.
+
+The 14 holdout positives are also worth stating openly: with that few events, the confidence interval is wide, and the honest reading is "no detectable improvement," not "proven equivalence."
+
+## Data
+
+| Cohort | Cells retained |
+|---|---:|
+| GSE115978 | 7,186 |
+| GSE120575 | 16,291 |
+| GSE179994 | 150,849 |
+
+## Verified release
+
+| Item | Current state |
+|---|---|
+| Automated tests | 70 |
+| Integration audit | `PASS_WITH_WARNINGS` |
+| Engineering evidence | Executable GitHub Actions jobs with uploaded JUnit, coverage and audit artefacts |
+| Licence | Apache-2.0 |
+
+Release claims are machine-checked against result JSON rather than hand-written into the README, so the documented numbers cannot silently drift from the executed ones.
+
+## Honest limitations
+
+- The completed result concerns static token geometry, not contextual embeddings.
+- 14 holdout positives is a small number of events; the interval is correspondingly wide.
+- A negative result in this specific decision task does not generalise to all uses of foundation models in biology.
+- Research software only: it evaluates methods for preclinical target prioritisation and does not recommend a medicine, diagnose a patient, or make a clinical decision.

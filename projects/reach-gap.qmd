@@ -1,0 +1,91 @@
+---
+title: "reach-gap"
+subtitle: "Is the target physically reachable?"
+description: "An evidence-aware spatial modelling tool that asks whether target-positive tumour cells are accessible to an antibody, and refuses to answer when the required biology has not been measured."
+image: ../assets/favicon.svg
+page-layout: article
+toc: true
+toc-title: "On this page"
+---
+
+<div class="article-status">
+  <span class="status-pill status-preview">v0.8.0 · Research preview</span>
+  <a href="https://github.com/rsolerortuno/reach-gap">View repository <span aria-hidden="true">↗</span></a>
+</div>
+
+## The problem
+
+A tumour target can be highly expressed and still be difficult for an antibody to reach. Accessibility depends on far more than expression level:
+
+- which vessels are structurally present, and which are actually perfused;
+- how far target-positive cells lie from those vessels;
+- how quickly an antibody moves through the extracellular matrix;
+- how strongly and how densely it binds;
+- whether an administered antibody reaches and engages the tissue at all.
+
+These quantities are rarely measured together in the same sample. The common failure mode is quiet substitution: combining RNA, fluorescence, literature diffusion constants and vessel distances as though they were interchangeable.
+
+## The idea
+
+`reach-gap` has two linked layers.
+
+```{mermaid}
+flowchart TB
+    subgraph M[Mechanistic layer]
+        A[Vessel source geometry] --> B[Diffusion through matrix]
+        B --> C[Binding and internalisation]
+    end
+    subgraph E[Evidence layer]
+        D[Same-tissue measurement]
+        F[External validation]
+        G[Literature prior]
+        H[Missing / blocked]
+    end
+    M --> I{Evidence sufficient?}
+    E --> I
+    I -->|Yes| J[Relative target ranking]
+    I -->|No| K[NOT_COMPUTED]
+```
+
+The mechanistic layer represents vascular geometry, diffusion, binding and internalisation in a simplified 2D reaction–diffusion model. The evidence layer records, for every required input, whether it was measured in the same tissue, externally validated, borrowed as a prior, missing, or explicitly blocked from transfer.
+
+The second layer is the point. It makes questionable substitutions visible instead of letting them disappear into a single number.
+
+## What it returns
+
+Depending on the evidence available:
+
+- mechanistic simulation outputs with propagated uncertainty;
+- relative target-rank probabilities and pairwise comparisons;
+- evidence-readiness and measurement-priority reports;
+- or an explicit abstention such as `reachable_fraction = NOT_COMPUTED`.
+
+The last of these is a feature. An absolute reachable fraction requires biology that usually has not been measured, so the tool declines to produce one rather than fabricating false precision.
+
+## Design choices
+
+| Choice | Reason |
+|---|---|
+| Relative ranking rather than absolute fractions | The absolute quantity depends on unmeasured inputs; the relative comparison is defensible |
+| Six vessel definitions instead of one | Vessel identity is itself a modelling decision, and the ranking should be shown to survive it |
+| 20,000 uncertainty draws | Point estimates hide how wide the plausible range actually is |
+| Explicit `NOT_COMPUTED` outputs | A missing answer is more useful than a confident wrong one |
+| Auditable evidence graph | Every transfer between data types can be inspected and challenged |
+
+## Verified release
+
+| Item | Current state |
+|---|---|
+| Automated tests | 117 |
+| Coverage | 88.3% |
+| Uncertainty draws | 20,000 per analysis |
+| Vessel definitions compared | 6 |
+| Containerised | Yes (Docker) |
+| Licence | MIT |
+
+## Honest limitations
+
+- The reaction–diffusion model is a simplified 2D representation, not a full pharmacokinetic simulation.
+- Relative rankings are comparisons between targets in the same tissue context; they do not transfer to other tumours unchanged.
+- Literature priors remain priors, however carefully labelled.
+- Research use only: no prediction of patient response, treatment recommendation, or estimate of clinical efficacy.

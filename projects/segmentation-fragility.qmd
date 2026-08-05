@@ -1,0 +1,84 @@
+---
+title: "segmentation-fragility"
+subtitle: "Does the conclusion survive the segmentation?"
+description: "An auditable tool that tests whether a spatial-transcriptomics claim still holds when transcript-to-cell assignment changes."
+image: ../assets/favicon.svg
+page-layout: article
+toc: true
+toc-title: "On this page"
+---
+
+<div class="article-status">
+  <span class="status-pill status-preview">v0.5.0 · Research preview</span>
+  <a href="https://github.com/rsolerortuno/segmentation-fragility">View repository <span aria-hidden="true">↗</span></a>
+</div>
+
+## The problem
+
+Spatial transcriptomics measures RNA molecules at precise tissue coordinates. Before any biology can be read out, a segmentation method must assign each transcript to a cell.
+
+Cell boundaries are genuinely uncertain in dense tissue — cells overlap, nuclei are incomplete, transcripts sit near borders. A small boundary change can move a marker from one cell type to another and change the downstream conclusion. Most analyses treat one segmentation output as final and never propagate that uncertainty into the claim.
+
+This matters for statements of exactly the kind people report:
+
+- fewer than 5% of T-cell anchors express `MS4A1`;
+- fewer than 5% of B-cell anchors express `CD3E`;
+- fewer than 5% of myeloid anchors express `EPCAM`.
+
+A claim can look comfortably stable under one assignment system and cross the decision threshold under another.
+
+## The idea
+
+The tool does not ask which segmentation is best. It asks whether the *claim* survives.
+
+```{mermaid}
+flowchart LR
+    A[Fixed biological anchors] --> B[Xenium vendor]
+    A --> C[ProSeg]
+    A --> D[Baysor]
+    B --> E[Same claim, three assignments]
+    C --> E
+    D --> E
+    E --> F{Anchor coverage sufficient?}
+    F -->|No| G[Not reportable]
+    F -->|Yes| H{Threshold decision stable?}
+    H -->|Yes| I[Robust]
+    H -->|No| J[Segmentation-sensitive]
+```
+
+The separation between the **cell anchor** and the **transcript assignment** is what makes this work: anchors stay conservative and fixed, assignment varies, and the claim becomes the unit of analysis rather than the segmented object.
+
+## Design choices
+
+| Choice | Reason |
+|---|---|
+| Claim as unit of analysis | The scientific output is the claim, not the segmentation mask |
+| Fixed biological denominators | Otherwise a change in anchors and a change in assignment are confounded |
+| Three independent assignment systems | One alternative could be an idiosyncrasy; three is a pattern |
+| Coverage requirement before reporting | A claim computed on too few anchors is noise, not evidence |
+| Explicit "not reportable" state | Abstention beats a confident answer built on insufficient support |
+
+## Validation
+
+| Evidence layer | Data | Purpose |
+|---|---|---|
+| Planted-truth simulation | 36 scenarios, 288 observations | Tests signed flips and estimator calibration |
+| Xenium RCC perturbation | 77.1M transcript records | Tests controlled boundary reassignment around one vendor segmentation |
+
+The simulation layer matters because it is the only place where ground truth is known by construction — real tissue cannot tell you which assignment was correct.
+
+## Verified release
+
+| Item | Current state |
+|---|---|
+| Automated tests | 62 |
+| Line coverage | 90.28% |
+| Branch-aware coverage | 85.92% |
+| Continuous integration | GitHub Actions |
+| Licence | MIT |
+
+## Honest limitations
+
+- "Robust" and "segmentation-sensitive" refer to a predeclared numerical claim threshold in this audit. They are not clinical safety conclusions and do not establish biological ground truth.
+- Results are specific to the claims, anchors and thresholds declared before the analysis.
+- Agreement across three segmentation methods reduces the chance of an artefact; it does not prove the underlying biology is correct.
