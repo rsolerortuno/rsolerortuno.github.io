@@ -74,7 +74,7 @@ Based in Lund, Sweden · Open to opportunities from September 2026
 <p class="section-index">02 / Selected tools</p>
 <h2 id="tools-title">Research software built around honest evidence.</h2>
 </div>
-<p>Five public projects spanning target discovery, target safety, pharmacogenomics, safe agentic development and explainable protein-sequence modelling.</p>
+<p>Eight public projects spanning target discovery and safety, method reliability, pharmacogenomics, safe agentic development and explainable protein-sequence modelling.</p>
 </div>
 
 <div class="tools-overview tools-overview-compact">
@@ -92,7 +92,7 @@ Based in Lund, Sweden · Open to opportunities from September 2026
 </thead>
 <tbody>
 <tr class="overview-row" style="--row-index: 0" data-field="Target discovery &amp; safety">
-<th scope="row" rowspan="2" class="field-cell">Target discovery &amp; safety</th>
+<th scope="row" rowspan="3" class="field-cell">Target discovery &amp; safety</th>
 <td data-label="Tool"><span class="tool-name">TargetIntel-IO</span></td>
 <td data-label="The problem">A gene linked to disease is not automatically a good drug target, yet most tools collapse that judgement into a single score.</td>
 <td data-label="What it is for">Sorting candidate genes into genuine targets, biomarkers, resistance mechanisms and poor candidates.</td>
@@ -106,7 +106,29 @@ Based in Lund, Sweden · Open to opportunities from September 2026
 <td data-label="What it adds">A direct resting-versus-activated comparison in public data, with abstention when the evidence is too thin.</td>
 <td data-label="Key skills applied"><ul class="skill-tags"><li>Single-cell RNA-seq</li><li>Public GEO cohorts</li><li>Negative-binomial models</li><li>Donor-level robustness</li><li>Reproducible manifests</li></ul></td>
 </tr>
-<tr class="overview-row" style="--row-index: 2" data-field="Drug response prediction">
+<tr class="overview-row" style="--row-index: 2" data-field="Target discovery &amp; safety">
+<td data-label="Tool"><span class="tool-name">reach-gap</span></td>
+<td data-label="The problem">A target can be highly expressed and still sit too far from a working blood vessel for an antibody to reach it.</td>
+<td data-label="What it is for">Asking whether target-positive tumour cells are physically accessible to an antibody.</td>
+<td data-label="What it adds">Mechanistic diffusion modelling paired with an evidence graph that returns <code>NOT_COMPUTED</code> rather than guessing.</td>
+<td data-label="Key skills applied"><ul class="skill-tags"><li>Reaction–diffusion modelling</li><li>Spatial transcriptomics</li><li>Uncertainty propagation</li><li>Evidence provenance</li><li>Docker</li></ul></td>
+</tr>
+<tr class="overview-row" style="--row-index: 3" data-field="Method reliability">
+<th scope="row" rowspan="2" class="field-cell">Method reliability</th>
+<td data-label="Tool"><span class="tool-name">segmentation-fragility</span></td>
+<td data-label="The problem">In spatial data, a small change in where a cell boundary is drawn can move a marker between cell types and flip the conclusion.</td>
+<td data-label="What it is for">Testing whether a spatial-transcriptomics claim survives a change in transcript-to-cell assignment.</td>
+<td data-label="What it adds">Each claim is labelled robust, segmentation-sensitive or not reportable, instead of trusting one segmentation as final.</td>
+<td data-label="Key skills applied"><ul class="skill-tags"><li>Xenium / ProSeg / Baysor</li><li>Claim-level auditing</li><li>Planted-truth simulation</li><li>Abstention logic</li></ul></td>
+</tr>
+<tr class="overview-row" style="--row-index: 4" data-field="Method reliability">
+<td data-label="Tool"><span class="tool-name">FM Value Audit</span></td>
+<td data-label="The problem">A foundation-model embedding can look biologically structured and still add nothing to a real decision.</td>
+<td data-label="What it is for">Testing whether single-cell foundation models beat cheaper baselines at target prioritisation.</td>
+<td data-label="What it adds">A leakage-aware temporal holdout designed to report a negative result when that is what the data shows.</td>
+<td data-label="Key skills applied"><ul class="skill-tags"><li>Geneformer &amp; scGPT</li><li>Leakage control</li><li>Temporal holdout</li><li>AUPRC benchmarking</li><li>Preregistration</li></ul></td>
+</tr>
+<tr class="overview-row" style="--row-index: 5" data-field="Drug response prediction">
 <th scope="row" class="field-cell">Drug response prediction</th>
 <td data-label="Tool"><span class="tool-name">DrugMatch-Confidence</span></td>
 <td data-label="The problem">Cancer models respond very differently to the same drug, and predictions rarely say how much to trust them.</td>
@@ -114,7 +136,7 @@ Based in Lund, Sweden · Open to opportunities from September 2026
 <td data-label="What it adds">Every prediction carries a calibrated probability, an uncertainty interval and a warning when the input is unfamiliar.</td>
 <td data-label="Key skills applied"><ul class="skill-tags"><li>XGBoost</li><li>SHAP</li><li>Conformal prediction</li><li>Probability calibration</li><li>Grouped cross-validation</li><li>DepMap / PRISM / GDSC2</li></ul></td>
 </tr>
-<tr class="overview-row" style="--row-index: 3" data-field="Protein deep learning">
+<tr class="overview-row" style="--row-index: 6" data-field="Protein deep learning">
 <th scope="row" class="field-cell">Protein deep learning</th>
 <td data-label="Tool"><span class="tool-name">MTF Prediction</span></td>
 <td data-label="The problem">Whether a membrane protein carries transcription-factor-like features can change depending on where you draw its boundary.</td>
@@ -122,7 +144,7 @@ Based in Lund, Sweden · Open to opportunities from September 2026
 <td data-label="What it adds">The same screen repeated across three boundary conditions, so a result that holds under only one is visible as such.</td>
 <td data-label="Key skills applied"><ul class="skill-tags"><li>PyTorch</li><li>DeepTFactor</li><li>Captum integrated gradients</li><li>UniProtKB</li></ul></td>
 </tr>
-<tr class="overview-row" style="--row-index: 4" data-field="Research engineering">
+<tr class="overview-row" style="--row-index: 7" data-field="Research engineering">
 <th scope="row" class="field-cell">Research engineering</th>
 <td data-label="Tool"><span class="tool-name">Dev Autopilot</span></td>
 <td data-label="The problem">AI coding agents can move fast through a repository and leave no reliable trail of what changed or why.</td>
@@ -139,6 +161,102 @@ Based in Lund, Sweden · Open to opportunities from September 2026
 <article class="project-card project-card-featured">
 <div class="card-topline">
 <span class="project-number">01</span>
+<span class="status-pill status-preview">v0.5.0 · Research preview</span>
+</div>
+<h3>TargetIntel-IO</h3>
+<p class="project-kicker">Explainable target discovery and prioritisation</p>
+<p>Separates therapeutic targets, biomarkers, resistance mechanisms and poor direct targets in anti-PD-1-resistant melanoma—then ranks them according to antibody/IO, biomarker or small-molecule intent.</p>
+<div class="metric-row" aria-label="TargetIntel validation highlights">
+<span><strong>3</strong> intent rankings</span>
+<span><strong>331</strong> discovery universe</span>
+<span><strong>26Q1</strong> real DepMap layer</span>
+</div>
+<div class="tag-list"><span>Target discovery</span><span>CRISPR</span><span>Evidence audit</span></div>
+<div class="card-links">
+<a href="projects/targetintel-io.html">Case study <span aria-hidden="true">→</span></a>
+<a href="https://github.com/rsolerortuno/TargetIntel-IO">GitHub <span aria-hidden="true">↗</span></a>
+</div>
+</article>
+
+<article class="project-card">
+<div class="card-topline">
+<span class="project-number">02</span>
+<span class="status-pill status-preview">v0.5.0 · Research preview</span>
+</div>
+<h3>Activation Liability</h3>
+<p class="project-kicker">Hidden safety risk in surface targets</p>
+<p>Audits how much of a target's apparent tumour selectivity disappears when healthy tissue is inflamed rather than resting, using paired public single-cell cohorts.</p>
+<div class="metric-row" aria-label="Activation Liability release highlights">
+<span><strong>52</strong> automated tests</span>
+<span><strong>85.4%</strong> non-I/O coverage</span>
+</div>
+<div class="tag-list"><span>Target safety</span><span>Single-cell</span><span>Abstention</span></div>
+<div class="card-links">
+<a href="projects/activation-liability.html">Case study <span aria-hidden="true">→</span></a>
+<a href="https://github.com/rsolerortuno/activation-liability">GitHub <span aria-hidden="true">↗</span></a>
+</div>
+</article>
+
+<article class="project-card">
+<div class="card-topline">
+<span class="project-number">03</span>
+<span class="status-pill status-preview">v0.8.0 · Research preview</span>
+</div>
+<h3>reach-gap</h3>
+<p class="project-kicker">Is the target physically reachable?</p>
+<p>Couples simplified reaction–diffusion modelling with an explicit evidence graph to ask whether target-positive tumour cells are accessible to an antibody, and returns <code>NOT_COMPUTED</code> when the required biology has not been measured.</p>
+<div class="metric-row" aria-label="reach-gap release highlights">
+<span><strong>117</strong> automated tests</span>
+<span><strong>20,000</strong> uncertainty draws</span>
+</div>
+<div class="tag-list"><span>Reaction–diffusion</span><span>Spatial</span><span>Evidence graph</span></div>
+<div class="card-links">
+<a href="projects/reach-gap.html">Case study <span aria-hidden="true">→</span></a>
+<a href="https://github.com/rsolerortuno/reach-gap">GitHub <span aria-hidden="true">↗</span></a>
+</div>
+</article>
+
+<article class="project-card">
+<div class="card-topline">
+<span class="project-number">04</span>
+<span class="status-pill status-preview">v0.5.0 · Research preview</span>
+</div>
+<h3>segmentation-fragility</h3>
+<p class="project-kicker">Does the conclusion survive the segmentation?</p>
+<p>Tests whether a spatial-transcriptomics claim still holds when transcript-to-cell assignment changes across Xenium, ProSeg and Baysor, labelling each claim robust, segmentation-sensitive or not reportable.</p>
+<div class="metric-row" aria-label="segmentation-fragility release highlights">
+<span><strong>62</strong> automated tests</span>
+<span><strong>90.3%</strong> line coverage</span>
+</div>
+<div class="tag-list"><span>Xenium</span><span>Claim auditing</span><span>Abstention</span></div>
+<div class="card-links">
+<a href="projects/segmentation-fragility.html">Case study <span aria-hidden="true">→</span></a>
+<a href="https://github.com/rsolerortuno/segmentation-fragility">GitHub <span aria-hidden="true">↗</span></a>
+</div>
+</article>
+
+<article class="project-card">
+<div class="card-topline">
+<span class="project-number">05</span>
+<span class="status-pill status-alpha">v0.5.0a1 · Pre-release</span>
+</div>
+<h3>FM Value Audit</h3>
+<p class="project-kicker">Do foundation models actually add value?</p>
+<p>A leakage-aware temporal-holdout benchmark testing whether Geneformer and scGPT representations improve target prioritisation over cheaper baselines. The completed v0.4 result was negative, and is reported as such.</p>
+<div class="metric-row" aria-label="FM Value Audit release highlights">
+<span><strong>79,542</strong> holdout rows</span>
+<span><strong>NOT_SUPPORTED</strong> primary conclusion</span>
+</div>
+<div class="tag-list"><span>Geneformer</span><span>scGPT</span><span>Leakage control</span></div>
+<div class="card-links">
+<a href="projects/fm-value-audit.html">Case study <span aria-hidden="true">→</span></a>
+<a href="https://github.com/rsolerortuno/FM-Value-Audit">GitHub <span aria-hidden="true">↗</span></a>
+</div>
+</article>
+
+<article class="project-card">
+<div class="card-topline">
+<span class="project-number">06</span>
 <span class="status-pill status-released">v1.0.1 · Released</span>
 </div>
 <h3>DrugMatch-Confidence</h3>
@@ -156,62 +274,9 @@ Based in Lund, Sweden · Open to opportunities from September 2026
 </div>
 </article>
 
-<article class="project-card project-card-featured">
-<div class="card-topline">
-<span class="project-number">02</span>
-<span class="status-pill status-preview">v0.5.0 · Research preview</span>
-</div>
-<h3>TargetIntel-IO</h3>
-<p class="project-kicker">Explainable target discovery and prioritisation</p>
-<p>Separates therapeutic targets, biomarkers, resistance mechanisms and poor direct targets in anti-PD-1-resistant melanoma—then ranks them according to antibody/IO, biomarker or small-molecule intent.</p>
-<div class="metric-row" aria-label="TargetIntel validation highlights">
-<span><strong>3</strong> intent rankings</span>
-<span><strong>56</strong> benchmark targets</span>
-<span><strong>26Q1</strong> DepMap layer</span>
-</div>
-<div class="tag-list"><span>Target discovery</span><span>CRISPR</span><span>Evidence audit</span></div>
-<div class="card-links">
-<a href="projects/targetintel-io.html">Case study <span aria-hidden="true">→</span></a>
-<a href="https://github.com/rsolerortuno/TargetIntel-IO">GitHub <span aria-hidden="true">↗</span></a>
-</div>
-</article>
-
 <article class="project-card">
 <div class="card-topline">
-<span class="project-number">03</span>
-<span class="status-pill status-alpha">v0.1.1 · Alpha</span>
-</div>
-<h3>Dev Autopilot</h3>
-<p class="project-kicker">Auditable AI-agent workflow for scientific software</p>
-<p>A persistent Python/SQLite orchestrator that separates implementation, adversarial audit and independent review, with deterministic gates and final human authority.</p>
-<div class="tag-list"><span>Agentic AI</span><span>SQLite</span><span>Safety gates</span></div>
-<div class="card-links">
-<a href="projects/dev-autopilot.html">Case study <span aria-hidden="true">→</span></a>
-<a href="https://github.com/rsolerortuno/dev-autopilot">GitHub <span aria-hidden="true">↗</span></a>
-</div>
-</article>
-
-<article class="project-card">
-<div class="card-topline">
-<span class="project-number">04</span>
-<span class="status-pill status-preview">v0.5.0 · Research preview</span>
-</div>
-<h3>Activation Liability</h3>
-<p class="project-kicker">Hidden safety risk in surface targets</p>
-<p>Audits how much of a target's apparent tumour selectivity disappears when healthy tissue is inflamed rather than resting, using paired public single-cell cohorts.</p>
-<div class="metric-row" aria-label="Activation Liability release highlights">
-<span><strong>52</strong> automated tests</span>
-<span><strong>85.4%</strong> non-I/O coverage</span>
-</div>
-<div class="tag-list"><span>Target safety</span><span>Single-cell</span><span>Abstention</span></div>
-<div class="card-links">
-<a href="projects/activation-liability.html">Case study <span aria-hidden="true">→</span></a>
-<a href="https://github.com/rsolerortuno/activation-liability">GitHub <span aria-hidden="true">↗</span></a>
-</div>
-</article>
-<article class="project-card">
-<div class="card-topline">
-<span class="project-number">05</span>
+<span class="project-number">07</span>
 <span class="status-pill status-archive">v1.0.0 · Research analysis</span>
 </div>
 <h3>MTF Prediction</h3>
@@ -221,6 +286,21 @@ Based in Lund, Sweden · Open to opportunities from September 2026
 <div class="card-links">
 <a href="projects/mtf-prediction.html">Case study <span aria-hidden="true">→</span></a>
 <a href="https://github.com/rsolerortuno/MTF_prediction">GitHub <span aria-hidden="true">↗</span></a>
+</div>
+</article>
+
+<article class="project-card">
+<div class="card-topline">
+<span class="project-number">08</span>
+<span class="status-pill status-alpha">v0.1.1 · Alpha</span>
+</div>
+<h3>Dev Autopilot</h3>
+<p class="project-kicker">Auditable AI-agent workflow for scientific software</p>
+<p>A persistent Python/SQLite orchestrator that separates implementation, adversarial audit and independent review, with deterministic gates and final human authority.</p>
+<div class="tag-list"><span>Agentic AI</span><span>SQLite</span><span>Safety gates</span></div>
+<div class="card-links">
+<a href="projects/dev-autopilot.html">Case study <span aria-hidden="true">→</span></a>
+<a href="https://github.com/rsolerortuno/dev-autopilot">GitHub <span aria-hidden="true">↗</span></a>
 </div>
 </article>
 </div>

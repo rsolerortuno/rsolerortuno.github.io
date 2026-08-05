@@ -21,6 +21,8 @@ website:
       text: Tools
     - href: about.qmd
       text: Experience
+    - href: blog.qmd
+      text: Writing
     right:
     - icon: linkedin
       href: https://www.linkedin.com/in/rafael-soler-ortuno/
