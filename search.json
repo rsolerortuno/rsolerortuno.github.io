@@ -224,13 +224,6 @@
     "text": "Current boundary\nDev Autopilot is alpha software. It coordinates and audits work, but never stages, commits, pushes, tags or merges product code. A human must inspect the final diff and evidence.\n\n\nReview the state machine, job schema, offline smoke run and TargetIntel example profile.\n\nOpen Dev Autopilot on GitHub ↗"
   },
   {
-    "objectID": "blog.html",
-    "href": "blog.html",
-    "title": "Writing",
-    "section": "",
-    "text": "No matching items"
-  },
-  {
     "objectID": "about.html",
     "href": "about.html",
     "title": "\nI work where biological complexity meets therapeutic decisions.\n",
