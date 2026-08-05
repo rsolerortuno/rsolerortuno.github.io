@@ -6,9 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="description" content="Writing by Rafael Soler Ortuño on computational biology, translational research, and interpretable scientific software.">
+<meta name="description" content="An auditable tool that tests whether a spatial-transcriptomics claim still holds when transcript-to-cell assignment changes.">
 
-<title>Writing – Rafael Soler Ortuño</title>
+<title>segmentation-fragility – Rafael Soler Ortuño</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -30,21 +30,19 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<link href="./assets/favicon.svg" rel="icon" type="image/svg+xml">
-<script src="site_libs/quarto-listing/list.min.js"></script>
-<script src="site_libs/quarto-listing/quarto-listing.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-3d1b6502958a38d6b4d29f0899443d12.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<link href="../assets/favicon.svg" rel="icon" type="image/svg+xml">
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-3d1b6502958a38d6b4d29f0899443d12.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "language": {
     "search-no-results-text": "No results",
@@ -60,80 +58,23 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Search"
   }
 }</script>
-<script>
-
-  window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-listing .list');
-    if (!listingTargetEl) {
-      // No listing discovered, do not attach.
-      return; 
-    }
-
-    const options = {
-      valueNames: ['listing-image','listing-date','listing-title','listing-description','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
-      
-      searchColumns: ["listing-title","listing-author","listing-date","listing-image","listing-description","listing-categories"],
-    };
-
-    window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
-
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  });
-
-  window.addEventListener('hashchange',() => {
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  })
-  </script>
 <style>html{ scroll-behavior: smooth; }</style>
+<script src="../site_libs/quarto-diagram/mermaid.min.js"></script>
+<script src="../site_libs/quarto-diagram/mermaid-init.js"></script>
+<link href="../site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
 
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
 
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
-
-<link rel="stylesheet" href="styles.css">
-<link rel="stylesheet" href="brand.css">
-<link rel="stylesheet" href="role-fix.css">
-<link rel="alternate" type="application/rss+xml" title="Rafael Soler Ortuño" href="blog.xml" data-external="1"><meta property="og:title" content="Writing – Rafael Soler Ortuño">
-<meta property="og:description" content="Writing by Rafael Soler Ortuño on computational biology, translational research, and interpretable scientific software.">
-<meta property="og:image" content="https://rsolerortuno.github.io/posts/why-target-ranking-is-not-enough/featured.svg">
+<link rel="stylesheet" href="../styles.css">
+<link rel="stylesheet" href="../brand.css">
+<link rel="stylesheet" href="../role-fix.css">
+<meta property="og:title" content="segmentation-fragility – Rafael Soler Ortuño">
+<meta property="og:description" content="An auditable tool that tests whether a spatial-transcriptomics claim still holds when transcript-to-cell assignment changes.">
+<meta property="og:image" content="https://rsolerortuno.github.io/assets/favicon.svg">
 <meta property="og:site_name" content="Rafael Soler Ortuño">
 <meta property="og:locale" content="en_GB">
-<meta property="og:image:alt" content="TargetIntel-IO therapeutic-intent target triage diagram">
-<meta name="twitter:title" content="Writing – Rafael Soler Ortuño">
-<meta name="twitter:description" content="Writing by Rafael Soler Ortuño on computational biology, translational research, and interpretable scientific software.">
-<meta name="twitter:image" content="https://rsolerortuno.github.io/posts/why-target-ranking-is-not-enough/featured.svg">
-<meta name="twitter:image:alt" content="TargetIntel-IO therapeutic-intent target triage diagram">
+<meta name="twitter:title" content="segmentation-fragility – Rafael Soler Ortuño">
+<meta name="twitter:description" content="An auditable tool that tests whether a spatial-transcriptomics claim still holds when transcript-to-cell assignment changes.">
+<meta name="twitter:image" content="https://rsolerortuno.github.io/assets/favicon.svg">
 <meta name="twitter:card" content="summary_large_image">
 </head>
 
@@ -144,7 +85,7 @@ window.Quarto = {
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="./index.html">
+    <a class="navbar-brand" href="../index.html">
     <span class="navbar-title">RSO.</span>
     </a>
   </div>
@@ -154,15 +95,15 @@ window.Quarto = {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./projects.html"> 
+    <a class="nav-link" href="../projects.html"> 
 <span class="menu-text">Tools</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./about.html"> 
+    <a class="nav-link" href="../about.html"> 
 <span class="menu-text">Experience</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="./blog.html" aria-current="page"> 
+    <a class="nav-link" href="../blog.html"> 
 <span class="menu-text">Writing</span></a>
   </li>  
 </ul>
@@ -189,19 +130,31 @@ window.Quarto = {
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Q29tcHV0YXRpb25hbCUyMGJpb2xvZ3k=">Computational biology <span class="quarto-category-count">(1)</span></div><div class="category" data-category="RXhwbGFpbmFibGUlMjBBSQ==">Explainable AI <span class="quarto-category-count">(1)</span></div><div class="category" data-category="SW1tdW5vLW9uY29sb2d5">Immuno-oncology <span class="quarto-category-count">(1)</span></div><div class="category" data-category="VGFyZ2V0JTIwZGlzY292ZXJ5">Target discovery <span class="quarto-category-count">(1)</span></div></div></div>
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#the-problem" id="toc-the-problem" class="nav-link active" data-scroll-target="#the-problem">The problem</a></li>
+  <li><a href="#the-idea" id="toc-the-idea" class="nav-link" data-scroll-target="#the-idea">The idea</a></li>
+  <li><a href="#design-choices" id="toc-design-choices" class="nav-link" data-scroll-target="#design-choices">Design choices</a></li>
+  <li><a href="#validation" id="toc-validation" class="nav-link" data-scroll-target="#validation">Validation</a></li>
+  <li><a href="#verified-release" id="toc-verified-release" class="nav-link" data-scroll-target="#verified-release">Verified release</a></li>
+  <li><a href="#honest-limitations" id="toc-honest-limitations" class="nav-link" data-scroll-target="#honest-limitations">Honest limitations</a></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Writing</h1>
-<p class="subtitle lead">Notes on computational biology, target discovery, single-cell and spatial genomics, and explainable AI.</p>
+<h1 class="title">segmentation-fragility</h1>
+<p class="subtitle lead">Does the conclusion survive the segmentation?</p>
 </div>
 
 <div>
   <div class="description">
-    Writing by Rafael Soler Ortuño on computational biology, translational research, and interpretable scientific software.
+    An auditable tool that tests whether a spatial-transcriptomics claim still holds when transcript-to-cell assignment changes.
   </div>
 </div>
 
@@ -218,47 +171,161 @@ window.Quarto = {
 </header>
 
 
-
-
-
-
-<div class="quarto-listing quarto-listing-container-grid" id="listing-listing">
-<div class="list grid quarto-listing-cols-3">
-<div class="g-col-1" data-index="0" data-categories="VGFyZ2V0JTIwZGlzY292ZXJ5JTJDSW1tdW5vLW9uY29sb2d5JTJDRXhwbGFpbmFibGUlMjBBSSUyQ0NvbXB1dGF0aW9uYWwlMjBiaW9sb2d5" data-listing-date-sort="1783641600000" data-listing-file-modified-sort="1785890033951" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="5" data-listing-word-count-sort="932">
-<a href="./posts/why-target-ranking-is-not-enough/index.html" class="quarto-grid-link">
-<div class="quarto-grid-item card h-100 card-left">
-<p class="card-img-top">
-<img loading="lazy" src="./posts/why-target-ranking-is-not-enough/featured.svg" class="thumbnail-image card-img" style="height: 150px;" alt="TargetIntel-IO therapeutic-intent target triage diagram">
-</p>
-<div class="card-body post-contents">
-<h5 class="no-anchor card-title listing-title">
-Why Target Ranking Is Not Enough in Immuno-Oncology
-</h5>
-<div class="listing-categories">
-
-<div class="listing-category" onclick="window.quartoListingCategory('VGFyZ2V0JTIwZGlzY292ZXJ5'); return false;">Target discovery</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('SW1tdW5vLW9uY29sb2d5'); return false;">Immuno-oncology</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('RXhwbGFpbmFibGUlMjBBSQ=='); return false;">Explainable AI</div>
-
-<div class="listing-category" onclick="window.quartoListingCategory('Q29tcHV0YXRpb25hbCUyMGJpb2xvZ3k='); return false;">Computational biology</div>
-
+<div class="article-status">
+<p><span class="status-pill status-preview">v0.5.0 · Research preview</span> <a href="https://github.com/rsolerortuno/segmentation-fragility">View repository <span aria-hidden="true">↗</span></a></p>
 </div>
-<div class="card-text listing-description delink">
-<p>A disease-associated gene is not automatically a good therapeutic target. Its value depends on biological role, modality, and therapeutic intent.</p>
+<section id="the-problem" class="level2">
+<h2 class="anchored" data-anchor-id="the-problem">The problem</h2>
+<p>Spatial transcriptomics measures RNA molecules at precise tissue coordinates. Before any biology can be read out, a segmentation method must assign each transcript to a cell.</p>
+<p>Cell boundaries are genuinely uncertain in dense tissue — cells overlap, nuclei are incomplete, transcripts sit near borders. A small boundary change can move a marker from one cell type to another and change the downstream conclusion. Most analyses treat one segmentation output as final and never propagate that uncertainty into the claim.</p>
+<p>This matters for statements of exactly the kind people report:</p>
+<ul>
+<li>fewer than 5% of T-cell anchors express <code>MS4A1</code>;</li>
+<li>fewer than 5% of B-cell anchors express <code>CD3E</code>;</li>
+<li>fewer than 5% of myeloid anchors express <code>EPCAM</code>.</li>
+</ul>
+<p>A claim can look comfortably stable under one assignment system and cross the decision threshold under another.</p>
+</section>
+<section id="the-idea" class="level2">
+<h2 class="anchored" data-anchor-id="the-idea">The idea</h2>
+<p>The tool does not ask which segmentation is best. It asks whether the <em>claim</em> survives.</p>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart LR
+    A[Fixed biological anchors] --&gt; B[Xenium vendor]
+    A --&gt; C[ProSeg]
+    A --&gt; D[Baysor]
+    B --&gt; E[Same claim, three assignments]
+    C --&gt; E
+    D --&gt; E
+    E --&gt; F{Anchor coverage sufficient?}
+    F --&gt;|No| G[Not reportable]
+    F --&gt;|Yes| H{Threshold decision stable?}
+    H --&gt;|Yes| I[Robust]
+    H --&gt;|No| J[Segmentation-sensitive]
+</pre>
 </div>
-<div class="card-attribution card-text-small end">
-<div class="listing-date">
-10 Jul 2026
+<p></p></figure><p></p>
 </div>
 </div>
 </div>
-</div></a>
-</div>
-</div>
-<div class="listing-no-matching d-none">No matching items</div>
-</div></main> <!-- /main -->
+<p>The separation between the <strong>cell anchor</strong> and the <strong>transcript assignment</strong> is what makes this work: anchors stay conservative and fixed, assignment varies, and the claim becomes the unit of analysis rather than the segmented object.</p>
+</section>
+<section id="design-choices" class="level2">
+<h2 class="anchored" data-anchor-id="design-choices">Design choices</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Choice</th>
+<th>Reason</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Claim as unit of analysis</td>
+<td>The scientific output is the claim, not the segmentation mask</td>
+</tr>
+<tr class="even">
+<td>Fixed biological denominators</td>
+<td>Otherwise a change in anchors and a change in assignment are confounded</td>
+</tr>
+<tr class="odd">
+<td>Three independent assignment systems</td>
+<td>One alternative could be an idiosyncrasy; three is a pattern</td>
+</tr>
+<tr class="even">
+<td>Coverage requirement before reporting</td>
+<td>A claim computed on too few anchors is noise, not evidence</td>
+</tr>
+<tr class="odd">
+<td>Explicit “not reportable” state</td>
+<td>Abstention beats a confident answer built on insufficient support</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="validation" class="level2">
+<h2 class="anchored" data-anchor-id="validation">Validation</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Evidence layer</th>
+<th>Data</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Planted-truth simulation</td>
+<td>36 scenarios, 288 observations</td>
+<td>Tests signed flips and estimator calibration</td>
+</tr>
+<tr class="even">
+<td>Xenium RCC perturbation</td>
+<td>77.1M transcript records</td>
+<td>Tests controlled boundary reassignment around one vendor segmentation</td>
+</tr>
+</tbody>
+</table>
+<p>The simulation layer matters because it is the only place where ground truth is known by construction — real tissue cannot tell you which assignment was correct.</p>
+</section>
+<section id="verified-release" class="level2">
+<h2 class="anchored" data-anchor-id="verified-release">Verified release</h2>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Item</th>
+<th>Current state</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Automated tests</td>
+<td>62</td>
+</tr>
+<tr class="even">
+<td>Line coverage</td>
+<td>90.28%</td>
+</tr>
+<tr class="odd">
+<td>Branch-aware coverage</td>
+<td>85.92%</td>
+</tr>
+<tr class="even">
+<td>Continuous integration</td>
+<td>GitHub Actions</td>
+</tr>
+<tr class="odd">
+<td>Licence</td>
+<td>MIT</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="honest-limitations" class="level2">
+<h2 class="anchored" data-anchor-id="honest-limitations">Honest limitations</h2>
+<ul>
+<li>“Robust” and “segmentation-sensitive” refer to a predeclared numerical claim threshold in this audit. They are not clinical safety conclusions and do not establish biological ground truth.</li>
+<li>Results are specific to the claims, anchors and thresholds declared before the analysis.</li>
+<li>Agreement across three segmentation methods reduces the chance of an artefact; it does not prove the underlying biology is correct.</li>
+</ul>
+
+
+</section>
+
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";
@@ -682,5 +749,5 @@ Why Target Ranking Is Not Enough in Immuno-Oncology
 
 
 
-<script src="site_libs/quarto-html/zenscroll-min.js"></script>
+<script src="../site_libs/quarto-html/zenscroll-min.js"></script>
 </body></html>

@@ -112,67 +112,109 @@
     "text": "Scientific boundary\nA positive prediction only means that a fragment contains sequence features associated with transcription factors by the selected model. It does not establish DNA binding, nuclear localisation, proteolytic activation or transcriptional function in vivo. Orthogonal experimental validation is required.\nThe repository is a research archive, not a packaged end-to-end application, and remains tied to the 2022_05 UniProtKB release and the original DeepTFactor checkpoint.\n\n\nExplore the full analysis matrix, processed inputs and residue-attribution outputs.\n\nOpen MTF Prediction on GitHub ↗"
   },
   {
-    "objectID": "projects/dev-autopilot.html",
-    "href": "projects/dev-autopilot.html",
-    "title": "Dev Autopilot",
+    "objectID": "projects/fm-value-audit.html",
+    "href": "projects/fm-value-audit.html",
+    "title": "FM Value Audit",
     "section": "",
-    "text": "v0.1.1 · Alpha View repository ↗"
+    "text": "v0.5.0a1 · Pre-release View repository ↗"
   },
   {
-    "objectID": "projects/dev-autopilot.html#the-problem",
-    "href": "projects/dev-autopilot.html#the-problem",
-    "title": "Dev Autopilot",
+    "objectID": "projects/fm-value-audit.html#the-question",
+    "href": "projects/fm-value-audit.html#the-question",
+    "title": "FM Value Audit",
+    "section": "The question",
+    "text": "The question\nFoundation models produce impressive high-dimensional embeddings of single-cell data. Whether those embeddings help is a separate question, and it is often left unanswered:\n\nare the embeddings contextual, or only static token vectors?\nwere test outcomes used indirectly during feature selection or tuning?\ndoes the model beat a cheap historical or expression-based baseline?\n\nFM Value Audit tests whether representations from models such as Geneformer and scGPT add measurable value beyond simpler, easier-to-explain alternatives in immuno-oncology target prioritisation."
+  },
+  {
+    "objectID": "projects/fm-value-audit.html#the-design",
+    "href": "projects/fm-value-audit.html#the-design",
+    "title": "FM Value Audit",
+    "section": "The design",
+    "text": "The design\nThe project is built to be able to say no.\n\n\n\n\n\nflowchart TB\n    A[Prespecified decision metric] --&gt; B[Historical baseline]\n    A --&gt; C[Expression baseline]\n    A --&gt; D[Foundation-model representation]\n    B --&gt; E[Temporal holdout&lt;br/&gt;unseen future outcomes]\n    C --&gt; E\n    D --&gt; E\n    E --&gt; F{Does FM improve AUPRC?}\n    F --&gt;|No| G[Report negative result]\n    F --&gt;|Yes| H[Report improvement with CI]\n\n\n\n\n\n\nA sophisticated embedding is not treated as useful merely because it looks biologically structured. It has to improve a prespecified decision metric on outcomes that were not available when the features were built."
+  },
+  {
+    "objectID": "projects/fm-value-audit.html#current-status-read-this-carefully",
+    "href": "projects/fm-value-audit.html#current-status-read-this-carefully",
+    "title": "FM Value Audit",
+    "section": "Current status — read this carefully",
+    "text": "Current status — read this carefully\nv0.5.0a1 is a pre-release containing two clearly separated evidence layers.\n1. Final v0.4 result. Static Geneformer token geometry did not improve the prespecified AUPRC contrast over the historical baseline.\n\n\n\nMetric\nValue\n\n\n\n\nPrimary conclusion\nNOT_SUPPORTED\n\n\nPoint delta (AUPRC)\n−0.00033\n\n\n95% CI\n−0.0095 to +0.0014\n\n\nTemporal holdout rows\n79,542\n\n\nHoldout positives\n14\n\n\n\n2. Prospective v0.5 protocol. Contextual cell-state embeddings are preregistered, but the GPU runs and future-outcome evaluation are not complete.\nThis release must therefore not be described as evidence that contextual foundation-model representations improve target prioritisation. It is evidence about static token geometry only."
+  },
+  {
+    "objectID": "projects/fm-value-audit.html#why-a-negative-result-is-the-point",
+    "href": "projects/fm-value-audit.html#why-a-negative-result-is-the-point",
+    "title": "FM Value Audit",
+    "section": "Why a negative result is the point",
+    "text": "Why a negative result is the point\nMost published comparisons appear when a method wins. That selection pressure makes the literature look more favourable to new methods than the underlying evidence supports.\nA benchmark designed in advance, with a declared metric and a leakage-controlled holdout, produces a usable answer either way. Here the answer was no — and reporting it plainly is more useful to anyone deciding whether to invest GPU time than a reframed positive.\nThe 14 holdout positives are also worth stating openly: with that few events, the confidence interval is wide, and the honest reading is “no detectable improvement,” not “proven equivalence.”"
+  },
+  {
+    "objectID": "projects/fm-value-audit.html#data",
+    "href": "projects/fm-value-audit.html#data",
+    "title": "FM Value Audit",
+    "section": "Data",
+    "text": "Data\n\n\n\nCohort\nCells retained\n\n\n\n\nGSE115978\n7,186\n\n\nGSE120575\n16,291\n\n\nGSE179994\n150,849"
+  },
+  {
+    "objectID": "projects/fm-value-audit.html#verified-release",
+    "href": "projects/fm-value-audit.html#verified-release",
+    "title": "FM Value Audit",
+    "section": "Verified release",
+    "text": "Verified release\n\n\n\n\n\n\n\nItem\nCurrent state\n\n\n\n\nAutomated tests\n70\n\n\nIntegration audit\nPASS_WITH_WARNINGS\n\n\nEngineering evidence\nExecutable GitHub Actions jobs with uploaded JUnit, coverage and audit artefacts\n\n\nLicence\nApache-2.0\n\n\n\nRelease claims are machine-checked against result JSON rather than hand-written into the README, so the documented numbers cannot silently drift from the executed ones."
+  },
+  {
+    "objectID": "projects/fm-value-audit.html#honest-limitations",
+    "href": "projects/fm-value-audit.html#honest-limitations",
+    "title": "FM Value Audit",
+    "section": "Honest limitations",
+    "text": "Honest limitations\n\nThe completed result concerns static token geometry, not contextual embeddings.\n14 holdout positives is a small number of events; the interval is correspondingly wide.\nA negative result in this specific decision task does not generalise to all uses of foundation models in biology.\nResearch software only: it evaluates methods for preclinical target prioritisation and does not recommend a medicine, diagnose a patient, or make a clinical decision."
+  },
+  {
+    "objectID": "projects/segmentation-fragility.html",
+    "href": "projects/segmentation-fragility.html",
+    "title": "segmentation-fragility",
+    "section": "",
+    "text": "v0.5.0 · Research preview View repository ↗"
+  },
+  {
+    "objectID": "projects/segmentation-fragility.html#the-problem",
+    "href": "projects/segmentation-fragility.html#the-problem",
+    "title": "segmentation-fragility",
     "section": "The problem",
-    "text": "The problem\nAI coding agents can produce useful work, but a scientific software project also needs durable state, explicit permissions, reproducible tests, independent review and a clear boundary around human authority.\nDev Autopilot turns those requirements into a workflow instead of relying on one long prompt or one agent grading its own work."
+    "text": "The problem\nSpatial transcriptomics measures RNA molecules at precise tissue coordinates. Before any biology can be read out, a segmentation method must assign each transcript to a cell.\nCell boundaries are genuinely uncertain in dense tissue — cells overlap, nuclei are incomplete, transcripts sit near borders. A small boundary change can move a marker from one cell type to another and change the downstream conclusion. Most analyses treat one segmentation output as final and never propagate that uncertainty into the claim.\nThis matters for statements of exactly the kind people report:\n\nfewer than 5% of T-cell anchors express MS4A1;\nfewer than 5% of B-cell anchors express CD3E;\nfewer than 5% of myeloid anchors express EPCAM.\n\nA claim can look comfortably stable under one assignment system and cross the decision threshold under another."
   },
   {
-    "objectID": "projects/dev-autopilot.html#authority-is-separated",
-    "href": "projects/dev-autopilot.html#authority-is-separated",
-    "title": "Dev Autopilot",
-    "section": "Authority is separated",
-    "text": "Authority is separated\n\n\n\n\n\nflowchart LR\n    A[Planning advice] --&gt; B[Implementation]\n    B --&gt; C[Deterministic gates]\n    C --&gt; D[Adversarial audit]\n    D --&gt; E[Independent review]\n    E --&gt; F[Bounded correction]\n    F --&gt; C\n    E --&gt; G[Ready for human review]\n\n\n\n\n\n\nPlanning advice is not approval. The implementation agent cannot approve its own diff. Review agents cannot override mechanical gates. The system stops at READY_FOR_HUMAN_REVIEW, leaving commit, pull-request and merge decisions to a person."
+    "objectID": "projects/segmentation-fragility.html#the-idea",
+    "href": "projects/segmentation-fragility.html#the-idea",
+    "title": "segmentation-fragility",
+    "section": "The idea",
+    "text": "The idea\nThe tool does not ask which segmentation is best. It asks whether the claim survives.\n\n\n\n\n\nflowchart LR\n    A[Fixed biological anchors] --&gt; B[Xenium vendor]\n    A --&gt; C[ProSeg]\n    A --&gt; D[Baysor]\n    B --&gt; E[Same claim, three assignments]\n    C --&gt; E\n    D --&gt; E\n    E --&gt; F{Anchor coverage sufficient?}\n    F --&gt;|No| G[Not reportable]\n    F --&gt;|Yes| H{Threshold decision stable?}\n    H --&gt;|Yes| I[Robust]\n    H --&gt;|No| J[Segmentation-sensitive]\n\n\n\n\n\n\nThe separation between the cell anchor and the transcript assignment is what makes this work: anchors stay conservative and fixed, assignment varies, and the claim becomes the unit of analysis rather than the segmented object."
   },
   {
-    "objectID": "projects/dev-autopilot.html#what-persists",
-    "href": "projects/dev-autopilot.html#what-persists",
-    "title": "Dev Autopilot",
-    "section": "What persists",
-    "text": "What persists\nSQLite records:\n\nevery legal state transition;\nappend-only events and stop reasons;\nretry counts for each agent role;\nquota pauses and exact resume states;\nidempotency hashes and diff-keyed review caches;\nexpiring exclusive run locks.\n\nThis allows a workflow to recover after process restarts without guessing where it left off."
+    "objectID": "projects/segmentation-fragility.html#design-choices",
+    "href": "projects/segmentation-fragility.html#design-choices",
+    "title": "segmentation-fragility",
+    "section": "Design choices",
+    "text": "Design choices\n\n\n\n\n\n\n\nChoice\nReason\n\n\n\n\nClaim as unit of analysis\nThe scientific output is the claim, not the segmentation mask\n\n\nFixed biological denominators\nOtherwise a change in anchors and a change in assignment are confounded\n\n\nThree independent assignment systems\nOne alternative could be an idiosyncrasy; three is a pattern\n\n\nCoverage requirement before reporting\nA claim computed on too few anchors is noise, not evidence\n\n\nExplicit “not reportable” state\nAbstention beats a confident answer built on insufficient support"
   },
   {
-    "objectID": "projects/dev-autopilot.html#safety-design",
-    "href": "projects/dev-autopilot.html#safety-design",
-    "title": "Dev Autopilot",
-    "section": "Safety design",
-    "text": "Safety design\nVersion 0.1.1 includes:\n\nvalidated YAML jobs with explicit file, tree and glob permissions;\nscope, test, context-size and Git-metadata gates;\nfail-closed transitions;\ndeterministic jitter and quota-reset support;\nbounded review/correction rounds;\nfake adapters for complete offline integration tests;\na generic file-based bridge for real subscription agents.\n\nReal execution requires an explicit network opt-in. Shell syntax inside test commands also requires an explicit opt-in because it expands the trust boundary."
+    "objectID": "projects/segmentation-fragility.html#validation",
+    "href": "projects/segmentation-fragility.html#validation",
+    "title": "segmentation-fragility",
+    "section": "Validation",
+    "text": "Validation\n\n\n\n\n\n\n\n\nEvidence layer\nData\nPurpose\n\n\n\n\nPlanted-truth simulation\n36 scenarios, 288 observations\nTests signed flips and estimator calibration\n\n\nXenium RCC perturbation\n77.1M transcript records\nTests controlled boundary reassignment around one vendor segmentation\n\n\n\nThe simulation layer matters because it is the only place where ground truth is known by construction — real tissue cannot tell you which assignment was correct."
   },
   {
-    "objectID": "projects/dev-autopilot.html#why-it-belongs-in-a-scientific-portfolio",
-    "href": "projects/dev-autopilot.html#why-it-belongs-in-a-scientific-portfolio",
-    "title": "Dev Autopilot",
-    "section": "Why it belongs in a scientific portfolio",
-    "text": "Why it belongs in a scientific portfolio\nThe project is not a claim that automation removes scientific judgment. It demonstrates the opposite: agentic workflows become more useful when scientific scope, mechanical correctness, adversarial review and human authority are represented as different responsibilities."
+    "objectID": "projects/segmentation-fragility.html#verified-release",
+    "href": "projects/segmentation-fragility.html#verified-release",
+    "title": "segmentation-fragility",
+    "section": "Verified release",
+    "text": "Verified release\n\n\n\nItem\nCurrent state\n\n\n\n\nAutomated tests\n62\n\n\nLine coverage\n90.28%\n\n\nBranch-aware coverage\n85.92%\n\n\nContinuous integration\nGitHub Actions\n\n\nLicence\nMIT"
   },
   {
-    "objectID": "projects/dev-autopilot.html#current-boundary",
-    "href": "projects/dev-autopilot.html#current-boundary",
-    "title": "Dev Autopilot",
-    "section": "Current boundary",
-    "text": "Current boundary\nDev Autopilot is alpha software. It coordinates and audits work, but never stages, commits, pushes, tags or merges product code. A human must inspect the final diff and evidence.\n\n\nReview the state machine, job schema, offline smoke run and TargetIntel example profile.\n\nOpen Dev Autopilot on GitHub ↗"
-  },
-  {
-    "objectID": "blog.html",
-    "href": "blog.html",
-    "title": "Writing",
-    "section": "",
-    "text": "Why Target Ranking Is Not Enough in Immuno-Oncology\n\n\n\nTarget discovery\n\nImmuno-oncology\n\nExplainable AI\n\nComputational biology\n\n\n\nA disease-associated gene is not automatically a good therapeutic target. Its value depends on biological role, modality, and therapeutic intent.\n\n\n\n10 Jul 2026\n\n\n\n\n\n\nNo matching items"
-  },
-  {
-    "objectID": "about.html",
-    "href": "about.html",
-    "title": "\nI work where biological complexity meets therapeutic decisions.\n",
-    "section": "",
-    "text": "Experience & approach\n\n\nI work where biological complexity meets therapeutic decisions.\n\n\nMy background spans antibody immunotherapies, precision oncology, developmental neurobiology and computational tool building. Across those settings, my role is consistent: structure ambiguous questions, connect evidence across modalities and communicate what the data can—and cannot—support.\n\n\n\n\n\n\n\n\n\n\nProfile\n\n\nComputational biologist with 6+ years across industry and academia.\n\n\nI combine deep biological context with hands-on analysis and software engineering. That means I can move from experimental design and QC to multi-omic integration, statistical modelling, interpretation and a result that an experimental or clinical team can use.\n\n\nI hold a PhD in Bioinformatics and two MSc degrees in Bioinformatics & Biostatistics and Molecular Biology. I have worked in Spain, Germany, the United Kingdom and Sweden, and collaborate comfortably across disciplines and cultures.\n\n\nCurrent BioInvent International Based Lund, Sweden Available September 2026\n\n\n\n\n\n\n\nCareer\n\n\nProfessional experience\n\n\n\n\n\n\nAug 2025 — Aug 2026Lund, Sweden\n\n\n\nBioInvent International AB\n\n\nBioinformatics Research Scientist\n\n\n\nLead multi-omic analysis across the BI-1206 anti-FcγRIIB and BI-1808 anti-TNFR2 antibody programs, connecting patient, mouse and in-vitro evidence.\n\n\nResolve response mechanisms, immune-cell states and tissue niches using scRNA-seq, CITE-seq, spatial transcriptomics, bulk RNA-seq, proteomics and clinical metadata.\n\n\nSupport target validation, biomarker strategy, patient selection and go/no-go decisions while building reusable AWS/HPC analysis environments.\n\n\n\n\n\n\nSep 2024 — Jan 2025Seville, Spain\n\n\n\nBristol Myers Squibb\n\n\nVisiting Scientist, Computational Biology\n\n\n\nDesigned patient-derived gene signatures across lung, pancreatic and breast cancers for precision-medicine and resistance questions.\n\n\nMapped cell lines, xenografts and organoids to clinical tumour subtypes using TCGA and DepMap/Celligner.\n\n\nAnalysed NanoString CosMx and 10x Visium HD spatial transcriptomics across tumour cohorts.\n\n\n\n\n\n\nSep 2020 — Sep 2024Alicante, Spain\n\n\n\nInstitute of Neurosciences, CSIC–UMH\n\n\nBioinformatics Research Scientist · PhD\n\n\n\nIntegrated cross-species scRNA-seq, RNA-seq and ATAC-seq to define conserved cortical stem-cell programs and regulatory elements.\n\n\nIdentified gene signatures in paediatric brain tumours through public-data meta-analysis and mouse-model benchmarking.\n\n\nBuilt and published an R Shiny single-cell atlas and mentored two MSc students.\n\n\n\n\n\n\nMar 2023 — Jun 2023Munich, Germany\n\n\n\nHelmholtz Munich\n\n\nVisiting Scientist, Bioinformatics\n\n\n\nCombined Hi-C and ATAC-seq to study open chromatin, enhancer contacts and transcription-factor motifs.\n\n\nTrained ChromBPNet to predict chromatin accessibility and sequence motifs directly from DNA sequence.\n\n\n\n\n\n\n2017 — 2019Madrid · London\n\n\n\nIMDEA · SUEZ\n\n\nJunior Scientist\n\n\nEarly scientific roles that built my foundations in experimental biology, data analysis and cross-functional research.\n\n\n\n\n\n\n\n\n\nCapabilities\n\n\nA practical, end-to-end toolkit\n\n\n\n\n\n\nDomains\n\n\nImmuno-oncology · Inflammation · Tumour biology · Translational research · Neuroscience\n\n\n\n\nDecisions\n\n\nTarget discovery · Biomarker validation · Patient stratification · Mode of action · Resistance mechanisms\n\n\n\n\nSingle-cell & spatial\n\n\nscRNA-seq · CITE-seq · scATAC-seq · RNA velocity · Seurat WNN · totalVI · MultiVI · Visium HD · CosMx\n\n\n\n\nBulk & functional genomics\n\n\nRNA-seq · ATAC-seq · ChIP-seq · CUT&Tag/CUT&RUN · Hi-C · Proteomics · DepMap · CCLE · PRISM\n\n\n\n\nML & AI\n\n\nXGBoost · Random Forest · Survival analysis · Variational autoencoders · Geneformer · scGPT · Cell2Sentence · ChromBPNet\n\n\n\n\nEngineering\n\n\nPython · R · Bash · Nextflow · Snakemake · Docker · AWS · HPC/Slurm · Git\n\n\n\n\n\n\n\n\nEducation\n\n\nTraining\n\n\n\n\n\n2020—2025\n\nPhD, Bioinformatics\n\n\nHelmholtz Munich · CSIC · Miguel Hernández University\n\n\n\n2018—2020\n\nMSc, Bioinformatics & Biostatistics\n\n\nUniversity of Barcelona\n\n\n\n2017—2018\n\nMSc, Molecular Biology\n\n\nAutonomous University of Madrid\n\n\n\n2013—2017\n\nBSc, Biology\n\n\nUniversity of Alicante\n\n\n\n\n\n\nNext chapter\n\n\nOpen to computational biology opportunities from September 2026.\n\n\nI am especially interested in roles that connect human biology, multi-omic data and therapeutic development.\n\n\nStart a conversation LinkedIn"
+    "objectID": "projects/segmentation-fragility.html#honest-limitations",
+    "href": "projects/segmentation-fragility.html#honest-limitations",
+    "title": "segmentation-fragility",
+    "section": "Honest limitations",
+    "text": "Honest limitations\n\n“Robust” and “segmentation-sensitive” refer to a predeclared numerical claim threshold in this audit. They are not clinical safety conclusions and do not establish biological ground truth.\nResults are specific to the claims, anchors and thresholds declared before the analysis.\nAgreement across three segmentation methods reduces the chance of an artefact; it does not prove the underlying biology is correct."
   },
   {
     "objectID": "projects/drugmatch-confidence.html",
@@ -222,6 +264,118 @@
     "title": "DrugMatch-Confidence",
     "section": "Scientific boundary",
     "text": "Scientific boundary\nThis is preclinical research software. Cell lines do not reproduce the full tumour microenvironment, pharmacokinetics or patient heterogeneity, and the strict external subsets are small. The model cannot predict an unseen compound and must never be used to choose treatment for a person.\n\n\nInspect the models, external validation, example predictions and complete model card.\n\nOpen DrugMatch-Confidence on GitHub ↗"
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "\nI work where biological complexity meets therapeutic decisions.\n",
+    "section": "",
+    "text": "Experience & approach\n\n\nI work where biological complexity meets therapeutic decisions.\n\n\nMy background spans antibody immunotherapies, precision oncology, developmental neurobiology and computational tool building. Across those settings, my role is consistent: structure ambiguous questions, connect evidence across modalities and communicate what the data can—and cannot—support.\n\n\n\n\n\n\n\n\n\n\nProfile\n\n\nComputational biologist with 6+ years across industry and academia.\n\n\nI combine deep biological context with hands-on analysis and software engineering. That means I can move from experimental design and QC to multi-omic integration, statistical modelling, interpretation and a result that an experimental or clinical team can use.\n\n\nI hold a PhD in Bioinformatics and two MSc degrees in Bioinformatics & Biostatistics and Molecular Biology. I have worked in Spain, Germany, the United Kingdom and Sweden, and collaborate comfortably across disciplines and cultures.\n\n\nCurrent BioInvent International Based Lund, Sweden Available September 2026\n\n\n\n\n\n\n\nCareer\n\n\nProfessional experience\n\n\n\n\n\n\nAug 2025 — Aug 2026Lund, Sweden\n\n\n\nBioInvent International AB\n\n\nBioinformatics Research Scientist\n\n\n\nLead multi-omic analysis across the BI-1206 anti-FcγRIIB and BI-1808 anti-TNFR2 antibody programs, connecting patient, mouse and in-vitro evidence.\n\n\nResolve response mechanisms, immune-cell states and tissue niches using scRNA-seq, CITE-seq, spatial transcriptomics, bulk RNA-seq, proteomics and clinical metadata.\n\n\nSupport target validation, biomarker strategy, patient selection and go/no-go decisions while building reusable AWS/HPC analysis environments.\n\n\n\n\n\n\nSep 2024 — Jan 2025Seville, Spain\n\n\n\nBristol Myers Squibb\n\n\nVisiting Scientist, Computational Biology\n\n\n\nDesigned patient-derived gene signatures across lung, pancreatic and breast cancers for precision-medicine and resistance questions.\n\n\nMapped cell lines, xenografts and organoids to clinical tumour subtypes using TCGA and DepMap/Celligner.\n\n\nAnalysed NanoString CosMx and 10x Visium HD spatial transcriptomics across tumour cohorts.\n\n\n\n\n\n\nSep 2020 — Sep 2024Alicante, Spain\n\n\n\nInstitute of Neurosciences, CSIC–UMH\n\n\nBioinformatics Research Scientist · PhD\n\n\n\nIntegrated cross-species scRNA-seq, RNA-seq and ATAC-seq to define conserved cortical stem-cell programs and regulatory elements.\n\n\nIdentified gene signatures in paediatric brain tumours through public-data meta-analysis and mouse-model benchmarking.\n\n\nBuilt and published an R Shiny single-cell atlas and mentored two MSc students.\n\n\n\n\n\n\nMar 2023 — Jun 2023Munich, Germany\n\n\n\nHelmholtz Munich\n\n\nVisiting Scientist, Bioinformatics\n\n\n\nCombined Hi-C and ATAC-seq to study open chromatin, enhancer contacts and transcription-factor motifs.\n\n\nTrained ChromBPNet to predict chromatin accessibility and sequence motifs directly from DNA sequence.\n\n\n\n\n\n\n2017 — 2019Madrid · London\n\n\n\nIMDEA · SUEZ\n\n\nJunior Scientist\n\n\nEarly scientific roles that built my foundations in experimental biology, data analysis and cross-functional research.\n\n\n\n\n\n\n\n\n\nCapabilities\n\n\nA practical, end-to-end toolkit\n\n\n\n\n\n\nDomains\n\n\nImmuno-oncology · Inflammation · Tumour biology · Translational research · Neuroscience\n\n\n\n\nDecisions\n\n\nTarget discovery · Biomarker validation · Patient stratification · Mode of action · Resistance mechanisms\n\n\n\n\nSingle-cell & spatial\n\n\nscRNA-seq · CITE-seq · scATAC-seq · RNA velocity · Seurat WNN · totalVI · MultiVI · Visium HD · CosMx\n\n\n\n\nBulk & functional genomics\n\n\nRNA-seq · ATAC-seq · ChIP-seq · CUT&Tag/CUT&RUN · Hi-C · Proteomics · DepMap · CCLE · PRISM\n\n\n\n\nML & AI\n\n\nXGBoost · Random Forest · Survival analysis · Variational autoencoders · Geneformer · scGPT · Cell2Sentence · ChromBPNet\n\n\n\n\nEngineering\n\n\nPython · R · Bash · Nextflow · Snakemake · Docker · AWS · HPC/Slurm · Git\n\n\n\n\n\n\n\n\nEducation\n\n\nTraining\n\n\n\n\n\n2020—2025\n\nPhD, Bioinformatics\n\n\nHelmholtz Munich · CSIC · Miguel Hernández University\n\n\n\n2018—2020\n\nMSc, Bioinformatics & Biostatistics\n\n\nUniversity of Barcelona\n\n\n\n2017—2018\n\nMSc, Molecular Biology\n\n\nAutonomous University of Madrid\n\n\n\n2013—2017\n\nBSc, Biology\n\n\nUniversity of Alicante\n\n\n\n\n\n\nNext chapter\n\n\nOpen to computational biology opportunities from September 2026.\n\n\nI am especially interested in roles that connect human biology, multi-omic data and therapeutic development.\n\n\nStart a conversation LinkedIn"
+  },
+  {
+    "objectID": "blog.html",
+    "href": "blog.html",
+    "title": "Writing",
+    "section": "",
+    "text": "Why Target Ranking Is Not Enough in Immuno-Oncology\n\n\n\nTarget discovery\n\nImmuno-oncology\n\nExplainable AI\n\nComputational biology\n\n\n\nA disease-associated gene is not automatically a good therapeutic target. Its value depends on biological role, modality, and therapeutic intent.\n\n\n\n10 Jul 2026\n\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "projects/dev-autopilot.html",
+    "href": "projects/dev-autopilot.html",
+    "title": "Dev Autopilot",
+    "section": "",
+    "text": "v0.1.1 · Alpha View repository ↗"
+  },
+  {
+    "objectID": "projects/dev-autopilot.html#the-problem",
+    "href": "projects/dev-autopilot.html#the-problem",
+    "title": "Dev Autopilot",
+    "section": "The problem",
+    "text": "The problem\nAI coding agents can produce useful work, but a scientific software project also needs durable state, explicit permissions, reproducible tests, independent review and a clear boundary around human authority.\nDev Autopilot turns those requirements into a workflow instead of relying on one long prompt or one agent grading its own work."
+  },
+  {
+    "objectID": "projects/dev-autopilot.html#authority-is-separated",
+    "href": "projects/dev-autopilot.html#authority-is-separated",
+    "title": "Dev Autopilot",
+    "section": "Authority is separated",
+    "text": "Authority is separated\n\n\n\n\n\nflowchart LR\n    A[Planning advice] --&gt; B[Implementation]\n    B --&gt; C[Deterministic gates]\n    C --&gt; D[Adversarial audit]\n    D --&gt; E[Independent review]\n    E --&gt; F[Bounded correction]\n    F --&gt; C\n    E --&gt; G[Ready for human review]\n\n\n\n\n\n\nPlanning advice is not approval. The implementation agent cannot approve its own diff. Review agents cannot override mechanical gates. The system stops at READY_FOR_HUMAN_REVIEW, leaving commit, pull-request and merge decisions to a person."
+  },
+  {
+    "objectID": "projects/dev-autopilot.html#what-persists",
+    "href": "projects/dev-autopilot.html#what-persists",
+    "title": "Dev Autopilot",
+    "section": "What persists",
+    "text": "What persists\nSQLite records:\n\nevery legal state transition;\nappend-only events and stop reasons;\nretry counts for each agent role;\nquota pauses and exact resume states;\nidempotency hashes and diff-keyed review caches;\nexpiring exclusive run locks.\n\nThis allows a workflow to recover after process restarts without guessing where it left off."
+  },
+  {
+    "objectID": "projects/dev-autopilot.html#safety-design",
+    "href": "projects/dev-autopilot.html#safety-design",
+    "title": "Dev Autopilot",
+    "section": "Safety design",
+    "text": "Safety design\nVersion 0.1.1 includes:\n\nvalidated YAML jobs with explicit file, tree and glob permissions;\nscope, test, context-size and Git-metadata gates;\nfail-closed transitions;\ndeterministic jitter and quota-reset support;\nbounded review/correction rounds;\nfake adapters for complete offline integration tests;\na generic file-based bridge for real subscription agents.\n\nReal execution requires an explicit network opt-in. Shell syntax inside test commands also requires an explicit opt-in because it expands the trust boundary."
+  },
+  {
+    "objectID": "projects/dev-autopilot.html#why-it-belongs-in-a-scientific-portfolio",
+    "href": "projects/dev-autopilot.html#why-it-belongs-in-a-scientific-portfolio",
+    "title": "Dev Autopilot",
+    "section": "Why it belongs in a scientific portfolio",
+    "text": "Why it belongs in a scientific portfolio\nThe project is not a claim that automation removes scientific judgment. It demonstrates the opposite: agentic workflows become more useful when scientific scope, mechanical correctness, adversarial review and human authority are represented as different responsibilities."
+  },
+  {
+    "objectID": "projects/dev-autopilot.html#current-boundary",
+    "href": "projects/dev-autopilot.html#current-boundary",
+    "title": "Dev Autopilot",
+    "section": "Current boundary",
+    "text": "Current boundary\nDev Autopilot is alpha software. It coordinates and audits work, but never stages, commits, pushes, tags or merges product code. A human must inspect the final diff and evidence.\n\n\nReview the state machine, job schema, offline smoke run and TargetIntel example profile.\n\nOpen Dev Autopilot on GitHub ↗"
+  },
+  {
+    "objectID": "projects/reach-gap.html",
+    "href": "projects/reach-gap.html",
+    "title": "reach-gap",
+    "section": "",
+    "text": "v0.8.0 · Research preview View repository ↗"
+  },
+  {
+    "objectID": "projects/reach-gap.html#the-problem",
+    "href": "projects/reach-gap.html#the-problem",
+    "title": "reach-gap",
+    "section": "The problem",
+    "text": "The problem\nA tumour target can be highly expressed and still be difficult for an antibody to reach. Accessibility depends on far more than expression level:\n\nwhich vessels are structurally present, and which are actually perfused;\nhow far target-positive cells lie from those vessels;\nhow quickly an antibody moves through the extracellular matrix;\nhow strongly and how densely it binds;\nwhether an administered antibody reaches and engages the tissue at all.\n\nThese quantities are rarely measured together in the same sample. The common failure mode is quiet substitution: combining RNA, fluorescence, literature diffusion constants and vessel distances as though they were interchangeable."
+  },
+  {
+    "objectID": "projects/reach-gap.html#the-idea",
+    "href": "projects/reach-gap.html#the-idea",
+    "title": "reach-gap",
+    "section": "The idea",
+    "text": "The idea\nreach-gap has two linked layers.\n\n\n\n\n\nflowchart TB\n    subgraph M[Mechanistic layer]\n        A[Vessel source geometry] --&gt; B[Diffusion through matrix]\n        B --&gt; C[Binding and internalisation]\n    end\n    subgraph E[Evidence layer]\n        D[Same-tissue measurement]\n        F[External validation]\n        G[Literature prior]\n        H[Missing / blocked]\n    end\n    M --&gt; I{Evidence sufficient?}\n    E --&gt; I\n    I --&gt;|Yes| J[Relative target ranking]\n    I --&gt;|No| K[NOT_COMPUTED]\n\n\n\n\n\n\nThe mechanistic layer represents vascular geometry, diffusion, binding and internalisation in a simplified 2D reaction–diffusion model. The evidence layer records, for every required input, whether it was measured in the same tissue, externally validated, borrowed as a prior, missing, or explicitly blocked from transfer.\nThe second layer is the point. It makes questionable substitutions visible instead of letting them disappear into a single number."
+  },
+  {
+    "objectID": "projects/reach-gap.html#what-it-returns",
+    "href": "projects/reach-gap.html#what-it-returns",
+    "title": "reach-gap",
+    "section": "What it returns",
+    "text": "What it returns\nDepending on the evidence available:\n\nmechanistic simulation outputs with propagated uncertainty;\nrelative target-rank probabilities and pairwise comparisons;\nevidence-readiness and measurement-priority reports;\nor an explicit abstention such as reachable_fraction = NOT_COMPUTED.\n\nThe last of these is a feature. An absolute reachable fraction requires biology that usually has not been measured, so the tool declines to produce one rather than fabricating false precision."
+  },
+  {
+    "objectID": "projects/reach-gap.html#design-choices",
+    "href": "projects/reach-gap.html#design-choices",
+    "title": "reach-gap",
+    "section": "Design choices",
+    "text": "Design choices\n\n\n\n\n\n\n\nChoice\nReason\n\n\n\n\nRelative ranking rather than absolute fractions\nThe absolute quantity depends on unmeasured inputs; the relative comparison is defensible\n\n\nSix vessel definitions instead of one\nVessel identity is itself a modelling decision, and the ranking should be shown to survive it\n\n\n20,000 uncertainty draws\nPoint estimates hide how wide the plausible range actually is\n\n\nExplicit NOT_COMPUTED outputs\nA missing answer is more useful than a confident wrong one\n\n\nAuditable evidence graph\nEvery transfer between data types can be inspected and challenged"
+  },
+  {
+    "objectID": "projects/reach-gap.html#verified-release",
+    "href": "projects/reach-gap.html#verified-release",
+    "title": "reach-gap",
+    "section": "Verified release",
+    "text": "Verified release\n\n\n\nItem\nCurrent state\n\n\n\n\nAutomated tests\n117\n\n\nCoverage\n88.3%\n\n\nUncertainty draws\n20,000 per analysis\n\n\nVessel definitions compared\n6\n\n\nContainerised\nYes (Docker)\n\n\nLicence\nMIT"
+  },
+  {
+    "objectID": "projects/reach-gap.html#honest-limitations",
+    "href": "projects/reach-gap.html#honest-limitations",
+    "title": "reach-gap",
+    "section": "Honest limitations",
+    "text": "Honest limitations\n\nThe reaction–diffusion model is a simplified 2D representation, not a full pharmacokinetic simulation.\nRelative rankings are comparisons between targets in the same tissue context; they do not transfer to other tumours unchanged.\nLiterature priors remain priors, however carefully labelled.\nResearch use only: no prediction of patient response, treatment recommendation, or estimate of clinical efficacy."
   },
   {
     "objectID": "projects/targetintel-io.html",
