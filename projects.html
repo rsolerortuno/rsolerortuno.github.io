@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="description" content="Public research-software projects in target discovery, pharmacogenomics, agentic development, and protein deep learning.">
+<meta name="description" content="Public research-software projects in target discovery and safety, method reliability, pharmacogenomics, agentic development, and protein deep learning.">
 
 <title>Tools | Rafael Soler Ortuño – Rafael Soler Ortuño</title>
 <style>
@@ -65,11 +65,11 @@ ul.task-list li input[type="checkbox"] {
 <link rel="stylesheet" href="brand.css">
 <link rel="stylesheet" href="role-fix.css">
 <meta property="og:title" content="Tools | Rafael Soler Ortuño">
-<meta property="og:description" content="Public research-software projects in target discovery, pharmacogenomics, agentic development, and protein deep learning.">
+<meta property="og:description" content="Public research-software projects in target discovery and safety, method reliability, pharmacogenomics, agentic development, and protein deep learning.">
 <meta property="og:site_name" content="Rafael Soler Ortuño">
 <meta property="og:locale" content="en_GB">
 <meta name="twitter:title" content="Tools | Rafael Soler Ortuño">
-<meta name="twitter:description" content="Public research-software projects in target discovery, pharmacogenomics, agentic development, and protein deep learning.">
+<meta name="twitter:description" content="Public research-software projects in target discovery and safety, method reliability, pharmacogenomics, agentic development, and protein deep learning.">
 <meta name="twitter:card" content="summary">
 </head>
 
@@ -96,6 +96,10 @@ ul.task-list li input[type="checkbox"] {
   <li class="nav-item">
     <a class="nav-link" href="./about.html"> 
 <span class="menu-text">Experience</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./blog.html"> 
+<span class="menu-text">Writing</span></a>
   </li>  
 </ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
@@ -141,7 +145,7 @@ My projects cover different biological questions, but share the same standard: c
 </header>
 <section class="tools-overview" aria-labelledby="overview-title">
 <h2 id="overview-title" class="overview-title anchored">
-The five tools at a glance
+The eight tools at a glance
 </h2>
 <p class="overview-lede">
 Grouped by the question they answer. Each one addresses a decision that comes up early, before anyone commits time or money to a candidate.
@@ -172,7 +176,7 @@ Key skills applied
 </thead>
 <tbody>
 <tr class="overview-row" style="--row-index: 0" data-field="Target discovery &amp; safety">
-<th scope="row" rowspan="2" class="field-cell">
+<th scope="row" rowspan="3" class="field-cell">
 Target discovery &amp; safety
 </th>
 <td data-label="Tool">
@@ -243,7 +247,106 @@ Reproducible manifests
 </ul>
 </td>
 </tr>
-<tr class="overview-row" style="--row-index: 2" data-field="Drug response prediction">
+<tr class="overview-row" style="--row-index: 2" data-field="Target discovery &amp; safety">
+<td data-label="Tool">
+<span class="tool-name">reach-gap</span>
+</td>
+<td data-label="The problem">
+A target can be highly expressed and still sit too far from a working blood vessel for an antibody to reach it.
+</td>
+<td data-label="What it is for">
+Asking whether target-positive tumour cells are physically accessible to an antibody.
+</td>
+<td data-label="What it adds">
+Mechanistic diffusion modelling paired with an evidence graph that returns <code>NOT_COMPUTED</code> rather than guessing.
+</td>
+<td data-label="Key skills applied">
+<ul class="skill-tags">
+<li>
+Reaction–diffusion modelling
+</li>
+<li>
+Spatial transcriptomics
+</li>
+<li>
+Uncertainty propagation
+</li>
+<li>
+Evidence provenance
+</li>
+<li>
+Docker
+</li>
+</ul>
+</td>
+</tr>
+<tr class="overview-row" style="--row-index: 3" data-field="Method reliability">
+<th scope="row" rowspan="2" class="field-cell">
+Method reliability
+</th>
+<td data-label="Tool">
+<span class="tool-name">segmentation-fragility</span>
+</td>
+<td data-label="The problem">
+In spatial data, a small change in where a cell boundary is drawn can move a marker between cell types and flip the conclusion.
+</td>
+<td data-label="What it is for">
+Testing whether a spatial-transcriptomics claim survives a change in transcript-to-cell assignment.
+</td>
+<td data-label="What it adds">
+Each claim is labelled robust, segmentation-sensitive or not reportable, instead of trusting one segmentation as final.
+</td>
+<td data-label="Key skills applied">
+<ul class="skill-tags">
+<li>
+Xenium / ProSeg / Baysor
+</li>
+<li>
+Claim-level auditing
+</li>
+<li>
+Planted-truth simulation
+</li>
+<li>
+Abstention logic
+</li>
+</ul>
+</td>
+</tr>
+<tr class="overview-row" style="--row-index: 4" data-field="Method reliability">
+<td data-label="Tool">
+<span class="tool-name">FM Value Audit</span>
+</td>
+<td data-label="The problem">
+A foundation-model embedding can look biologically structured and still add nothing to a real decision.
+</td>
+<td data-label="What it is for">
+Testing whether single-cell foundation models beat cheaper baselines at target prioritisation.
+</td>
+<td data-label="What it adds">
+A leakage-aware temporal holdout designed to report a negative result when that is what the data shows.
+</td>
+<td data-label="Key skills applied">
+<ul class="skill-tags">
+<li>
+Geneformer &amp; scGPT
+</li>
+<li>
+Leakage control
+</li>
+<li>
+Temporal holdout
+</li>
+<li>
+AUPRC benchmarking
+</li>
+<li>
+Preregistration
+</li>
+</ul>
+</td>
+</tr>
+<tr class="overview-row" style="--row-index: 5" data-field="Drug response prediction">
 <th scope="row" class="field-cell">
 Drug response prediction
 </th>
@@ -282,7 +385,7 @@ DepMap / PRISM / GDSC2
 </ul>
 </td>
 </tr>
-<tr class="overview-row" style="--row-index: 3" data-field="Protein deep learning">
+<tr class="overview-row" style="--row-index: 6" data-field="Protein deep learning">
 <th scope="row" class="field-cell">
 Protein deep learning
 </th>
@@ -315,7 +418,7 @@ UniProtKB
 </ul>
 </td>
 </tr>
-<tr class="overview-row" style="--row-index: 4" data-field="Research engineering">
+<tr class="overview-row" style="--row-index: 7" data-field="Research engineering">
 <th scope="row" class="field-cell">
 Research engineering
 </th>
@@ -358,54 +461,10 @@ CI/CD
 </table>
 </div>
 </section>
-<section class="project-showcase page-columns page-full" aria-labelledby="drugmatch-title">
+<section class="project-showcase page-columns page-full" aria-labelledby="targetintel-title">
 <div class="showcase-copy">
 <div class="card-topline">
-<p><span class="project-number">01</span> <span class="status-pill status-released">v1.0.1 · Released</span></p>
-</div>
-<h2 id="drugmatch-title" class="anchored">
-DrugMatch-Confidence
-</h2>
-<p class="project-kicker">
-Interpretable preclinical cancer drug-response prediction
-</p>
-<p>
-Five real DepMap/PRISM XGBoost bundles produce continuous response, sensitive/resistant classification, calibrated probabilities, conformal intervals, out-of-distribution warnings and SHAP explanations.
-</p>
-<ul class="check-list">
-<li>
-Training-only feature selection and cell-line-grouped splits
-</li>
-<li>
-Five-fold out-of-fold evaluation with locked GDSC2 validation
-</li>
-<li>
-Honest release labels: validated, exploratory or insufficient evidence
-</li>
-</ul>
-<div class="button-row">
-<p><a class="button button-primary" href="projects/drugmatch-confidence.html">Read the case study</a> <a class="button button-secondary" href="https://github.com/rsolerortuno/DrugMatch-Confidence">View repository <span aria-hidden="true">↗</span></a></p>
-</div>
-</div>
-<aside class="showcase-proof" aria-label="DrugMatch release evidence">
-<p class="proof-label">
-Release evidence
-</p>
-<div class="proof-stat">
-<strong>0.84</strong><span>Trametinib strict GDSC2 AUROC · n=20</span>
-</div>
-<div class="proof-stat">
-<strong>0.83</strong><span>Afatinib strict GDSC2 AUROC · n=22</span>
-</div>
-<p class="proof-note">
-Preclinical research only. These are small external subsets and not patient-response models.
-</p>
-</aside>
-</section>
-<section class="project-showcase project-showcase-alt page-columns page-full" aria-labelledby="targetintel-title">
-<div class="showcase-copy">
-<div class="card-topline">
-<p><span class="project-number">02</span> <span class="status-pill status-preview">v0.5.0 · Research preview</span></p>
+<p><span class="project-number">01</span> <span class="status-pill status-preview">v0.5.0 · Research preview</span></p>
 </div>
 <h2 id="targetintel-title" class="anchored">
 TargetIntel-IO
@@ -424,7 +483,7 @@ Stable role classification and three intent-specific rankings
 Typed, source-linked evidence with mandatory human-review boundaries
 </li>
 <li>
-Optional DepMap/CRISPR layer that never silently changes the baseline
+Real DepMap Public 26Q1 dependency layer that never silently changes the baseline
 </li>
 </ul>
 <div class="button-row">
@@ -436,58 +495,23 @@ Optional DepMap/CRISPR layer that never silently changes the baseline
 Current scope
 </p>
 <div class="proof-stat">
-<strong>300</strong><span>genes in the productive baseline</span>
+<strong>331</strong><span>genes in the discovery universe</span>
 </div>
 <div class="proof-stat">
 <strong>56</strong><span>targets in the internal benchmark</span>
+</div>
+<div class="proof-stat">
+<strong>0</strong><span>differing artefacts across two independent runs</span>
 </div>
 <p class="proof-note">
 The benchmark tests implementation consistency. It is not an independent clinical validation dataset.
 </p>
 </aside>
 </section>
-<section class="project-showcase page-columns page-full" aria-labelledby="autopilot-title">
-<div class="showcase-copy">
-<div class="card-topline">
-<p><span class="project-number">03</span> <span class="status-pill status-alpha">v0.1.1 · Alpha</span></p>
-</div>
-<h2 id="autopilot-title" class="anchored">
-Dev Autopilot
-</h2>
-<p class="project-kicker">
-Persistent, auditable development orchestration
-</p>
-<p>
-Coordinates implementation, adversarial audit and independent review while SQLite records state transitions, retries and decisions across restarts.
-</p>
-<ul class="check-list">
-<li>
-Fail-closed state machine and explicit path permissions
-</li>
-<li>
-Mechanical scope, test, context and Git-metadata gates
-</li>
-<li>
-Stops at human review; it never commits, pushes or merges product code
-</li>
-</ul>
-<div class="button-row">
-<p><a class="button button-primary" href="projects/dev-autopilot.html">Read the case study</a> <a class="button button-secondary" href="https://github.com/rsolerortuno/dev-autopilot">View repository <span aria-hidden="true">↗</span></a></p>
-</div>
-</div>
-<aside class="showcase-proof" aria-label="Dev Autopilot design principle">
-<p class="proof-label">
-Design principle
-</p>
-<blockquote class="blockquote">
-Agents advise, implement and review. Deterministic gates decide whether work can advance. A person retains scientific and merge authority.
-</blockquote>
-</aside>
-</section>
 <section class="project-showcase project-showcase-alt page-columns page-full" aria-labelledby="activation-title">
 <div class="showcase-copy">
 <div class="card-topline">
-<p><span class="project-number">04</span> <span class="status-pill status-preview">v0.5.0 · Research preview</span></p>
+<p><span class="project-number">02</span> <span class="status-pill status-preview">v0.5.0 · Research preview</span></p>
 </div>
 <h2 id="activation-title" class="anchored">
 Activation Liability
@@ -528,10 +552,186 @@ A liability detector with abstention. It does not predict toxicity or establish 
 </p>
 </aside>
 </section>
+<section class="project-showcase page-columns page-full" aria-labelledby="reachgap-title">
+<div class="showcase-copy">
+<div class="card-topline">
+<p><span class="project-number">03</span> <span class="status-pill status-preview">v0.8.0 · Research preview</span></p>
+</div>
+<h2 id="reachgap-title" class="anchored">
+reach-gap
+</h2>
+<p class="project-kicker">
+Is the target physically reachable?
+</p>
+<p>
+A tumour target can be strongly expressed and still sit too far from a perfused vessel for an antibody to engage it. <code>reach-gap</code> couples simplified reaction–diffusion modelling with an explicit evidence graph.
+</p>
+<ul class="check-list">
+<li>
+Separates same-tissue measurement from external validation and literature priors
+</li>
+<li>
+Relative target ranking across six defensible vessel definitions
+</li>
+<li>
+Returns <code>NOT_COMPUTED</code> instead of inventing an absolute answer
+</li>
+</ul>
+<div class="button-row">
+<p><a class="button button-primary" href="projects/reach-gap.html">Read the case study</a> <a class="button button-secondary" href="https://github.com/rsolerortuno/reach-gap">View repository <span aria-hidden="true">↗</span></a></p>
+</div>
+</div>
+<aside class="showcase-proof" aria-label="reach-gap verified release">
+<p class="proof-label">
+Verified release
+</p>
+<div class="proof-stat">
+<strong>117</strong><span>automated tests</span>
+</div>
+<div class="proof-stat">
+<strong>20,000</strong><span>uncertainty draws per analysis</span>
+</div>
+<p class="proof-note">
+Research use only. It does not predict patient response or estimate clinical efficacy.
+</p>
+</aside>
+</section>
+<section class="project-showcase project-showcase-alt page-columns page-full" aria-labelledby="segfrag-title">
+<div class="showcase-copy">
+<div class="card-topline">
+<p><span class="project-number">04</span> <span class="status-pill status-preview">v0.5.0 · Research preview</span></p>
+</div>
+<h2 id="segfrag-title" class="anchored">
+segmentation-fragility
+</h2>
+<p class="project-kicker">
+Does the conclusion survive the segmentation?
+</p>
+<p>
+In spatial transcriptomics a small boundary change can move a marker between cell types and flip a biological claim. This tool makes the claim, not the segmented object, the unit of analysis.
+</p>
+<ul class="check-list">
+<li>
+Compares claims across Xenium, ProSeg and Baysor with fixed biological anchors
+</li>
+<li>
+Labels each claim robust, segmentation-sensitive or not reportable
+</li>
+<li>
+Abstains when claim-specific anchor coverage is insufficient
+</li>
+</ul>
+<div class="button-row">
+<p><a class="button button-primary" href="projects/segmentation-fragility.html">Read the case study</a> <a class="button button-secondary" href="https://github.com/rsolerortuno/segmentation-fragility">View repository <span aria-hidden="true">↗</span></a></p>
+</div>
+</div>
+<aside class="showcase-proof" aria-label="segmentation-fragility verified release">
+<p class="proof-label">
+Verified release
+</p>
+<div class="proof-stat">
+<strong>62</strong><span>automated tests · 90.3% line coverage</span>
+</div>
+<div class="proof-stat">
+<strong>77.1M</strong><span>transcript records in the Xenium perturbation</span>
+</div>
+<p class="proof-note">
+Robust and sensitive refer to a predeclared numerical threshold, not to clinical safety.
+</p>
+</aside>
+</section>
+<section class="project-showcase page-columns page-full" aria-labelledby="fmva-title">
+<div class="showcase-copy">
+<div class="card-topline">
+<p><span class="project-number">05</span> <span class="status-pill status-alpha">v0.5.0a1 · Pre-release</span></p>
+</div>
+<h2 id="fmva-title" class="anchored">
+FM Value Audit
+</h2>
+<p class="project-kicker">
+Do foundation models actually add value?
+</p>
+<p>
+A leakage-aware benchmark testing whether representations from Geneformer and scGPT improve a real target-prioritisation decision over cheaper, easier-to-explain baselines.
+</p>
+<ul class="check-list">
+<li>
+Prespecified decision metric evaluated on unseen future outcomes
+</li>
+<li>
+Explicit leakage control across feature selection and tuning
+</li>
+<li>
+Designed to report a negative result when that is what the data shows
+</li>
+</ul>
+<div class="button-row">
+<p><a class="button button-primary" href="projects/fm-value-audit.html">Read the case study</a> <a class="button button-secondary" href="https://github.com/rsolerortuno/FM-Value-Audit">View repository <span aria-hidden="true">↗</span></a></p>
+</div>
+</div>
+<aside class="showcase-proof" aria-label="FM Value Audit current finding">
+<p class="proof-label">
+Current finding
+</p>
+<div class="proof-stat">
+<strong>NOT<br>SUPPORTED</strong><span>static Geneformer geometry did not improve AUPRC</span>
+</div>
+<div class="proof-stat">
+<strong>79,542</strong><span>rows in the temporal holdout</span>
+</div>
+<p class="proof-note">
+The contextual-embedding protocol is preregistered but not yet executed. This release is not evidence that foundation models help.
+</p>
+</aside>
+</section>
+<section class="project-showcase project-showcase-alt page-columns page-full" aria-labelledby="drugmatch-title">
+<div class="showcase-copy">
+<div class="card-topline">
+<p><span class="project-number">06</span> <span class="status-pill status-released">v1.0.1 · Released</span></p>
+</div>
+<h2 id="drugmatch-title" class="anchored">
+DrugMatch-Confidence
+</h2>
+<p class="project-kicker">
+Interpretable preclinical cancer drug-response prediction
+</p>
+<p>
+Five real DepMap/PRISM XGBoost bundles produce continuous response, sensitive/resistant classification, calibrated probabilities, conformal intervals, out-of-distribution warnings and SHAP explanations.
+</p>
+<ul class="check-list">
+<li>
+Training-only feature selection and cell-line-grouped splits
+</li>
+<li>
+Five-fold out-of-fold evaluation with locked GDSC2 validation
+</li>
+<li>
+Honest release labels: validated, exploratory or insufficient evidence
+</li>
+</ul>
+<div class="button-row">
+<p><a class="button button-primary" href="projects/drugmatch-confidence.html">Read the case study</a> <a class="button button-secondary" href="https://github.com/rsolerortuno/DrugMatch-Confidence">View repository <span aria-hidden="true">↗</span></a></p>
+</div>
+</div>
+<aside class="showcase-proof" aria-label="DrugMatch release evidence">
+<p class="proof-label">
+Release evidence
+</p>
+<div class="proof-stat">
+<strong>0.84</strong><span>Trametinib strict GDSC2 AUROC · n=20</span>
+</div>
+<div class="proof-stat">
+<strong>0.83</strong><span>Afatinib strict GDSC2 AUROC · n=22</span>
+</div>
+<p class="proof-note">
+Preclinical research only. These are small external subsets and not patient-response models.
+</p>
+</aside>
+</section>
 <section class="project-showcase page-columns page-full" aria-labelledby="mtf-title">
 <div class="showcase-copy">
 <div class="card-topline">
-<p><span class="project-number">05</span> <span class="status-pill status-archive">v1.0.0 · Research analysis</span></p>
+<p><span class="project-number">07</span> <span class="status-pill status-archive">v1.0.0 · Research analysis</span></p>
 </div>
 <h2 id="mtf-title" class="anchored">
 MTF Prediction
@@ -570,6 +770,44 @@ Analysis matrix
 <p class="proof-note">
 Candidate-generating predictions only; experimental validation is required.
 </p>
+</aside>
+</section>
+<section class="project-showcase project-showcase-alt page-columns page-full" aria-labelledby="autopilot-title">
+<div class="showcase-copy">
+<div class="card-topline">
+<p><span class="project-number">08</span> <span class="status-pill status-alpha">v0.1.1 · Alpha</span></p>
+</div>
+<h2 id="autopilot-title" class="anchored">
+Dev Autopilot
+</h2>
+<p class="project-kicker">
+Persistent, auditable development orchestration
+</p>
+<p>
+Coordinates implementation, adversarial audit and independent review while SQLite records state transitions, retries and decisions across restarts.
+</p>
+<ul class="check-list">
+<li>
+Fail-closed state machine and explicit path permissions
+</li>
+<li>
+Mechanical scope, test, context and Git-metadata gates
+</li>
+<li>
+Stops at human review; it never commits, pushes or merges product code
+</li>
+</ul>
+<div class="button-row">
+<p><a class="button button-primary" href="projects/dev-autopilot.html">Read the case study</a> <a class="button button-secondary" href="https://github.com/rsolerortuno/dev-autopilot">View repository <span aria-hidden="true">↗</span></a></p>
+</div>
+</div>
+<aside class="showcase-proof" aria-label="Dev Autopilot design principle">
+<p class="proof-label">
+Design principle
+</p>
+<blockquote class="blockquote">
+Agents advise, implement and review. Deterministic gates decide whether work can advance. A person retains scientific and merge authority.
+</blockquote>
 </aside>
 </section>
 <section class="contact-panel compact-contact">

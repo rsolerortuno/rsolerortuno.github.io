@@ -1552,6 +1552,7 @@ code {
 }
 
 @media (max-width: 900px) {
+  /* Cards, not a table: nothing here may scroll sideways. */
   .overview-table-wrap {
     overflow-x: visible;
     border: none;
@@ -1567,7 +1568,12 @@ code {
   .overview-table td {
     display: block;
     width: 100%;
+    max-width: 100%;
     min-width: 0;
+  }
+
+  .overview-table {
+    font-size: 0.95rem;
   }
 
   .overview-table thead {
@@ -1580,15 +1586,15 @@ code {
     white-space: nowrap;
   }
 
-  /* rowspan cell does not translate to cards: show field as a badge instead.
-     Needs .overview-table prefix to outrank the display:block rule above. */
+  /* The rowspan cell has no meaning once rows become cards; each card
+     carries its field as a badge instead. */
   .overview-table .field-cell {
     display: none;
   }
 
   .overview-row {
-    margin-bottom: 1.1rem;
-    padding: 1.5rem 1.4rem 0.6rem;
+    margin-bottom: 1.15rem;
+    padding: 1.45rem 1.35rem 1.15rem;
     border: 1px solid var(--line);
     border-radius: var(--radius-md);
     background: var(--surface);
@@ -1598,14 +1604,15 @@ code {
   .overview-row::before {
     content: attr(data-field);
     display: inline-block;
-    margin-bottom: 0.9rem;
-    padding: 0.34rem 0.66rem;
+    margin-bottom: 0.85rem;
+    padding: 0.34rem 0.7rem;
     border-radius: 999px;
     background: var(--mint);
     color: var(--forest-dark);
-    font-size: 0.66rem;
+    font-size: 0.63rem;
     font-weight: 780;
     letter-spacing: 0.07em;
+    line-height: 1.3;
     text-transform: uppercase;
   }
 
@@ -1614,19 +1621,32 @@ code {
   }
 
   .overview-table tbody td {
-    padding: 0 0 1.1rem;
+    padding: 0 0 1rem;
     border-bottom: none;
+    line-height: 1.6;
+  }
+
+  .overview-table tbody td:last-child {
+    padding-bottom: 0;
   }
 
   .overview-table tbody td::before {
     content: attr(data-label);
     display: block;
-    margin-bottom: 0.28rem;
+    margin-bottom: 0.32rem;
     color: var(--ink-soft);
-    font-size: 0.66rem;
+    font-size: 0.63rem;
     font-weight: 780;
     letter-spacing: 0.08em;
     text-transform: uppercase;
+    opacity: 0.75;
+  }
+
+  /* The tool name is the card title and needs no eyebrow label. */
+  .overview-table tbody td[data-label="Tool"] {
+    margin-bottom: 1.15rem;
+    padding-bottom: 1.15rem;
+    border-bottom: 1px solid var(--line);
   }
 
   .overview-table tbody td[data-label="Tool"]::before {
@@ -1634,11 +1654,38 @@ code {
   }
 
   .tool-name {
-    font-size: 1.28rem;
+    padding-bottom: 0;
+    font-size: 1.35rem;
   }
 
   .tool-name::after {
-    transform: scaleX(1);
+    display: none;
+  }
+
+  /* Tags must wrap inside the card rather than widen it. */
+  .skill-tags {
+    gap: 0.4rem;
+  }
+
+  .skill-tags li {
+    max-width: 100%;
+    font-size: 0.72rem;
+    white-space: normal;
+    overflow-wrap: break-word;
+  }
+}
+
+@media (max-width: 420px) {
+  .overview-row {
+    padding: 1.3rem 1.1rem 1rem;
+  }
+
+  .tool-name {
+    font-size: 1.22rem;
+  }
+
+  .overview-table {
+    font-size: 0.92rem;
   }
 }
 
@@ -1660,18 +1707,41 @@ code {
   margin: 0 0 2.6rem;
 }
 
-.tools-overview-compact .overview-table {
-  min-width: 58rem;
-  font-size: 0.85rem;
+/* Scoped above the card breakpoint only. These rules carry two classes of
+   specificity and would otherwise beat the single-class min-width:0 reset
+   inside the mobile media query, keeping the table 928px wide on phones. */
+@media (min-width: 901px) {
+  .tools-overview-compact .overview-table {
+    min-width: 58rem;
+    font-size: 0.85rem;
+  }
+
+  .tools-overview-compact .overview-table thead th,
+  .tools-overview-compact .overview-table tbody th,
+  .tools-overview-compact .overview-table tbody td {
+    padding-right: 0.8rem;
+    padding-left: 0.8rem;
+  }
+
+  .tools-overview-compact .field-cell {
+    width: 8.6rem;
+  }
 }
 
-.tools-overview-compact .overview-table thead th,
-.tools-overview-compact .overview-table tbody th,
-.tools-overview-compact .overview-table tbody td {
-  padding-right: 0.8rem;
-  padding-left: 0.8rem;
+/* The decorative hero orbits extend past the viewport below ~1340px and were
+   pushing the whole page sideways. They are aria-hidden ornament, so clipping
+   them removes the horizontal scroll without altering the desktop look. */
+@media (max-width: 1340px) {
+  .portrait-wrap {
+    overflow: hidden;
+  }
 }
 
-.tools-overview-compact .field-cell {
-  width: 8.6rem;
+/* On narrow phones the long e-mail address is a single unbreakable token and
+   forced the contact buttons wider than their panel. */
+@media (max-width: 480px) {
+  .button {
+    max-width: 100%;
+    overflow-wrap: anywhere;
+  }
 }
