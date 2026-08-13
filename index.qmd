@@ -11,7 +11,6 @@ page-layout: full
 <p class="eyebrow">Rafael Soler Ortuño · Computational Biologist</p>
 <h1 id="hero-title">Biology,<br><span>decoded.</span></h1>
 <p class="hero-lead">I am Rafael, a computational biologist who connects single-cell, spatial and multi-omic data with interpretable machine learning to support target discovery, biomarker strategy and patient stratification.</p>
-<p class="hero-personal">Curious by nature and rigorous by training, I enjoy the difficult space between data, mechanism and therapeutic decisions. I build analyses and tools that make the evidence visible—not just the final answer.</p>
 <div class="button-row" aria-label="Primary links">
 <a class="button button-primary" href="projects.html">Explore my tools <span aria-hidden="true">↗</span></a>
 <a class="button button-secondary" href="assets/Rafael_Soler_Ortuno_CV.pdf" target="_blank" rel="noopener" download>Download CV <span aria-hidden="true">↓</span></a>
