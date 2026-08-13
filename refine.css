@@ -488,9 +488,17 @@ main.content p {
 }
 
 @media (max-width: 620px) {
-  .current-role .role-facts > div {
+  /* The :first-child rule above is more specific than a bare
+     `.role-facts > div`, so it has to be repeated here or the contract
+     period keeps its two-column track and breaks one word per line. */
+  .current-role .role-facts > div,
+  .current-role .role-facts > div:first-child {
     grid-template-columns: minmax(0, 1fr);
     gap: 0.35rem;
+  }
+
+  .current-role .role-facts > div:first-child strong {
+    white-space: nowrap;
   }
 }
 
@@ -589,4 +597,128 @@ main.content p {
 
 .current-role::after {
   font-size: clamp(4.5rem, 11vw, 10rem);
+}
+
+/* ============================================================
+   8. Mobile
+   ============================================================
+
+   Desktop is unchanged: everything below is inside a media query.
+
+   Three problems were found by measuring the built pages at 320-480px.
+   Two were self-inflicted: the .section-heading and .publication-list
+   tracks defined above sit outside any media query and were overriding
+   the stacking that brand.css and styles.css already did, so the heading
+   column collapsed to 0px and the publication title column to 3px. The
+   third is type: the mono micro-labels bottom out near 10px, which is
+   too small to read on a phone. */
+
+@media (max-width: 820px) {
+  /* Restore the single column these headings are meant to take. */
+  .section-heading {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.1rem;
+  }
+
+  .section-heading > p {
+    max-width: 62ch;
+  }
+}
+
+@media (max-width: 820px) {
+  /* Year, title and journal each get the full width instead of being
+     squeezed into a 150px sidebar and whatever is left. */
+  .publication-list li {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.25rem;
+    padding: 1.1rem 0;
+  }
+
+  .publication-list .publication-year {
+    font-weight: 700;
+  }
+
+  /* Micro-type. Root is 17px here, so 0.62rem was 10.5px. */
+  .status-pill {
+    font-size: 0.76rem;
+  }
+
+  .tag-list span {
+    font-size: 0.76rem;
+  }
+
+  .skill-tags li {
+    font-size: 0.78rem;
+  }
+
+  .card-links a,
+  .text-link {
+    font-size: 0.78rem;
+  }
+
+  .button {
+    font-size: 0.78rem;
+  }
+
+  .project-kicker {
+    font-size: 0.76rem;
+  }
+
+  .eyebrow,
+  .section-index,
+  .fact-label,
+  .proof-label,
+  .company {
+    font-size: 0.76rem;
+  }
+
+  .availability-line {
+    font-size: 0.76rem;
+    letter-spacing: 0.03em;
+  }
+
+  .metric-row span {
+    font-size: 0.8rem;
+  }
+
+  .proof-note {
+    font-size: 0.84rem;
+  }
+
+  .experience-meta {
+    font-size: 0.82rem;
+  }
+
+  .mini-facts span,
+  .education-grid span,
+  .education-grid p,
+  .capability-list p,
+  .publication-list span {
+    font-size: 0.84rem;
+  }
+
+  .portrait-wrap figcaption {
+    font-size: 0.78rem;
+  }
+
+  .portrait-wrap figcaption span {
+    font-size: 0.72rem;
+  }
+
+  .nav-footer {
+    font-size: 0.76rem;
+  }
+
+  main.content code {
+    font-size: 0.82rem;
+  }
+}
+
+@media (max-width: 430px) {
+  /* Three metric columns leave about 85px each, too narrow for a label
+     like "real-project validation run". Two columns read better. */
+  .metric-row {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.9rem 0.75rem;
+  }
 }
