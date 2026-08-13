@@ -378,8 +378,37 @@ main.content p {
 }
 
 /* ============================================================
-   6. General polish
+   6. Portraits
    ============================================================ */
+
+/*
+ * The homepage shows the speaking photograph. It is listed first with the
+ * studio portrait behind it, so the page still renders correctly until
+ * assets/Rafael_Soler_Ortuno_speaking.webp is added to the repository.
+ */
+.portrait-photo {
+  background-image:
+    url("assets/Rafael_Soler_Ortuno_speaking.webp"),
+    url("assets/Rafael_Soler_Ortuno_portrait.webp") !important;
+  background-position: center 30% !important;
+}
+
+/* The experience page takes over the studio portrait. */
+.about-photo {
+  background-image: url("assets/Rafael_Soler_Ortuno_portrait.webp");
+  background-position: center 20%;
+}
+
+/* ============================================================
+   7. General polish
+   ============================================================ */
+
+.hero-personal {
+  max-width: 640px;
+  color: var(--muted);
+  font-size: 0.97rem;
+  line-height: 1.75;
+}
 
 .project-showcase {
   padding: clamp(2.5rem, 4.5vw, 4rem) 0;
@@ -399,6 +428,22 @@ main.content p {
 
 .publication-list a {
   font-size: 1.02rem;
+}
+
+/*
+ * A word-shaped value such as NOT SUPPORTED does not fit the 90px numeric
+ * column, so it wrapped and left its caption stranded halfway down. Wide
+ * values stack instead.
+ */
+.proof-stat.proof-stat-wide {
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0.4rem;
+}
+
+.proof-stat.proof-stat-wide strong {
+  font-size: 1.45rem;
+  letter-spacing: -0.01em;
+  line-height: 1.15;
 }
 
 /* Manuscripts in preparation have no DOI to link, so the title is a span.

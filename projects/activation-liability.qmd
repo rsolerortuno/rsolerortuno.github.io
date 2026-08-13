@@ -45,7 +45,7 @@ The repository states the limit before it states the result:
 
 > This is a liability detector with abstention. It does **not** predict toxicity, establish a therapeutic window, or prove accessible surface protein from RNA.
 
-RNA is not protein, and expansion of an expression footprint is a flag for closer inspection—not a safety verdict.
+RNA is not protein, and expansion of an expression footprint is a flag for closer inspection, not a safety verdict.
 
 ## Design choices
 
@@ -59,7 +59,7 @@ RNA is not protein, and expansion of an expression footprint is a flag for close
 
 ## Reproducibility
 
-Multi-gigabyte GEO archives are deliberately not vendored into the repository. What is committed is the identity of every input—official URLs, accessions and checksums—so another researcher can download the same files and re-run the analysis.
+Multi-gigabyte GEO archives are deliberately not vendored into the repository. What is committed is the identity of every input (official URLs, accessions and checksums), so another researcher can download the same files and re-run the analysis.
 
 Executed cohorts ship compact, auditable result artefacts rather than raw matrices: ingestion QC, donor robustness, claims, benchmark output and per-target scores.
 
@@ -86,4 +86,4 @@ A target can pass one and fail the other. Keeping the two questions separate is 
 - Expression is measured from RNA; surface protein accessibility is not established here.
 - Public cohorts constrain which tissues and activation states can be examined.
 - A detected footprint expansion is a prompt for experimental follow-up, not a conclusion about patient risk.
-- Absence of a signal is not evidence of safety—it may simply mean the relevant activation state was never sampled.
+- Absence of a signal is not evidence of safety. It may simply mean the relevant activation state was never sampled.

@@ -3,11 +3,12 @@ project:
   resources:
   - assets/Rafael_Soler_Ortuno_CV.pdf
   - assets/Rafael_Soler_Ortuno_portrait.webp
+  - assets/Rafael_Soler_Ortuno_speaking.webp
 website:
   title: Rafael Soler Ortuño
   site-url: https://rsolerortuno.github.io
-  description: Computational biologist working across immuno-oncology, multi-omics, biomarker discovery, patient stratification,
-    and interpretable AI.
+  description: Computational biologist working in immuno-oncology on multi-omics, biomarker discovery, patient
+    stratification and interpretable models.
   favicon: assets/favicon.svg
   open-graph:
     locale: en_GB

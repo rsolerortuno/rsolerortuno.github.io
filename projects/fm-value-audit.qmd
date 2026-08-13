@@ -42,7 +42,7 @@ flowchart TB
 
 A sophisticated embedding is not treated as useful merely because it looks biologically structured. It has to improve a prespecified decision metric on outcomes that were not available when the features were built.
 
-## Current status — read this carefully
+## Current status, read this carefully
 
 **v0.5.0a1 is a pre-release containing two clearly separated evidence layers.**
 
@@ -64,7 +64,7 @@ This release must therefore **not** be described as evidence that contextual fou
 
 Most published comparisons appear when a method wins. That selection pressure makes the literature look more favourable to new methods than the underlying evidence supports.
 
-A benchmark designed in advance, with a declared metric and a leakage-controlled holdout, produces a usable answer either way. Here the answer was no — and reporting it plainly is more useful to anyone deciding whether to invest GPU time than a reframed positive.
+A benchmark designed in advance, with a declared metric and a leakage-controlled holdout, produces a usable answer either way. Here the answer was no, and reporting it plainly is more useful to anyone deciding whether to invest GPU time than a reframed positive.
 
 The 14 holdout positives are also worth stating openly: with that few events, the confidence interval is wide, and the honest reading is "no detectable improvement," not "proven equivalence."
 

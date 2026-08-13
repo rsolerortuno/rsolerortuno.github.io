@@ -17,7 +17,7 @@ toc-title: "On this page"
 
 Spatial transcriptomics measures RNA molecules at precise tissue coordinates. Before any biology can be read out, a segmentation method must assign each transcript to a cell.
 
-Cell boundaries are genuinely uncertain in dense tissue — cells overlap, nuclei are incomplete, transcripts sit near borders. A small boundary change can move a marker from one cell type to another and change the downstream conclusion. Most analyses treat one segmentation output as final and never propagate that uncertainty into the claim.
+Cell boundaries are genuinely uncertain in dense tissue: cells overlap, nuclei are incomplete, transcripts sit near borders. A small boundary change can move a marker from one cell type to another and change the downstream conclusion. Most analyses treat one segmentation output as final and never propagate that uncertainty into the claim.
 
 This matters for statements of exactly the kind people report:
 
@@ -65,7 +65,7 @@ The separation between the **cell anchor** and the **transcript assignment** is 
 | Planted-truth simulation | 36 scenarios, 288 observations | Tests signed flips and estimator calibration |
 | Xenium RCC perturbation | 77.1M transcript records | Tests controlled boundary reassignment around one vendor segmentation |
 
-The simulation layer matters because it is the only place where ground truth is known by construction — real tissue cannot tell you which assignment was correct.
+The simulation layer matters because it is the only place where ground truth is known by construction, because real tissue cannot tell you which assignment was correct.
 
 ## Verified release
 

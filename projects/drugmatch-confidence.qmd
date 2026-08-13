@@ -14,7 +14,7 @@ toc-title: "On this page"
 
 ## The question
 
-Can molecular profiles from cancer cell lines help predict which models will respond to a drug—and can the tool say when its own prediction should not be trusted?
+Can molecular profiles from cancer cell lines help predict which models will respond to a drug, and can the tool say when its own prediction should not be trusted?
 
 DrugMatch-Confidence combines DepMap molecular features with PRISM dose-response measurements. For a supported drug and cell line, it returns more than a sensitive/resistant label:
 

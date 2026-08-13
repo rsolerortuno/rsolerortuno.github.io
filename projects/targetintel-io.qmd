@@ -60,9 +60,9 @@ TargetIntel-IO has progressed through five released layers:
 - **v0.3.0:** audited extraction, review and grounded-synthesis infrastructure;
 - **v0.4.0:** modality-specific target feasibility;
 - **v0.5.0:** optional DepMap/CRISPR functional-dependency architecture and portable reports;
-- **v0.6.0:** graph-native evidence—an immutable evidence graph with deterministic local retrieval and a provider-neutral, GraphRAG-compatible export. The decision plane remains authoritative: graph output cannot promote a candidate into the productive ranking without an explicit validation and authorization gate.
+- **v0.6.0:** graph-native evidence, an immutable evidence graph with deterministic local retrieval and a provider-neutral, GraphRAG-compatible export. The decision plane remains authoritative: graph output cannot promote a candidate into the productive ranking without an explicit validation and authorization gate.
 
-The productive baseline contains **300 genes**. The current discovery universe contains **331 unique identities**. The full **18,531-gene DepMap background** is context only—not a new productive ranking.
+The productive baseline contains **300 genes**. The current discovery universe contains **331 unique identities**. The full **18,531-gene DepMap background** is context only, not a new productive ranking.
 
 ## Validation without overclaiming
 

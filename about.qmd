@@ -8,8 +8,8 @@ page-layout: full
 
 <header class="page-hero about-hero">
 <p class="eyebrow">Experience & approach</p>
-<h1>I work where biological complexity meets therapeutic decisions.</h1>
-<p>My background spans antibody immunotherapies, precision oncology, developmental neurobiology and computational tool building. Across those settings, my role is consistent: structure ambiguous questions, connect evidence across modalities and communicate what the data can—and cannot—support.</p>
+<h1>I work between the biology and the decision.</h1>
+<p>My background covers antibody immunotherapies, precision oncology, developmental neurobiology and building computational tools. The job has been the same in all of them: take a vague question, pull evidence from whatever modalities are available, and say plainly what the data supports and what it does not.</p>
 </header>
 
 <section class="about-intro" aria-labelledby="profile-title">
@@ -19,9 +19,9 @@ page-layout: full
 <div>
 <p class="section-index">Profile</p>
 <h2 id="profile-title">Computational biologist with 6+ years across industry and academia.</h2>
-<p>I hold a PhD in bioinformatics and have 2+ years of postdoctoral experience in immuno-oncology and tumour biology, using single-cell and spatial transcriptomics, multi-omic integration and ML/AI to drive biomarker discovery, validation and patient stratification. My industry work spans antibody-based immunotherapies against TNFR2 and FcγRIIB, drug mode-of-action studies, and translational research across oncology and autoimmune disease.</p>
-<p>I combine deep biological context with hands-on analysis and software engineering, which means I can move from experimental design and QC through multi-omic integration, statistical modelling and interpretation to a result an experimental or clinical team can act on. I build reproducible R and Python pipelines on HPC and AWS, and report findings directly to clinical, translational and non-technical stakeholders.</p>
-<p>I have worked in Spain, Germany, the United Kingdom and Sweden, and collaborate comfortably across disciplines and cultures.</p>
+<p>I have a PhD in bioinformatics and two years of postdoctoral work in immuno-oncology and tumour biology, using single-cell and spatial transcriptomics, multi-omic integration and machine learning for biomarker discovery, validation and patient stratification. In industry that has meant antibody immunotherapies against TNFR2 and FcγRIIB, mode-of-action studies, and translational work in oncology and autoimmune disease.</p>
+<p>The useful part is that I know the biology and can also write the code. I can pick up a question at experimental design and QC and carry it through integration, modelling and interpretation to something an experimental or clinical team can use. The pipelines are R and Python, they run on HPC and AWS, and they are meant to be rerun by someone who is not me.</p>
+<p>I have worked in Spain, Germany, the United Kingdom and Sweden, and I am comfortable presenting to people whose background is nothing like mine.</p>
 <div class="mini-facts">
 <span><strong>Current</strong> BioInvent International</span>
 <span><strong>Based</strong> Lund, Sweden</span>
@@ -40,16 +40,16 @@ page-layout: full
 
 <div class="experience-list">
 <article class="experience-entry">
-<div class="experience-meta"><span>Aug 2025 — Aug 2026</span><span>Lund, Sweden</span></div>
+<div class="experience-meta"><span>Aug 2025 – Aug 2026</span><span>Lund, Sweden</span></div>
 <div class="experience-content">
 <p class="company">BioInvent International AB</p>
 <h3>Bioinformatics Research Scientist</h3>
 <ul>
-<li>Lead multi-omic analysis across the BI-1206 anti-FcγRIIB and BI-1808 anti-TNFR2 antibody programs, integrating scRNA-seq, CITE-seq, spatial transcriptomics, bulk RNA-seq, proteomics and clinical metadata, and connecting evidence across patient, mouse and in-vitro samples to advance mode-of-action and resistance-mechanism understanding.</li>
+<li>Carried out multi-omic analysis across the BI-1206 anti-FcγRIIB and BI-1808 anti-TNFR2 antibody programmes, integrating scRNA-seq, CITE-seq, spatial transcriptomics, bulk RNA-seq, proteomics and clinical metadata, and connecting evidence across patient, mouse and in-vitro samples to advance mode-of-action and resistance-mechanism understanding.</li>
 <li>Uncovered a non-canonical myeloid activation pathway underlying antibody response by resolving distinct immune activation states across a 30-patient clinical PBMC cohort spanning the BI-1808 and BI-1910 programs, extending the mode-of-action pipeline to integrate clinical single-cell RNA-seq with targeted pathway-level analysis.</li>
 <li>Characterised drug mechanism of action using scRNA-seq, spatial transcriptomics and targeted gene-module scoring, resolving antibody-responsive immune cell states, macrophage polarisation profiles and tissue niches in blood and tumour microenvironments to support early patient selection.</li>
 <li>Validated cell-type-specific genetic regulation of a candidate autoimmune target using a public single-cell eQTL atlas, auditing raw alignment quality and dataset chemistry to protect quantification against multi-mapping read loss within a polymorphic gene family, directly informing a target-validation go/no-go decision.</li>
-<li>Established a novel biomarker and therapeutic target for autoimmune disease by curating and integrating public single-cell atlases across three published inflammatory bowel disease cohorts—ulcerative colitis, Crohn's disease and healthy controls—demonstrating specificity restricted to M1 macrophages, inflammatory monocytes and neutrophils.</li>
+<li>Established a novel biomarker and therapeutic target for autoimmune disease by curating and integrating public single-cell atlases across three published inflammatory bowel disease cohorts (ulcerative colitis, Crohn's disease and healthy controls), demonstrating specificity restricted to M1 macrophages, inflammatory monocytes and neutrophils.</li>
 <li>Strengthened the biological rationale for a novel bispecific target by integrating clinical single-cell and spatial transcriptomics into the biomarker strategy, identifying a significant expression correlation with a canonical regulatory T-cell marker ahead of experimental validation.</li>
 <li>Built and trained a variational autoencoder to separate strain-level technical variability from tumour biomarker signal across genetically diverse mouse strains, designed to extrapolate candidate biomarkers to human population heterogeneity.</li>
 <li>Delivered a reusable single-cell and spatial immune atlas alongside an AWS-based, Docker-containerised HPC environment built from scratch, enabling reproducible computing across the team, with documented R/Python pipelines, automated QC and reporting for technical and non-technical audiences.</li>
@@ -58,20 +58,20 @@ page-layout: full
 </article>
 
 <article class="experience-entry">
-<div class="experience-meta"><span>Sep 2024 — Jan 2025</span><span>Seville, Spain</span></div>
+<div class="experience-meta"><span>Sep 2024 – Jan 2025</span><span>Seville, Spain</span></div>
 <div class="experience-content">
 <p class="company">Bristol Myers Squibb</p>
 <h3>Visiting Scientist, Computational Biology</h3>
 <ul>
 <li>Designed gene signatures from patient tumour samples across lung, pancreatic and breast cancers, applying SNV and mutation analysis to inform precision-medicine and drug-resistance strategies.</li>
-<li>Mapped preclinical models—cell lines, xenografts and organoids—to clinical tumour subtypes using TCGA and DepMap/Celligner, improving the translational validity of preclinical findings.</li>
+<li>Mapped preclinical models (cell lines, xenografts and organoids) to clinical tumour subtypes using TCGA and DepMap/Celligner, improving the translational validity of preclinical findings.</li>
 <li>Performed spatial transcriptomics analysis with NanoString CosMx and 10x Visium HD to resolve tissue-level expression programs across tumour cohorts.</li>
 </ul>
 </div>
 </article>
 
 <article class="experience-entry">
-<div class="experience-meta"><span>Sep 2020 — Sep 2024</span><span>Alicante, Spain</span></div>
+<div class="experience-meta"><span>Sep 2020 – Sep 2024</span><span>Alicante, Spain</span></div>
 <div class="experience-content">
 <p class="company">Institute of Neurosciences, CSIC–UMH</p>
 <h3>Bioinformatics Research Scientist · PhD</h3>
@@ -86,7 +86,7 @@ page-layout: full
 </article>
 
 <article class="experience-entry">
-<div class="experience-meta"><span>Mar 2023 — Jun 2023</span><span>Munich, Germany</span></div>
+<div class="experience-meta"><span>Mar 2023 – Jun 2023</span><span>Munich, Germany</span></div>
 <div class="experience-content">
 <p class="company">Helmholtz Munich</p>
 <h3>Visiting Scientist, Bioinformatics</h3>
@@ -98,20 +98,20 @@ page-layout: full
 </article>
 
 <article class="experience-entry experience-entry-compact">
-<div class="experience-meta"><span>Aug 2018 — Jun 2019</span><span>London, United Kingdom</span></div>
+<div class="experience-meta"><span>Aug 2018 – Jun 2019</span><span>London, United Kingdom</span></div>
 <div class="experience-content">
 <p class="company">SUEZ</p>
 <h3>Junior Scientist</h3>
-<p>Applied environmental and molecular analysis in an industrial laboratory setting, working to defined quality standards across a high-throughput sample pipeline.</p>
+<p>Ran bioinformatic and experimental analysis on hospital samples, working to defined quality standards across a high-throughput processing pipeline.</p>
 </div>
 </article>
 
 <article class="experience-entry experience-entry-compact">
-<div class="experience-meta"><span>Sep 2017 — Jul 2018</span><span>Madrid, Spain</span></div>
+<div class="experience-meta"><span>Sep 2017 – Jul 2018</span><span>Madrid, Spain</span></div>
 <div class="experience-content">
 <p class="company">IMDEA</p>
 <h3>Junior Scientist</h3>
-<p>Early research role that built my foundations in experimental molecular biology, data analysis and cross-functional scientific collaboration.</p>
+<p>Ran biochemical and bioinformatic analysis on CRISPR-Cas9 and derived editing systems, covering both the bench work and the sequencing analysis behind it.</p>
 </div>
 </article>
 </div>
@@ -121,7 +121,7 @@ page-layout: full
 <div class="section-heading">
 <div>
 <p class="section-index">Capabilities</p>
-<h2 id="capabilities-title">A practical, end-to-end toolkit</h2>
+<h2 id="capabilities-title">What I work with</h2>
 </div>
 </div>
 <div class="capability-list">
@@ -147,10 +147,10 @@ page-layout: full
 </div>
 </div>
 <div class="education-grid">
-<article><span>2020—2025</span><h3>PhD, Bioinformatics</h3><p>Helmholtz Munich · CSIC · Miguel Hernández University</p></article>
-<article><span>2018—2020</span><h3>MSc, Bioinformatics & Biostatistics</h3><p>University of Barcelona</p></article>
-<article><span>2017—2018</span><h3>MSc, Molecular Biology</h3><p>Autonomous University of Madrid</p></article>
-<article><span>2013—2017</span><h3>BSc, Biology</h3><p>University of Alicante</p></article>
+<article><span>2020–2025</span><h3>PhD, Bioinformatics</h3><p>Helmholtz Munich · CSIC · Miguel Hernández University</p></article>
+<article><span>2018–2020</span><h3>MSc, Bioinformatics & Biostatistics</h3><p>University of Barcelona</p></article>
+<article><span>2017–2018</span><h3>MSc, Molecular Biology</h3><p>Autonomous University of Madrid</p></article>
+<article><span>2013–2017</span><h3>BSc, Biology</h3><p>University of Alicante</p></article>
 </div>
 </section>
 
@@ -187,7 +187,7 @@ page-layout: full
 <section class="contact-panel compact-contact">
 <p class="section-index">Next chapter</p>
 <h2>Open to computational biology opportunities from September 2026.</h2>
-<p>I am especially interested in roles that connect human biology, multi-omic data and therapeutic development.</p>
+<p>What interests me most are roles where human biology, multi-omic data and drug development actually sit in the same room.</p>
 <div class="button-row">
 <a class="button button-light" href="mailto:rafaelsolersanblas@gmail.com">Start a conversation</a>
 <a class="button button-ghost" href="assets/Rafael_Soler_Ortuno_CV.pdf" target="_blank" rel="noopener" download>Download CV <span aria-hidden="true">↓</span></a>

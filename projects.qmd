@@ -1,6 +1,6 @@
 ---
 pagetitle: "Tools | Rafael Soler Ortuño"
-description: "Public research-software projects in target discovery and safety, method reliability, pharmacogenomics, agentic development, and protein deep learning."
+description: "Public research software for target discovery and safety, method reliability, drug response, protein modelling and auditable agentic development."
 page-layout: full
 ---
 
@@ -8,13 +8,13 @@ page-layout: full
 
 <header class="page-hero">
 <p class="eyebrow">Public research software</p>
-<h1>Tools built to make scientific reasoning inspectable.</h1>
-<p>My projects cover different biological questions, but share the same standard: clear scope, reproducible inputs, visible uncertainty and no inflated claims.</p>
+<h1>Tools built so the reasoning can be checked.</h1>
+<p>They answer different biological questions, but I build them the same way. Each one states its scope up front, uses inputs you can download and reproduce, keeps the uncertainty visible, and stops at what the data actually supports.</p>
 </header>
 
 <section class="tools-overview" aria-labelledby="overview-title">
 <h2 id="overview-title" class="overview-title">The eight tools at a glance</h2>
-<p class="overview-lede">Grouped by the question they answer. Each one addresses a decision that comes up early, before anyone commits time or money to a candidate.</p>
+<p class="overview-lede">Grouped by the question they answer. Each one deals with a decision that lands early, before anyone commits real time or money to a candidate.</p>
 
 <div class="overview-table-wrap">
 <table class="overview-table">
@@ -159,7 +159,7 @@ page-layout: full
 </div>
 <h2 id="reachgap-title">reach-gap</h2>
 <p class="project-kicker">Is the target physically reachable?</p>
-<p>A tumour target can be strongly expressed and still sit too far from a perfused vessel for an antibody to engage it. <code>reach-gap</code> couples simplified reaction–diffusion modelling with an explicit evidence graph.</p>
+<p>A tumour target can be strongly expressed and still sit too far from a perfused vessel for an antibody to engage it. <code>reach-gap</code> combines simplified reaction–diffusion modelling with an explicit evidence graph.</p>
 <ul class="check-list">
 <li>Separates same-tissue measurement from external validation and literature priors</li>
 <li>Relative target ranking across six defensible vessel definitions</li>
@@ -226,7 +226,7 @@ page-layout: full
 </div>
 <aside class="showcase-proof" aria-label="FM Value Audit current finding">
 <p class="proof-label">Current finding</p>
-<div class="proof-stat"><strong>NOT<br>SUPPORTED</strong><span>static Geneformer geometry did not improve AUPRC</span></div>
+<div class="proof-stat proof-stat-wide"><strong>NOT SUPPORTED</strong><span>static Geneformer geometry did not improve AUPRC</span></div>
 <div class="proof-stat"><strong>79,542</strong><span>rows in the temporal holdout</span></div>
 <p class="proof-note">The contextual-embedding protocol is preregistered but not yet executed. This release is not evidence that foundation models help.</p>
 </aside>
@@ -316,7 +316,7 @@ page-layout: full
 <section class="contact-panel compact-contact">
 <p class="section-index">Collaboration</p>
 <h2>Interested in the science or the implementation?</h2>
-<p>Every repository is public. For research, product or computational biology conversations, feel free to get in touch.</p>
+<p>Every repository is public. If you want to talk about the biology or the code behind it, get in touch.</p>
 <div class="button-row">
 <a class="button button-light" href="mailto:rafaelsolersanblas@gmail.com">Email me</a>
 <a class="button button-ghost" href="https://github.com/rsolerortuno">All GitHub repositories</a>
