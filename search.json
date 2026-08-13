@@ -1,10 +1,339 @@
 [
   {
+    "objectID": "projects/segmentation-fragility.html",
+    "href": "projects/segmentation-fragility.html",
+    "title": "segmentation-fragility",
+    "section": "",
+    "text": "v0.5.0 · Research preview View repository ↗"
+  },
+  {
+    "objectID": "projects/segmentation-fragility.html#the-problem",
+    "href": "projects/segmentation-fragility.html#the-problem",
+    "title": "segmentation-fragility",
+    "section": "The problem",
+    "text": "The problem\nSpatial transcriptomics measures RNA molecules at precise tissue coordinates. Before any biology can be read out, a segmentation method must assign each transcript to a cell.\nCell boundaries are genuinely uncertain in dense tissue — cells overlap, nuclei are incomplete, transcripts sit near borders. A small boundary change can move a marker from one cell type to another and change the downstream conclusion. Most analyses treat one segmentation output as final and never propagate that uncertainty into the claim.\nThis matters for statements of exactly the kind people report:\n\nfewer than 5% of T-cell anchors express MS4A1;\nfewer than 5% of B-cell anchors express CD3E;\nfewer than 5% of myeloid anchors express EPCAM.\n\nA claim can look comfortably stable under one assignment system and cross the decision threshold under another."
+  },
+  {
+    "objectID": "projects/segmentation-fragility.html#the-idea",
+    "href": "projects/segmentation-fragility.html#the-idea",
+    "title": "segmentation-fragility",
+    "section": "The idea",
+    "text": "The idea\nThe tool does not ask which segmentation is best. It asks whether the claim survives.\n\n\n\n\n\nflowchart LR\n    A[Fixed biological anchors] --&gt; B[Xenium vendor]\n    A --&gt; C[ProSeg]\n    A --&gt; D[Baysor]\n    B --&gt; E[Same claim, three assignments]\n    C --&gt; E\n    D --&gt; E\n    E --&gt; F{Anchor coverage sufficient?}\n    F --&gt;|No| G[Not reportable]\n    F --&gt;|Yes| H{Threshold decision stable?}\n    H --&gt;|Yes| I[Robust]\n    H --&gt;|No| J[Segmentation-sensitive]\n\n\n\n\n\n\nThe separation between the cell anchor and the transcript assignment is what makes this work: anchors stay conservative and fixed, assignment varies, and the claim becomes the unit of analysis rather than the segmented object."
+  },
+  {
+    "objectID": "projects/segmentation-fragility.html#design-choices",
+    "href": "projects/segmentation-fragility.html#design-choices",
+    "title": "segmentation-fragility",
+    "section": "Design choices",
+    "text": "Design choices\n\n\n\n\n\n\n\nChoice\nReason\n\n\n\n\nClaim as unit of analysis\nThe scientific output is the claim, not the segmentation mask\n\n\nFixed biological denominators\nOtherwise a change in anchors and a change in assignment are confounded\n\n\nThree independent assignment systems\nOne alternative could be an idiosyncrasy; three is a pattern\n\n\nCoverage requirement before reporting\nA claim computed on too few anchors is noise, not evidence\n\n\nExplicit “not reportable” state\nAbstention beats a confident answer built on insufficient support"
+  },
+  {
+    "objectID": "projects/segmentation-fragility.html#validation",
+    "href": "projects/segmentation-fragility.html#validation",
+    "title": "segmentation-fragility",
+    "section": "Validation",
+    "text": "Validation\n\n\n\n\n\n\n\n\nEvidence layer\nData\nPurpose\n\n\n\n\nPlanted-truth simulation\n36 scenarios, 288 observations\nTests signed flips and estimator calibration\n\n\nXenium RCC perturbation\n77.1M transcript records\nTests controlled boundary reassignment around one vendor segmentation\n\n\n\nThe simulation layer matters because it is the only place where ground truth is known by construction — real tissue cannot tell you which assignment was correct."
+  },
+  {
+    "objectID": "projects/segmentation-fragility.html#verified-release",
+    "href": "projects/segmentation-fragility.html#verified-release",
+    "title": "segmentation-fragility",
+    "section": "Verified release",
+    "text": "Verified release\n\n\n\nItem\nCurrent state\n\n\n\n\nAutomated tests\n62\n\n\nLine coverage\n90.28%\n\n\nBranch-aware coverage\n85.92%\n\n\nContinuous integration\nGitHub Actions\n\n\nLicence\nMIT"
+  },
+  {
+    "objectID": "projects/segmentation-fragility.html#honest-limitations",
+    "href": "projects/segmentation-fragility.html#honest-limitations",
+    "title": "segmentation-fragility",
+    "section": "Honest limitations",
+    "text": "Honest limitations\n\n“Robust” and “segmentation-sensitive” refer to a predeclared numerical claim threshold in this audit. They are not clinical safety conclusions and do not establish biological ground truth.\nResults are specific to the claims, anchors and thresholds declared before the analysis.\nAgreement across three segmentation methods reduces the chance of an artefact; it does not prove the underlying biology is correct."
+  },
+  {
+    "objectID": "projects/targetintel-io.html",
+    "href": "projects/targetintel-io.html",
+    "title": "TargetIntel-IO",
+    "section": "",
+    "text": "v0.6.0 · Research preview View repository ↗"
+  },
+  {
+    "objectID": "projects/targetintel-io.html#the-problem",
+    "href": "projects/targetintel-io.html#the-problem",
+    "title": "TargetIntel-IO",
+    "section": "The problem",
+    "text": "The problem\nA gene can be highly relevant to disease and still be the wrong direct therapeutic target. In anti-PD-1-resistant melanoma, the same candidate might instead be a resistance biomarker, an immune-context marker, a tumour-intrinsic dependency or a mechanism with poor tractability.\nTargetIntel-IO does not compress those possibilities into one universal score. It asks a more useful question: valuable for what therapeutic purpose?"
+  },
+  {
+    "objectID": "projects/targetintel-io.html#what-the-tool-does",
+    "href": "projects/targetintel-io.html#what-the-tool-does",
+    "title": "TargetIntel-IO",
+    "section": "What the tool does",
+    "text": "What the tool does\nThe platform retrieves and structures evidence, assigns stable biological roles, and produces separate rankings for:\n\nAntibody / IO combination strategies;\nResistance biomarker strategies;\nTumour-intrinsic small-molecule strategies.\n\n\n\n\n\n\nflowchart LR\n    A[Open Targets + curated rules] --&gt; B[Deterministic features]\n    B --&gt; C[Stable role]\n    C --&gt; D[Three intent rankings]\n    D --&gt; E[Cards, reports and figures]\n    F[Reviewed evidence] --&gt; G[Read-only report layers]\n    H[DepMap 26Q1] --&gt; G\n    G --&gt; E\n\n\n\n\n\n\nThe deterministic baseline remains authoritative. Optional evidence, feasibility and functional-dependency layers can decorate a report, but they cannot silently change baseline features, roles, scores or ranks."
+  },
+  {
+    "objectID": "projects/targetintel-io.html#why-this-design-matters",
+    "href": "projects/targetintel-io.html#why-this-design-matters",
+    "title": "TargetIntel-IO",
+    "section": "Why this design matters",
+    "text": "Why this design matters\n\n\n\n\n\n\n\nCandidate pattern\nMore defensible interpretation\n\n\n\n\nImmune checkpoint with combination rationale\nAntibody / IO-combination candidate\n\n\nLoss associated with resistance\nBiomarker or mechanistic marker\n\n\nSelective tumour-cell dependency\nTumour-intrinsic intervention candidate\n\n\nBroad essentiality or poor modality fit\nBiologically relevant, but weak direct target\n\n\n\nThis separation makes a result easier to challenge, reproduce and discuss with experimental teams."
+  },
+  {
+    "objectID": "projects/targetintel-io.html#current-release",
+    "href": "projects/targetintel-io.html#current-release",
+    "title": "TargetIntel-IO",
+    "section": "Current release",
+    "text": "Current release\nTargetIntel-IO has progressed through five released layers:\n\nv0.1.3: deterministic role classification and intent-specific ranking;\nv0.2.0: typed, source-linked Common Evidence Layer;\nv0.3.0: audited extraction, review and grounded-synthesis infrastructure;\nv0.4.0: modality-specific target feasibility;\nv0.5.0: optional DepMap/CRISPR functional-dependency architecture and portable reports;\nv0.6.0: graph-native evidence—an immutable evidence graph with deterministic local retrieval and a provider-neutral, GraphRAG-compatible export. The decision plane remains authoritative: graph output cannot promote a candidate into the productive ranking without an explicit validation and authorization gate.\n\nThe productive baseline contains 300 genes. The current discovery universe contains 331 unique identities. The full 18,531-gene DepMap background is context only—not a new productive ranking."
+  },
+  {
+    "objectID": "projects/targetintel-io.html#validation-without-overclaiming",
+    "href": "projects/targetintel-io.html#validation-without-overclaiming",
+    "title": "TargetIntel-IO",
+    "section": "Validation without overclaiming",
+    "text": "Validation without overclaiming\nThe internal 56-target benchmark measures implementation consistency:\n\n\n\nMetric\nCurrent snapshot\n\n\n\n\nOpen Targets retrieval coverage\n25 / 56 (44.6%)\n\n\nStable-role accuracy on covered targets\n100.0%\n\n\nStrict primary-intent accuracy\n91.1%\n\n\nAcceptable-intent accuracy\n100.0%\n\n\n\nA 42-scenario local sensitivity analysis produced a minimum Spearman rank correlation of 0.8762. These results test deterministic behaviour around curated rules. They are not independent biological or clinical validation."
+  },
+  {
+    "objectID": "projects/targetintel-io.html#outputs",
+    "href": "projects/targetintel-io.html#outputs",
+    "title": "TargetIntel-IO",
+    "section": "Outputs",
+    "text": "Outputs\nThe CLI generates:\n\ndeterministic feature tables and three ranked target lists;\ntarget cards and HTML reports;\nscore and rank-shift figures;\nbenchmark and sensitivity snapshots;\noptional reviewed-evidence and feasibility sections;\noptional portable DepMap/CRISPR reports."
+  },
+  {
+    "objectID": "projects/targetintel-io.html#scientific-boundary",
+    "href": "projects/targetintel-io.html#scientific-boundary",
+    "title": "TargetIntel-IO",
+    "section": "Scientific boundary",
+    "text": "Scientific boundary\nTargetIntel-IO is research-use software. It does not recommend treatment, establish causality, validate a therapeutic target or biomarker, or predict patient response. The immediate future direction is external validation with public clinical response cohorts and single-cell/spatial context while preserving the same evidence boundaries.\n\n\nExplore the implementation, reports and versioned examples.\n\nOpen TargetIntel-IO on GitHub ↗"
+  },
+  {
+    "objectID": "projects/dev-autopilot.html",
+    "href": "projects/dev-autopilot.html",
+    "title": "Dev Autopilot",
+    "section": "",
+    "text": "v0.6.0 · Research preview View repository ↗"
+  },
+  {
+    "objectID": "projects/dev-autopilot.html#the-problem",
+    "href": "projects/dev-autopilot.html#the-problem",
+    "title": "Dev Autopilot",
+    "section": "The problem",
+    "text": "The problem\nAI coding agents can produce useful work, but a scientific software project also needs durable state, explicit permissions, reproducible tests, independent review and a clear boundary around human authority.\nDev Autopilot turns those requirements into a workflow instead of relying on one long prompt or one agent grading its own work."
+  },
+  {
+    "objectID": "projects/dev-autopilot.html#authority-is-separated",
+    "href": "projects/dev-autopilot.html#authority-is-separated",
+    "title": "Dev Autopilot",
+    "section": "Authority is separated",
+    "text": "Authority is separated\n\n\n\n\n\nflowchart LR\n    A[Project charter] --&gt; B[Milestone]\n    B --&gt; C[Implementation]\n    C --&gt; D[Deterministic gates]\n    D --&gt; E[Adversarial audit]\n    E --&gt; F[Independent review]\n    F --&gt; G[Bounded correction]\n    G --&gt; D\n    F --&gt; H[Milestone acceptance]\n    H --&gt; B\n    H --&gt; I[Ready for human release]\n\n\n\n\n\n\nPlanning advice is not approval. The implementation agent cannot approve its own diff. Review agents cannot override mechanical gates. The system stops at READY_FOR_HUMAN_RELEASE, leaving commit, pull-request, tag and merge decisions to a person.\nReview conclusions are bound to the exact repository diff they were written against. Any later change invalidates them, and unresolved or invalidated P0/P1 findings block milestone acceptance."
+  },
+  {
+    "objectID": "projects/dev-autopilot.html#continuous-project-execution",
+    "href": "projects/dev-autopilot.html#continuous-project-execution",
+    "title": "Dev Autopilot",
+    "section": "Continuous project execution",
+    "text": "Continuous project execution\nA project starts from an immutable charter: mission, definition of done, non-goals, autonomy policy and a dependency-checked milestone DAG. ask_questions: false is enforced by the schema, so the workflow runs to completion on safe, reversible defaults rather than stopping to ask.\nWhen it genuinely cannot proceed, it writes a machine-readable blocker with one required action and an explicit resume condition, instead of a conversational question nobody is there to answer."
+  },
+  {
+    "objectID": "projects/dev-autopilot.html#what-persists",
+    "href": "projects/dev-autopilot.html#what-persists",
+    "title": "Dev Autopilot",
+    "section": "What persists",
+    "text": "What persists\nSQLite records:\n\nevery legal state transition;\nappend-only events and stop reasons;\nretry counts for each agent role;\nfindings, reviews, assumptions and evidence;\nquota pauses and exact resume states;\nidempotency hashes and diff-keyed review caches;\nexpiring exclusive run locks, leases, heartbeats and fencing tokens.\n\nThis allows a workflow to recover after process restarts without guessing where it left off."
+  },
+  {
+    "objectID": "projects/dev-autopilot.html#safety-design",
+    "href": "projects/dev-autopilot.html#safety-design",
+    "title": "Dev Autopilot",
+    "section": "Safety design",
+    "text": "Safety design\nVersion 0.6.0 includes:\n\nvalidated YAML/JSON contracts with unknown fields rejected;\nscope, test, context-size and Git-metadata gates;\nbounded gate autocorrection instead of a terminal failure when an implementation can be repaired;\nfail-closed transitions and a fail-closed milestone acceptance decision;\nrepository-bounded, read-only audit instructions with schema-constrained report output;\ndeterministic jitter, short linear retry backoff and quota-reset support;\nbounded review and correction rounds;\nverified review bundles: JSON payloads, a human-readable HTML report and a folded digest;\nfake adapters for complete offline integration tests, including a simulated Drive API.\n\nReal execution requires an explicit network opt-in. Shell syntax inside test commands also requires an explicit opt-in because it expands the trust boundary."
+  },
+  {
+    "objectID": "projects/dev-autopilot.html#what-v0.6.0-changed",
+    "href": "projects/dev-autopilot.html#what-v0.6.0-changed",
+    "title": "Dev Autopilot",
+    "section": "What v0.6.0 changed",
+    "text": "What v0.6.0 changed\nThe M00–M05 architecture is unchanged. This release folds in the fixes that only surfaced once the orchestrator was pointed at a real repository:\n\nbuilt-in default commands for the Codex, AGY and Claude bridges, so a normal run no longer depends on environment variables;\nstructured AGY auditing that starts in an isolated project, removing manual per-repository read permissions;\ncontinuous retry and resume behaviour for transient agent failures;\nstricter classification of provider quota exhaustion versus malformed bridge output;\nlive verbose progress reporting and stricter changed-file validation;\ndeterministic SHA-256 identifiers for long Google Drive appProperties keys.\n\nIt was validated end to end against a real TargetIntel-IO milestone, covering implementation correction, deterministic gates, adversarial audit, independent review, evidence packaging and the final READY_FOR_HUMAN_RELEASE state."
+  },
+  {
+    "objectID": "projects/dev-autopilot.html#why-it-belongs-in-a-scientific-portfolio",
+    "href": "projects/dev-autopilot.html#why-it-belongs-in-a-scientific-portfolio",
+    "title": "Dev Autopilot",
+    "section": "Why it belongs in a scientific portfolio",
+    "text": "Why it belongs in a scientific portfolio\nThe project is not a claim that automation removes scientific judgment. It demonstrates the opposite: agentic workflows become more useful when scientific scope, mechanical correctness, adversarial review and human authority are represented as different responsibilities."
+  },
+  {
+    "objectID": "projects/dev-autopilot.html#current-boundary",
+    "href": "projects/dev-autopilot.html#current-boundary",
+    "title": "Dev Autopilot",
+    "section": "Current boundary",
+    "text": "Current boundary\nDev Autopilot is research-preview software. It coordinates and audits work, but never stages, commits, pushes, tags or merges product code. A human must inspect the final diff and evidence.\n\n\nReview the state machine, charter schema, review-bundle format and the real-project execution evidence.\n\nOpen Dev Autopilot on GitHub ↗"
+  },
+  {
+    "objectID": "projects/mtf-prediction.html",
+    "href": "projects/mtf-prediction.html",
+    "title": "MTF Prediction",
+    "section": "",
+    "text": "v1.0.0 · Research analysis View repository ↗"
+  },
+  {
+    "objectID": "projects/mtf-prediction.html#the-scientific-question",
+    "href": "projects/mtf-prediction.html#the-scientific-question",
+    "title": "MTF Prediction",
+    "section": "The scientific question",
+    "text": "The scientific question\nSome membrane proteins release intracellular fragments that participate in nuclear signalling. Could topological domains of mammalian membrane proteins contain sequence patterns that a deep-learning model recognises as transcription-factor-like?\nMTF Prediction is a research-analysis archive built to generate candidates and explore how strongly the result depends on protein-domain boundaries."
+  },
+  {
+    "objectID": "projects/mtf-prediction.html#analysis-design",
+    "href": "projects/mtf-prediction.html#analysis-design",
+    "title": "MTF Prediction",
+    "section": "Analysis design",
+    "text": "Analysis design\nReviewed human and mouse membrane proteins from UniProtKB 2022_05 were separated into cytoplasmic, extracellular and lumenal domains. Each eligible domain was evaluated under three boundary definitions:\n\n\n\n\n\n\n\nCondition\nSequence submitted to the model\n\n\n\n\nNo TMD\nAnnotated topological domain only\n\n\nHalf TMD\nDomain extended by approximately half of each adjacent transmembrane segment\n\n\nFull TMD\nDomain extended across the complete adjacent transmembrane segment\n\n\n\n\n\n\n\n\nflowchart LR\n    A[UniProtKB topology] --&gt; B[Cytoplasmic, extracellular, lumenal]\n    B --&gt; C[No, half or full TMD]\n    C --&gt; D[Coordinate-aware FASTA]\n    D --&gt; E[DeepTFactor]\n    E --&gt; F[Candidate predictions]\n    F --&gt; G[Captum Integrated Gradients]"
+  },
+  {
+    "objectID": "projects/mtf-prediction.html#interpretation",
+    "href": "projects/mtf-prediction.html#interpretation",
+    "title": "MTF Prediction",
+    "section": "Interpretation",
+    "text": "Interpretation\nDeepTFactor assigns transcription-factor-like scores to protein fragments. For selected candidates, Captum Integrated Gradients provides residue-level attribution, helping identify which positions influenced the model.\nThe public repository preserves:\n\nhuman and mouse processed inputs;\nGFF-to-domain coordinate transformations;\nFASTA fragments across boundary conditions;\nprediction outputs and filtered candidate tables;\nattribution tables and sequence-logo figures;\nthe original scripts and a machine-readable citation."
+  },
+  {
+    "objectID": "projects/mtf-prediction.html#what-the-project-demonstrates",
+    "href": "projects/mtf-prediction.html#what-the-project-demonstrates",
+    "title": "MTF Prediction",
+    "section": "What the project demonstrates",
+    "text": "What the project demonstrates\nThis project connects biological annotation, command-line data processing, protein deep learning and model interpretation. It also exposes a biologically important sensitivity question: if a prediction changes when the boundary moves by a few residues, it should be interpreted differently from one that is stable across all three definitions."
+  },
+  {
+    "objectID": "projects/mtf-prediction.html#scientific-boundary",
+    "href": "projects/mtf-prediction.html#scientific-boundary",
+    "title": "MTF Prediction",
+    "section": "Scientific boundary",
+    "text": "Scientific boundary\nA positive prediction only means that a fragment contains sequence features associated with transcription factors by the selected model. It does not establish DNA binding, nuclear localisation, proteolytic activation or transcriptional function in vivo. Orthogonal experimental validation is required.\nThe repository is a research archive, not a packaged end-to-end application, and remains tied to the 2022_05 UniProtKB release and the original DeepTFactor checkpoint.\n\n\nExplore the full analysis matrix, processed inputs and residue-attribution outputs.\n\nOpen MTF Prediction on GitHub ↗"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "\nBiology,decoded.\n",
+    "section": "",
+    "text": "Rafael Soler Ortuño · Computational Biologist\n\n\nBiology,decoded.\n\n\nI am Rafael, a computational biologist who connects single-cell, spatial and multi-omic data with interpretable machine learning to support target discovery, biomarker strategy and patient stratification.\n\n\nCurious by nature and rigorous by training, I enjoy the difficult space between data, mechanism and therapeutic decisions. I build analyses and tools that make the evidence visible—not just the final answer.\n\n\nExplore my tools ↗ Download CV ↓ Get in touch\n\n\n Based in Lund, Sweden · Open to opportunities from September 2026\n\n\n\n  \n\n\n\n\nCurrently BioInvent InternationalLund, Sweden\n\n\n\n\n    \n\n\n\n\n01 / Now\n\n\nBioinformatics Research Scientist\n\n\nBioInvent International AB · Lund, Sweden\n\n\n\n\nContract period Aug 2025 — Aug 2026\n\n\nCompany focus Antibody therapeutics for oncology and autoimmunity\n\n\nRole  Multi-omics lead · Immunotherapy · Biomarker discovery · Patient stratification · Mode of action \n\n\n\nI lead computational work across the BI-1206 anti-FcγRIIB and BI-1808 anti-TNFR2 programs, integrating clinical, mouse and in-vitro evidence to resolve response and resistance mechanisms. My day-to-day spans scRNA-seq, CITE-seq, spatial transcriptomics, proteomics and clinical metadata, delivered through reproducible AWS and HPC workflows that the rest of the team can rerun.\n\n\n\n\n\n\n02 / Selected tools\n\n\nResearch software built around honest evidence.\n\n\n\nEight public projects spanning target discovery and safety, method reliability, pharmacogenomics, safe agentic development and explainable protein-sequence modelling.\n\n\n\n\n\n\n\n\nField\n\n\nTool\n\n\nThe problem\n\n\nWhat it is for\n\n\nWhat it adds\n\n\nKey skills applied\n\n\n\n\n\n\nTarget discovery & safety\n\n\nTargetIntel-IO\n\n\nA gene linked to disease is not automatically a good drug target, yet most tools collapse that judgement into a single score.\n\n\nSorting candidate genes into genuine targets, biomarkers, resistance mechanisms and poor candidates.\n\n\nThree separate rankings, one per therapeutic strategy, plus the evidence for and against each call.\n\n\n\n\nOpen Targets & DepMap\n\n\nDuckDB\n\n\nBenchmarking\n\n\nSensitivity analysis\n\n\nGrounded LLM synthesis\n\n\nGraphRAG\n\n\nCI/CD\n\n\n\n\n\n\nActivation Liability\n\n\nA target can look safely tumour-specific in healthy resting tissue and stop looking that way once the tissue is inflamed.\n\n\nSpotting targets whose apparent safety margin shrinks under immune activation.\n\n\nA direct resting-versus-activated comparison in public data, with abstention when the evidence is too thin.\n\n\n\n\nSingle-cell RNA-seq\n\n\nPublic GEO cohorts\n\n\nNegative-binomial models\n\n\nDonor-level robustness\n\n\nReproducible manifests\n\n\n\n\n\n\nreach-gap\n\n\nA target can be highly expressed and still sit too far from a working blood vessel for an antibody to reach it.\n\n\nAsking whether target-positive tumour cells are physically accessible to an antibody.\n\n\nMechanistic diffusion modelling paired with an evidence graph that returns NOT_COMPUTED rather than guessing.\n\n\n\n\nReaction–diffusion modelling\n\n\nSpatial transcriptomics\n\n\nUncertainty propagation\n\n\nEvidence provenance\n\n\nDocker\n\n\n\n\n\n\nMethod reliability\n\n\nsegmentation-fragility\n\n\nIn spatial data, a small change in where a cell boundary is drawn can move a marker between cell types and flip the conclusion.\n\n\nTesting whether a spatial-transcriptomics claim survives a change in transcript-to-cell assignment.\n\n\nEach claim is labelled robust, segmentation-sensitive or not reportable, instead of trusting one segmentation as final.\n\n\n\n\nXenium / ProSeg / Baysor\n\n\nClaim-level auditing\n\n\nPlanted-truth simulation\n\n\nAbstention logic\n\n\n\n\n\n\nFM Value Audit\n\n\nA foundation-model embedding can look biologically structured and still add nothing to a real decision.\n\n\nTesting whether single-cell foundation models beat cheaper baselines at target prioritisation.\n\n\nA leakage-aware temporal holdout designed to report a negative result when that is what the data shows.\n\n\n\n\nGeneformer & scGPT\n\n\nLeakage control\n\n\nTemporal holdout\n\n\nAUPRC benchmarking\n\n\nPreregistration\n\n\n\n\n\n\nDrug response prediction\n\n\nDrugMatch-Confidence\n\n\nCancer models respond very differently to the same drug, and predictions rarely say how much to trust them.\n\n\nPredicting how a preclinical cancer model will respond to a given drug.\n\n\nEvery prediction carries a calibrated probability, an uncertainty interval and a warning when the input is unfamiliar.\n\n\n\n\nXGBoost\n\n\nSHAP\n\n\nConformal prediction\n\n\nProbability calibration\n\n\nGrouped cross-validation\n\n\nDepMap / PRISM / GDSC2\n\n\n\n\n\n\nProtein deep learning\n\n\nMTF Prediction\n\n\nWhether a membrane protein carries transcription-factor-like features can change depending on where you draw its boundary.\n\n\nScreening human and mouse membrane-protein domains for those features under different boundary definitions.\n\n\nThe same screen repeated across three boundary conditions, so a result that holds under only one is visible as such.\n\n\n\n\nPyTorch\n\n\nDeepTFactor\n\n\nCaptum integrated gradients\n\n\nUniProtKB\n\n\n\n\n\n\nResearch engineering\n\n\nDev Autopilot\n\n\nAI coding agents can move fast through a repository and leave no reliable trail of what changed or why.\n\n\nRunning AI agents on real code with hard limits on what they may touch.\n\n\nSeparate agents implement, audit and review; deterministic gates decide whether work advances, state survives restarts, and a person keeps merge authority.\n\n\n\n\nAgentic AI orchestration\n\n\nPydantic\n\n\nSQLite\n\n\nStrict typing (mypy)\n\n\nState machines\n\n\nCI/CD\n\n\n\n\n\n\n\n\n\n\n\n01 v0.6.0 · Research preview\n\n\nTargetIntel-IO\n\n\nExplainable target discovery and prioritisation\n\n\nSeparates therapeutic targets, biomarkers, resistance mechanisms and poor direct targets in anti-PD-1-resistant melanoma—then ranks them according to antibody/IO, biomarker or small-molecule intent.\n\n\n3 intent rankings 331 discovery universe 26Q1 real DepMap layer\n\n\nTarget discoveryCRISPREvidence auditGraphRAG\n\n\nCase study → GitHub ↗\n\n\n\n\n02 v0.5.0 · Research preview\n\n\nActivation Liability\n\n\nHidden safety risk in surface targets\n\n\nAudits how much of a target’s apparent tumour selectivity disappears when healthy tissue is inflamed rather than resting, using paired public single-cell cohorts.\n\n\n52 automated tests 85.4% non-I/O coverage\n\n\nTarget safetySingle-cellAbstention\n\n\nCase study → GitHub ↗\n\n\n\n\n03 v0.8.0 · Research preview\n\n\nreach-gap\n\n\nIs the target physically reachable?\n\n\nCouples simplified reaction–diffusion modelling with an explicit evidence graph to ask whether target-positive tumour cells are accessible to an antibody, and returns NOT_COMPUTED when the required biology has not been measured.\n\n\n117 automated tests 20,000 uncertainty draws\n\n\nReaction–diffusionSpatialEvidence graph\n\n\nCase study → GitHub ↗\n\n\n\n\n04 v0.5.0 · Research preview\n\n\nsegmentation-fragility\n\n\nDoes the conclusion survive the segmentation?\n\n\nTests whether a spatial-transcriptomics claim still holds when transcript-to-cell assignment changes across Xenium, ProSeg and Baysor, labelling each claim robust, segmentation-sensitive or not reportable.\n\n\n62 automated tests 90.3% line coverage\n\n\nXeniumClaim auditingAbstention\n\n\nCase study → GitHub ↗\n\n\n\n\n05 v0.5.0a1 · Pre-release\n\n\nFM Value Audit\n\n\nDo foundation models actually add value?\n\n\nA leakage-aware temporal-holdout benchmark testing whether Geneformer and scGPT representations improve target prioritisation over cheaper baselines. The completed v0.4 result was negative, and is reported as such.\n\n\n79,542 holdout rows NOT_SUPPORTED primary conclusion\n\n\nGeneformerscGPTLeakage control\n\n\nCase study → GitHub ↗\n\n\n\n\n06 v1.0.1 · Released\n\n\nDrugMatch-Confidence\n\n\nInterpretable cancer drug-response prediction\n\n\nPredicts sensitivity in preclinical cancer cell lines from DepMap multi-omics and PRISM response data, with SHAP drivers, calibrated uncertainty, prediction intervals and out-of-distribution warnings.\n\n\n5 real drug models 2 validated demos GDSC2 external test\n\n\nXGBoostSHAPDepMapPRISM\n\n\nCase study → GitHub ↗\n\n\n\n\n07 v1.0.0 · Research analysis\n\n\nMTF Prediction\n\n\nTopology-aware protein deep learning\n\n\nScreens human and mouse membrane-protein domains for transcription-factor-like sequence features using DeepTFactor, then interprets selected predictions with Captum Integrated Gradients.\n\n\n2 mammalian species 3 × 3 classes × boundaries\n\n\nPyTorchCaptumUniProt\n\n\nCase study → GitHub ↗\n\n\n\n\n08 v0.6.0 · Research preview\n\n\nDev Autopilot\n\n\nAuditable AI-agent workflow for scientific software\n\n\nA persistent Python/SQLite orchestrator that separates implementation, adversarial audit and independent review, with deterministic gates, resumable milestone execution and final human authority.\n\n\nM00—M05 audited scope 1 real-project validation run\n\n\nAgentic AISQLiteSafety gates\n\n\nCase study → GitHub ↗\n\n\n\nView the complete project portfolio →\n\n\n\n\n\n03 / Experience\n\n\nFrom fundamental biology to therapeutic programs.\n\n\n\nSix-plus years across industry and academia, with a consistent focus on translating complex molecular data into biological conclusions a team can act on.\n\n\n\n\n\n2025—2026\n\n\n\nBioInvent International\n\n\nComputational lead for translational multi-omics across the anti-TNFR2 and anti-FcγRIIB antibody programs, from mode of action to biomarker strategy.\n\n\nLund\n\n\n\n2024—2025\n\n\n\nBristol Myers Squibb\n\n\nPatient-derived gene signatures, preclinical-to-clinical model mapping with TCGA and Celligner, and CosMx/Visium HD spatial transcriptomics across tumour cohorts.\n\n\nSeville\n\n\n\n2020—2024\n\n\n\nInstitute of Neurosciences, CSIC–UMH\n\n\nCross-species single-cell and epigenomic analysis of cortical development, plus paediatric brain-tumour genomics.\n\n\nAlicante\n\n\n\n2023\n\n\n\nHelmholtz Munich\n\n\nHi-C, chromatin accessibility and sequence-to-signal deep learning with ChromBPNet.\n\n\nMunich\n\n\nRead the full experience summary →\n\n\n\n\n\n04 / What I bring\n\n\nBiology, modelling and engineering in one workflow.\n\n\n\n\n\n01\n\nTranslational science\n\n\nImmuno-oncology, inflammation, tumour biology, mechanism of action, target validation, biomarkers and patient stratification.\n\n\n\n02\n\nMulti-omic evidence\n\n\nscRNA-seq, CITE-seq, spatial transcriptomics, bulk RNA-seq, epigenomics, proteomics and functional genomics.\n\n\n\n03\n\nModels that explain themselves\n\n\nXGBoost, survival analysis, variational autoencoders, foundation models and sequence-to-signal deep learning, with uncertainty and provenance.\n\n\n\n04\n\nReproducible delivery\n\n\nPython, R, Bash, Nextflow, Snakemake, Docker, AWS and HPC—with versioned inputs, automated tests and stakeholder-ready reporting.\n\n\n\n\n\n\n\n\n05 / Selected publications\n\n\nPeer-reviewed work in developmental neurobiology.\n\n\n\n\n\n2024Gene regulatory landscape of cerebral cortex foldingScience Advances\n\n\n2024Multiple parallel cell lineages in the developing mammalian cerebral cortexScience Advances\n\n\n2022Secondary loss of miR-3607 reduced cortical progenitor amplification during rodent evolutionScience Advances\n\n\n2020Repression of Irs2 by let-7 miRNAs is essential for homeostasis of the telencephalic neuroepitheliumThe EMBO Journal\n\n\n\n\n\n06 / Contact\n\n\nLooking for new roles from September 2026.\n\n\nI am interested in computational biology and translational data-science roles where rigorous analysis can shape therapeutic decisions.\n\n\nrafaelsolersanblas@gmail.com ↗ Download CV ↓ LinkedIn"
+  },
+  {
     "objectID": "projects.html",
     "href": "projects.html",
     "title": "\nTools built to make scientific reasoning inspectable.\n",
     "section": "",
-    "text": "Public research software\n\n\nTools built to make scientific reasoning inspectable.\n\n\nMy projects cover different biological questions, but share the same standard: clear scope, reproducible inputs, visible uncertainty and no inflated claims.\n\n\n\n\nThe eight tools at a glance\n\n\nGrouped by the question they answer. Each one addresses a decision that comes up early, before anyone commits time or money to a candidate.\n\n\n\n\n\n\nField\n\n\nTool\n\n\nThe problem\n\n\nWhat it is for\n\n\nWhat it adds\n\n\nKey skills applied\n\n\n\n\n\n\nTarget discovery & safety\n\n\nTargetIntel-IO\n\n\nA gene linked to disease is not automatically a good drug target, yet most tools collapse that judgement into a single score.\n\n\nSorting candidate genes into genuine targets, biomarkers, resistance mechanisms and poor candidates.\n\n\nThree separate rankings, one per therapeutic strategy, plus the evidence for and against each call.\n\n\n\n\nOpen Targets & DepMap\n\n\nDuckDB\n\n\nBenchmarking\n\n\nSensitivity analysis\n\n\nGrounded LLM synthesis\n\n\nGraphRAG\n\n\nCI/CD\n\n\n\n\n\n\nActivation Liability\n\n\nA target can look safely tumour-specific in healthy resting tissue and stop looking that way once the tissue is inflamed.\n\n\nSpotting targets whose apparent safety margin shrinks under immune activation.\n\n\nA direct resting-versus-activated comparison in public data, with abstention when the evidence is too thin.\n\n\n\n\nSingle-cell RNA-seq\n\n\nPublic GEO cohorts\n\n\nNegative-binomial models\n\n\nDonor-level robustness\n\n\nReproducible manifests\n\n\n\n\n\n\nreach-gap\n\n\nA target can be highly expressed and still sit too far from a working blood vessel for an antibody to reach it.\n\n\nAsking whether target-positive tumour cells are physically accessible to an antibody.\n\n\nMechanistic diffusion modelling paired with an evidence graph that returns NOT_COMPUTED rather than guessing.\n\n\n\n\nReaction–diffusion modelling\n\n\nSpatial transcriptomics\n\n\nUncertainty propagation\n\n\nEvidence provenance\n\n\nDocker\n\n\n\n\n\n\nMethod reliability\n\n\nsegmentation-fragility\n\n\nIn spatial data, a small change in where a cell boundary is drawn can move a marker between cell types and flip the conclusion.\n\n\nTesting whether a spatial-transcriptomics claim survives a change in transcript-to-cell assignment.\n\n\nEach claim is labelled robust, segmentation-sensitive or not reportable, instead of trusting one segmentation as final.\n\n\n\n\nXenium / ProSeg / Baysor\n\n\nClaim-level auditing\n\n\nPlanted-truth simulation\n\n\nAbstention logic\n\n\n\n\n\n\nFM Value Audit\n\n\nA foundation-model embedding can look biologically structured and still add nothing to a real decision.\n\n\nTesting whether single-cell foundation models beat cheaper baselines at target prioritisation.\n\n\nA leakage-aware temporal holdout designed to report a negative result when that is what the data shows.\n\n\n\n\nGeneformer & scGPT\n\n\nLeakage control\n\n\nTemporal holdout\n\n\nAUPRC benchmarking\n\n\nPreregistration\n\n\n\n\n\n\nDrug response prediction\n\n\nDrugMatch-Confidence\n\n\nCancer models respond very differently to the same drug, and predictions rarely say how much to trust them.\n\n\nPredicting how a preclinical cancer model will respond to a given drug.\n\n\nEvery prediction carries a calibrated probability, an uncertainty interval and a warning when the input is unfamiliar.\n\n\n\n\nXGBoost\n\n\nSHAP\n\n\nConformal prediction\n\n\nProbability calibration\n\n\nGrouped cross-validation\n\n\nDepMap / PRISM / GDSC2\n\n\n\n\n\n\nProtein deep learning\n\n\nMTF Prediction\n\n\nWhether a membrane protein carries transcription-factor-like features can change depending on where you draw its boundary.\n\n\nScreening human and mouse membrane-protein domains for those features under different boundary definitions.\n\n\nThe same screen repeated across three boundary conditions, so a result that holds under only one is visible as such.\n\n\n\n\nPyTorch\n\n\nDeepTFactor\n\n\nCaptum integrated gradients\n\n\nUniProtKB\n\n\n\n\n\n\nResearch engineering\n\n\nDev Autopilot\n\n\nAI coding agents can move fast through a repository and leave no reliable trail of what changed or why.\n\n\nRunning AI agents on real code with hard limits on what they may touch.\n\n\nSeparate agents implement, audit and review; deterministic gates decide whether work advances, and a person keeps merge authority.\n\n\n\n\nAgentic AI orchestration\n\n\nPydantic\n\n\nSQLite\n\n\nStrict typing (mypy)\n\n\nState machines\n\n\nCI/CD\n\n\n\n\n\n\n\n\n\n\n\n01 v0.6.0 · Research preview\n\n\nTargetIntel-IO\n\n\nTherapeutic-intent-aware target triage\n\n\nA deterministic platform for interpreting candidate genes in anti-PD-1-resistant melanoma. It avoids one universal score by separating antibody/IO, resistance-biomarker and small-molecule strategies.\n\n\n\nStable role classification and three intent-specific rankings\n\n\nTyped, source-linked evidence with mandatory human-review boundaries\n\n\nReal DepMap Public 26Q1 dependency layer that never silently changes the baseline\n\n\nGraph-native evidence with a deterministic, GraphRAG-compatible research-preview export\n\n\n\nRead the case study View repository ↗\n\n\n\n\nCurrent scope\n\n\n331genes in the discovery universe\n\n\n56targets in the internal benchmark\n\n\n0differing artefacts across two independent runs\n\n\nThe benchmark tests implementation consistency. It is not an independent clinical validation dataset.\n\n\n\n\n\n\n02 v0.5.0 · Research preview\n\n\nActivation Liability\n\n\nDetecting hidden safety risk in surface targets\n\n\nA target can look tumour-selective against resting healthy tissue and lose that selectivity once normal cells are inflamed or immune-activated. alia audits how much of that apparent selectivity survives biologically matched activation.\n\n\n\nPaired resting and activated public single-cell cohorts\n\n\nDonor-level robustness, negative controls and explicit abstention\n\n\nFrozen manifests and checksums for every executed cohort\n\n\n\nRead the case study View repository ↗\n\n\n\n\nVerified release\n\n\n52automated tests · 85.4% non-I/O coverage\n\n\n2evidence types: RNA and paired tissue\n\n\nA liability detector with abstention. It does not predict toxicity or establish a therapeutic window.\n\n\n\n\n\n\n03 v0.8.0 · Research preview\n\n\nreach-gap\n\n\nIs the target physically reachable?\n\n\nA tumour target can be strongly expressed and still sit too far from a perfused vessel for an antibody to engage it. reach-gap couples simplified reaction–diffusion modelling with an explicit evidence graph.\n\n\n\nSeparates same-tissue measurement from external validation and literature priors\n\n\nRelative target ranking across six defensible vessel definitions\n\n\nReturns NOT_COMPUTED instead of inventing an absolute answer\n\n\n\nRead the case study View repository ↗\n\n\n\n\nVerified release\n\n\n117automated tests\n\n\n20,000uncertainty draws per analysis\n\n\nResearch use only. It does not predict patient response or estimate clinical efficacy.\n\n\n\n\n\n\n04 v0.5.0 · Research preview\n\n\nsegmentation-fragility\n\n\nDoes the conclusion survive the segmentation?\n\n\nIn spatial transcriptomics a small boundary change can move a marker between cell types and flip a biological claim. This tool makes the claim, not the segmented object, the unit of analysis.\n\n\n\nCompares claims across Xenium, ProSeg and Baysor with fixed biological anchors\n\n\nLabels each claim robust, segmentation-sensitive or not reportable\n\n\nAbstains when claim-specific anchor coverage is insufficient\n\n\n\nRead the case study View repository ↗\n\n\n\n\nVerified release\n\n\n62automated tests · 90.3% line coverage\n\n\n77.1Mtranscript records in the Xenium perturbation\n\n\nRobust and sensitive refer to a predeclared numerical threshold, not to clinical safety.\n\n\n\n\n\n\n05 v0.5.0a1 · Pre-release\n\n\nFM Value Audit\n\n\nDo foundation models actually add value?\n\n\nA leakage-aware benchmark testing whether representations from Geneformer and scGPT improve a real target-prioritisation decision over cheaper, easier-to-explain baselines.\n\n\n\nPrespecified decision metric evaluated on unseen future outcomes\n\n\nExplicit leakage control across feature selection and tuning\n\n\nDesigned to report a negative result when that is what the data shows\n\n\n\nRead the case study View repository ↗\n\n\n\n\nCurrent finding\n\n\nNOTSUPPORTEDstatic Geneformer geometry did not improve AUPRC\n\n\n79,542rows in the temporal holdout\n\n\nThe contextual-embedding protocol is preregistered but not yet executed. This release is not evidence that foundation models help.\n\n\n\n\n\n\n06 v1.0.1 · Released\n\n\nDrugMatch-Confidence\n\n\nInterpretable preclinical cancer drug-response prediction\n\n\nFive real DepMap/PRISM XGBoost bundles produce continuous response, sensitive/resistant classification, calibrated probabilities, conformal intervals, out-of-distribution warnings and SHAP explanations.\n\n\n\nTraining-only feature selection and cell-line-grouped splits\n\n\nFive-fold out-of-fold evaluation with locked GDSC2 validation\n\n\nHonest release labels: validated, exploratory or insufficient evidence\n\n\n\nRead the case study View repository ↗\n\n\n\n\nRelease evidence\n\n\n0.84Trametinib strict GDSC2 AUROC · n=20\n\n\n0.83Afatinib strict GDSC2 AUROC · n=22\n\n\nPreclinical research only. These are small external subsets and not patient-response models.\n\n\n\n\n\n\n07 v1.0.0 · Research analysis\n\n\nMTF Prediction\n\n\nTopology-aware deep learning for membrane proteins\n\n\nA reproducible research archive screening human and mouse membrane-protein domains for transcription-factor-like sequence features under alternative transmembrane-boundary definitions.\n\n\n\nHuman and mouse UniProtKB membrane-protein domains\n\n\nDeepTFactor inference across no-, half- and full-TMD conditions\n\n\nResidue-level interpretation with Captum Integrated Gradients\n\n\n\nRead the case study View repository ↗\n\n\n\n\nAnalysis matrix\n\n\n2mammalian species\n\n\n3 × 3domain classes × boundary conditions\n\n\nCandidate-generating predictions only; experimental validation is required.\n\n\n\n\n\n\n08 v0.1.1 · Alpha\n\n\nDev Autopilot\n\n\nPersistent, auditable development orchestration\n\n\nCoordinates implementation, adversarial audit and independent review while SQLite records state transitions, retries and decisions across restarts.\n\n\n\nFail-closed state machine and explicit path permissions\n\n\nMechanical scope, test, context and Git-metadata gates\n\n\nStops at human review; it never commits, pushes or merges product code\n\n\n\nRead the case study View repository ↗\n\n\n\n\nDesign principle\n\n\nAgents advise, implement and review. Deterministic gates decide whether work can advance. A person retains scientific and merge authority.\n\n\n\n\n\nCollaboration\n\n\nInterested in the science or the implementation?\n\n\nEvery repository is public. For research, product or computational biology conversations, feel free to get in touch.\n\n\nEmail me All GitHub repositories"
+    "text": "Public research software\n\n\nTools built to make scientific reasoning inspectable.\n\n\nMy projects cover different biological questions, but share the same standard: clear scope, reproducible inputs, visible uncertainty and no inflated claims.\n\n\n\n\nThe eight tools at a glance\n\n\nGrouped by the question they answer. Each one addresses a decision that comes up early, before anyone commits time or money to a candidate.\n\n\n\n\n\n\nField\n\n\nTool\n\n\nThe problem\n\n\nWhat it is for\n\n\nWhat it adds\n\n\nKey skills applied\n\n\n\n\n\n\nTarget discovery & safety\n\n\nTargetIntel-IO\n\n\nA gene linked to disease is not automatically a good drug target, yet most tools collapse that judgement into a single score.\n\n\nSorting candidate genes into genuine targets, biomarkers, resistance mechanisms and poor candidates.\n\n\nThree separate rankings, one per therapeutic strategy, plus the evidence for and against each call.\n\n\n\n\nOpen Targets & DepMap\n\n\nDuckDB\n\n\nBenchmarking\n\n\nSensitivity analysis\n\n\nGrounded LLM synthesis\n\n\nGraphRAG\n\n\nCI/CD\n\n\n\n\n\n\nActivation Liability\n\n\nA target can look safely tumour-specific in healthy resting tissue and stop looking that way once the tissue is inflamed.\n\n\nSpotting targets whose apparent safety margin shrinks under immune activation.\n\n\nA direct resting-versus-activated comparison in public data, with abstention when the evidence is too thin.\n\n\n\n\nSingle-cell RNA-seq\n\n\nPublic GEO cohorts\n\n\nNegative-binomial models\n\n\nDonor-level robustness\n\n\nReproducible manifests\n\n\n\n\n\n\nreach-gap\n\n\nA target can be highly expressed and still sit too far from a working blood vessel for an antibody to reach it.\n\n\nAsking whether target-positive tumour cells are physically accessible to an antibody.\n\n\nMechanistic diffusion modelling paired with an evidence graph that returns NOT_COMPUTED rather than guessing.\n\n\n\n\nReaction–diffusion modelling\n\n\nSpatial transcriptomics\n\n\nUncertainty propagation\n\n\nEvidence provenance\n\n\nDocker\n\n\n\n\n\n\nMethod reliability\n\n\nsegmentation-fragility\n\n\nIn spatial data, a small change in where a cell boundary is drawn can move a marker between cell types and flip the conclusion.\n\n\nTesting whether a spatial-transcriptomics claim survives a change in transcript-to-cell assignment.\n\n\nEach claim is labelled robust, segmentation-sensitive or not reportable, instead of trusting one segmentation as final.\n\n\n\n\nXenium / ProSeg / Baysor\n\n\nClaim-level auditing\n\n\nPlanted-truth simulation\n\n\nAbstention logic\n\n\n\n\n\n\nFM Value Audit\n\n\nA foundation-model embedding can look biologically structured and still add nothing to a real decision.\n\n\nTesting whether single-cell foundation models beat cheaper baselines at target prioritisation.\n\n\nA leakage-aware temporal holdout designed to report a negative result when that is what the data shows.\n\n\n\n\nGeneformer & scGPT\n\n\nLeakage control\n\n\nTemporal holdout\n\n\nAUPRC benchmarking\n\n\nPreregistration\n\n\n\n\n\n\nDrug response prediction\n\n\nDrugMatch-Confidence\n\n\nCancer models respond very differently to the same drug, and predictions rarely say how much to trust them.\n\n\nPredicting how a preclinical cancer model will respond to a given drug.\n\n\nEvery prediction carries a calibrated probability, an uncertainty interval and a warning when the input is unfamiliar.\n\n\n\n\nXGBoost\n\n\nSHAP\n\n\nConformal prediction\n\n\nProbability calibration\n\n\nGrouped cross-validation\n\n\nDepMap / PRISM / GDSC2\n\n\n\n\n\n\nProtein deep learning\n\n\nMTF Prediction\n\n\nWhether a membrane protein carries transcription-factor-like features can change depending on where you draw its boundary.\n\n\nScreening human and mouse membrane-protein domains for those features under different boundary definitions.\n\n\nThe same screen repeated across three boundary conditions, so a result that holds under only one is visible as such.\n\n\n\n\nPyTorch\n\n\nDeepTFactor\n\n\nCaptum integrated gradients\n\n\nUniProtKB\n\n\n\n\n\n\nResearch engineering\n\n\nDev Autopilot\n\n\nAI coding agents can move fast through a repository and leave no reliable trail of what changed or why.\n\n\nRunning AI agents on real code with hard limits on what they may touch.\n\n\nSeparate agents implement, audit and review; deterministic gates decide whether work advances, state survives restarts, and a person keeps merge authority.\n\n\n\n\nAgentic AI orchestration\n\n\nPydantic\n\n\nSQLite\n\n\nStrict typing (mypy)\n\n\nState machines\n\n\nCI/CD\n\n\n\n\n\n\n\n\n\n\n\n01 v0.6.0 · Research preview\n\n\nTargetIntel-IO\n\n\nTherapeutic-intent-aware target triage\n\n\nA deterministic platform for interpreting candidate genes in anti-PD-1-resistant melanoma. It avoids one universal score by separating antibody/IO, resistance-biomarker and small-molecule strategies.\n\n\n\nStable role classification and three intent-specific rankings\n\n\nTyped, source-linked evidence with mandatory human-review boundaries\n\n\nReal DepMap Public 26Q1 dependency layer that never silently changes the baseline\n\n\nGraph-native evidence with a deterministic, GraphRAG-compatible research-preview export\n\n\n\nRead the case study View repository ↗\n\n\n\n\nv0.6.0 release gate\n\n\n825automated tests passed\n\n\n56/56productive artefacts byte-identical after the graph layer landed\n\n\n331genes in the discovery universe\n\n\nThe benchmark tests implementation consistency. It is not an independent clinical validation dataset.\n\n\n\n\n\n\n02 v0.5.0 · Research preview\n\n\nActivation Liability\n\n\nDetecting hidden safety risk in surface targets\n\n\nA target can look tumour-selective against resting healthy tissue and lose that selectivity once normal cells are inflamed or immune-activated. alia audits how much of that apparent selectivity survives biologically matched activation.\n\n\n\nPaired resting and activated public single-cell cohorts\n\n\nDonor-level robustness, negative controls and explicit abstention\n\n\nFrozen manifests and checksums for every executed cohort\n\n\n\nRead the case study View repository ↗\n\n\n\n\nVerified release\n\n\n52automated tests · 85.4% non-I/O coverage\n\n\n2evidence types: RNA and paired tissue\n\n\nA liability detector with abstention. It does not predict toxicity or establish a therapeutic window.\n\n\n\n\n\n\n03 v0.8.0 · Research preview\n\n\nreach-gap\n\n\nIs the target physically reachable?\n\n\nA tumour target can be strongly expressed and still sit too far from a perfused vessel for an antibody to engage it. reach-gap couples simplified reaction–diffusion modelling with an explicit evidence graph.\n\n\n\nSeparates same-tissue measurement from external validation and literature priors\n\n\nRelative target ranking across six defensible vessel definitions\n\n\nReturns NOT_COMPUTED instead of inventing an absolute answer\n\n\n\nRead the case study View repository ↗\n\n\n\n\nVerified release\n\n\n117automated tests\n\n\n20,000uncertainty draws per analysis\n\n\nResearch use only. It does not predict patient response or estimate clinical efficacy.\n\n\n\n\n\n\n04 v0.5.0 · Research preview\n\n\nsegmentation-fragility\n\n\nDoes the conclusion survive the segmentation?\n\n\nIn spatial transcriptomics a small boundary change can move a marker between cell types and flip a biological claim. This tool makes the claim, not the segmented object, the unit of analysis.\n\n\n\nCompares claims across Xenium, ProSeg and Baysor with fixed biological anchors\n\n\nLabels each claim robust, segmentation-sensitive or not reportable\n\n\nAbstains when claim-specific anchor coverage is insufficient\n\n\n\nRead the case study View repository ↗\n\n\n\n\nVerified release\n\n\n62automated tests · 90.3% line coverage\n\n\n77.1Mtranscript records in the Xenium perturbation\n\n\nRobust and sensitive refer to a predeclared numerical threshold, not to clinical safety.\n\n\n\n\n\n\n05 v0.5.0a1 · Pre-release\n\n\nFM Value Audit\n\n\nDo foundation models actually add value?\n\n\nA leakage-aware benchmark testing whether representations from Geneformer and scGPT improve a real target-prioritisation decision over cheaper, easier-to-explain baselines.\n\n\n\nPrespecified decision metric evaluated on unseen future outcomes\n\n\nExplicit leakage control across feature selection and tuning\n\n\nDesigned to report a negative result when that is what the data shows\n\n\n\nRead the case study View repository ↗\n\n\n\n\nCurrent finding\n\n\nNOTSUPPORTEDstatic Geneformer geometry did not improve AUPRC\n\n\n79,542rows in the temporal holdout\n\n\nThe contextual-embedding protocol is preregistered but not yet executed. This release is not evidence that foundation models help.\n\n\n\n\n\n\n06 v1.0.1 · Released\n\n\nDrugMatch-Confidence\n\n\nInterpretable preclinical cancer drug-response prediction\n\n\nFive real DepMap/PRISM XGBoost bundles produce continuous response, sensitive/resistant classification, calibrated probabilities, conformal intervals, out-of-distribution warnings and SHAP explanations.\n\n\n\nTraining-only feature selection and cell-line-grouped splits\n\n\nFive-fold out-of-fold evaluation with locked GDSC2 validation\n\n\nHonest release labels: validated, exploratory or insufficient evidence\n\n\n\nRead the case study View repository ↗\n\n\n\n\nRelease evidence\n\n\n0.84Trametinib strict GDSC2 AUROC · n=20\n\n\n0.83Afatinib strict GDSC2 AUROC · n=22\n\n\nPreclinical research only. These are small external subsets and not patient-response models.\n\n\n\n\n\n\n07 v1.0.0 · Research analysis\n\n\nMTF Prediction\n\n\nTopology-aware deep learning for membrane proteins\n\n\nA reproducible research archive screening human and mouse membrane-protein domains for transcription-factor-like sequence features under alternative transmembrane-boundary definitions.\n\n\n\nHuman and mouse UniProtKB membrane-protein domains\n\n\nDeepTFactor inference across no-, half- and full-TMD conditions\n\n\nResidue-level interpretation with Captum Integrated Gradients\n\n\n\nRead the case study View repository ↗\n\n\n\n\nAnalysis matrix\n\n\n2mammalian species\n\n\n3 × 3domain classes × boundary conditions\n\n\nCandidate-generating predictions only; experimental validation is required.\n\n\n\n\n\n\n08 v0.6.0 · Research preview\n\n\nDev Autopilot\n\n\nPersistent, auditable development orchestration\n\n\nCoordinates implementation, adversarial audit and independent review while SQLite records state transitions, retries, findings and decisions across restarts. Version 0.6.0 hardens that loop against a real autonomous milestone rather than a synthetic one.\n\n\n\nImmutable project charter with a dependency-checked milestone DAG\n\n\nMechanical scope, test, context and Git-metadata gates, with bounded autocorrection instead of a terminal stop\n\n\nReview conclusions bound to an exact diff; any later change invalidates them\n\n\nStops at READY_FOR_HUMAN_RELEASE; it never commits, pushes, tags or merges product code\n\n\n\nRead the case study View repository ↗\n\n\n\n\nDesign principle\n\n\nAgents advise, implement and review. Deterministic gates decide whether work can advance. A person retains scientific and merge authority.\n\n\nv0.6.0 was validated end to end on a real TargetIntel-IO milestone: implementation, deterministic gates, adversarial audit, independent review, evidence packaging and READY_FOR_HUMAN_RELEASE.\n\n\n\n\n\nCollaboration\n\n\nInterested in the science or the implementation?\n\n\nEvery repository is public. For research, product or computational biology conversations, feel free to get in touch.\n\n\nEmail me All GitHub repositories"
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "\nI work where biological complexity meets therapeutic decisions.\n",
+    "section": "",
+    "text": "Experience & approach\n\n\nI work where biological complexity meets therapeutic decisions.\n\n\nMy background spans antibody immunotherapies, precision oncology, developmental neurobiology and computational tool building. Across those settings, my role is consistent: structure ambiguous questions, connect evidence across modalities and communicate what the data can—and cannot—support.\n\n\n\n\n\n\n\n\n\n\nProfile\n\n\nComputational biologist with 6+ years across industry and academia.\n\n\nI hold a PhD in bioinformatics and have 2+ years of postdoctoral experience in immuno-oncology and tumour biology, using single-cell and spatial transcriptomics, multi-omic integration and ML/AI to drive biomarker discovery, validation and patient stratification. My industry work spans antibody-based immunotherapies against TNFR2 and FcγRIIB, drug mode-of-action studies, and translational research across oncology and autoimmune disease.\n\n\nI combine deep biological context with hands-on analysis and software engineering, which means I can move from experimental design and QC through multi-omic integration, statistical modelling and interpretation to a result an experimental or clinical team can act on. I build reproducible R and Python pipelines on HPC and AWS, and report findings directly to clinical, translational and non-technical stakeholders.\n\n\nI have worked in Spain, Germany, the United Kingdom and Sweden, and collaborate comfortably across disciplines and cultures.\n\n\nCurrent BioInvent International Based Lund, Sweden Available September 2026\n\n\n\n\n\n\n\nCareer\n\n\nProfessional experience\n\n\n\n\n\n\nAug 2025 — Aug 2026Lund, Sweden\n\n\n\nBioInvent International AB\n\n\nBioinformatics Research Scientist\n\n\n\nLead multi-omic analysis across the BI-1206 anti-FcγRIIB and BI-1808 anti-TNFR2 antibody programs, integrating scRNA-seq, CITE-seq, spatial transcriptomics, bulk RNA-seq, proteomics and clinical metadata, and connecting evidence across patient, mouse and in-vitro samples to advance mode-of-action and resistance-mechanism understanding.\n\n\nUncovered a non-canonical myeloid activation pathway underlying antibody response by resolving distinct immune activation states across a 30-patient clinical PBMC cohort spanning the BI-1808 and BI-1910 programs, extending the mode-of-action pipeline to integrate clinical single-cell RNA-seq with targeted pathway-level analysis.\n\n\nCharacterised drug mechanism of action using scRNA-seq, spatial transcriptomics and targeted gene-module scoring, resolving antibody-responsive immune cell states, macrophage polarisation profiles and tissue niches in blood and tumour microenvironments to support early patient selection.\n\n\nValidated cell-type-specific genetic regulation of a candidate autoimmune target using a public single-cell eQTL atlas, auditing raw alignment quality and dataset chemistry to protect quantification against multi-mapping read loss within a polymorphic gene family, directly informing a target-validation go/no-go decision.\n\n\nEstablished a novel biomarker and therapeutic target for autoimmune disease by curating and integrating public single-cell atlases across three published inflammatory bowel disease cohorts—ulcerative colitis, Crohn’s disease and healthy controls—demonstrating specificity restricted to M1 macrophages, inflammatory monocytes and neutrophils.\n\n\nStrengthened the biological rationale for a novel bispecific target by integrating clinical single-cell and spatial transcriptomics into the biomarker strategy, identifying a significant expression correlation with a canonical regulatory T-cell marker ahead of experimental validation.\n\n\nBuilt and trained a variational autoencoder to separate strain-level technical variability from tumour biomarker signal across genetically diverse mouse strains, designed to extrapolate candidate biomarkers to human population heterogeneity.\n\n\nDelivered a reusable single-cell and spatial immune atlas alongside an AWS-based, Docker-containerised HPC environment built from scratch, enabling reproducible computing across the team, with documented R/Python pipelines, automated QC and reporting for technical and non-technical audiences.\n\n\n\n\n\n\nSep 2024 — Jan 2025Seville, Spain\n\n\n\nBristol Myers Squibb\n\n\nVisiting Scientist, Computational Biology\n\n\n\nDesigned gene signatures from patient tumour samples across lung, pancreatic and breast cancers, applying SNV and mutation analysis to inform precision-medicine and drug-resistance strategies.\n\n\nMapped preclinical models—cell lines, xenografts and organoids—to clinical tumour subtypes using TCGA and DepMap/Celligner, improving the translational validity of preclinical findings.\n\n\nPerformed spatial transcriptomics analysis with NanoString CosMx and 10x Visium HD to resolve tissue-level expression programs across tumour cohorts.\n\n\n\n\n\n\nSep 2020 — Sep 2024Alicante, Spain\n\n\n\nInstitute of Neurosciences, CSIC–UMH\n\n\nBioinformatics Research Scientist · PhD\n\n\n\nBuilt automated Python, R, Bash and AWK pipelines to integrate RNA-seq and ATAC-seq across phylogenetically distant species, resolving conserved and species-specific genes and enhancers governing cortical development.\n\n\nIntegrated scRNA-seq with RNA-seq and ATAC-seq to define conserved cortical stem-cell types and their gene-regulatory programs across species.\n\n\nIdentified tumour gene signatures in paediatric brain tumours through meta-analysis of public GEO and EGA datasets, benchmarking findings against mouse scRNA-seq, ATAC-seq and bulk RNA-seq models.\n\n\nApplied deep learning to protein sequence data to predict candidate transcription-factor sequences from structural features, scaling automated workflows across large public datasets.\n\n\nBuilt and published an interactive R Shiny single-cell atlas for non-programmer researchers, broadening public access to cortical single-cell data, and mentored two MSc students.\n\n\n\n\n\n\nMar 2023 — Jun 2023Munich, Germany\n\n\n\nHelmholtz Munich\n\n\nVisiting Scientist, Bioinformatics\n\n\n\nCombined Hi-C analysis with the ENCODE ATAC-seq pipeline in Docker and Snakemake to resolve open chromatin regions, enhancers and transcription-factor motifs across the genome.\n\n\nTrained ChromBPNet to predict open chromatin, transcription-factor binding sites and sequence motifs directly from DNA sequence, and built a custom Python/R/Bash visualisation pipeline for genomic rearrangements.\n\n\n\n\n\n\nAug 2018 — Jun 2019London, United Kingdom\n\n\n\nSUEZ\n\n\nJunior Scientist\n\n\nApplied environmental and molecular analysis in an industrial laboratory setting, working to defined quality standards across a high-throughput sample pipeline.\n\n\n\n\n\nSep 2017 — Jul 2018Madrid, Spain\n\n\n\nIMDEA\n\n\nJunior Scientist\n\n\nEarly research role that built my foundations in experimental molecular biology, data analysis and cross-functional scientific collaboration.\n\n\n\n\n\n\n\n\n\nCapabilities\n\n\nA practical, end-to-end toolkit\n\n\n\n\n\n\nDomains\n\n\nComputational biology · Immuno-oncology · Inflammation · Tumour biology · Translational research · Neuroscience\n\n\n\n\nDecisions\n\n\nTarget discovery · Biomarker discovery & validation · Patient stratification · Drug mode of action · Resistance mechanisms\n\n\n\n\nSingle-cell\n\n\nscRNA-seq · CITE-seq · scATAC-seq · RNA velocity · Perturbation modelling\n\n\n\n\nSpatial\n\n\n10x Visium HD · NanoString CosMx · Xenium\n\n\n\n\nBulk omics\n\n\nRNA-seq · ATAC-seq · ChIP-seq · CUT&Tag/CUT&RUN · Hi-C · Ribo-seq · miRNA · Proteomics · SNV and mutation analysis\n\n\n\n\nFunctional genomics\n\n\nDepMap · CCLE · PRISM · CRISPR/RNAi dependency screens · Drug-sensitivity analysis\n\n\n\n\nML, statistics & AI\n\n\nRandom Forest · XGBoost · Survival analysis (Cox, Kaplan–Meier) · Risk modelling · Variational autoencoders · Single-cell foundation models (Geneformer, scGPT, Cell2Sentence) · ChromBPNet\n\n\n\n\nMulti-omic integration\n\n\nSeurat WNN · totalVI · MultiVI\n\n\n\n\nProgramming\n\n\nR (Seurat, Shiny, DESeq2, edgeR) · Python (scanpy, scvi-tools, PyTorch, pandas) · Bash · AWK\n\n\n\n\nPipelines & infrastructure\n\n\nNextflow · Snakemake · Docker · HPC/Slurm · AWS · Git\n\n\n\n\nDatabases & resources\n\n\nGEO · EGA · TCGA · UCSC Genome Browser · Ensembl · NCBI · UniProt · Open Targets\n\n\n\n\n\n\n\n\nEducation\n\n\nTraining\n\n\n\n\n\n2020—2025\n\nPhD, Bioinformatics\n\n\nHelmholtz Munich · CSIC · Miguel Hernández University\n\n\n\n2018—2020\n\nMSc, Bioinformatics & Biostatistics\n\n\nUniversity of Barcelona\n\n\n\n2017—2018\n\nMSc, Molecular Biology\n\n\nAutonomous University of Madrid\n\n\n\n2013—2017\n\nBSc, Biology\n\n\nUniversity of Alicante\n\n\n\n\n\n\n\n\nPublications\n\n\nPeer-reviewed and in preparation\n\n\n\n\n\n2024Singh, A. et al. Gene regulatory landscape of cerebral cortex foldingScience Advances 10\n\n\n2024Del-Valle-Antón, L. et al. Multiple parallel cell lineages in the developing mammalian cerebral cortexScience Advances 10\n\n\n2022Chinnappa, K. et al. Secondary loss of miR-3607 reduced cortical progenitor amplification during rodent evolutionScience Advances 8\n\n\n2020Fernández, V. et al. Repression of Irs2 by let-7 miRNAs is essential for homeostasis of the telencephalic neuroepitheliumThe EMBO Journal 39\n\n\nIn prep.Espinós, A.; Soler, R. et al. Cross-species multi-omic analysis of apical radial glia cells in cortical development evolutionManuscript in preparation\n\n\nIn prep.Soler, R. Prediction of novel mammalian membrane transcription factors with deep learningManuscript in preparation\n\n\n\n\n\n\n\nCertifications & languages\n\n\nAdditional training\n\n\n\n\n\n\nCertifications\n\n\nGenerative AI & Prompt Engineering (IBM) · Single-cell RNA-seq (EMBL-EBI) · HPC/Slurm (University of Cambridge) · Cloud Computing (Google) · Drug Discovery & Biomarker Validation (GSK)\n\n\n\n\nLanguages\n\n\nSpanish (native) · English (C1) · Catalan (C1) · Swedish (A2) · Japanese (A2)\n\n\n\n\n\n\nNext chapter\n\n\nOpen to computational biology opportunities from September 2026.\n\n\nI am especially interested in roles that connect human biology, multi-omic data and therapeutic development.\n\n\nStart a conversation Download CV ↓ LinkedIn"
+  },
+  {
+    "objectID": "projects/fm-value-audit.html",
+    "href": "projects/fm-value-audit.html",
+    "title": "FM Value Audit",
+    "section": "",
+    "text": "v0.5.0a1 · Pre-release View repository ↗"
+  },
+  {
+    "objectID": "projects/fm-value-audit.html#the-question",
+    "href": "projects/fm-value-audit.html#the-question",
+    "title": "FM Value Audit",
+    "section": "The question",
+    "text": "The question\nFoundation models produce impressive high-dimensional embeddings of single-cell data. Whether those embeddings help is a separate question, and it is often left unanswered:\n\nare the embeddings contextual, or only static token vectors?\nwere test outcomes used indirectly during feature selection or tuning?\ndoes the model beat a cheap historical or expression-based baseline?\n\nFM Value Audit tests whether representations from models such as Geneformer and scGPT add measurable value beyond simpler, easier-to-explain alternatives in immuno-oncology target prioritisation."
+  },
+  {
+    "objectID": "projects/fm-value-audit.html#the-design",
+    "href": "projects/fm-value-audit.html#the-design",
+    "title": "FM Value Audit",
+    "section": "The design",
+    "text": "The design\nThe project is built to be able to say no.\n\n\n\n\n\nflowchart TB\n    A[Prespecified decision metric] --&gt; B[Historical baseline]\n    A --&gt; C[Expression baseline]\n    A --&gt; D[Foundation-model representation]\n    B --&gt; E[Temporal holdout&lt;br/&gt;unseen future outcomes]\n    C --&gt; E\n    D --&gt; E\n    E --&gt; F{Does FM improve AUPRC?}\n    F --&gt;|No| G[Report negative result]\n    F --&gt;|Yes| H[Report improvement with CI]\n\n\n\n\n\n\nA sophisticated embedding is not treated as useful merely because it looks biologically structured. It has to improve a prespecified decision metric on outcomes that were not available when the features were built."
+  },
+  {
+    "objectID": "projects/fm-value-audit.html#current-status-read-this-carefully",
+    "href": "projects/fm-value-audit.html#current-status-read-this-carefully",
+    "title": "FM Value Audit",
+    "section": "Current status — read this carefully",
+    "text": "Current status — read this carefully\nv0.5.0a1 is a pre-release containing two clearly separated evidence layers.\n1. Final v0.4 result. Static Geneformer token geometry did not improve the prespecified AUPRC contrast over the historical baseline.\n\n\n\nMetric\nValue\n\n\n\n\nPrimary conclusion\nNOT_SUPPORTED\n\n\nPoint delta (AUPRC)\n−0.00033\n\n\n95% CI\n−0.0095 to +0.0014\n\n\nTemporal holdout rows\n79,542\n\n\nHoldout positives\n14\n\n\n\n2. Prospective v0.5 protocol. Contextual cell-state embeddings are preregistered, but the GPU runs and future-outcome evaluation are not complete.\nThis release must therefore not be described as evidence that contextual foundation-model representations improve target prioritisation. It is evidence about static token geometry only."
+  },
+  {
+    "objectID": "projects/fm-value-audit.html#why-a-negative-result-is-the-point",
+    "href": "projects/fm-value-audit.html#why-a-negative-result-is-the-point",
+    "title": "FM Value Audit",
+    "section": "Why a negative result is the point",
+    "text": "Why a negative result is the point\nMost published comparisons appear when a method wins. That selection pressure makes the literature look more favourable to new methods than the underlying evidence supports.\nA benchmark designed in advance, with a declared metric and a leakage-controlled holdout, produces a usable answer either way. Here the answer was no — and reporting it plainly is more useful to anyone deciding whether to invest GPU time than a reframed positive.\nThe 14 holdout positives are also worth stating openly: with that few events, the confidence interval is wide, and the honest reading is “no detectable improvement,” not “proven equivalence.”"
+  },
+  {
+    "objectID": "projects/fm-value-audit.html#data",
+    "href": "projects/fm-value-audit.html#data",
+    "title": "FM Value Audit",
+    "section": "Data",
+    "text": "Data\n\n\n\nCohort\nCells retained\n\n\n\n\nGSE115978\n7,186\n\n\nGSE120575\n16,291\n\n\nGSE179994\n150,849"
+  },
+  {
+    "objectID": "projects/fm-value-audit.html#verified-release",
+    "href": "projects/fm-value-audit.html#verified-release",
+    "title": "FM Value Audit",
+    "section": "Verified release",
+    "text": "Verified release\n\n\n\n\n\n\n\nItem\nCurrent state\n\n\n\n\nAutomated tests\n70\n\n\nIntegration audit\nPASS_WITH_WARNINGS\n\n\nEngineering evidence\nExecutable GitHub Actions jobs with uploaded JUnit, coverage and audit artefacts\n\n\nLicence\nApache-2.0\n\n\n\nRelease claims are machine-checked against result JSON rather than hand-written into the README, so the documented numbers cannot silently drift from the executed ones."
+  },
+  {
+    "objectID": "projects/fm-value-audit.html#honest-limitations",
+    "href": "projects/fm-value-audit.html#honest-limitations",
+    "title": "FM Value Audit",
+    "section": "Honest limitations",
+    "text": "Honest limitations\n\nThe completed result concerns static token geometry, not contextual embeddings.\n14 holdout positives is a small number of events; the interval is correspondingly wide.\nA negative result in this specific decision task does not generalise to all uses of foundation models in biology.\nResearch software only: it evaluates methods for preclinical target prioritisation and does not recommend a medicine, diagnose a patient, or make a clinical decision."
+  },
+  {
+    "objectID": "projects/reach-gap.html",
+    "href": "projects/reach-gap.html",
+    "title": "reach-gap",
+    "section": "",
+    "text": "v0.8.0 · Research preview View repository ↗"
+  },
+  {
+    "objectID": "projects/reach-gap.html#the-problem",
+    "href": "projects/reach-gap.html#the-problem",
+    "title": "reach-gap",
+    "section": "The problem",
+    "text": "The problem\nA tumour target can be highly expressed and still be difficult for an antibody to reach. Accessibility depends on far more than expression level:\n\nwhich vessels are structurally present, and which are actually perfused;\nhow far target-positive cells lie from those vessels;\nhow quickly an antibody moves through the extracellular matrix;\nhow strongly and how densely it binds;\nwhether an administered antibody reaches and engages the tissue at all.\n\nThese quantities are rarely measured together in the same sample. The common failure mode is quiet substitution: combining RNA, fluorescence, literature diffusion constants and vessel distances as though they were interchangeable."
+  },
+  {
+    "objectID": "projects/reach-gap.html#the-idea",
+    "href": "projects/reach-gap.html#the-idea",
+    "title": "reach-gap",
+    "section": "The idea",
+    "text": "The idea\nreach-gap has two linked layers.\n\n\n\n\n\nflowchart TB\n    subgraph M[Mechanistic layer]\n        A[Vessel source geometry] --&gt; B[Diffusion through matrix]\n        B --&gt; C[Binding and internalisation]\n    end\n    subgraph E[Evidence layer]\n        D[Same-tissue measurement]\n        F[External validation]\n        G[Literature prior]\n        H[Missing / blocked]\n    end\n    M --&gt; I{Evidence sufficient?}\n    E --&gt; I\n    I --&gt;|Yes| J[Relative target ranking]\n    I --&gt;|No| K[NOT_COMPUTED]\n\n\n\n\n\n\nThe mechanistic layer represents vascular geometry, diffusion, binding and internalisation in a simplified 2D reaction–diffusion model. The evidence layer records, for every required input, whether it was measured in the same tissue, externally validated, borrowed as a prior, missing, or explicitly blocked from transfer.\nThe second layer is the point. It makes questionable substitutions visible instead of letting them disappear into a single number."
+  },
+  {
+    "objectID": "projects/reach-gap.html#what-it-returns",
+    "href": "projects/reach-gap.html#what-it-returns",
+    "title": "reach-gap",
+    "section": "What it returns",
+    "text": "What it returns\nDepending on the evidence available:\n\nmechanistic simulation outputs with propagated uncertainty;\nrelative target-rank probabilities and pairwise comparisons;\nevidence-readiness and measurement-priority reports;\nor an explicit abstention such as reachable_fraction = NOT_COMPUTED.\n\nThe last of these is a feature. An absolute reachable fraction requires biology that usually has not been measured, so the tool declines to produce one rather than fabricating false precision."
+  },
+  {
+    "objectID": "projects/reach-gap.html#design-choices",
+    "href": "projects/reach-gap.html#design-choices",
+    "title": "reach-gap",
+    "section": "Design choices",
+    "text": "Design choices\n\n\n\n\n\n\n\nChoice\nReason\n\n\n\n\nRelative ranking rather than absolute fractions\nThe absolute quantity depends on unmeasured inputs; the relative comparison is defensible\n\n\nSix vessel definitions instead of one\nVessel identity is itself a modelling decision, and the ranking should be shown to survive it\n\n\n20,000 uncertainty draws\nPoint estimates hide how wide the plausible range actually is\n\n\nExplicit NOT_COMPUTED outputs\nA missing answer is more useful than a confident wrong one\n\n\nAuditable evidence graph\nEvery transfer between data types can be inspected and challenged"
+  },
+  {
+    "objectID": "projects/reach-gap.html#verified-release",
+    "href": "projects/reach-gap.html#verified-release",
+    "title": "reach-gap",
+    "section": "Verified release",
+    "text": "Verified release\n\n\n\nItem\nCurrent state\n\n\n\n\nAutomated tests\n117\n\n\nCoverage\n88.3%\n\n\nUncertainty draws\n20,000 per analysis\n\n\nVessel definitions compared\n6\n\n\nContainerised\nYes (Docker)\n\n\nLicence\nMIT"
+  },
+  {
+    "objectID": "projects/reach-gap.html#honest-limitations",
+    "href": "projects/reach-gap.html#honest-limitations",
+    "title": "reach-gap",
+    "section": "Honest limitations",
+    "text": "Honest limitations\n\nThe reaction–diffusion model is a simplified 2D representation, not a full pharmacokinetic simulation.\nRelative rankings are comparisons between targets in the same tissue context; they do not transfer to other tumours unchanged.\nLiterature priors remain priors, however carefully labelled.\nResearch use only: no prediction of patient response, treatment recommendation, or estimate of clinical efficacy."
   },
   {
     "objectID": "projects/activation-liability.html",
@@ -70,167 +399,6 @@
     "text": "Honest limitations\n\nExpression is measured from RNA; surface protein accessibility is not established here.\nPublic cohorts constrain which tissues and activation states can be examined.\nA detected footprint expansion is a prompt for experimental follow-up, not a conclusion about patient risk.\nAbsence of a signal is not evidence of safety—it may simply mean the relevant activation state was never sampled."
   },
   {
-    "objectID": "projects/targetintel-io.html",
-    "href": "projects/targetintel-io.html",
-    "title": "TargetIntel-IO",
-    "section": "",
-    "text": "v0.6.0 · Research preview View repository ↗"
-  },
-  {
-    "objectID": "projects/targetintel-io.html#the-problem",
-    "href": "projects/targetintel-io.html#the-problem",
-    "title": "TargetIntel-IO",
-    "section": "The problem",
-    "text": "The problem\nA gene can be highly relevant to disease and still be the wrong direct therapeutic target. In anti-PD-1-resistant melanoma, the same candidate might instead be a resistance biomarker, an immune-context marker, a tumour-intrinsic dependency or a mechanism with poor tractability.\nTargetIntel-IO does not compress those possibilities into one universal score. It asks a more useful question: valuable for what therapeutic purpose?"
-  },
-  {
-    "objectID": "projects/targetintel-io.html#what-the-tool-does",
-    "href": "projects/targetintel-io.html#what-the-tool-does",
-    "title": "TargetIntel-IO",
-    "section": "What the tool does",
-    "text": "What the tool does\nThe platform retrieves and structures evidence, assigns stable biological roles, and produces separate rankings for:\n\nAntibody / IO combination strategies;\nResistance biomarker strategies;\nTumour-intrinsic small-molecule strategies.\n\n\n\n\n\n\nflowchart LR\n    A[Open Targets + curated rules] --&gt; B[Deterministic features]\n    B --&gt; C[Stable role]\n    C --&gt; D[Three intent rankings]\n    D --&gt; E[Cards, reports and figures]\n    F[Reviewed evidence] --&gt; G[Read-only report layers]\n    H[DepMap 26Q1] --&gt; G\n    G --&gt; E\n\n\n\n\n\n\nThe deterministic baseline remains authoritative. Optional evidence, feasibility and functional-dependency layers can decorate a report, but they cannot silently change baseline features, roles, scores or ranks."
-  },
-  {
-    "objectID": "projects/targetintel-io.html#why-this-design-matters",
-    "href": "projects/targetintel-io.html#why-this-design-matters",
-    "title": "TargetIntel-IO",
-    "section": "Why this design matters",
-    "text": "Why this design matters\n\n\n\n\n\n\n\nCandidate pattern\nMore defensible interpretation\n\n\n\n\nImmune checkpoint with combination rationale\nAntibody / IO-combination candidate\n\n\nLoss associated with resistance\nBiomarker or mechanistic marker\n\n\nSelective tumour-cell dependency\nTumour-intrinsic intervention candidate\n\n\nBroad essentiality or poor modality fit\nBiologically relevant, but weak direct target\n\n\n\nThis separation makes a result easier to challenge, reproduce and discuss with experimental teams."
-  },
-  {
-    "objectID": "projects/targetintel-io.html#current-release",
-    "href": "projects/targetintel-io.html#current-release",
-    "title": "TargetIntel-IO",
-    "section": "Current release",
-    "text": "Current release\nTargetIntel-IO has progressed through five released layers:\n\nv0.1.3: deterministic role classification and intent-specific ranking;\nv0.2.0: typed, source-linked Common Evidence Layer;\nv0.3.0: audited extraction, review and grounded-synthesis infrastructure;\nv0.4.0: modality-specific target feasibility;\nv0.5.0: optional DepMap/CRISPR functional-dependency architecture and portable reports;\nv0.6.0: graph-native evidence—an immutable evidence graph with deterministic local retrieval and a provider-neutral, GraphRAG-compatible export. The decision plane remains authoritative: graph output cannot promote a candidate into the productive ranking without an explicit validation and authorization gate.\n\nThe productive baseline contains 300 genes. The current discovery universe contains 331 unique identities. The full 18,531-gene DepMap background is context only—not a new productive ranking."
-  },
-  {
-    "objectID": "projects/targetintel-io.html#validation-without-overclaiming",
-    "href": "projects/targetintel-io.html#validation-without-overclaiming",
-    "title": "TargetIntel-IO",
-    "section": "Validation without overclaiming",
-    "text": "Validation without overclaiming\nThe internal 56-target benchmark measures implementation consistency:\n\n\n\nMetric\nCurrent snapshot\n\n\n\n\nOpen Targets retrieval coverage\n25 / 56 (44.6%)\n\n\nStable-role accuracy on covered targets\n100.0%\n\n\nStrict primary-intent accuracy\n91.1%\n\n\nAcceptable-intent accuracy\n100.0%\n\n\n\nA 42-scenario local sensitivity analysis produced a minimum Spearman rank correlation of 0.8762. These results test deterministic behaviour around curated rules. They are not independent biological or clinical validation."
-  },
-  {
-    "objectID": "projects/targetintel-io.html#outputs",
-    "href": "projects/targetintel-io.html#outputs",
-    "title": "TargetIntel-IO",
-    "section": "Outputs",
-    "text": "Outputs\nThe CLI generates:\n\ndeterministic feature tables and three ranked target lists;\ntarget cards and HTML reports;\nscore and rank-shift figures;\nbenchmark and sensitivity snapshots;\noptional reviewed-evidence and feasibility sections;\noptional portable DepMap/CRISPR reports."
-  },
-  {
-    "objectID": "projects/targetintel-io.html#scientific-boundary",
-    "href": "projects/targetintel-io.html#scientific-boundary",
-    "title": "TargetIntel-IO",
-    "section": "Scientific boundary",
-    "text": "Scientific boundary\nTargetIntel-IO is research-use software. It does not recommend treatment, establish causality, validate a therapeutic target or biomarker, or predict patient response. The immediate future direction is external validation with public clinical response cohorts and single-cell/spatial context while preserving the same evidence boundaries.\n\n\nExplore the implementation, reports and versioned examples.\n\nOpen TargetIntel-IO on GitHub ↗"
-  },
-  {
-    "objectID": "projects/reach-gap.html",
-    "href": "projects/reach-gap.html",
-    "title": "reach-gap",
-    "section": "",
-    "text": "v0.8.0 · Research preview View repository ↗"
-  },
-  {
-    "objectID": "projects/reach-gap.html#the-problem",
-    "href": "projects/reach-gap.html#the-problem",
-    "title": "reach-gap",
-    "section": "The problem",
-    "text": "The problem\nA tumour target can be highly expressed and still be difficult for an antibody to reach. Accessibility depends on far more than expression level:\n\nwhich vessels are structurally present, and which are actually perfused;\nhow far target-positive cells lie from those vessels;\nhow quickly an antibody moves through the extracellular matrix;\nhow strongly and how densely it binds;\nwhether an administered antibody reaches and engages the tissue at all.\n\nThese quantities are rarely measured together in the same sample. The common failure mode is quiet substitution: combining RNA, fluorescence, literature diffusion constants and vessel distances as though they were interchangeable."
-  },
-  {
-    "objectID": "projects/reach-gap.html#the-idea",
-    "href": "projects/reach-gap.html#the-idea",
-    "title": "reach-gap",
-    "section": "The idea",
-    "text": "The idea\nreach-gap has two linked layers.\n\n\n\n\n\nflowchart TB\n    subgraph M[Mechanistic layer]\n        A[Vessel source geometry] --&gt; B[Diffusion through matrix]\n        B --&gt; C[Binding and internalisation]\n    end\n    subgraph E[Evidence layer]\n        D[Same-tissue measurement]\n        F[External validation]\n        G[Literature prior]\n        H[Missing / blocked]\n    end\n    M --&gt; I{Evidence sufficient?}\n    E --&gt; I\n    I --&gt;|Yes| J[Relative target ranking]\n    I --&gt;|No| K[NOT_COMPUTED]\n\n\n\n\n\n\nThe mechanistic layer represents vascular geometry, diffusion, binding and internalisation in a simplified 2D reaction–diffusion model. The evidence layer records, for every required input, whether it was measured in the same tissue, externally validated, borrowed as a prior, missing, or explicitly blocked from transfer.\nThe second layer is the point. It makes questionable substitutions visible instead of letting them disappear into a single number."
-  },
-  {
-    "objectID": "projects/reach-gap.html#what-it-returns",
-    "href": "projects/reach-gap.html#what-it-returns",
-    "title": "reach-gap",
-    "section": "What it returns",
-    "text": "What it returns\nDepending on the evidence available:\n\nmechanistic simulation outputs with propagated uncertainty;\nrelative target-rank probabilities and pairwise comparisons;\nevidence-readiness and measurement-priority reports;\nor an explicit abstention such as reachable_fraction = NOT_COMPUTED.\n\nThe last of these is a feature. An absolute reachable fraction requires biology that usually has not been measured, so the tool declines to produce one rather than fabricating false precision."
-  },
-  {
-    "objectID": "projects/reach-gap.html#design-choices",
-    "href": "projects/reach-gap.html#design-choices",
-    "title": "reach-gap",
-    "section": "Design choices",
-    "text": "Design choices\n\n\n\n\n\n\n\nChoice\nReason\n\n\n\n\nRelative ranking rather than absolute fractions\nThe absolute quantity depends on unmeasured inputs; the relative comparison is defensible\n\n\nSix vessel definitions instead of one\nVessel identity is itself a modelling decision, and the ranking should be shown to survive it\n\n\n20,000 uncertainty draws\nPoint estimates hide how wide the plausible range actually is\n\n\nExplicit NOT_COMPUTED outputs\nA missing answer is more useful than a confident wrong one\n\n\nAuditable evidence graph\nEvery transfer between data types can be inspected and challenged"
-  },
-  {
-    "objectID": "projects/reach-gap.html#verified-release",
-    "href": "projects/reach-gap.html#verified-release",
-    "title": "reach-gap",
-    "section": "Verified release",
-    "text": "Verified release\n\n\n\nItem\nCurrent state\n\n\n\n\nAutomated tests\n117\n\n\nCoverage\n88.3%\n\n\nUncertainty draws\n20,000 per analysis\n\n\nVessel definitions compared\n6\n\n\nContainerised\nYes (Docker)\n\n\nLicence\nMIT"
-  },
-  {
-    "objectID": "projects/reach-gap.html#honest-limitations",
-    "href": "projects/reach-gap.html#honest-limitations",
-    "title": "reach-gap",
-    "section": "Honest limitations",
-    "text": "Honest limitations\n\nThe reaction–diffusion model is a simplified 2D representation, not a full pharmacokinetic simulation.\nRelative rankings are comparisons between targets in the same tissue context; they do not transfer to other tumours unchanged.\nLiterature priors remain priors, however carefully labelled.\nResearch use only: no prediction of patient response, treatment recommendation, or estimate of clinical efficacy."
-  },
-  {
-    "objectID": "projects/dev-autopilot.html",
-    "href": "projects/dev-autopilot.html",
-    "title": "Dev Autopilot",
-    "section": "",
-    "text": "v0.1.1 · Alpha View repository ↗"
-  },
-  {
-    "objectID": "projects/dev-autopilot.html#the-problem",
-    "href": "projects/dev-autopilot.html#the-problem",
-    "title": "Dev Autopilot",
-    "section": "The problem",
-    "text": "The problem\nAI coding agents can produce useful work, but a scientific software project also needs durable state, explicit permissions, reproducible tests, independent review and a clear boundary around human authority.\nDev Autopilot turns those requirements into a workflow instead of relying on one long prompt or one agent grading its own work."
-  },
-  {
-    "objectID": "projects/dev-autopilot.html#authority-is-separated",
-    "href": "projects/dev-autopilot.html#authority-is-separated",
-    "title": "Dev Autopilot",
-    "section": "Authority is separated",
-    "text": "Authority is separated\n\n\n\n\n\nflowchart LR\n    A[Planning advice] --&gt; B[Implementation]\n    B --&gt; C[Deterministic gates]\n    C --&gt; D[Adversarial audit]\n    D --&gt; E[Independent review]\n    E --&gt; F[Bounded correction]\n    F --&gt; C\n    E --&gt; G[Ready for human review]\n\n\n\n\n\n\nPlanning advice is not approval. The implementation agent cannot approve its own diff. Review agents cannot override mechanical gates. The system stops at READY_FOR_HUMAN_REVIEW, leaving commit, pull-request and merge decisions to a person."
-  },
-  {
-    "objectID": "projects/dev-autopilot.html#what-persists",
-    "href": "projects/dev-autopilot.html#what-persists",
-    "title": "Dev Autopilot",
-    "section": "What persists",
-    "text": "What persists\nSQLite records:\n\nevery legal state transition;\nappend-only events and stop reasons;\nretry counts for each agent role;\nquota pauses and exact resume states;\nidempotency hashes and diff-keyed review caches;\nexpiring exclusive run locks.\n\nThis allows a workflow to recover after process restarts without guessing where it left off."
-  },
-  {
-    "objectID": "projects/dev-autopilot.html#safety-design",
-    "href": "projects/dev-autopilot.html#safety-design",
-    "title": "Dev Autopilot",
-    "section": "Safety design",
-    "text": "Safety design\nVersion 0.1.1 includes:\n\nvalidated YAML jobs with explicit file, tree and glob permissions;\nscope, test, context-size and Git-metadata gates;\nfail-closed transitions;\ndeterministic jitter and quota-reset support;\nbounded review/correction rounds;\nfake adapters for complete offline integration tests;\na generic file-based bridge for real subscription agents.\n\nReal execution requires an explicit network opt-in. Shell syntax inside test commands also requires an explicit opt-in because it expands the trust boundary."
-  },
-  {
-    "objectID": "projects/dev-autopilot.html#why-it-belongs-in-a-scientific-portfolio",
-    "href": "projects/dev-autopilot.html#why-it-belongs-in-a-scientific-portfolio",
-    "title": "Dev Autopilot",
-    "section": "Why it belongs in a scientific portfolio",
-    "text": "Why it belongs in a scientific portfolio\nThe project is not a claim that automation removes scientific judgment. It demonstrates the opposite: agentic workflows become more useful when scientific scope, mechanical correctness, adversarial review and human authority are represented as different responsibilities."
-  },
-  {
-    "objectID": "projects/dev-autopilot.html#current-boundary",
-    "href": "projects/dev-autopilot.html#current-boundary",
-    "title": "Dev Autopilot",
-    "section": "Current boundary",
-    "text": "Current boundary\nDev Autopilot is alpha software. It coordinates and audits work, but never stages, commits, pushes, tags or merges product code. A human must inspect the final diff and evidence.\n\n\nReview the state machine, job schema, offline smoke run and TargetIntel example profile.\n\nOpen Dev Autopilot on GitHub ↗"
-  },
-  {
-    "objectID": "about.html",
-    "href": "about.html",
-    "title": "\nI work where biological complexity meets therapeutic decisions.\n",
-    "section": "",
-    "text": "Experience & approach\n\n\nI work where biological complexity meets therapeutic decisions.\n\n\nMy background spans antibody immunotherapies, precision oncology, developmental neurobiology and computational tool building. Across those settings, my role is consistent: structure ambiguous questions, connect evidence across modalities and communicate what the data can—and cannot—support.\n\n\n\n\n\n\n\n\n\n\nProfile\n\n\nComputational biologist with 6+ years across industry and academia.\n\n\nI combine deep biological context with hands-on analysis and software engineering. That means I can move from experimental design and QC to multi-omic integration, statistical modelling, interpretation and a result that an experimental or clinical team can use.\n\n\nI hold a PhD in Bioinformatics and two MSc degrees in Bioinformatics & Biostatistics and Molecular Biology. I have worked in Spain, Germany, the United Kingdom and Sweden, and collaborate comfortably across disciplines and cultures.\n\n\nCurrent BioInvent International Based Lund, Sweden Available September 2026\n\n\n\n\n\n\n\nCareer\n\n\nProfessional experience\n\n\n\n\n\n\nAug 2025 — Aug 2026Lund, Sweden\n\n\n\nBioInvent International AB\n\n\nBioinformatics Research Scientist\n\n\n\nLead multi-omic analysis across the BI-1206 anti-FcγRIIB and BI-1808 anti-TNFR2 antibody programs, connecting patient, mouse and in-vitro evidence.\n\n\nResolve response mechanisms, immune-cell states and tissue niches using scRNA-seq, CITE-seq, spatial transcriptomics, bulk RNA-seq, proteomics and clinical metadata.\n\n\nSupport target validation, biomarker strategy, patient selection and go/no-go decisions while building reusable AWS/HPC analysis environments.\n\n\n\n\n\n\nSep 2024 — Jan 2025Seville, Spain\n\n\n\nBristol Myers Squibb\n\n\nVisiting Scientist, Computational Biology\n\n\n\nDesigned patient-derived gene signatures across lung, pancreatic and breast cancers for precision-medicine and resistance questions.\n\n\nMapped cell lines, xenografts and organoids to clinical tumour subtypes using TCGA and DepMap/Celligner.\n\n\nAnalysed NanoString CosMx and 10x Visium HD spatial transcriptomics across tumour cohorts.\n\n\n\n\n\n\nSep 2020 — Sep 2024Alicante, Spain\n\n\n\nInstitute of Neurosciences, CSIC–UMH\n\n\nBioinformatics Research Scientist · PhD\n\n\n\nIntegrated cross-species scRNA-seq, RNA-seq and ATAC-seq to define conserved cortical stem-cell programs and regulatory elements.\n\n\nIdentified gene signatures in paediatric brain tumours through public-data meta-analysis and mouse-model benchmarking.\n\n\nBuilt and published an R Shiny single-cell atlas and mentored two MSc students.\n\n\n\n\n\n\nMar 2023 — Jun 2023Munich, Germany\n\n\n\nHelmholtz Munich\n\n\nVisiting Scientist, Bioinformatics\n\n\n\nCombined Hi-C and ATAC-seq to study open chromatin, enhancer contacts and transcription-factor motifs.\n\n\nTrained ChromBPNet to predict chromatin accessibility and sequence motifs directly from DNA sequence.\n\n\n\n\n\n\n2017 — 2019Madrid · London\n\n\n\nIMDEA · SUEZ\n\n\nJunior Scientist\n\n\nEarly scientific roles that built my foundations in experimental biology, data analysis and cross-functional research.\n\n\n\n\n\n\n\n\n\nCapabilities\n\n\nA practical, end-to-end toolkit\n\n\n\n\n\n\nDomains\n\n\nImmuno-oncology · Inflammation · Tumour biology · Translational research · Neuroscience\n\n\n\n\nDecisions\n\n\nTarget discovery · Biomarker validation · Patient stratification · Mode of action · Resistance mechanisms\n\n\n\n\nSingle-cell & spatial\n\n\nscRNA-seq · CITE-seq · scATAC-seq · RNA velocity · Seurat WNN · totalVI · MultiVI · Visium HD · CosMx\n\n\n\n\nBulk & functional genomics\n\n\nRNA-seq · ATAC-seq · ChIP-seq · CUT&Tag/CUT&RUN · Hi-C · Proteomics · DepMap · CCLE · PRISM\n\n\n\n\nML & AI\n\n\nXGBoost · Random Forest · Survival analysis · Variational autoencoders · Geneformer · scGPT · Cell2Sentence · ChromBPNet\n\n\n\n\nEngineering\n\n\nPython · R · Bash · Nextflow · Snakemake · Docker · AWS · HPC/Slurm · Git\n\n\n\n\n\n\n\n\nEducation\n\n\nTraining\n\n\n\n\n\n2020—2025\n\nPhD, Bioinformatics\n\n\nHelmholtz Munich · CSIC · Miguel Hernández University\n\n\n\n2018—2020\n\nMSc, Bioinformatics & Biostatistics\n\n\nUniversity of Barcelona\n\n\n\n2017—2018\n\nMSc, Molecular Biology\n\n\nAutonomous University of Madrid\n\n\n\n2013—2017\n\nBSc, Biology\n\n\nUniversity of Alicante\n\n\n\n\n\n\nNext chapter\n\n\nOpen to computational biology opportunities from September 2026.\n\n\nI am especially interested in roles that connect human biology, multi-omic data and therapeutic development.\n\n\nStart a conversation LinkedIn"
-  },
-  {
     "objectID": "projects/drugmatch-confidence.html",
     "href": "projects/drugmatch-confidence.html",
     "title": "DrugMatch-Confidence",
@@ -278,159 +446,5 @@
     "title": "DrugMatch-Confidence",
     "section": "Scientific boundary",
     "text": "Scientific boundary\nThis is preclinical research software. Cell lines do not reproduce the full tumour microenvironment, pharmacokinetics or patient heterogeneity, and the strict external subsets are small. The model cannot predict an unseen compound and must never be used to choose treatment for a person.\n\n\nInspect the models, external validation, example predictions and complete model card.\n\nOpen DrugMatch-Confidence on GitHub ↗"
-  },
-  {
-    "objectID": "projects/segmentation-fragility.html",
-    "href": "projects/segmentation-fragility.html",
-    "title": "segmentation-fragility",
-    "section": "",
-    "text": "v0.5.0 · Research preview View repository ↗"
-  },
-  {
-    "objectID": "projects/segmentation-fragility.html#the-problem",
-    "href": "projects/segmentation-fragility.html#the-problem",
-    "title": "segmentation-fragility",
-    "section": "The problem",
-    "text": "The problem\nSpatial transcriptomics measures RNA molecules at precise tissue coordinates. Before any biology can be read out, a segmentation method must assign each transcript to a cell.\nCell boundaries are genuinely uncertain in dense tissue — cells overlap, nuclei are incomplete, transcripts sit near borders. A small boundary change can move a marker from one cell type to another and change the downstream conclusion. Most analyses treat one segmentation output as final and never propagate that uncertainty into the claim.\nThis matters for statements of exactly the kind people report:\n\nfewer than 5% of T-cell anchors express MS4A1;\nfewer than 5% of B-cell anchors express CD3E;\nfewer than 5% of myeloid anchors express EPCAM.\n\nA claim can look comfortably stable under one assignment system and cross the decision threshold under another."
-  },
-  {
-    "objectID": "projects/segmentation-fragility.html#the-idea",
-    "href": "projects/segmentation-fragility.html#the-idea",
-    "title": "segmentation-fragility",
-    "section": "The idea",
-    "text": "The idea\nThe tool does not ask which segmentation is best. It asks whether the claim survives.\n\n\n\n\n\nflowchart LR\n    A[Fixed biological anchors] --&gt; B[Xenium vendor]\n    A --&gt; C[ProSeg]\n    A --&gt; D[Baysor]\n    B --&gt; E[Same claim, three assignments]\n    C --&gt; E\n    D --&gt; E\n    E --&gt; F{Anchor coverage sufficient?}\n    F --&gt;|No| G[Not reportable]\n    F --&gt;|Yes| H{Threshold decision stable?}\n    H --&gt;|Yes| I[Robust]\n    H --&gt;|No| J[Segmentation-sensitive]\n\n\n\n\n\n\nThe separation between the cell anchor and the transcript assignment is what makes this work: anchors stay conservative and fixed, assignment varies, and the claim becomes the unit of analysis rather than the segmented object."
-  },
-  {
-    "objectID": "projects/segmentation-fragility.html#design-choices",
-    "href": "projects/segmentation-fragility.html#design-choices",
-    "title": "segmentation-fragility",
-    "section": "Design choices",
-    "text": "Design choices\n\n\n\n\n\n\n\nChoice\nReason\n\n\n\n\nClaim as unit of analysis\nThe scientific output is the claim, not the segmentation mask\n\n\nFixed biological denominators\nOtherwise a change in anchors and a change in assignment are confounded\n\n\nThree independent assignment systems\nOne alternative could be an idiosyncrasy; three is a pattern\n\n\nCoverage requirement before reporting\nA claim computed on too few anchors is noise, not evidence\n\n\nExplicit “not reportable” state\nAbstention beats a confident answer built on insufficient support"
-  },
-  {
-    "objectID": "projects/segmentation-fragility.html#validation",
-    "href": "projects/segmentation-fragility.html#validation",
-    "title": "segmentation-fragility",
-    "section": "Validation",
-    "text": "Validation\n\n\n\n\n\n\n\n\nEvidence layer\nData\nPurpose\n\n\n\n\nPlanted-truth simulation\n36 scenarios, 288 observations\nTests signed flips and estimator calibration\n\n\nXenium RCC perturbation\n77.1M transcript records\nTests controlled boundary reassignment around one vendor segmentation\n\n\n\nThe simulation layer matters because it is the only place where ground truth is known by construction — real tissue cannot tell you which assignment was correct."
-  },
-  {
-    "objectID": "projects/segmentation-fragility.html#verified-release",
-    "href": "projects/segmentation-fragility.html#verified-release",
-    "title": "segmentation-fragility",
-    "section": "Verified release",
-    "text": "Verified release\n\n\n\nItem\nCurrent state\n\n\n\n\nAutomated tests\n62\n\n\nLine coverage\n90.28%\n\n\nBranch-aware coverage\n85.92%\n\n\nContinuous integration\nGitHub Actions\n\n\nLicence\nMIT"
-  },
-  {
-    "objectID": "projects/segmentation-fragility.html#honest-limitations",
-    "href": "projects/segmentation-fragility.html#honest-limitations",
-    "title": "segmentation-fragility",
-    "section": "Honest limitations",
-    "text": "Honest limitations\n\n“Robust” and “segmentation-sensitive” refer to a predeclared numerical claim threshold in this audit. They are not clinical safety conclusions and do not establish biological ground truth.\nResults are specific to the claims, anchors and thresholds declared before the analysis.\nAgreement across three segmentation methods reduces the chance of an artefact; it does not prove the underlying biology is correct."
-  },
-  {
-    "objectID": "projects/fm-value-audit.html",
-    "href": "projects/fm-value-audit.html",
-    "title": "FM Value Audit",
-    "section": "",
-    "text": "v0.5.0a1 · Pre-release View repository ↗"
-  },
-  {
-    "objectID": "projects/fm-value-audit.html#the-question",
-    "href": "projects/fm-value-audit.html#the-question",
-    "title": "FM Value Audit",
-    "section": "The question",
-    "text": "The question\nFoundation models produce impressive high-dimensional embeddings of single-cell data. Whether those embeddings help is a separate question, and it is often left unanswered:\n\nare the embeddings contextual, or only static token vectors?\nwere test outcomes used indirectly during feature selection or tuning?\ndoes the model beat a cheap historical or expression-based baseline?\n\nFM Value Audit tests whether representations from models such as Geneformer and scGPT add measurable value beyond simpler, easier-to-explain alternatives in immuno-oncology target prioritisation."
-  },
-  {
-    "objectID": "projects/fm-value-audit.html#the-design",
-    "href": "projects/fm-value-audit.html#the-design",
-    "title": "FM Value Audit",
-    "section": "The design",
-    "text": "The design\nThe project is built to be able to say no.\n\n\n\n\n\nflowchart TB\n    A[Prespecified decision metric] --&gt; B[Historical baseline]\n    A --&gt; C[Expression baseline]\n    A --&gt; D[Foundation-model representation]\n    B --&gt; E[Temporal holdout&lt;br/&gt;unseen future outcomes]\n    C --&gt; E\n    D --&gt; E\n    E --&gt; F{Does FM improve AUPRC?}\n    F --&gt;|No| G[Report negative result]\n    F --&gt;|Yes| H[Report improvement with CI]\n\n\n\n\n\n\nA sophisticated embedding is not treated as useful merely because it looks biologically structured. It has to improve a prespecified decision metric on outcomes that were not available when the features were built."
-  },
-  {
-    "objectID": "projects/fm-value-audit.html#current-status-read-this-carefully",
-    "href": "projects/fm-value-audit.html#current-status-read-this-carefully",
-    "title": "FM Value Audit",
-    "section": "Current status — read this carefully",
-    "text": "Current status — read this carefully\nv0.5.0a1 is a pre-release containing two clearly separated evidence layers.\n1. Final v0.4 result. Static Geneformer token geometry did not improve the prespecified AUPRC contrast over the historical baseline.\n\n\n\nMetric\nValue\n\n\n\n\nPrimary conclusion\nNOT_SUPPORTED\n\n\nPoint delta (AUPRC)\n−0.00033\n\n\n95% CI\n−0.0095 to +0.0014\n\n\nTemporal holdout rows\n79,542\n\n\nHoldout positives\n14\n\n\n\n2. Prospective v0.5 protocol. Contextual cell-state embeddings are preregistered, but the GPU runs and future-outcome evaluation are not complete.\nThis release must therefore not be described as evidence that contextual foundation-model representations improve target prioritisation. It is evidence about static token geometry only."
-  },
-  {
-    "objectID": "projects/fm-value-audit.html#why-a-negative-result-is-the-point",
-    "href": "projects/fm-value-audit.html#why-a-negative-result-is-the-point",
-    "title": "FM Value Audit",
-    "section": "Why a negative result is the point",
-    "text": "Why a negative result is the point\nMost published comparisons appear when a method wins. That selection pressure makes the literature look more favourable to new methods than the underlying evidence supports.\nA benchmark designed in advance, with a declared metric and a leakage-controlled holdout, produces a usable answer either way. Here the answer was no — and reporting it plainly is more useful to anyone deciding whether to invest GPU time than a reframed positive.\nThe 14 holdout positives are also worth stating openly: with that few events, the confidence interval is wide, and the honest reading is “no detectable improvement,” not “proven equivalence.”"
-  },
-  {
-    "objectID": "projects/fm-value-audit.html#data",
-    "href": "projects/fm-value-audit.html#data",
-    "title": "FM Value Audit",
-    "section": "Data",
-    "text": "Data\n\n\n\nCohort\nCells retained\n\n\n\n\nGSE115978\n7,186\n\n\nGSE120575\n16,291\n\n\nGSE179994\n150,849"
-  },
-  {
-    "objectID": "projects/fm-value-audit.html#verified-release",
-    "href": "projects/fm-value-audit.html#verified-release",
-    "title": "FM Value Audit",
-    "section": "Verified release",
-    "text": "Verified release\n\n\n\n\n\n\n\nItem\nCurrent state\n\n\n\n\nAutomated tests\n70\n\n\nIntegration audit\nPASS_WITH_WARNINGS\n\n\nEngineering evidence\nExecutable GitHub Actions jobs with uploaded JUnit, coverage and audit artefacts\n\n\nLicence\nApache-2.0\n\n\n\nRelease claims are machine-checked against result JSON rather than hand-written into the README, so the documented numbers cannot silently drift from the executed ones."
-  },
-  {
-    "objectID": "projects/fm-value-audit.html#honest-limitations",
-    "href": "projects/fm-value-audit.html#honest-limitations",
-    "title": "FM Value Audit",
-    "section": "Honest limitations",
-    "text": "Honest limitations\n\nThe completed result concerns static token geometry, not contextual embeddings.\n14 holdout positives is a small number of events; the interval is correspondingly wide.\nA negative result in this specific decision task does not generalise to all uses of foundation models in biology.\nResearch software only: it evaluates methods for preclinical target prioritisation and does not recommend a medicine, diagnose a patient, or make a clinical decision."
-  },
-  {
-    "objectID": "projects/mtf-prediction.html",
-    "href": "projects/mtf-prediction.html",
-    "title": "MTF Prediction",
-    "section": "",
-    "text": "v1.0.0 · Research analysis View repository ↗"
-  },
-  {
-    "objectID": "projects/mtf-prediction.html#the-scientific-question",
-    "href": "projects/mtf-prediction.html#the-scientific-question",
-    "title": "MTF Prediction",
-    "section": "The scientific question",
-    "text": "The scientific question\nSome membrane proteins release intracellular fragments that participate in nuclear signalling. Could topological domains of mammalian membrane proteins contain sequence patterns that a deep-learning model recognises as transcription-factor-like?\nMTF Prediction is a research-analysis archive built to generate candidates and explore how strongly the result depends on protein-domain boundaries."
-  },
-  {
-    "objectID": "projects/mtf-prediction.html#analysis-design",
-    "href": "projects/mtf-prediction.html#analysis-design",
-    "title": "MTF Prediction",
-    "section": "Analysis design",
-    "text": "Analysis design\nReviewed human and mouse membrane proteins from UniProtKB 2022_05 were separated into cytoplasmic, extracellular and lumenal domains. Each eligible domain was evaluated under three boundary definitions:\n\n\n\n\n\n\n\nCondition\nSequence submitted to the model\n\n\n\n\nNo TMD\nAnnotated topological domain only\n\n\nHalf TMD\nDomain extended by approximately half of each adjacent transmembrane segment\n\n\nFull TMD\nDomain extended across the complete adjacent transmembrane segment\n\n\n\n\n\n\n\n\nflowchart LR\n    A[UniProtKB topology] --&gt; B[Cytoplasmic, extracellular, lumenal]\n    B --&gt; C[No, half or full TMD]\n    C --&gt; D[Coordinate-aware FASTA]\n    D --&gt; E[DeepTFactor]\n    E --&gt; F[Candidate predictions]\n    F --&gt; G[Captum Integrated Gradients]"
-  },
-  {
-    "objectID": "projects/mtf-prediction.html#interpretation",
-    "href": "projects/mtf-prediction.html#interpretation",
-    "title": "MTF Prediction",
-    "section": "Interpretation",
-    "text": "Interpretation\nDeepTFactor assigns transcription-factor-like scores to protein fragments. For selected candidates, Captum Integrated Gradients provides residue-level attribution, helping identify which positions influenced the model.\nThe public repository preserves:\n\nhuman and mouse processed inputs;\nGFF-to-domain coordinate transformations;\nFASTA fragments across boundary conditions;\nprediction outputs and filtered candidate tables;\nattribution tables and sequence-logo figures;\nthe original scripts and a machine-readable citation."
-  },
-  {
-    "objectID": "projects/mtf-prediction.html#what-the-project-demonstrates",
-    "href": "projects/mtf-prediction.html#what-the-project-demonstrates",
-    "title": "MTF Prediction",
-    "section": "What the project demonstrates",
-    "text": "What the project demonstrates\nThis project connects biological annotation, command-line data processing, protein deep learning and model interpretation. It also exposes a biologically important sensitivity question: if a prediction changes when the boundary moves by a few residues, it should be interpreted differently from one that is stable across all three definitions."
-  },
-  {
-    "objectID": "projects/mtf-prediction.html#scientific-boundary",
-    "href": "projects/mtf-prediction.html#scientific-boundary",
-    "title": "MTF Prediction",
-    "section": "Scientific boundary",
-    "text": "Scientific boundary\nA positive prediction only means that a fragment contains sequence features associated with transcription factors by the selected model. It does not establish DNA binding, nuclear localisation, proteolytic activation or transcriptional function in vivo. Orthogonal experimental validation is required.\nThe repository is a research archive, not a packaged end-to-end application, and remains tied to the 2022_05 UniProtKB release and the original DeepTFactor checkpoint.\n\n\nExplore the full analysis matrix, processed inputs and residue-attribution outputs.\n\nOpen MTF Prediction on GitHub ↗"
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "\nBiology,decoded.\n",
-    "section": "",
-    "text": "Rafael Soler Ortuño · Computational Biologist\n\n\nBiology,decoded.\n\n\nI am Rafael, a computational biologist who connects single-cell, spatial and multi-omic data with interpretable machine learning to support target discovery, biomarker strategy and patient stratification.\n\n\nCurious by nature and rigorous by training, I enjoy the difficult space between data, mechanism and therapeutic decisions. I build analyses and tools that make the evidence visible—not just the final answer.\n\n\nExplore my tools ↗ Download CV ↓ Get in touch\n\n\n Based in Lund, Sweden · Open to opportunities from September 2026\n\n\n\n  \n\n\n\n\nCurrently BioInvent InternationalLund, Sweden\n\n\n\n\n    \n\n\n\n\n01 / Now\n\n\nBioinformatics Research Scientist\n\n\nBioInvent International AB · Lund, Sweden\n\n\n\n\nContract period Aug 2025 — Aug 2026\n\n\nCompany focus Antibody therapeutics for oncology and autoimmune diseases\n\n\nRole  Multi-omics lead · Immunotherapy · Biomarker discovery · Patient stratification · Mode of action \n\n\n\nI lead computational work across antibody programs, integrating clinical, mouse and in-vitro evidence to resolve response and resistance mechanisms. My day-to-day spans scRNA-seq, CITE-seq, spatial transcriptomics, proteomics, clinical metadata and reproducible AWS/HPC workflows.\n\n\n\n\n\n\n02 / Selected tools\n\n\nResearch software built around honest evidence.\n\n\n\nEight public projects spanning target discovery and safety, method reliability, pharmacogenomics, safe agentic development and explainable protein-sequence modelling.\n\n\n\n\n\n\n\n\nField\n\n\nTool\n\n\nThe problem\n\n\nWhat it is for\n\n\nWhat it adds\n\n\nKey skills applied\n\n\n\n\n\n\nTarget discovery & safety\n\n\nTargetIntel-IO\n\n\nA gene linked to disease is not automatically a good drug target, yet most tools collapse that judgement into a single score.\n\n\nSorting candidate genes into genuine targets, biomarkers, resistance mechanisms and poor candidates.\n\n\nThree separate rankings, one per therapeutic strategy, plus the evidence for and against each call.\n\n\n\n\nOpen Targets & DepMap\n\n\nDuckDB\n\n\nBenchmarking\n\n\nSensitivity analysis\n\n\nGrounded LLM synthesis\n\n\nGraphRAG\n\n\nCI/CD\n\n\n\n\n\n\nActivation Liability\n\n\nA target can look safely tumour-specific in healthy resting tissue and stop looking that way once the tissue is inflamed.\n\n\nSpotting targets whose apparent safety margin shrinks under immune activation.\n\n\nA direct resting-versus-activated comparison in public data, with abstention when the evidence is too thin.\n\n\n\n\nSingle-cell RNA-seq\n\n\nPublic GEO cohorts\n\n\nNegative-binomial models\n\n\nDonor-level robustness\n\n\nReproducible manifests\n\n\n\n\n\n\nreach-gap\n\n\nA target can be highly expressed and still sit too far from a working blood vessel for an antibody to reach it.\n\n\nAsking whether target-positive tumour cells are physically accessible to an antibody.\n\n\nMechanistic diffusion modelling paired with an evidence graph that returns NOT_COMPUTED rather than guessing.\n\n\n\n\nReaction–diffusion modelling\n\n\nSpatial transcriptomics\n\n\nUncertainty propagation\n\n\nEvidence provenance\n\n\nDocker\n\n\n\n\n\n\nMethod reliability\n\n\nsegmentation-fragility\n\n\nIn spatial data, a small change in where a cell boundary is drawn can move a marker between cell types and flip the conclusion.\n\n\nTesting whether a spatial-transcriptomics claim survives a change in transcript-to-cell assignment.\n\n\nEach claim is labelled robust, segmentation-sensitive or not reportable, instead of trusting one segmentation as final.\n\n\n\n\nXenium / ProSeg / Baysor\n\n\nClaim-level auditing\n\n\nPlanted-truth simulation\n\n\nAbstention logic\n\n\n\n\n\n\nFM Value Audit\n\n\nA foundation-model embedding can look biologically structured and still add nothing to a real decision.\n\n\nTesting whether single-cell foundation models beat cheaper baselines at target prioritisation.\n\n\nA leakage-aware temporal holdout designed to report a negative result when that is what the data shows.\n\n\n\n\nGeneformer & scGPT\n\n\nLeakage control\n\n\nTemporal holdout\n\n\nAUPRC benchmarking\n\n\nPreregistration\n\n\n\n\n\n\nDrug response prediction\n\n\nDrugMatch-Confidence\n\n\nCancer models respond very differently to the same drug, and predictions rarely say how much to trust them.\n\n\nPredicting how a preclinical cancer model will respond to a given drug.\n\n\nEvery prediction carries a calibrated probability, an uncertainty interval and a warning when the input is unfamiliar.\n\n\n\n\nXGBoost\n\n\nSHAP\n\n\nConformal prediction\n\n\nProbability calibration\n\n\nGrouped cross-validation\n\n\nDepMap / PRISM / GDSC2\n\n\n\n\n\n\nProtein deep learning\n\n\nMTF Prediction\n\n\nWhether a membrane protein carries transcription-factor-like features can change depending on where you draw its boundary.\n\n\nScreening human and mouse membrane-protein domains for those features under different boundary definitions.\n\n\nThe same screen repeated across three boundary conditions, so a result that holds under only one is visible as such.\n\n\n\n\nPyTorch\n\n\nDeepTFactor\n\n\nCaptum integrated gradients\n\n\nUniProtKB\n\n\n\n\n\n\nResearch engineering\n\n\nDev Autopilot\n\n\nAI coding agents can move fast through a repository and leave no reliable trail of what changed or why.\n\n\nRunning AI agents on real code with hard limits on what they may touch.\n\n\nSeparate agents implement, audit and review; deterministic gates decide whether work advances, and a person keeps merge authority.\n\n\n\n\nAgentic AI orchestration\n\n\nPydantic\n\n\nSQLite\n\n\nStrict typing (mypy)\n\n\nState machines\n\n\nCI/CD\n\n\n\n\n\n\n\n\n\n\n\n01 v0.6.0 · Research preview\n\n\nTargetIntel-IO\n\n\nExplainable target discovery and prioritisation\n\n\nSeparates therapeutic targets, biomarkers, resistance mechanisms and poor direct targets in anti-PD-1-resistant melanoma—then ranks them according to antibody/IO, biomarker or small-molecule intent.\n\n\n3 intent rankings 331 discovery universe 26Q1 real DepMap layer\n\n\nTarget discoveryCRISPREvidence auditGraphRAG\n\n\nCase study → GitHub ↗\n\n\n\n\n02 v0.5.0 · Research preview\n\n\nActivation Liability\n\n\nHidden safety risk in surface targets\n\n\nAudits how much of a target’s apparent tumour selectivity disappears when healthy tissue is inflamed rather than resting, using paired public single-cell cohorts.\n\n\n52 automated tests 85.4% non-I/O coverage\n\n\nTarget safetySingle-cellAbstention\n\n\nCase study → GitHub ↗\n\n\n\n\n03 v0.8.0 · Research preview\n\n\nreach-gap\n\n\nIs the target physically reachable?\n\n\nCouples simplified reaction–diffusion modelling with an explicit evidence graph to ask whether target-positive tumour cells are accessible to an antibody, and returns NOT_COMPUTED when the required biology has not been measured.\n\n\n117 automated tests 20,000 uncertainty draws\n\n\nReaction–diffusionSpatialEvidence graph\n\n\nCase study → GitHub ↗\n\n\n\n\n04 v0.5.0 · Research preview\n\n\nsegmentation-fragility\n\n\nDoes the conclusion survive the segmentation?\n\n\nTests whether a spatial-transcriptomics claim still holds when transcript-to-cell assignment changes across Xenium, ProSeg and Baysor, labelling each claim robust, segmentation-sensitive or not reportable.\n\n\n62 automated tests 90.3% line coverage\n\n\nXeniumClaim auditingAbstention\n\n\nCase study → GitHub ↗\n\n\n\n\n05 v0.5.0a1 · Pre-release\n\n\nFM Value Audit\n\n\nDo foundation models actually add value?\n\n\nA leakage-aware temporal-holdout benchmark testing whether Geneformer and scGPT representations improve target prioritisation over cheaper baselines. The completed v0.4 result was negative, and is reported as such.\n\n\n79,542 holdout rows NOT_SUPPORTED primary conclusion\n\n\nGeneformerscGPTLeakage control\n\n\nCase study → GitHub ↗\n\n\n\n\n06 v1.0.1 · Released\n\n\nDrugMatch-Confidence\n\n\nInterpretable cancer drug-response prediction\n\n\nPredicts sensitivity in preclinical cancer cell lines from DepMap multi-omics and PRISM response data, with SHAP drivers, calibrated uncertainty, prediction intervals and out-of-distribution warnings.\n\n\n5 real drug models 2 validated demos GDSC2 external test\n\n\nXGBoostSHAPDepMapPRISM\n\n\nCase study → GitHub ↗\n\n\n\n\n07 v1.0.0 · Research analysis\n\n\nMTF Prediction\n\n\nTopology-aware protein deep learning\n\n\nScreens human and mouse membrane-protein domains for transcription-factor-like sequence features using DeepTFactor, then interprets selected predictions with Captum Integrated Gradients.\n\n\nPyTorchCaptumUniProt\n\n\nCase study → GitHub ↗\n\n\n\n\n08 v0.1.1 · Alpha\n\n\nDev Autopilot\n\n\nAuditable AI-agent workflow for scientific software\n\n\nA persistent Python/SQLite orchestrator that separates implementation, adversarial audit and independent review, with deterministic gates and final human authority.\n\n\nAgentic AISQLiteSafety gates\n\n\nCase study → GitHub ↗\n\n\n\nView the complete project portfolio →\n\n\n\n\n\n03 / Experience\n\n\nFrom fundamental biology to therapeutic programs.\n\n\n\nSix-plus years working across industry and academia, with a consistent focus on translating complex molecular data into useful biological conclusions.\n\n\n\n\n\n2025—2026\n\n\n\nBioInvent International\n\n\nComputational lead for translational multi-omics across anti-TNFR2 and anti-FcγRIIB antibody programs.\n\n\nLund\n\n\n\n2024—2025\n\n\n\nBristol Myers Squibb\n\n\nPrecision oncology, preclinical-to-clinical model mapping and spatial transcriptomics across tumour cohorts.\n\n\nSeville\n\n\n\n2020—2024\n\n\n\nInstitute of Neurosciences, CSIC–UMH\n\n\nCross-species single-cell and epigenomic analysis of cortical development, plus paediatric brain-tumour genomics.\n\n\nAlicante\n\n\n\n2023\n\n\n\nHelmholtz Munich\n\n\nHi-C, chromatin accessibility and sequence-to-signal deep learning with ChromBPNet.\n\n\nMunich\n\n\nRead the full experience summary →\n\n\n\n\n\n04 / What I bring\n\n\nBiology, modelling and engineering in one workflow.\n\n\n\n\n\n01\n\nTranslational science\n\n\nImmuno-oncology, inflammation, tumour biology, mechanism of action, target validation, biomarkers and patient stratification.\n\n\n\n02\n\nMulti-omic evidence\n\n\nscRNA-seq, CITE-seq, spatial transcriptomics, bulk RNA-seq, epigenomics, proteomics and functional genomics.\n\n\n\n03\n\nModels that explain themselves\n\n\nXGBoost, survival analysis, variational autoencoders, foundation models and sequence-to-signal deep learning, with uncertainty and provenance.\n\n\n\n04\n\nReproducible delivery\n\n\nPython, R, Bash, Nextflow, Snakemake, Docker, AWS and HPC—with versioned inputs, automated tests and stakeholder-ready reporting.\n\n\n\n\n\n\n\n\n05 / Selected publications\n\n\nPeer-reviewed work in developmental neurobiology.\n\n\n\n\n\n2024Gene regulatory landscape of cerebral cortex foldingScience Advances\n\n\n2024Multiple parallel cell lineages in the developing mammalian cerebral cortexScience Advances\n\n\n2022Secondary loss of miR-3607 reduced cortical progenitor amplification during rodent evolutionScience Advances\n\n\n2020Repression of Irs2 by let-7 miRNAs is essential for homeostasis of the telencephalic neuroepitheliumThe EMBO Journal\n\n\n\n\n\n06 / Contact\n\n\nLooking for new roles from September 2026.\n\n\nI am interested in computational biology and translational data-science roles where rigorous analysis can shape therapeutic decisions.\n\n\nrafaelsolersanblas@gmail.com ↗ Download CV ↓ LinkedIn"
   }
 ]

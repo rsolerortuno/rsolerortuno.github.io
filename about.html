@@ -42,7 +42,7 @@ ul.task-list li input[type="checkbox"] {
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-3d1b6502958a38d6b4d29f0899443d12.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-3a8c703fb520cc07f7eefc65bb59a90d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "language": {
     "search-no-results-text": "No results",
@@ -64,6 +64,7 @@ ul.task-list li input[type="checkbox"] {
 <link rel="stylesheet" href="styles.css">
 <link rel="stylesheet" href="brand.css">
 <link rel="stylesheet" href="role-fix.css">
+<link rel="stylesheet" href="refine.css">
 <meta property="og:title" content="Experience | Rafael Soler Ortuño">
 <meta property="og:description" content="Experience across computational biology, immuno-oncology, multi-omics, translational research, and research software.">
 <meta property="og:site_name" content="Rafael Soler Ortuño">
@@ -153,10 +154,13 @@ Profile
 Computational biologist with 6+ years across industry and academia.
 </h2>
 <p>
-I combine deep biological context with hands-on analysis and software engineering. That means I can move from experimental design and QC to multi-omic integration, statistical modelling, interpretation and a result that an experimental or clinical team can use.
+I hold a PhD in bioinformatics and have 2+ years of postdoctoral experience in immuno-oncology and tumour biology, using single-cell and spatial transcriptomics, multi-omic integration and ML/AI to drive biomarker discovery, validation and patient stratification. My industry work spans antibody-based immunotherapies against TNFR2 and FcγRIIB, drug mode-of-action studies, and translational research across oncology and autoimmune disease.
 </p>
 <p>
-I hold a PhD in Bioinformatics and two MSc degrees in Bioinformatics &amp; Biostatistics and Molecular Biology. I have worked in Spain, Germany, the United Kingdom and Sweden, and collaborate comfortably across disciplines and cultures.
+I combine deep biological context with hands-on analysis and software engineering, which means I can move from experimental design and QC through multi-omic integration, statistical modelling and interpretation to a result an experimental or clinical team can act on. I build reproducible R and Python pipelines on HPC and AWS, and report findings directly to clinical, translational and non-technical stakeholders.
+</p>
+<p>
+I have worked in Spain, Germany, the United Kingdom and Sweden, and collaborate comfortably across disciplines and cultures.
 </p>
 <div class="mini-facts">
 <p><span><strong>Current</strong> BioInvent International</span> <span><strong>Based</strong> Lund, Sweden</span> <span><strong>Available</strong> September 2026</span></p>
@@ -188,13 +192,28 @@ Bioinformatics Research Scientist
 </h3>
 <ul>
 <li>
-Lead multi-omic analysis across the BI-1206 anti-FcγRIIB and BI-1808 anti-TNFR2 antibody programs, connecting patient, mouse and in-vitro evidence.
+Lead multi-omic analysis across the BI-1206 anti-FcγRIIB and BI-1808 anti-TNFR2 antibody programs, integrating scRNA-seq, CITE-seq, spatial transcriptomics, bulk RNA-seq, proteomics and clinical metadata, and connecting evidence across patient, mouse and in-vitro samples to advance mode-of-action and resistance-mechanism understanding.
 </li>
 <li>
-Resolve response mechanisms, immune-cell states and tissue niches using scRNA-seq, CITE-seq, spatial transcriptomics, bulk RNA-seq, proteomics and clinical metadata.
+Uncovered a non-canonical myeloid activation pathway underlying antibody response by resolving distinct immune activation states across a 30-patient clinical PBMC cohort spanning the BI-1808 and BI-1910 programs, extending the mode-of-action pipeline to integrate clinical single-cell RNA-seq with targeted pathway-level analysis.
 </li>
 <li>
-Support target validation, biomarker strategy, patient selection and go/no-go decisions while building reusable AWS/HPC analysis environments.
+Characterised drug mechanism of action using scRNA-seq, spatial transcriptomics and targeted gene-module scoring, resolving antibody-responsive immune cell states, macrophage polarisation profiles and tissue niches in blood and tumour microenvironments to support early patient selection.
+</li>
+<li>
+Validated cell-type-specific genetic regulation of a candidate autoimmune target using a public single-cell eQTL atlas, auditing raw alignment quality and dataset chemistry to protect quantification against multi-mapping read loss within a polymorphic gene family, directly informing a target-validation go/no-go decision.
+</li>
+<li>
+Established a novel biomarker and therapeutic target for autoimmune disease by curating and integrating public single-cell atlases across three published inflammatory bowel disease cohorts—ulcerative colitis, Crohn’s disease and healthy controls—demonstrating specificity restricted to M1 macrophages, inflammatory monocytes and neutrophils.
+</li>
+<li>
+Strengthened the biological rationale for a novel bispecific target by integrating clinical single-cell and spatial transcriptomics into the biomarker strategy, identifying a significant expression correlation with a canonical regulatory T-cell marker ahead of experimental validation.
+</li>
+<li>
+Built and trained a variational autoencoder to separate strain-level technical variability from tumour biomarker signal across genetically diverse mouse strains, designed to extrapolate candidate biomarkers to human population heterogeneity.
+</li>
+<li>
+Delivered a reusable single-cell and spatial immune atlas alongside an AWS-based, Docker-containerised HPC environment built from scratch, enabling reproducible computing across the team, with documented R/Python pipelines, automated QC and reporting for technical and non-technical audiences.
 </li>
 </ul>
 </div>
@@ -212,13 +231,13 @@ Visiting Scientist, Computational Biology
 </h3>
 <ul>
 <li>
-Designed patient-derived gene signatures across lung, pancreatic and breast cancers for precision-medicine and resistance questions.
+Designed gene signatures from patient tumour samples across lung, pancreatic and breast cancers, applying SNV and mutation analysis to inform precision-medicine and drug-resistance strategies.
 </li>
 <li>
-Mapped cell lines, xenografts and organoids to clinical tumour subtypes using TCGA and DepMap/Celligner.
+Mapped preclinical models—cell lines, xenografts and organoids—to clinical tumour subtypes using TCGA and DepMap/Celligner, improving the translational validity of preclinical findings.
 </li>
 <li>
-Analysed NanoString CosMx and 10x Visium HD spatial transcriptomics across tumour cohorts.
+Performed spatial transcriptomics analysis with NanoString CosMx and 10x Visium HD to resolve tissue-level expression programs across tumour cohorts.
 </li>
 </ul>
 </div>
@@ -236,13 +255,19 @@ Bioinformatics Research Scientist · PhD
 </h3>
 <ul>
 <li>
-Integrated cross-species scRNA-seq, RNA-seq and ATAC-seq to define conserved cortical stem-cell programs and regulatory elements.
+Built automated Python, R, Bash and AWK pipelines to integrate RNA-seq and ATAC-seq across phylogenetically distant species, resolving conserved and species-specific genes and enhancers governing cortical development.
 </li>
 <li>
-Identified gene signatures in paediatric brain tumours through public-data meta-analysis and mouse-model benchmarking.
+Integrated scRNA-seq with RNA-seq and ATAC-seq to define conserved cortical stem-cell types and their gene-regulatory programs across species.
 </li>
 <li>
-Built and published an R Shiny single-cell atlas and mentored two MSc students.
+Identified tumour gene signatures in paediatric brain tumours through meta-analysis of public GEO and EGA datasets, benchmarking findings against mouse scRNA-seq, ATAC-seq and bulk RNA-seq models.
+</li>
+<li>
+Applied deep learning to protein sequence data to predict candidate transcription-factor sequences from structural features, scaling automated workflows across large public datasets.
+</li>
+<li>
+Built and published an interactive R Shiny single-cell atlas for non-programmer researchers, broadening public access to cortical single-cell data, and mentored two MSc students.
 </li>
 </ul>
 </div>
@@ -260,27 +285,43 @@ Visiting Scientist, Bioinformatics
 </h3>
 <ul>
 <li>
-Combined Hi-C and ATAC-seq to study open chromatin, enhancer contacts and transcription-factor motifs.
+Combined Hi-C analysis with the ENCODE ATAC-seq pipeline in Docker and Snakemake to resolve open chromatin regions, enhancers and transcription-factor motifs across the genome.
 </li>
 <li>
-Trained ChromBPNet to predict chromatin accessibility and sequence motifs directly from DNA sequence.
+Trained ChromBPNet to predict open chromatin, transcription-factor binding sites and sequence motifs directly from DNA sequence, and built a custom Python/R/Bash visualisation pipeline for genomic rearrangements.
 </li>
 </ul>
 </div>
 </article>
 <article class="experience-entry experience-entry-compact">
 <div class="experience-meta">
-<span>2017 — 2019</span><span>Madrid · London</span>
+<span>Aug 2018 — Jun 2019</span><span>London, United Kingdom</span>
 </div>
 <div class="experience-content">
 <p class="company">
-IMDEA · SUEZ
+SUEZ
 </p>
 <h3 class="anchored">
 Junior Scientist
 </h3>
 <p>
-Early scientific roles that built my foundations in experimental biology, data analysis and cross-functional research.
+Applied environmental and molecular analysis in an industrial laboratory setting, working to defined quality standards across a high-throughput sample pipeline.
+</p>
+</div>
+</article>
+<article class="experience-entry experience-entry-compact">
+<div class="experience-meta">
+<span>Sep 2017 — Jul 2018</span><span>Madrid, Spain</span>
+</div>
+<div class="experience-content">
+<p class="company">
+IMDEA
+</p>
+<h3 class="anchored">
+Junior Scientist
+</h3>
+<p>
+Early research role that built my foundations in experimental molecular biology, data analysis and cross-functional scientific collaboration.
 </p>
 </div>
 </article>
@@ -303,7 +344,7 @@ A practical, end-to-end toolkit
 Domains
 </h3>
 <p>
-Immuno-oncology · Inflammation · Tumour biology · Translational research · Neuroscience
+Computational biology · Immuno-oncology · Inflammation · Tumour biology · Translational research · Neuroscience
 </p>
 </div>
 <div>
@@ -311,39 +352,79 @@ Immuno-oncology · Inflammation · Tumour biology · Translational research · N
 Decisions
 </h3>
 <p>
-Target discovery · Biomarker validation · Patient stratification · Mode of action · Resistance mechanisms
+Target discovery · Biomarker discovery &amp; validation · Patient stratification · Drug mode of action · Resistance mechanisms
 </p>
 </div>
 <div>
 <h3 class="anchored">
-Single-cell &amp; spatial
+Single-cell
 </h3>
 <p>
-scRNA-seq · CITE-seq · scATAC-seq · RNA velocity · Seurat WNN · totalVI · MultiVI · Visium HD · CosMx
+scRNA-seq · CITE-seq · scATAC-seq · RNA velocity · Perturbation modelling
 </p>
 </div>
 <div>
 <h3 class="anchored">
-Bulk &amp; functional genomics
+Spatial
 </h3>
 <p>
-RNA-seq · ATAC-seq · ChIP-seq · CUT&amp;Tag/CUT&amp;RUN · Hi-C · Proteomics · DepMap · CCLE · PRISM
+10x Visium HD · NanoString CosMx · Xenium
 </p>
 </div>
 <div>
 <h3 class="anchored">
-ML &amp; AI
+Bulk omics
 </h3>
 <p>
-XGBoost · Random Forest · Survival analysis · Variational autoencoders · Geneformer · scGPT · Cell2Sentence · ChromBPNet
+RNA-seq · ATAC-seq · ChIP-seq · CUT&amp;Tag/CUT&amp;RUN · Hi-C · Ribo-seq · miRNA · Proteomics · SNV and mutation analysis
 </p>
 </div>
 <div>
 <h3 class="anchored">
-Engineering
+Functional genomics
 </h3>
 <p>
-Python · R · Bash · Nextflow · Snakemake · Docker · AWS · HPC/Slurm · Git
+DepMap · CCLE · PRISM · CRISPR/RNAi dependency screens · Drug-sensitivity analysis
+</p>
+</div>
+<div>
+<h3 class="anchored">
+ML, statistics &amp; AI
+</h3>
+<p>
+Random Forest · XGBoost · Survival analysis (Cox, Kaplan–Meier) · Risk modelling · Variational autoencoders · Single-cell foundation models (Geneformer, scGPT, Cell2Sentence) · ChromBPNet
+</p>
+</div>
+<div>
+<h3 class="anchored">
+Multi-omic integration
+</h3>
+<p>
+Seurat WNN · totalVI · MultiVI
+</p>
+</div>
+<div>
+<h3 class="anchored">
+Programming
+</h3>
+<p>
+R (Seurat, Shiny, DESeq2, edgeR) · Python (scanpy, scvi-tools, PyTorch, pandas) · Bash · AWK
+</p>
+</div>
+<div>
+<h3 class="anchored">
+Pipelines &amp; infrastructure
+</h3>
+<p>
+Nextflow · Snakemake · Docker · HPC/Slurm · AWS · Git
+</p>
+</div>
+<div>
+<h3 class="anchored">
+Databases &amp; resources
+</h3>
+<p>
+GEO · EGA · TCGA · UCSC Genome Browser · Ensembl · NCBI · UniProt · Open Targets
 </p>
 </div>
 </div>
@@ -398,6 +479,68 @@ University of Alicante
 </article>
 </div>
 </section>
+<section class="section-shell" aria-labelledby="publications-about-title">
+<div class="section-heading">
+<div>
+<p class="section-index">
+Publications
+</p>
+<h2 id="publications-about-title" class="anchored">
+Peer-reviewed and in preparation
+</h2>
+</div>
+</div>
+<ol class="publication-list">
+<li>
+<span class="publication-year">2024</span><a href="https://doi.org/10.1126/sciadv.adn1640">Singh, A. et al.&nbsp;Gene regulatory landscape of cerebral cortex folding</a><span>Science Advances 10</span>
+</li>
+<li>
+<span class="publication-year">2024</span><a href="https://doi.org/10.1126/sciadv.adn9998">Del-Valle-Antón, L. et al.&nbsp;Multiple parallel cell lineages in the developing mammalian cerebral cortex</a><span>Science Advances 10</span>
+</li>
+<li>
+<span class="publication-year">2022</span><a href="https://doi.org/10.1126/sciadv.abj4010">Chinnappa, K. et al.&nbsp;Secondary loss of miR-3607 reduced cortical progenitor amplification during rodent evolution</a><span>Science Advances 8</span>
+</li>
+<li>
+<span class="publication-year">2020</span><a href="https://doi.org/10.15252/embj.2020105479">Fernández, V. et al.&nbsp;Repression of Irs2 by let-7 miRNAs is essential for homeostasis of the telencephalic neuroepithelium</a><span>The EMBO Journal 39</span>
+</li>
+<li>
+<span class="publication-year">In prep.</span><span class="publication-title">Espinós, A.; Soler, R. et al.&nbsp;Cross-species multi-omic analysis of apical radial glia cells in cortical development evolution</span><span>Manuscript in preparation</span>
+</li>
+<li>
+<span class="publication-year">In prep.</span><span class="publication-title">Soler, R. Prediction of novel mammalian membrane transcription factors with deep learning</span><span>Manuscript in preparation</span>
+</li>
+</ol>
+</section>
+<section class="section-shell capabilities" aria-labelledby="training-title">
+<div class="section-heading">
+<div>
+<p class="section-index">
+Certifications &amp; languages
+</p>
+<h2 id="training-title" class="anchored">
+Additional training
+</h2>
+</div>
+</div>
+<div class="capability-list">
+<div>
+<h3 class="anchored">
+Certifications
+</h3>
+<p>
+Generative AI &amp; Prompt Engineering (IBM) · Single-cell RNA-seq (EMBL-EBI) · HPC/Slurm (University of Cambridge) · Cloud Computing (Google) · Drug Discovery &amp; Biomarker Validation (GSK)
+</p>
+</div>
+<div>
+<h3 class="anchored">
+Languages
+</h3>
+<p>
+Spanish (native) · English (C1) · Catalan (C1) · Swedish (A2) · Japanese (A2)
+</p>
+</div>
+</div>
+</section>
 <section class="contact-panel compact-contact">
 <p class="section-index">
 Next chapter
@@ -409,7 +552,7 @@ Open to computational biology opportunities from September 2026.
 I am especially interested in roles that connect human biology, multi-omic data and therapeutic development.
 </p>
 <div class="button-row">
-<p><a class="button button-light" href="mailto:rafaelsolersanblas@gmail.com">Start a conversation</a> <a class="button button-ghost" href="https://www.linkedin.com/in/rafael-soler-ortuno/">LinkedIn</a></p>
+<p><a class="button button-light" href="mailto:rafaelsolersanblas@gmail.com">Start a conversation</a> <a class="button button-ghost" href="assets/Rafael_Soler_Ortuno_CV.pdf" target="_blank" rel="noopener" download="">Download CV <span aria-hidden="true">↓</span></a> <a class="button button-ghost" href="https://www.linkedin.com/in/rafael-soler-ortuno/">LinkedIn</a></p>
 </div>
 </section>
 </div>

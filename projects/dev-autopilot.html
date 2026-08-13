@@ -42,7 +42,7 @@ ul.task-list li input[type="checkbox"] {
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-3d1b6502958a38d6b4d29f0899443d12.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-3a8c703fb520cc07f7eefc65bb59a90d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "language": {
     "search-no-results-text": "No results",
@@ -67,6 +67,7 @@ ul.task-list li input[type="checkbox"] {
 <link rel="stylesheet" href="../styles.css">
 <link rel="stylesheet" href="../brand.css">
 <link rel="stylesheet" href="../role-fix.css">
+<link rel="stylesheet" href="../refine.css">
 <meta property="og:title" content="Dev Autopilot – Rafael Soler Ortuño">
 <meta property="og:description" content="A fail-closed Python and SQLite workflow coordinating implementation, adversarial audit, independent review, and final human approval.">
 <meta property="og:site_name" content="Rafael Soler Ortuño">
@@ -130,8 +131,10 @@ ul.task-list li input[type="checkbox"] {
   <ul>
   <li><a href="#the-problem" id="toc-the-problem" class="nav-link active" data-scroll-target="#the-problem">The problem</a></li>
   <li><a href="#authority-is-separated" id="toc-authority-is-separated" class="nav-link" data-scroll-target="#authority-is-separated">Authority is separated</a></li>
+  <li><a href="#continuous-project-execution" id="toc-continuous-project-execution" class="nav-link" data-scroll-target="#continuous-project-execution">Continuous project execution</a></li>
   <li><a href="#what-persists" id="toc-what-persists" class="nav-link" data-scroll-target="#what-persists">What persists</a></li>
   <li><a href="#safety-design" id="toc-safety-design" class="nav-link" data-scroll-target="#safety-design">Safety design</a></li>
+  <li><a href="#what-v0.6.0-changed" id="toc-what-v0.6.0-changed" class="nav-link" data-scroll-target="#what-v0.6.0-changed">What v0.6.0 changed</a></li>
   <li><a href="#why-it-belongs-in-a-scientific-portfolio" id="toc-why-it-belongs-in-a-scientific-portfolio" class="nav-link" data-scroll-target="#why-it-belongs-in-a-scientific-portfolio">Why it belongs in a scientific portfolio</a></li>
   <li><a href="#current-boundary" id="toc-current-boundary" class="nav-link" data-scroll-target="#current-boundary">Current boundary</a></li>
   </ul>
@@ -166,7 +169,7 @@ ul.task-list li input[type="checkbox"] {
 
 
 <div class="article-status">
-<p><span class="status-pill status-alpha">v0.1.1 · Alpha</span> <a href="https://github.com/rsolerortuno/dev-autopilot">View repository <span aria-hidden="true">↗</span></a></p>
+<p><span class="status-pill status-preview">v0.6.0 · Research preview</span> <a href="https://github.com/rsolerortuno/dev-autopilot">View repository <span aria-hidden="true">↗</span></a></p>
 </div>
 <section id="the-problem" class="level2">
 <h2 class="anchored" data-anchor-id="the-problem">The problem</h2>
@@ -181,20 +184,29 @@ ul.task-list li input[type="checkbox"] {
 <p></p><figure class="figure"><p></p>
 <div>
 <pre class="mermaid mermaid-js">flowchart LR
-    A[Planning advice] --&gt; B[Implementation]
-    B --&gt; C[Deterministic gates]
-    C --&gt; D[Adversarial audit]
-    D --&gt; E[Independent review]
-    E --&gt; F[Bounded correction]
-    F --&gt; C
-    E --&gt; G[Ready for human review]
+    A[Project charter] --&gt; B[Milestone]
+    B --&gt; C[Implementation]
+    C --&gt; D[Deterministic gates]
+    D --&gt; E[Adversarial audit]
+    E --&gt; F[Independent review]
+    F --&gt; G[Bounded correction]
+    G --&gt; D
+    F --&gt; H[Milestone acceptance]
+    H --&gt; B
+    H --&gt; I[Ready for human release]
 </pre>
 </div>
 <p></p></figure><p></p>
 </div>
 </div>
 </div>
-<p>Planning advice is not approval. The implementation agent cannot approve its own diff. Review agents cannot override mechanical gates. The system stops at <code>READY_FOR_HUMAN_REVIEW</code>, leaving commit, pull-request and merge decisions to a person.</p>
+<p>Planning advice is not approval. The implementation agent cannot approve its own diff. Review agents cannot override mechanical gates. The system stops at <code>READY_FOR_HUMAN_RELEASE</code>, leaving commit, pull-request, tag and merge decisions to a person.</p>
+<p>Review conclusions are bound to the exact repository diff they were written against. Any later change invalidates them, and unresolved or invalidated P0/P1 findings block milestone acceptance.</p>
+</section>
+<section id="continuous-project-execution" class="level2">
+<h2 class="anchored" data-anchor-id="continuous-project-execution">Continuous project execution</h2>
+<p>A project starts from an immutable charter: mission, definition of done, non-goals, autonomy policy and a dependency-checked milestone DAG. <code>ask_questions: false</code> is enforced by the schema, so the workflow runs to completion on safe, reversible defaults rather than stopping to ask.</p>
+<p>When it genuinely cannot proceed, it writes a machine-readable blocker with one required action and an explicit resume condition, instead of a conversational question nobody is there to answer.</p>
 </section>
 <section id="what-persists" class="level2">
 <h2 class="anchored" data-anchor-id="what-persists">What persists</h2>
@@ -203,25 +215,41 @@ ul.task-list li input[type="checkbox"] {
 <li>every legal state transition;</li>
 <li>append-only events and stop reasons;</li>
 <li>retry counts for each agent role;</li>
+<li>findings, reviews, assumptions and evidence;</li>
 <li>quota pauses and exact resume states;</li>
 <li>idempotency hashes and diff-keyed review caches;</li>
-<li>expiring exclusive run locks.</li>
+<li>expiring exclusive run locks, leases, heartbeats and fencing tokens.</li>
 </ul>
 <p>This allows a workflow to recover after process restarts without guessing where it left off.</p>
 </section>
 <section id="safety-design" class="level2">
 <h2 class="anchored" data-anchor-id="safety-design">Safety design</h2>
-<p>Version 0.1.1 includes:</p>
+<p>Version 0.6.0 includes:</p>
 <ul>
-<li>validated YAML jobs with explicit file, tree and glob permissions;</li>
+<li>validated YAML/JSON contracts with unknown fields rejected;</li>
 <li>scope, test, context-size and Git-metadata gates;</li>
-<li>fail-closed transitions;</li>
-<li>deterministic jitter and quota-reset support;</li>
-<li>bounded review/correction rounds;</li>
-<li>fake adapters for complete offline integration tests;</li>
-<li>a generic file-based bridge for real subscription agents.</li>
+<li>bounded gate autocorrection instead of a terminal failure when an implementation can be repaired;</li>
+<li>fail-closed transitions and a fail-closed milestone acceptance decision;</li>
+<li>repository-bounded, read-only audit instructions with schema-constrained report output;</li>
+<li>deterministic jitter, short linear retry backoff and quota-reset support;</li>
+<li>bounded review and correction rounds;</li>
+<li>verified review bundles: JSON payloads, a human-readable HTML report and a folded digest;</li>
+<li>fake adapters for complete offline integration tests, including a simulated Drive API.</li>
 </ul>
 <p>Real execution requires an explicit network opt-in. Shell syntax inside test commands also requires an explicit opt-in because it expands the trust boundary.</p>
+</section>
+<section id="what-v0.6.0-changed" class="level2">
+<h2 class="anchored" data-anchor-id="what-v0.6.0-changed">What v0.6.0 changed</h2>
+<p>The M00–M05 architecture is unchanged. This release folds in the fixes that only surfaced once the orchestrator was pointed at a real repository:</p>
+<ul>
+<li>built-in default commands for the Codex, AGY and Claude bridges, so a normal run no longer depends on environment variables;</li>
+<li>structured AGY auditing that starts in an isolated project, removing manual per-repository read permissions;</li>
+<li>continuous retry and resume behaviour for transient agent failures;</li>
+<li>stricter classification of provider quota exhaustion versus malformed bridge output;</li>
+<li>live verbose progress reporting and stricter changed-file validation;</li>
+<li>deterministic SHA-256 identifiers for long Google Drive <code>appProperties</code> keys.</li>
+</ul>
+<p>It was validated end to end against a real TargetIntel-IO milestone, covering implementation correction, deterministic gates, adversarial audit, independent review, evidence packaging and the final <code>READY_FOR_HUMAN_RELEASE</code> state.</p>
 </section>
 <section id="why-it-belongs-in-a-scientific-portfolio" class="level2">
 <h2 class="anchored" data-anchor-id="why-it-belongs-in-a-scientific-portfolio">Why it belongs in a scientific portfolio</h2>
@@ -229,10 +257,10 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="current-boundary" class="level2">
 <h2 class="anchored" data-anchor-id="current-boundary">Current boundary</h2>
-<p>Dev Autopilot is alpha software. It coordinates and audits work, but never stages, commits, pushes, tags or merges product code. A human must inspect the final diff and evidence.</p>
+<p>Dev Autopilot is research-preview software. It coordinates and audits work, but never stages, commits, pushes, tags or merges product code. A human must inspect the final diff and evidence.</p>
 <div class="article-cta">
 <p>
-<strong>Review the state machine, job schema, offline smoke run and TargetIntel example profile.</strong>
+<strong>Review the state machine, charter schema, review-bundle format and the real-project execution evidence.</strong>
 </p>
 <p><a class="button button-primary" href="https://github.com/rsolerortuno/dev-autopilot">Open Dev Autopilot on GitHub <span aria-hidden="true">↗</span></a></p>
 </div>

@@ -42,7 +42,7 @@ ul.task-list li input[type="checkbox"] {
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-3d1b6502958a38d6b4d29f0899443d12.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-3a8c703fb520cc07f7eefc65bb59a90d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "language": {
     "search-no-results-text": "No results",
@@ -64,6 +64,7 @@ ul.task-list li input[type="checkbox"] {
 <link rel="stylesheet" href="styles.css">
 <link rel="stylesheet" href="brand.css">
 <link rel="stylesheet" href="role-fix.css">
+<link rel="stylesheet" href="refine.css">
 <meta property="og:title" content="Tools | Rafael Soler Ortuño">
 <meta property="og:description" content="Public research-software projects in target discovery and safety, method reliability, pharmacogenomics, agentic development, and protein deep learning.">
 <meta property="og:site_name" content="Rafael Soler Ortuño">
@@ -431,7 +432,7 @@ AI coding agents can move fast through a repository and leave no reliable trail 
 Running AI agents on real code with hard limits on what they may touch.
 </td>
 <td data-label="What it adds">
-Separate agents implement, audit and review; deterministic gates decide whether work advances, and a person keeps merge authority.
+Separate agents implement, audit and review; deterministic gates decide whether work advances, state survives restarts, and a person keeps merge authority.
 </td>
 <td data-label="Key skills applied">
 <ul class="skill-tags">
@@ -494,16 +495,16 @@ Graph-native evidence with a deterministic, GraphRAG-compatible research-preview
 </div>
 <aside class="showcase-proof" aria-label="TargetIntel current scope">
 <p class="proof-label">
-Current scope
+v0.6.0 release gate
 </p>
 <div class="proof-stat">
+<strong>825</strong><span>automated tests passed</span>
+</div>
+<div class="proof-stat">
+<strong>56/56</strong><span>productive artefacts byte-identical after the graph layer landed</span>
+</div>
+<div class="proof-stat">
 <strong>331</strong><span>genes in the discovery universe</span>
-</div>
-<div class="proof-stat">
-<strong>56</strong><span>targets in the internal benchmark</span>
-</div>
-<div class="proof-stat">
-<strong>0</strong><span>differing artefacts across two independent runs</span>
 </div>
 <p class="proof-note">
 The benchmark tests implementation consistency. It is not an independent clinical validation dataset.
@@ -777,7 +778,7 @@ Candidate-generating predictions only; experimental validation is required.
 <section class="project-showcase project-showcase-alt page-columns page-full" aria-labelledby="autopilot-title">
 <div class="showcase-copy">
 <div class="card-topline">
-<p><span class="project-number">08</span> <span class="status-pill status-alpha">v0.1.1 · Alpha</span></p>
+<p><span class="project-number">08</span> <span class="status-pill status-preview">v0.6.0 · Research preview</span></p>
 </div>
 <h2 id="autopilot-title" class="anchored">
 Dev Autopilot
@@ -786,17 +787,20 @@ Dev Autopilot
 Persistent, auditable development orchestration
 </p>
 <p>
-Coordinates implementation, adversarial audit and independent review while SQLite records state transitions, retries and decisions across restarts.
+Coordinates implementation, adversarial audit and independent review while SQLite records state transitions, retries, findings and decisions across restarts. Version 0.6.0 hardens that loop against a real autonomous milestone rather than a synthetic one.
 </p>
 <ul class="check-list">
 <li>
-Fail-closed state machine and explicit path permissions
+Immutable project charter with a dependency-checked milestone DAG
 </li>
 <li>
-Mechanical scope, test, context and Git-metadata gates
+Mechanical scope, test, context and Git-metadata gates, with bounded autocorrection instead of a terminal stop
 </li>
 <li>
-Stops at human review; it never commits, pushes or merges product code
+Review conclusions bound to an exact diff; any later change invalidates them
+</li>
+<li>
+Stops at <code>READY_FOR_HUMAN_RELEASE</code>; it never commits, pushes, tags or merges product code
 </li>
 </ul>
 <div class="button-row">
@@ -810,6 +814,9 @@ Design principle
 <blockquote class="blockquote">
 Agents advise, implement and review. Deterministic gates decide whether work can advance. A person retains scientific and merge authority.
 </blockquote>
+<p class="proof-note">
+v0.6.0 was validated end to end on a real TargetIntel-IO milestone: implementation, deterministic gates, adversarial audit, independent review, evidence packaging and <code>READY_FOR_HUMAN_RELEASE</code>.
+</p>
 </aside>
 </section>
 <section class="contact-panel compact-contact">
