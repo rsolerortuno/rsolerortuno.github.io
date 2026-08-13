@@ -199,13 +199,6 @@ a:hover {
   line-height: 1.65;
 }
 
-.hero-personal {
-  max-width: 700px;
-  color: var(--muted);
-  font-size: 0.98rem;
-  line-height: 1.72;
-}
-
 .button {
   min-height: 3.2rem;
   border-radius: 999px;
