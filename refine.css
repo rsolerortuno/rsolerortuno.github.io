@@ -1,0 +1,433 @@
+/*
+ * refine.css — editorial polish layer.
+ *
+ * Loaded after styles.css, brand.css and role-fix.css. It handles four
+ * things the earlier layers left open: display headings that ran to five
+ * or six lines, unjustified body copy, project titles sitting flush
+ * against their kicker, and the tools table still wearing the old palette.
+ */
+
+/* ============================================================
+   1. Display headings
+   ============================================================ */
+
+/*
+ * The headings were sized for a poster, not a page: "Research software
+ * built around honest evidence." broke over six lines. Every display
+ * size below is reduced and given a slightly looser leading, which reads
+ * better once the type is no longer enormous.
+ */
+
+.hero-copy h1 {
+  margin: 0.75rem 0 1.75rem;
+  font-size: clamp(3.3rem, 6.4vw, 6.2rem);
+  letter-spacing: -0.055em;
+  line-height: 0.88;
+}
+
+.current-role h2 {
+  max-width: 22ch;
+  margin: 0.7rem 0 2.5rem;
+  font-size: clamp(2rem, 3.1vw, 3rem);
+  letter-spacing: -0.03em;
+  line-height: 1.06;
+}
+
+.section-heading h2 {
+  max-width: 26ch;
+  font-size: clamp(2rem, 3.5vw, 3.4rem);
+  letter-spacing: -0.03em;
+  line-height: 1.08;
+  text-wrap: balance;
+}
+
+.contact-panel h2 {
+  max-width: 28ch;
+  font-size: clamp(2rem, 3.6vw, 3.5rem);
+  letter-spacing: -0.03em;
+  line-height: 1.08;
+  text-wrap: balance;
+}
+
+.compact-contact h2 {
+  font-size: clamp(1.85rem, 3vw, 2.85rem);
+}
+
+.page-hero {
+  padding-bottom: 4.5rem;
+}
+
+.page-hero h1 {
+  max-width: 24ch;
+  margin: 0.5rem 0 1.5rem;
+  font-size: clamp(2.5rem, 4.8vw, 4.4rem);
+  letter-spacing: -0.03em;
+  line-height: 1.06;
+  text-wrap: balance;
+}
+
+.about-intro h2 {
+  font-size: clamp(1.85rem, 2.9vw, 2.8rem);
+  line-height: 1.1;
+}
+
+.showcase-copy h2 {
+  margin: 0 0 0.55rem;
+  font-size: clamp(1.9rem, 3.1vw, 3rem);
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+}
+
+.overview-title {
+  font-size: clamp(1.6rem, 2.3vw, 2.15rem);
+}
+
+.timeline-item h3 {
+  font-size: clamp(1.2rem, 1.8vw, 1.65rem);
+}
+
+/* These were the only role headings still set in the sans face. */
+.experience-content h3,
+.capability-list h3,
+.education-grid h3 {
+  font-family: var(--editorial);
+  font-weight: 500;
+}
+
+.experience-content h3 {
+  margin-bottom: 0.85rem;
+  font-size: clamp(1.25rem, 2vw, 1.75rem);
+}
+
+.experience-content > p:not(.company) {
+  max-width: 860px;
+}
+
+.capability-list h3 {
+  font-size: 1.08rem;
+}
+
+.expertise-grid h3 {
+  font-size: 1.32rem;
+}
+
+.expertise-grid article {
+  min-height: 0;
+}
+
+.quarto-title-block .quarto-title > h1 {
+  font-size: clamp(2.3rem, 4.4vw, 3.9rem);
+  letter-spacing: -0.03em;
+  line-height: 1.06;
+}
+
+/* The heading column no longer needs two thirds of the row. */
+.section-heading {
+  grid-template-columns: minmax(0, 1.15fr) minmax(260px, 0.85fr);
+  gap: 2rem 5rem;
+  margin-bottom: clamp(2.75rem, 5vw, 4.5rem);
+}
+
+.section-shell {
+  padding-top: clamp(5rem, 8vw, 8rem);
+}
+
+@media (max-width: 820px) {
+  .hero-copy h1 {
+    font-size: clamp(3rem, 11vw, 5rem);
+  }
+
+  .section-heading h2,
+  .contact-panel h2,
+  .page-hero h1 {
+    max-width: none;
+  }
+}
+
+@media (max-width: 620px) {
+  .hero-copy h1 {
+    font-size: clamp(2.75rem, 13vw, 3.9rem);
+    line-height: 0.92;
+  }
+
+  .current-role h2 {
+    font-size: clamp(1.8rem, 8vw, 2.5rem);
+  }
+
+  .section-heading h2 {
+    font-size: clamp(1.85rem, 8.5vw, 2.6rem);
+  }
+
+  .contact-panel h2 {
+    font-size: clamp(1.85rem, 8.5vw, 2.6rem);
+  }
+
+  .page-hero h1 {
+    font-size: clamp(1.95rem, 9vw, 2.7rem);
+  }
+}
+
+/* ============================================================
+   2. Justified body copy
+   ============================================================ */
+
+/*
+ * Justification is applied to running prose only. Hyphenation is on
+ * because en-GB justified text at these column widths opens ugly word
+ * gaps without it. Labels, mono eyebrows, pills, stats and buttons keep
+ * their own alignment — justifying a two-word label does nothing but
+ * stretch it.
+ */
+
+.portfolio-home p,
+.portfolio-page p,
+.portfolio-home li,
+.portfolio-page li,
+main.content p,
+main.content li,
+.role-summary,
+.hero-lead,
+.hero-personal,
+.proof-note,
+blockquote p {
+  hyphens: auto;
+  overflow-wrap: break-word;
+  text-align: justify;
+  text-justify: inter-word;
+}
+
+.eyebrow,
+.section-index,
+.fact-label,
+.proof-label,
+.company,
+.project-kicker,
+.availability-line,
+.status-pill,
+.tag-list,
+.tag-list span,
+.skill-tags,
+.skill-tags li,
+.metric-row,
+.metric-row span,
+.mini-facts,
+.mini-facts span,
+.timeline-date,
+.timeline-place,
+.proof-stat,
+.proof-stat span,
+.button,
+.button-row,
+.card-links,
+.card-links a,
+.text-link,
+.capability-list p,
+.education-grid p,
+.education-grid span,
+.portrait-wrap figcaption,
+.nav-footer p,
+.overview-table thead th,
+.overview-table tbody th,
+.overview-table tbody td,
+.field-cell,
+.publication-list li,
+.publication-list span {
+  hyphens: manual;
+  text-align: left;
+}
+
+/*
+ * Last-line orphans are the usual cost of justification. Slightly longer
+ * measures and a touch more leading keep the rag under control.
+ */
+.portfolio-home p,
+.portfolio-page p,
+main.content p {
+  line-height: 1.72;
+}
+
+/* ============================================================
+   3. Project titles and their kickers
+   ============================================================ */
+
+/*
+ * The title sat directly on top of its uppercase kicker with no gap at
+ * all. The topline above it also carried far more space than it needed,
+ * so the whole title block now sits higher in the card.
+ */
+
+.card-topline {
+  margin-bottom: clamp(1.4rem, 2.4vw, 2.1rem);
+}
+
+.project-card h3 {
+  margin: 0 0 0.7rem;
+  line-height: 1.2;
+}
+
+.project-card .project-kicker,
+.showcase-copy .project-kicker {
+  margin: 0 0 1.25rem;
+  line-height: 1.5;
+}
+
+.showcase-copy h2 + .project-kicker {
+  margin-top: 0.65rem;
+}
+
+.project-card > p:not(.project-kicker) {
+  margin-top: 0;
+}
+
+.project-card,
+.project-card-featured {
+  min-height: 0;
+}
+
+.showcase-copy .card-topline {
+  margin-bottom: clamp(1.2rem, 2vw, 1.8rem);
+}
+
+/* ============================================================
+   4. Tools table
+   ============================================================ */
+
+/*
+ * The palette variables are remapped in brand.css; these rules tune the
+ * few places where the table needs its own value rather than a shared
+ * one — the field column against the row hover, and the header band.
+ */
+
+.overview-table-wrap {
+  border-color: var(--hairline);
+}
+
+.overview-table thead th {
+  background: #efe6d8;
+  color: #7e402f;
+}
+
+.field-cell {
+  background: #f3ece0;
+  color: #7e402f;
+}
+
+.overview-row:hover td {
+  background: rgba(201, 101, 69, 0.055);
+}
+
+.overview-row:hover .field-cell {
+  background: #efe4d4;
+}
+
+.skill-tags li {
+  background: rgba(255, 255, 255, 0.55);
+  border-color: var(--hairline);
+  color: #5d574f;
+}
+
+.overview-row:hover .skill-tags li {
+  border-color: rgba(201, 101, 69, 0.42);
+  background: #fffdf8;
+}
+
+.tool-name::after {
+  background: var(--signal);
+}
+
+.overview-table tbody th,
+.overview-table tbody td,
+.overview-table tbody tr:last-child th,
+.overview-table tbody tr:last-child td {
+  border-color: var(--hairline);
+}
+
+@media (max-width: 900px) {
+  .overview-row::before {
+    background: #f0e1d5;
+    color: #7e402f;
+  }
+}
+
+/* ============================================================
+   5. Current-role card: company focus
+   ============================================================ */
+
+/*
+ * "Antibody therapeutics for oncology and autoimmunity" was breaking
+ * across five lines in a column that had been squeezed by the label
+ * track. Narrowing the label track for this row only, and balancing the
+ * break, keeps it to two lines without disturbing the rows around it.
+ */
+
+.current-role .role-facts > .company-focus {
+  grid-template-columns: minmax(96px, 0.2fr) minmax(0, 1fr);
+}
+
+.current-role .company-focus strong {
+  max-width: none;
+  font-size: 0.94rem;
+  line-height: 1.45;
+  text-wrap: balance;
+  white-space: normal !important;
+}
+
+@media (max-width: 620px) {
+  .current-role .role-facts > .company-focus {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ============================================================
+   6. General polish
+   ============================================================ */
+
+.project-showcase {
+  padding: clamp(2.5rem, 4.5vw, 4rem) 0;
+}
+
+.check-list li {
+  line-height: 1.65;
+}
+
+.experience-content ul {
+  gap: 0.75rem;
+}
+
+.experience-entry {
+  padding: 2.25rem 0;
+}
+
+.publication-list a {
+  font-size: 1.02rem;
+}
+
+/* Manuscripts in preparation have no DOI to link, so the title is a span.
+   It should still read as a title rather than as metadata. */
+.publication-list li {
+  grid-template-columns: 82px minmax(0, 1fr) 150px;
+}
+
+.publication-list .publication-title {
+  color: var(--text);
+  font-family: var(--editorial);
+  font-size: 1.02rem;
+  font-weight: 500;
+}
+
+.publication-list .publication-year {
+  white-space: nowrap;
+}
+
+.timeline-item {
+  padding: 1.9rem 0;
+}
+
+.contact-panel {
+  margin-top: clamp(5rem, 9vw, 8rem);
+  padding: clamp(2.75rem, 6vw, 5.5rem);
+}
+
+.current-role::after {
+  font-size: clamp(4.5rem, 11vw, 10rem);
+}

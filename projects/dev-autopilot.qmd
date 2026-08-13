@@ -8,7 +8,7 @@ toc-title: "On this page"
 ---
 
 <div class="article-status">
-  <span class="status-pill status-alpha">v0.1.1 · Alpha</span>
+  <span class="status-pill status-preview">v0.6.0 · Research preview</span>
   <a href="https://github.com/rsolerortuno/dev-autopilot">View repository <span aria-hidden="true">↗</span></a>
 </div>
 
@@ -22,16 +22,27 @@ Dev Autopilot turns those requirements into a workflow instead of relying on one
 
 ```{mermaid}
 flowchart LR
-    A[Planning advice] --> B[Implementation]
-    B --> C[Deterministic gates]
-    C --> D[Adversarial audit]
-    D --> E[Independent review]
-    E --> F[Bounded correction]
-    F --> C
-    E --> G[Ready for human review]
+    A[Project charter] --> B[Milestone]
+    B --> C[Implementation]
+    C --> D[Deterministic gates]
+    D --> E[Adversarial audit]
+    E --> F[Independent review]
+    F --> G[Bounded correction]
+    G --> D
+    F --> H[Milestone acceptance]
+    H --> B
+    H --> I[Ready for human release]
 ```
 
-Planning advice is not approval. The implementation agent cannot approve its own diff. Review agents cannot override mechanical gates. The system stops at `READY_FOR_HUMAN_REVIEW`, leaving commit, pull-request and merge decisions to a person.
+Planning advice is not approval. The implementation agent cannot approve its own diff. Review agents cannot override mechanical gates. The system stops at `READY_FOR_HUMAN_RELEASE`, leaving commit, pull-request, tag and merge decisions to a person.
+
+Review conclusions are bound to the exact repository diff they were written against. Any later change invalidates them, and unresolved or invalidated P0/P1 findings block milestone acceptance.
+
+## Continuous project execution
+
+A project starts from an immutable charter: mission, definition of done, non-goals, autonomy policy and a dependency-checked milestone DAG. `ask_questions: false` is enforced by the schema, so the workflow runs to completion on safe, reversible defaults rather than stopping to ask.
+
+When it genuinely cannot proceed, it writes a machine-readable blocker with one required action and an explicit resume condition, instead of a conversational question nobody is there to answer.
 
 ## What persists
 
@@ -40,25 +51,41 @@ SQLite records:
 - every legal state transition;
 - append-only events and stop reasons;
 - retry counts for each agent role;
+- findings, reviews, assumptions and evidence;
 - quota pauses and exact resume states;
 - idempotency hashes and diff-keyed review caches;
-- expiring exclusive run locks.
+- expiring exclusive run locks, leases, heartbeats and fencing tokens.
 
 This allows a workflow to recover after process restarts without guessing where it left off.
 
 ## Safety design
 
-Version 0.1.1 includes:
+Version 0.6.0 includes:
 
-- validated YAML jobs with explicit file, tree and glob permissions;
+- validated YAML/JSON contracts with unknown fields rejected;
 - scope, test, context-size and Git-metadata gates;
-- fail-closed transitions;
-- deterministic jitter and quota-reset support;
-- bounded review/correction rounds;
-- fake adapters for complete offline integration tests;
-- a generic file-based bridge for real subscription agents.
+- bounded gate autocorrection instead of a terminal failure when an implementation can be repaired;
+- fail-closed transitions and a fail-closed milestone acceptance decision;
+- repository-bounded, read-only audit instructions with schema-constrained report output;
+- deterministic jitter, short linear retry backoff and quota-reset support;
+- bounded review and correction rounds;
+- verified review bundles: JSON payloads, a human-readable HTML report and a folded digest;
+- fake adapters for complete offline integration tests, including a simulated Drive API.
 
 Real execution requires an explicit network opt-in. Shell syntax inside test commands also requires an explicit opt-in because it expands the trust boundary.
+
+## What v0.6.0 changed
+
+The M00–M05 architecture is unchanged. This release folds in the fixes that only surfaced once the orchestrator was pointed at a real repository:
+
+- built-in default commands for the Codex, AGY and Claude bridges, so a normal run no longer depends on environment variables;
+- structured AGY auditing that starts in an isolated project, removing manual per-repository read permissions;
+- continuous retry and resume behaviour for transient agent failures;
+- stricter classification of provider quota exhaustion versus malformed bridge output;
+- live verbose progress reporting and stricter changed-file validation;
+- deterministic SHA-256 identifiers for long Google Drive `appProperties` keys.
+
+It was validated end to end against a real TargetIntel-IO milestone, covering implementation correction, deterministic gates, adversarial audit, independent review, evidence packaging and the final `READY_FOR_HUMAN_RELEASE` state.
 
 ## Why it belongs in a scientific portfolio
 
@@ -66,9 +93,9 @@ The project is not a claim that automation removes scientific judgment. It demon
 
 ## Current boundary
 
-Dev Autopilot is alpha software. It coordinates and audits work, but never stages, commits, pushes, tags or merges product code. A human must inspect the final diff and evidence.
+Dev Autopilot is research-preview software. It coordinates and audits work, but never stages, commits, pushes, tags or merges product code. A human must inspect the final diff and evidence.
 
 <div class="article-cta">
-  <p><strong>Review the state machine, job schema, offline smoke run and TargetIntel example profile.</strong></p>
+  <p><strong>Review the state machine, charter schema, review-bundle format and the real-project execution evidence.</strong></p>
   <a class="button button-primary" href="https://github.com/rsolerortuno/dev-autopilot">Open Dev Autopilot on GitHub <span aria-hidden="true">↗</span></a>
 </div>

@@ -52,7 +52,7 @@ Based in Lund, Sweden · Open to opportunities from September 2026
 </div>
 <div class="company-focus">
 <span class="fact-label">Company focus</span>
-<strong>Antibody therapeutics for oncology and autoimmune diseases</strong>
+<strong>Antibody therapeutics for oncology and autoimmunity</strong>
 </div>
 <div class="role-fact-main">
 <span class="fact-label">Role</span>
@@ -65,7 +65,7 @@ Based in Lund, Sweden · Open to opportunities from September 2026
 </strong>
 </div>
 </div>
-<p class="role-summary">I lead computational work across antibody programs, integrating clinical, mouse and in-vitro evidence to resolve response and resistance mechanisms. My day-to-day spans scRNA-seq, CITE-seq, spatial transcriptomics, proteomics, clinical metadata and reproducible AWS/HPC workflows.</p>
+<p class="role-summary">I lead computational work across the BI-1206 anti-FcγRIIB and BI-1808 anti-TNFR2 programs, integrating clinical, mouse and in-vitro evidence to resolve response and resistance mechanisms. My day-to-day spans scRNA-seq, CITE-seq, spatial transcriptomics, proteomics and clinical metadata, delivered through reproducible AWS and HPC workflows that the rest of the team can rerun.</p>
 </section>
 
 <section class="section-shell" id="selected-tools" aria-labelledby="tools-title">
@@ -149,7 +149,7 @@ Based in Lund, Sweden · Open to opportunities from September 2026
 <td data-label="Tool"><span class="tool-name">Dev Autopilot</span></td>
 <td data-label="The problem">AI coding agents can move fast through a repository and leave no reliable trail of what changed or why.</td>
 <td data-label="What it is for">Running AI agents on real code with hard limits on what they may touch.</td>
-<td data-label="What it adds">Separate agents implement, audit and review; deterministic gates decide whether work advances, and a person keeps merge authority.</td>
+<td data-label="What it adds">Separate agents implement, audit and review; deterministic gates decide whether work advances, state survives restarts, and a person keeps merge authority.</td>
 <td data-label="Key skills applied"><ul class="skill-tags"><li>Agentic AI orchestration</li><li>Pydantic</li><li>SQLite</li><li>Strict typing (mypy)</li><li>State machines</li><li>CI/CD</li></ul></td>
 </tr>
 </tbody>
@@ -282,6 +282,10 @@ Based in Lund, Sweden · Open to opportunities from September 2026
 <h3>MTF Prediction</h3>
 <p class="project-kicker">Topology-aware protein deep learning</p>
 <p>Screens human and mouse membrane-protein domains for transcription-factor-like sequence features using DeepTFactor, then interprets selected predictions with Captum Integrated Gradients.</p>
+<div class="metric-row" aria-label="MTF Prediction analysis matrix">
+<span><strong>2</strong> mammalian species</span>
+<span><strong>3 × 3</strong> classes × boundaries</span>
+</div>
 <div class="tag-list"><span>PyTorch</span><span>Captum</span><span>UniProt</span></div>
 <div class="card-links">
 <a href="projects/mtf-prediction.html">Case study <span aria-hidden="true">→</span></a>
@@ -292,11 +296,15 @@ Based in Lund, Sweden · Open to opportunities from September 2026
 <article class="project-card">
 <div class="card-topline">
 <span class="project-number">08</span>
-<span class="status-pill status-alpha">v0.1.1 · Alpha</span>
+<span class="status-pill status-preview">v0.6.0 · Research preview</span>
 </div>
 <h3>Dev Autopilot</h3>
 <p class="project-kicker">Auditable AI-agent workflow for scientific software</p>
-<p>A persistent Python/SQLite orchestrator that separates implementation, adversarial audit and independent review, with deterministic gates and final human authority.</p>
+<p>A persistent Python/SQLite orchestrator that separates implementation, adversarial audit and independent review, with deterministic gates, resumable milestone execution and final human authority.</p>
+<div class="metric-row" aria-label="Dev Autopilot release highlights">
+<span><strong>M00—M05</strong> audited scope</span>
+<span><strong>1</strong> real-project validation run</span>
+</div>
 <div class="tag-list"><span>Agentic AI</span><span>SQLite</span><span>Safety gates</span></div>
 <div class="card-links">
 <a href="projects/dev-autopilot.html">Case study <span aria-hidden="true">→</span></a>
@@ -313,18 +321,18 @@ Based in Lund, Sweden · Open to opportunities from September 2026
 <p class="section-index">03 / Experience</p>
 <h2 id="experience-title">From fundamental biology to therapeutic programs.</h2>
 </div>
-<p>Six-plus years working across industry and academia, with a consistent focus on translating complex molecular data into useful biological conclusions.</p>
+<p>Six-plus years across industry and academia, with a consistent focus on translating complex molecular data into biological conclusions a team can act on.</p>
 </div>
 
 <div class="timeline">
 <article class="timeline-item">
 <div class="timeline-date">2025—2026</div>
-<div><h3>BioInvent International</h3><p>Computational lead for translational multi-omics across anti-TNFR2 and anti-FcγRIIB antibody programs.</p></div>
+<div><h3>BioInvent International</h3><p>Computational lead for translational multi-omics across the anti-TNFR2 and anti-FcγRIIB antibody programs, from mode of action to biomarker strategy.</p></div>
 <span class="timeline-place">Lund</span>
 </article>
 <article class="timeline-item">
 <div class="timeline-date">2024—2025</div>
-<div><h3>Bristol Myers Squibb</h3><p>Precision oncology, preclinical-to-clinical model mapping and spatial transcriptomics across tumour cohorts.</p></div>
+<div><h3>Bristol Myers Squibb</h3><p>Patient-derived gene signatures, preclinical-to-clinical model mapping with TCGA and Celligner, and CosMx/Visium HD spatial transcriptomics across tumour cohorts.</p></div>
 <span class="timeline-place">Seville</span>
 </article>
 <article class="timeline-item">
