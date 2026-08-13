@@ -9,7 +9,7 @@ page-layout: full
 <section class="hero-shell" aria-labelledby="hero-title">
 <div class="hero-copy">
 <p class="eyebrow">Computational Biologist</p>
-<h1 id="hero-title">Rafael<br><span>Soler Ortuño</span></h1>
+<h1 id="hero-title">Rafael Soler Ortuño</h1>
 <p class="hero-lead">I work with single-cell, spatial and multi-omic data in immuno-oncology. Most of my time goes to the questions that decide whether a target is worth pursuing: who responds, where resistance comes from, and which patients to select.</p>
 <p class="hero-personal">Science has been a journey into the unknown, with a humbling lesson waiting at every turn. I can't wait to be reminded again just how little I truly know, and how much is left to discover.</p>
 <div class="button-row" aria-label="Primary links">
