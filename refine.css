@@ -381,16 +381,14 @@ main.content p {
    6. Portraits
    ============================================================ */
 
-/*
- * The homepage shows the speaking photograph. It is listed first with the
- * studio portrait behind it, so the page still renders correctly until
- * assets/Rafael_Soler_Ortuno_speaking.webp is added to the repository.
- */
+/* The homepage shows the speaking photograph, already cropped to the 3:4
+   frame so the browser does not have to crop it again. */
 .portrait-photo {
-  background-image:
-    url("assets/Rafael_Soler_Ortuno_speaking.webp"),
-    url("assets/Rafael_Soler_Ortuno_portrait.webp") !important;
-  background-position: center 30% !important;
+  background-image: url("assets/Rafael_Soler_Ortuno_speaking.webp") !important;
+  background-position: center center !important;
+  /* The lecture-room photograph is already flat, so the desaturation the
+     studio portrait needed washes it out. */
+  filter: saturate(0.95) contrast(1.06);
 }
 
 /* The experience page takes over the studio portrait. */
