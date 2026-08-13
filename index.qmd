@@ -337,7 +337,7 @@ Based in Lund, Sweden · Open to opportunities from September 2026
 </article>
 <article class="timeline-item">
 <div class="timeline-date">2020–2024</div>
-<div><h3>Institute of Neurosciences, CSIC–UMH</h3><p>Cross-species single-cell and epigenomic analysis of cortical development, plus paediatric brain-tumour genomics.</p></div>
+<div><h3>Institute of Neurosciences, CSIC-UMH</h3><p>Cross-species single-cell and epigenomic analysis of cortical development, plus paediatric brain-tumour genomics.</p></div>
 <span class="timeline-place">Alicante</span>
 </article>
 <article class="timeline-item">
