@@ -35,6 +35,29 @@
   color: inherit;
 }
 
+/*
+ * brand.css paints these accent labels #a94f35, but its own
+ * `main.content p` rule is more specific and repaints every one of them
+ * that happens to be a paragraph. That is why "COMPANY FOCUS" and
+ * "CURRENTLY" were terracotta (they are spans) while "COMPUTATIONAL
+ * BIOLOGIST" and the section indices came out muted grey. Restore the
+ * accent with enough specificity to survive.
+ */
+main.content p.eyebrow,
+main.content p.section-index,
+main.content p.company,
+main.content p.proof-label,
+main.content p.overview-lede + p.section-index,
+.portfolio-home p.eyebrow,
+.portfolio-page p.eyebrow,
+.portfolio-home p.section-index,
+.portfolio-page p.section-index,
+.portfolio-page p.company,
+.portfolio-home p.proof-label,
+.portfolio-page p.proof-label {
+  color: #a94f35;
+}
+
 .current-role h2 {
   max-width: 22ch;
   margin: 0.7rem 0 2.5rem;
@@ -418,6 +441,19 @@ main.content p {
  * order. The label column that survives is too narrow for "CONTRACT
  * PERIOD", which then splits across two lines. Restore the intended stack.
  */
+/*
+ * The label track was about 102px in the two-column card, just short of
+ * "CONTRACT PERIOD", which then split across two lines next to a value
+ * that fits easily on one. Widen the track and stop the labels wrapping.
+ */
+.current-role .role-facts .fact-label {
+  white-space: nowrap;
+}
+
+.current-role .role-facts > div:first-child {
+  grid-template-columns: minmax(9.5rem, 0.3fr) minmax(0, 1fr);
+}
+
 @media (max-width: 620px) {
   .current-role .role-facts > div {
     grid-template-columns: minmax(0, 1fr);
