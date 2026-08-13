@@ -18,11 +18,21 @@
  * better once the type is no longer enormous.
  */
 
+/*
+ * The name runs on one line, in the body colour rather than the terracotta
+ * accent, and is sized to fit the hero column without breaking.
+ */
 .hero-copy h1 {
-  margin: 0.75rem 0 1.75rem;
-  font-size: clamp(3.3rem, 6.4vw, 6.2rem);
-  letter-spacing: -0.055em;
-  line-height: 0.88;
+  margin: 0.7rem 0 1.6rem;
+  color: var(--text);
+  font-size: clamp(1.6rem, 5vw, 5.5rem);
+  letter-spacing: -0.035em;
+  line-height: 1.06;
+  white-space: nowrap;
+}
+
+.hero-copy h1 span {
+  color: inherit;
 }
 
 .current-role h2 {
@@ -133,8 +143,10 @@
 }
 
 @media (max-width: 820px) {
+  /* The hero drops to one column here, so the name gets nearly the full
+     page width. Sized off the viewport so it stays on one line. */
   .hero-copy h1 {
-    font-size: clamp(3rem, 11vw, 5rem);
+    font-size: clamp(1.5rem, 9.5vw, 4.5rem);
   }
 
   .section-heading h2,
@@ -145,11 +157,6 @@
 }
 
 @media (max-width: 620px) {
-  .hero-copy h1 {
-    font-size: clamp(2.75rem, 13vw, 3.9rem);
-    line-height: 0.92;
-  }
-
   .current-role h2 {
     font-size: clamp(1.8rem, 8vw, 2.5rem);
   }
@@ -172,11 +179,14 @@
    ============================================================ */
 
 /*
- * Justification is applied to running prose only. Hyphenation is on
- * because en-GB justified text at these column widths opens ugly word
- * gaps without it. Labels, mono eyebrows, pills, stats and buttons keep
- * their own alignment — justifying a two-word label does nothing but
- * stretch it.
+ * Justification is applied to running prose only. Labels, mono eyebrows,
+ * pills, stats and buttons keep their own alignment, since justifying a
+ * two-word label does nothing but stretch it.
+ *
+ * Hyphenation is deliberately off. It closes the word gaps that
+ * justification opens, but it broke words mid-line ("thera-peutics",
+ * "pur-suing"), and a word split across two lines is harder to read than a
+ * slightly looser line.
  */
 
 .portfolio-home p,
@@ -189,10 +199,30 @@ main.content li,
 .hero-lead,
 .proof-note,
 blockquote p {
-  hyphens: auto;
+  hyphens: manual;
   overflow-wrap: break-word;
   text-align: justify;
   text-justify: inter-word;
+}
+
+/*
+ * Below tablet widths the measure is too short to justify: without
+ * hyphenation the gaps grow wide enough to pull the eye down the column
+ * instead of along the line. Ragged right reads better there.
+ */
+@media (max-width: 900px) {
+  .portfolio-home p,
+  .portfolio-page p,
+  .portfolio-home li,
+  .portfolio-page li,
+  main.content p,
+  main.content li,
+  .role-summary,
+  .hero-lead,
+  .proof-note,
+  blockquote p {
+    text-align: left;
+  }
 }
 
 .eyebrow,
@@ -353,27 +383,45 @@ main.content p {
    ============================================================ */
 
 /*
- * "Antibody therapeutics for oncology and autoimmunity" was breaking
- * across five lines in a column that had been squeezed by the label
- * track. Narrowing the label track for this row only, and balancing the
- * break, keeps it to two lines without disturbing the rows around it.
+ * "Antibody therapeutics for oncology and autoimmunity" kept collapsing
+ * into a narrow ragged column: the label track ate the width, and balanced
+ * wrapping then evened the lines out rather than letting the text run. The
+ * value now sits under its own label and uses the full width of the panel,
+ * exactly like the Role row below it, so it reads across instead of down.
  */
 
 .current-role .role-facts > .company-focus {
-  grid-template-columns: minmax(96px, 0.2fr) minmax(0, 1fr);
+  display: block;
+  padding: 1.25rem 0 1.4rem;
+}
+
+.current-role .company-focus .fact-label {
+  display: block;
+  margin: 0 0 0.55rem;
+  padding: 0;
 }
 
 .current-role .company-focus strong {
+  display: block;
+  width: 100%;
   max-width: none;
-  font-size: 0.94rem;
-  line-height: 1.45;
-  text-wrap: balance;
+  font-size: 0.98rem;
+  line-height: 1.5;
+  hyphens: manual;
+  text-wrap: wrap;
   white-space: normal !important;
 }
 
+/*
+ * brand.css already stacks these rows on narrow screens, but role-fix.css
+ * reasserts the two-column track outside any media query and wins on load
+ * order. The label column that survives is too narrow for "CONTRACT
+ * PERIOD", which then splits across two lines. Restore the intended stack.
+ */
 @media (max-width: 620px) {
-  .current-role .role-facts > .company-focus {
-    grid-template-columns: 1fr;
+  .current-role .role-facts > div {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.35rem;
   }
 }
 
