@@ -12,6 +12,11 @@
   --cream-card: #fbf8f2;
   --sage: #e5e9e1;
   --peach: #f1dfd1;
+  /* Second half of the project-card rotation, same pastel weight. */
+  --wheat: #f1e7d5;
+  --stone: #e8e5df;
+  --blush: #f2e2de;
+  --mist: #e3e9ea;
   --mono: "IBM Plex Mono", "SFMono-Regular", "Cascadia Code", "Roboto Mono", Consolas, monospace;
   --humanist: "Aptos", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
   --editorial: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Georgia, serif;
@@ -506,6 +511,23 @@ a:hover {
 
 .project-card:nth-child(4) {
   background: var(--peach);
+}
+
+/* Cards five to eight were all falling back to the default cream. */
+.project-card:nth-child(5) {
+  background: var(--wheat);
+}
+
+.project-card:nth-child(6) {
+  background: var(--stone);
+}
+
+.project-card:nth-child(7) {
+  background: var(--blush);
+}
+
+.project-card:nth-child(8) {
+  background: var(--mist);
 }
 
 .project-card:hover {

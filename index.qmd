@@ -245,7 +245,7 @@ Based in Lund, Sweden · Open to opportunities from September 2026
 <p>A leakage-aware temporal-holdout benchmark testing whether Geneformer and scGPT representations improve target prioritisation over cheaper baselines. The completed v0.4 result was negative, and is reported as such.</p>
 <div class="metric-row" aria-label="FM Value Audit release highlights">
 <span><strong>79,542</strong> holdout rows</span>
-<span><strong>NOT_SUPPORTED</strong> primary conclusion</span>
+<span><strong>NOT SUPPORTED</strong> primary conclusion</span>
 </div>
 <div class="tag-list"><span>Geneformer</span><span>scGPT</span><span>Leakage control</span></div>
 <div class="card-links">
