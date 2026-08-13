@@ -25,7 +25,12 @@
 .hero-copy h1 {
   margin: 0.7rem 0 1.6rem;
   color: var(--text);
-  font-size: clamp(1.6rem, 5vw, 5.5rem);
+  /*
+   * The page stops widening at 1440px but a raw vw does not, so above that
+   * the name outgrew its grid track and ran under the portrait. The cap is
+   * set from the widest the hero-copy column ever gets.
+   */
+  font-size: clamp(1.6rem, 5vw, 3.7rem);
   letter-spacing: -0.035em;
   line-height: 1.06;
   white-space: nowrap;
@@ -296,6 +301,34 @@ blockquote p {
 .portfolio-page p,
 main.content p {
   line-height: 1.72;
+}
+
+/* ============================================================
+   2b. Quarto's paragraph wrapper
+   ============================================================ */
+
+/*
+ * Quarto wraps loose inline HTML in a paragraph. Where that HTML is the
+ * whole content of a flex or grid container, the container ends up with a
+ * single <p> child and its layout collapses: the eight metric rows stacked
+ * into one 133px column instead of three, and the card links and button
+ * rows lost their gaps, so "Case study" and "GitHub" ran together.
+ *
+ * display: contents removes the wrapper from the box tree and hands the
+ * children back to the container as its own flex or grid items. It only
+ * fires where the wrapper exists, so the markup stays valid either way.
+ */
+.metric-row > p,
+.card-links > p,
+.button-row > p,
+.mini-facts > p,
+.tag-list > p,
+.role-list > p,
+.skill-tags > p,
+.role-facts > div > p,
+.timeline-item > p,
+.proof-stat > p {
+  display: contents;
 }
 
 /* ============================================================
