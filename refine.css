@@ -722,3 +722,22 @@ main.content p {
     gap: 0.9rem 0.75rem;
   }
 }
+
+/* ============================================================
+   9. The homepage summary table on small screens
+   ============================================================ */
+
+/*
+ * Below 900px the tools table stops being a table and becomes one card
+ * per tool. On the homepage that repeats what the project cards below it
+ * already say, so the same eight tools are read twice in a row.
+ *
+ * Scoped to .tools-overview-compact, which only the homepage copy carries;
+ * the Tools page keeps its table in card form, since there it is the
+ * content rather than a summary. Above 900px nothing changes anywhere.
+ */
+@media (max-width: 900px) {
+  .tools-overview-compact {
+    display: none;
+  }
+}
