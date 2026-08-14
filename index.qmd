@@ -10,7 +10,7 @@ page-layout: full
 <div class="hero-copy">
 <p class="eyebrow">Computational Biologist</p>
 <h1 id="hero-title">Rafael Soler Ortuño</h1>
-<p class="hero-lead">I work with single-cell, spatial and multi-omic data across immuno-oncology and autoimmune disease. Most of my time goes to the questions that decide whether a target is worth pursuing: who responds, where resistance comes from, and which patients to select. More recently I have started building, evaluating and orchestrating agentic AI systems to get more out of that work.</p>
+<p class="hero-lead">I am a computational biologist with a PhD in bioinformatics and six years in immuno-oncology, tumour biology and autoimmune disease. I use single-cell and spatial transcriptomics, multi-omics and machine learning to find biomarkers, validate targets and decide which patients to treat. I build reproducible R and Python pipelines on HPC and AWS, and I explain what I find in plain terms to clinical, translational and non-technical teammates. Recently I have also started building, evaluating and orchestrating agentic AI systems.</p>
 <p class="hero-personal">Science has been a journey into the unknown, with a humbling lesson waiting at every turn. I can't wait to be reminded again just how little I truly know, and how much is left to discover.</p>
 <div class="button-row" aria-label="Primary links">
 <a class="button button-primary" href="projects.html">Explore my tools <span aria-hidden="true">↗</span></a>
@@ -380,23 +380,8 @@ Based in Lund, Sweden · Open to opportunities from September 2026
 </div>
 </section>
 
-<section class="section-shell publications-section" aria-labelledby="publications-title">
-<div class="section-heading">
-<div>
-<p class="section-index">05 / Selected publications</p>
-<h2 id="publications-title">Peer-reviewed work in developmental neurobiology.</h2>
-</div>
-</div>
-<ol class="publication-list">
-<li><span class="publication-year">2024</span><a href="https://doi.org/10.1126/sciadv.adn1640">Gene regulatory landscape of cerebral cortex folding</a><span>Science Advances</span></li>
-<li><span class="publication-year">2024</span><a href="https://doi.org/10.1126/sciadv.adn9998">Multiple parallel cell lineages in the developing mammalian cerebral cortex</a><span>Science Advances</span></li>
-<li><span class="publication-year">2022</span><a href="https://doi.org/10.1126/sciadv.abj4010">Secondary loss of miR-3607 reduced cortical progenitor amplification during rodent evolution</a><span>Science Advances</span></li>
-<li><span class="publication-year">2020</span><a href="https://doi.org/10.15252/embj.2020105479">Repression of Irs2 by let-7 miRNAs is essential for homeostasis of the telencephalic neuroepithelium</a><span>The EMBO Journal</span></li>
-</ol>
-</section>
-
 <section class="contact-panel" aria-labelledby="contact-title">
-<p class="section-index">06 / Contact</p>
+<p class="section-index">05 / Contact</p>
 <h2 id="contact-title">Looking for new roles from September 2026.</h2>
 <p>I am looking for roles that merge computational biology, translational research and AI for biology.</p>
 <div class="button-row">
