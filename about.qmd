@@ -9,7 +9,7 @@ page-layout: full
 <header class="page-hero about-hero">
 <p class="eyebrow">Experience & approach</p>
 <h1>I work between the biology and the decision.</h1>
-<p>My background covers antibody immunotherapies, precision oncology, developmental neurobiology and building computational tools. The job has been the same in all of them: take a vague question, pull evidence from whatever modalities are available, and say plainly what the data supports and what it does not.</p>
+<p>My background covers antibody immunotherapies, precision oncology, developmental neurobiology and building computational tools. The job has been the same in all of them: take a question, pull evidence from whatever modalities are available, and say plainly what the data supports and what it does not.</p>
 </header>
 
 <section class="about-intro" aria-labelledby="profile-title">
@@ -46,13 +46,13 @@ page-layout: full
 <h3>Bioinformatics Research Scientist</h3>
 <ul>
 <li>Ran the multi-omic analysis for the BI-1206 anti-FcγRIIB and BI-1808 anti-TNFR2 antibody programmes. The evidence covers scRNA-seq, CITE-seq, spatial transcriptomics, bulk RNA-seq, proteomics and clinical metadata, tied together across patient, mouse and in-vitro samples, and the questions are mode of action and resistance.</li>
-<li>Found a non-canonical myeloid activation pathway behind the antibody response. It came out of separating immune activation states across a 30-patient clinical PBMC cohort from the BI-1808 and BI-1910 programmes, which meant extending the mode-of-action pipeline to take clinical single-cell RNA-seq alongside targeted pathway analysis.</li>
+<li>Traced an unexpected immune activation mechanism behind an antibody response from clinical single-cell data, and extended the mode-of-action pipeline to handle that kind of patient cohort.</li>
 <li>Characterised drug mechanism of action with scRNA-seq, spatial transcriptomics and targeted gene-module scoring, which resolves antibody-responsive immune cell states, macrophage polarisation profiles and tissue niches in blood and tumour microenvironments. All of that feeds into early patient selection.</li>
-<li>Validated cell-type-specific genetic regulation of a candidate autoimmune target against a public single-cell eQTL atlas. The gene sits in a polymorphic family, so I audited raw alignment quality and dataset chemistry first to stop multi-mapping read loss from corrupting the quantification. The result fed a go/no-go decision on the target.</li>
-<li>Established a biomarker and therapeutic target for autoimmune disease by curating and integrating public single-cell atlases from three published inflammatory bowel disease cohorts: ulcerative colitis, Crohn's disease and healthy controls. Expression turned out to be restricted to M1 macrophages, inflammatory monocytes and neutrophils.</li>
+<li>Validated cell-type-specific genetic regulation of a candidate autoimmune target using public single-cell data, auditing the raw data quality first so the numbers could be trusted. The result fed a go/no-go decision on the target.</li>
+<li>Built biomarker and target evidence for autoimmune and inflammatory disease by curating and integrating public single-cell and spatial atlases across a broad range of conditions: rheumatologic disease, including rheumatoid arthritis with a focus on synovial pathology, systemic lupus erythematosus, juvenile idiopathic arthritis and juvenile dermatomyositis; gastrointestinal and hepatobiliary inflammation, including Crohn's disease and ulcerative colitis in both human and mouse, and primary sclerosing cholangitis; inflammatory skin disease, including psoriasis and preclinical MC903 and oxazolone mouse models; atherosclerosis; interstitial lung disease; and kidney transplant biology and graft rejection.</li>
 <li>Built the biological rationale for a bispecific target by bringing clinical single-cell and spatial transcriptomics into the biomarker strategy. It showed a significant expression correlation with a canonical regulatory T-cell marker before any experimental validation had run.</li>
 <li>Built and trained a variational autoencoder to pull strain-level technical variation apart from tumour biomarker signal across genetically diverse mouse strains. It is meant to carry candidate biomarkers over to human population heterogeneity.</li>
-<li>Delivered a reusable single-cell and spatial immune atlas, plus an AWS and Docker HPC environment I built from scratch so the team could reproduce each other's work. Both ship with documented R and Python pipelines, automated QC, and reporting that a non-specialist can read.</li>
+<li>Acted as the computational contact point for more than four teams working several projects at once, turning multi-omic results into plain language and helping shape decisions from experimental design through to which validation experiments to run next. Delivered a reusable single-cell and spatial immune atlas and an AWS and Docker HPC environment I built from scratch, both documented so anyone on the team could rerun and build on the work.</li>
 </ul>
 </div>
 </article>
@@ -187,7 +187,7 @@ page-layout: full
 <section class="contact-panel compact-contact">
 <p class="section-index">Next chapter</p>
 <h2>Open to computational biology opportunities from September 2026.</h2>
-<p>What interests me most are roles where human biology, multi-omic data and drug development actually sit in the same room.</p>
+<p>What draws me are roles that combine human biology, multi-omic data and drug development with AI for biology and agentic systems.</p>
 <div class="button-row">
 <a class="button button-light" href="mailto:rafaelsolersanblas@gmail.com">Start a conversation</a>
 <a class="button button-ghost" href="assets/Rafael_Soler_Ortuno_CV.pdf" target="_blank" rel="noopener" download>Download CV <span aria-hidden="true">↓</span></a>

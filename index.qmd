@@ -10,7 +10,7 @@ page-layout: full
 <div class="hero-copy">
 <p class="eyebrow">Computational Biologist</p>
 <h1 id="hero-title">Rafael Soler Ortuño</h1>
-<p class="hero-lead">I work with single-cell, spatial and multi-omic data in immuno-oncology. Most of my time goes to the questions that decide whether a target is worth pursuing: who responds, where resistance comes from, and which patients to select.</p>
+<p class="hero-lead">I work with single-cell, spatial and multi-omic data across immuno-oncology and autoimmune disease. Most of my time goes to the questions that decide whether a target is worth pursuing: who responds, where resistance comes from, and which patients to select. More recently I have started building, evaluating and orchestrating agentic AI systems to get more out of that work.</p>
 <p class="hero-personal">Science has been a journey into the unknown, with a humbling lesson waiting at every turn. I can't wait to be reminded again just how little I truly know, and how much is left to discover.</p>
 <div class="button-row" aria-label="Primary links">
 <a class="button button-primary" href="projects.html">Explore my tools <span aria-hidden="true">↗</span></a>
@@ -65,7 +65,7 @@ Based in Lund, Sweden · Open to opportunities from September 2026
 </strong>
 </div>
 </div>
-<p class="role-summary">I carry out the computational work behind the BI-1206 anti-FcγRIIB and BI-1808 anti-TNFR2 programmes, putting clinical, mouse and in-vitro evidence together to work out how the antibodies act and where resistance comes from. Day to day that means scRNA-seq, CITE-seq, spatial transcriptomics, proteomics and clinical metadata, run through AWS and HPC pipelines the rest of the team can rerun.</p>
+<p class="role-summary">I carry out the computational work behind the BI-1206 anti-FcγRIIB and BI-1808 anti-TNFR2 programmes, putting clinical, mouse and in-vitro evidence together to work out how the antibodies act and where resistance comes from. Alongside that I run target discovery and validation for autoimmune disease, and train and deploy AI models. Day to day the work means scRNA-seq, CITE-seq, spatial transcriptomics, proteomics and clinical metadata, run through AWS and HPC pipelines the rest of the team can rerun.</p>
 </section>
 
 <section class="section-shell" id="selected-tools" aria-labelledby="tools-title">
