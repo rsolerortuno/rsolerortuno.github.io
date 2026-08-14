@@ -772,3 +772,19 @@ main.content p {
     font-size: 0.78rem;
   }
 }
+
+/* ============================================================
+   11. Hero lead and personal line
+   ============================================================ */
+
+/* Both a touch smaller than before; the personal line goes italic. */
+.hero-lead {
+  font-size: clamp(1rem, 1.35vw, 1.14rem);
+  line-height: 1.62;
+}
+
+.hero-personal {
+  font-size: 0.9rem;
+  font-style: italic;
+  line-height: 1.7;
+}

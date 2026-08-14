@@ -10,8 +10,8 @@ page-layout: full
 <div class="hero-copy">
 <p class="eyebrow">Computational Biologist</p>
 <h1 id="hero-title">Rafael Soler Ortuño</h1>
-<p class="hero-lead">I am a computational biologist with a PhD in bioinformatics and six years in immuno-oncology, tumour biology and autoimmune disease. I use single-cell and spatial transcriptomics, multi-omics and machine learning to find biomarkers, validate targets and decide which patients to treat. I build reproducible R and Python pipelines on HPC and AWS, and I explain what I find in plain terms to clinical, translational and non-technical teammates. Recently I have also started building, evaluating and orchestrating agentic AI systems.</p>
-<p class="hero-personal">Science has been a journey into the unknown, with a humbling lesson waiting at every turn. I can't wait to be reminded again just how little I truly know, and how much is left to discover.</p>
+<p class="hero-lead">Computational biologist with a PhD in bioinformatics and six years of experience across immuno-oncology, tumour biology, autoimmune disease and computational drug discovery. I integrate multi-omics, machine learning, deep learning and agentic AI systems to identify biomarkers, prioritise and validate therapeutic targets, and stratify patients.</p>
+<p class="hero-personal">Science has been a journey into the unknown, with a humbling lesson waiting at every turn. I can't wait to be reminded again just how little I truly know, and how much is left to discover</p>
 <div class="button-row" aria-label="Primary links">
 <a class="button button-primary" href="projects.html">Explore my tools <span aria-hidden="true">↗</span></a>
 <a class="button button-secondary" href="assets/Rafael_Soler_Ortuno_CV.pdf" target="_blank" rel="noopener" download>Download CV <span aria-hidden="true">↓</span></a>
@@ -72,7 +72,7 @@ Based in Lund, Sweden · Open to opportunities from September 2026
 <div class="section-heading">
 <div>
 <p class="section-index">02 / Selected tools</p>
-<h2 id="tools-title">Research software that shows its working.</h2>
+<h2 id="tools-title">Research software that shows its working</h2>
 </div>
 <p>Eight public repositories, covering target discovery and safety, method reliability, drug response and protein modelling. Most of them started as something I needed for my own work and could not find.</p>
 </div>
@@ -319,7 +319,7 @@ Based in Lund, Sweden · Open to opportunities from September 2026
 <div class="section-heading">
 <div>
 <p class="section-index">03 / Experience</p>
-<h2 id="experience-title">Where the work has taken me.</h2>
+<h2 id="experience-title">Where the work has taken me</h2>
 </div>
 <p>Six years across industry and academia, in cortical development, precision oncology and now antibody programmes. Every time, the work has been getting from messy molecular data to something a team can act on.</p>
 </div>
@@ -353,7 +353,7 @@ Based in Lund, Sweden · Open to opportunities from September 2026
 <div class="section-heading">
 <div>
 <p class="section-index">04 / What I bring</p>
-<h2 id="expertise-title">Biology and engineering in the same workflow.</h2>
+<h2 id="expertise-title">Biology and engineering in the same workflow</h2>
 </div>
 </div>
 <div class="expertise-grid">
@@ -382,7 +382,7 @@ Based in Lund, Sweden · Open to opportunities from September 2026
 
 <section class="contact-panel" aria-labelledby="contact-title">
 <p class="section-index">05 / Contact</p>
-<h2 id="contact-title">Looking for new roles from September 2026.</h2>
+<h2 id="contact-title">Looking for new roles from September 2026</h2>
 <p>I am looking for roles that merge computational biology, translational research and AI for biology.</p>
 <div class="button-row">
 <a class="button button-light" href="mailto:rafaelsolersanblas@gmail.com">rafaelsolersanblas@gmail.com <span aria-hidden="true">↗</span></a>

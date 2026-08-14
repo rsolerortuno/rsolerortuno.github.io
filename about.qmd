@@ -8,7 +8,7 @@ page-layout: full
 
 <header class="page-hero about-hero">
 <p class="eyebrow">Experience & approach</p>
-<h1>I work between the biology and the decision.</h1>
+<h1>I work between the biology and the decision</h1>
 <p>My background covers antibody immunotherapies, precision oncology, developmental neurobiology and building computational tools. The job has been the same in all of them: take a question, pull evidence from whatever modalities are available, and say plainly what the data supports and what it does not.</p>
 </header>
 
@@ -18,7 +18,7 @@ page-layout: full
 </figure>
 <div>
 <p class="section-index">Profile</p>
-<h2 id="profile-title">Computational biologist with 6+ years across industry and academia.</h2>
+<h2 id="profile-title">Computational biologist with 6+ years across industry and academia</h2>
 <p>I have a PhD in bioinformatics and two years of postdoctoral work in immuno-oncology and tumour biology, using single-cell and spatial transcriptomics, multi-omic integration and machine learning for biomarker discovery, validation and patient stratification. In industry that has meant antibody immunotherapies against TNFR2 and FcγRIIB, mode-of-action studies, and translational work in oncology and autoimmune disease.</p>
 <p>The useful part is that I know the biology and can also write the code. I can pick up a question at experimental design and QC and carry it through integration, modelling and interpretation to something an experimental or clinical team can use. The pipelines are R and Python, they run on HPC and AWS, and they are meant to be rerun by someone who is not me.</p>
 <p>I have worked in Spain, Germany, the United Kingdom and Sweden, and I am comfortable presenting to people whose background is nothing like mine.</p>
@@ -46,14 +46,14 @@ page-layout: full
 <h3>Bioinformatics Research Scientist</h3>
 <div class="role-keywords"><span>Single-cell &amp; spatial omics</span><span>Immuno-oncology</span><span>Autoimmune disease</span><span>Antibody drug programmes</span><span>Biomarker discovery</span><span>Target validation</span><span>AWS &amp; HPC</span><span>Agentic AI</span></div>
 <ul>
-<li>Ran the multi-omic analysis for the BI-1206 anti-FcγRIIB and BI-1808 anti-TNFR2 antibody programmes. The evidence covers scRNA-seq, CITE-seq, spatial transcriptomics, bulk RNA-seq, proteomics and clinical metadata, tied together across patient, mouse and in-vitro samples, and the questions are mode of action and resistance.</li>
-<li>Traced an unexpected immune activation mechanism behind an antibody response from clinical single-cell data, and extended the mode-of-action pipeline to handle that kind of patient cohort.</li>
-<li>Characterised drug mechanism of action with scRNA-seq, spatial transcriptomics and targeted gene-module scoring, which resolves antibody-responsive immune cell states, macrophage polarisation profiles and tissue niches in blood and tumour microenvironments. All of that feeds into early patient selection.</li>
-<li>Validated cell-type-specific genetic regulation of a candidate autoimmune target using public single-cell data, auditing the raw data quality first so the numbers could be trusted. The result fed a go/no-go decision on the target.</li>
-<li>Built biomarker and target evidence for autoimmune and inflammatory disease by curating and integrating public single-cell and spatial atlases across a broad range of conditions: rheumatologic disease, including rheumatoid arthritis with a focus on synovial pathology, systemic lupus erythematosus, juvenile idiopathic arthritis and juvenile dermatomyositis; gastrointestinal and hepatobiliary inflammation, including Crohn's disease and ulcerative colitis in both human and mouse, and primary sclerosing cholangitis; inflammatory skin disease, including psoriasis and preclinical MC903 and oxazolone mouse models; atherosclerosis; interstitial lung disease; and kidney transplant biology and graft rejection.</li>
-<li>Built the biological rationale for a bispecific target by bringing clinical single-cell and spatial transcriptomics into the biomarker strategy. It showed a significant expression correlation with a canonical regulatory T-cell marker before any experimental validation had run.</li>
-<li>Built and trained a variational autoencoder to pull strain-level technical variation apart from tumour biomarker signal across genetically diverse mouse strains. It is meant to carry candidate biomarkers over to human population heterogeneity.</li>
-<li>Acted as the computational contact point for more than four teams working several projects at once, turning multi-omic results into plain language and helping shape decisions from experimental design through to which validation experiments to run next. Delivered a reusable single-cell and spatial immune atlas and an AWS and Docker HPC environment I built from scratch, both documented so anyone on the team could rerun and build on the work.</li>
+<li>Ran the multi-omic analysis for the BI-1206 anti-FcγRIIB and BI-1808 anti-TNFR2 antibody programmes. The evidence covers scRNA-seq, CITE-seq, spatial transcriptomics, bulk RNA-seq, proteomics and clinical metadata, tied together across patient, mouse and in-vitro samples, and the questions are mode of action and resistance</li>
+<li>Traced an unexpected immune activation mechanism behind an antibody response from clinical single-cell data, and extended the mode-of-action pipeline to handle that kind of patient cohort</li>
+<li>Characterised drug mechanism of action with scRNA-seq, spatial transcriptomics and targeted gene-module scoring, which resolves antibody-responsive immune cell states, macrophage polarisation profiles and tissue niches in blood and tumour microenvironments. All of that feeds into early patient selection</li>
+<li>Validated cell-type-specific genetic regulation of a candidate autoimmune target using public single-cell data, auditing the raw data quality first so the numbers could be trusted. The result fed a go/no-go decision on the target</li>
+<li>Built biomarker and target evidence for autoimmune and inflammatory disease by curating and integrating public single-cell and spatial atlases across a broad range of conditions: rheumatologic disease, including rheumatoid arthritis with a focus on synovial pathology, systemic lupus erythematosus, juvenile idiopathic arthritis and juvenile dermatomyositis; gastrointestinal and hepatobiliary inflammation, including Crohn's disease and ulcerative colitis in both human and mouse, and primary sclerosing cholangitis; inflammatory skin disease, including psoriasis and preclinical MC903 and oxazolone mouse models; atherosclerosis; interstitial lung disease; and kidney transplant biology and graft rejection</li>
+<li>Built the biological rationale for a bispecific target by bringing clinical single-cell and spatial transcriptomics into the biomarker strategy. It showed a significant expression correlation with a canonical regulatory T-cell marker before any experimental validation had run</li>
+<li>Built and trained a variational autoencoder to pull strain-level technical variation apart from tumour biomarker signal across genetically diverse mouse strains. It is meant to carry candidate biomarkers over to human population heterogeneity</li>
+<li>Acted as the computational contact point for more than four teams working several projects at once, turning multi-omic results into plain language and helping shape decisions from experimental design through to which validation experiments to run next. Delivered a reusable single-cell and spatial immune atlas and an AWS and Docker HPC environment I built from scratch, both documented so anyone on the team could rerun and build on the work</li>
 </ul>
 </div>
 </article>
@@ -65,9 +65,9 @@ page-layout: full
 <h3>Visiting Scientist, Computational Biology</h3>
 <div class="role-keywords"><span>Precision oncology</span><span>Spatial transcriptomics</span><span>Tumour gene signatures</span><span>TCGA &amp; DepMap</span><span>Preclinical-to-clinical mapping</span></div>
 <ul>
-<li>Designed gene signatures from patient tumour samples in lung, pancreatic and breast cancer, with SNV and mutation analysis behind them, for precision-medicine and drug-resistance questions.</li>
-<li>Mapped preclinical models, meaning cell lines, xenografts and organoids, onto clinical tumour subtypes with TCGA and DepMap/Celligner, so it was clear which preclinical findings could be expected to translate.</li>
-<li>Analysed spatial transcriptomics from NanoString CosMx and 10x Visium HD to resolve tissue-level expression programmes across tumour cohorts.</li>
+<li>Designed gene signatures from patient tumour samples in lung, pancreatic and breast cancer, with SNV and mutation analysis behind them, for precision-medicine and drug-resistance questions</li>
+<li>Mapped preclinical models, meaning cell lines, xenografts and organoids, onto clinical tumour subtypes with TCGA and DepMap/Celligner, so it was clear which preclinical findings could be expected to translate</li>
+<li>Analysed spatial transcriptomics from NanoString CosMx and 10x Visium HD to resolve tissue-level expression programmes across tumour cohorts</li>
 </ul>
 </div>
 </article>
@@ -79,11 +79,11 @@ page-layout: full
 <h3>Bioinformatics Research Scientist · PhD</h3>
 <div class="role-keywords"><span>scRNA-seq &amp; ATAC-seq</span><span>Multi-omic integration</span><span>Cross-species genomics</span><span>Deep learning</span><span>Reproducible pipelines</span></div>
 <ul>
-<li>Built automated Python, R, Bash and AWK pipelines to integrate RNA-seq and ATAC-seq across phylogenetically distant species. That separated the genes and enhancers of cortical development that are conserved from the ones that are not.</li>
-<li>Integrated scRNA-seq with RNA-seq and ATAC-seq to define conserved cortical stem-cell types and their gene-regulatory programs across species.</li>
-<li>Identified tumour gene signatures in paediatric brain tumours by meta-analysis of public GEO and EGA datasets, then benchmarked them against mouse scRNA-seq, ATAC-seq and bulk RNA-seq models.</li>
-<li>Applied deep learning to protein sequence data to predict candidate transcription factors from structural features, and ran the workflow across large public datasets.</li>
-<li>Built and published an interactive R Shiny single-cell atlas so researchers who do not code could work with the cortical data themselves. Mentored two MSc students.</li>
+<li>Built automated Python, R, Bash and AWK pipelines to integrate RNA-seq and ATAC-seq across phylogenetically distant species. That separated the genes and enhancers of cortical development that are conserved from the ones that are not</li>
+<li>Integrated scRNA-seq with RNA-seq and ATAC-seq to define conserved cortical stem-cell types and their gene-regulatory programs across species</li>
+<li>Identified tumour gene signatures in paediatric brain tumours by meta-analysis of public GEO and EGA datasets, then benchmarked them against mouse scRNA-seq, ATAC-seq and bulk RNA-seq models</li>
+<li>Applied deep learning to protein sequence data to predict candidate transcription factors from structural features, and ran the workflow across large public datasets</li>
+<li>Built and published an interactive R Shiny single-cell atlas so researchers who do not code could work with the cortical data themselves. Mentored two MSc students</li>
 </ul>
 </div>
 </article>
@@ -95,8 +95,8 @@ page-layout: full
 <h3>Visiting Scientist, Bioinformatics</h3>
 <div class="role-keywords"><span>Hi-C &amp; ATAC-seq</span><span>Regulatory genomics</span><span>Deep learning (ChromBPNet)</span><span>Snakemake &amp; Docker</span></div>
 <ul>
-<li>Combined Hi-C analysis with the ENCODE ATAC-seq pipeline in Docker and Snakemake to resolve open chromatin regions, enhancers and transcription-factor motifs across the genome.</li>
-<li>Trained ChromBPNet to predict open chromatin, transcription-factor binding sites and sequence motifs directly from DNA sequence, and built a custom Python/R/Bash visualisation pipeline for genomic rearrangements.</li>
+<li>Combined Hi-C analysis with the ENCODE ATAC-seq pipeline in Docker and Snakemake to resolve open chromatin regions, enhancers and transcription-factor motifs across the genome</li>
+<li>Trained ChromBPNet to predict open chromatin, transcription-factor binding sites and sequence motifs directly from DNA sequence, and built a custom Python/R/Bash visualisation pipeline for genomic rearrangements</li>
 </ul>
 </div>
 </article>
@@ -192,7 +192,7 @@ page-layout: full
 
 <section class="contact-panel compact-contact">
 <p class="section-index">Next chapter</p>
-<h2>Open to computational biology opportunities from September 2026.</h2>
+<h2>Open to computational biology opportunities from September 2026</h2>
 <p>I am looking for roles that merge computational biology, translational research and AI for biology.</p>
 <div class="button-row">
 <a class="button button-light" href="mailto:rafaelsolersanblas@gmail.com">Start a conversation</a>
