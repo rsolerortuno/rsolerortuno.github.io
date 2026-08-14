@@ -8,13 +8,13 @@ page-layout: full
 
 <header class="page-hero">
 <p class="eyebrow">Public research software</p>
-<h1>Tools built so the reasoning can be checked.</h1>
-<p>They answer different biological questions, but I build them the same way. Each one states its scope up front, uses inputs you can download and reproduce, keeps the uncertainty visible, and stops at what the data actually supports.</p>
+<h1>Research software you can check.</h1>
+<p>The tools answer different biological questions, but I build them the same way. Each one says what it does, uses data you can download and run yourself, shows how sure it is, and stops where the evidence stops.</p>
 </header>
 
 <section class="tools-overview" aria-labelledby="overview-title">
-<h2 id="overview-title" class="overview-title">The eight tools at a glance</h2>
-<p class="overview-lede">Grouped by the question they answer. Each one deals with a decision that lands early, before anyone commits real time or money to a candidate.</p>
+<h2 id="overview-title" class="overview-title">The eight tools</h2>
+<p class="overview-lede">Grouped by the question they answer. Each one helps with a decision that comes up early, before you spend time or money on a candidate.</p>
 
 <div class="overview-table-wrap">
 <table class="overview-table">

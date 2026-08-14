@@ -398,7 +398,7 @@ Based in Lund, Sweden · Open to opportunities from September 2026
 <section class="contact-panel" aria-labelledby="contact-title">
 <p class="section-index">06 / Contact</p>
 <h2 id="contact-title">Looking for new roles from September 2026.</h2>
-<p>I am looking for computational biology and translational roles where the analysis actually feeds into what gets developed next.</p>
+<p>I am looking for roles that merge computational biology, translational research and AI for biology.</p>
 <div class="button-row">
 <a class="button button-light" href="mailto:rafaelsolersanblas@gmail.com">rafaelsolersanblas@gmail.com <span aria-hidden="true">↗</span></a>
 <a class="button button-ghost" href="assets/Rafael_Soler_Ortuno_CV.pdf" target="_blank" rel="noopener" download>Download CV <span aria-hidden="true">↓</span></a>
