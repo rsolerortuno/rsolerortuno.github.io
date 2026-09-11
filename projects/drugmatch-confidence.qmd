@@ -1,92 +1,83 @@
 ---
 title: "DrugMatch-Confidence"
-subtitle: "Interpretable and uncertainty-aware preclinical drug-response prediction"
-description: "An XGBoost tool trained on DepMap and PRISM that explains predictions, quantifies uncertainty, and exposes weak models."
+subtitle: "Choosing which preclinical drug-response experiments to run next"
+description: "Matched evaluation of XGBoost and simple baselines, independent calibration, and a retrospective MAPK screening analysis."
 page-layout: article
 toc: true
 toc-title: "On this page"
 ---
 
 <div class="article-status">
-  <span class="status-pill status-released">v1.0.1 · Released</span>
+  <span class="status-pill status-preview">v1.1.0.dev0 · Evidence review</span>
   <a href="https://github.com/rsolerortuno/DrugMatch-Confidence">View repository <span aria-hidden="true">↗</span></a>
 </div>
 
-## The question
+## The decision
 
-Can molecular profiles from cancer cell lines help predict which models will respond to a drug, and can the tool say when its own prediction should not be trusted?
+Which cancer cell lines should a laboratory test first, and does a complex model improve that choice over a simpler one?
 
-DrugMatch-Confidence combines DepMap molecular features with PRISM dose-response measurements. For a supported drug and cell line, it returns more than a sensitive/resistant label:
+DrugMatch combines DepMap molecular profiles with PRISM drug-response measurements. The current review establishes a matched comparison across five drugs, separates calibration from fitting, and makes unsupported decisions visible. Its useful present output is **experimental ranking**.
 
-- a continuous response prediction;
-- a calibrated sensitivity probability;
-- an uncertainty interval;
-- agreement between regression and classification heads;
-- an out-of-distribution warning;
-- input-coverage checks;
-- SHAP features that pushed the prediction in either direction.
+For each supported drug, the tool returns a continuous response prediction, a calibrated probability for the response extremes, an uncertainty interval, SHAP explanations and input-support warnings. A separate policy returns **sensitive, resistant or abstain**, with reasons. The five review bundles remain `unreviewed` and therefore abstain from categorical screening decisions.
 
-## Data and modelling
+## A comparison that can detect failure
 
-```{mermaid}
-flowchart LR
-    A[DepMap expression, mutation, copy number] --> C[Stable ModelID join]
-    B[PRISM drug-response AUC] --> C
-    C --> D[Grouped split + training-only selection]
-    D --> E[Baselines + Elastic Net + XGBoost]
-    E --> F[Calibration, conformal interval, OOD, SHAP]
-    F --> G[Locked GDSC2 validation]
-```
+XGBoost, ElasticNet and lineage-only baselines see the same five evaluation folds. Each held-out cell line is predicted without using its response to fit the model. Feature selection, response cutoffs and calibration remain local to the appropriate training subsets.
 
-The safeguards are central to the project:
+The outer and inner split allocation uses full-cohort outcome-rank quartiles for stratification. This is retrospective outcome-stratified evaluation, not an outcome-blind prospective experiment.
 
-1. The same cell line cannot appear in both training and test data.
-2. Test data never select genes.
-3. GDSC2 is locked and cannot tune the model.
-4. XGBoost is compared against lineage-only and Elastic Net baselines.
-5. Weak results remain visible instead of being reframed as successes.
+| Drug | XGBoost AUROC | ElasticNet AUROC | Lineage AUROC |
+|---|---:|---:|---:|
+| Trametinib | 0.848 | 0.863 | 0.755 |
+| Afatinib | 0.905 | 0.916 | 0.774 |
+| Palbociclib | 0.722 | 0.726 | 0.561 |
+| Olaparib | 0.606 | 0.575 | 0.493 |
+| Gemcitabine | 0.506 | 0.609 | 0.592 |
 
-## What is validated
+AUROC measures how well the model ranks sensitive versus resistant response extremes: 0.5 is chance-level ranking. It is different from drug-response AUC, where a lower value indicates greater sensitivity.
 
-Five real model bundles are included, but they do not receive the same release label.
+![Matched five-fold AUROC for five drugs and three model families.](https://raw.githubusercontent.com/rsolerortuno/DrugMatch-Confidence/73db0eea2d464b78c1b4b048c094a7760188381e/reports/figures/review_matched_auroc.png)
 
-| Drug | Status | OOF AUROC | OOF balanced accuracy | Strict GDSC2 AUROC | External n |
-|---|---|---:|---:|---:|---:|
-| Trametinib | Validated demo | 0.86 | 0.78 | 0.84 | 20 |
-| Afatinib | Validated demo | 0.92 | 0.85 | 0.83 | 22 |
-| Palbociclib | Exploratory | 0.75 | 0.64 | 0.51 | 22 |
-| Olaparib | Insufficient evidence | 0.54 | 0.52 | 0.68 | 24 |
-| Gemcitabine | Insufficient evidence | 0.48 | 0.49 | 0.70 | 18 |
+**There is no demonstrated XGBoost advantage over ElasticNet.** For gemcitabine, complexity measurably hurts in this evaluation: the paired AUROC difference is −0.103, with an unadjusted 95% interval of −0.178 to −0.022. This interval is conditional on the saved predictions; it does not include uncertainty from retraining or correct for multiple comparisons.
 
-Trametinib and afatinib are the portfolio demonstrations. Palbociclib is exploratory. Olaparib and gemcitabine are retained as transparent negative or weak results.
+## MAPK: turning a ranking into an experiment
 
-## What makes the output useful
+Among 375 held-out trametinib candidates, the ten highest-ranked models contain:
 
-The model explanations recover biologically plausible associations:
+| Ranking | Sensitive models in the top ten |
+|---|---:|
+| XGBoost | 7 |
+| ElasticNet | 7 |
+| Lineage only | 5–6, depending on ties; 5.2 expected |
+| Random selection | 2.53 expected |
 
-- **Trametinib:** MAPK feedback and mesenchymal-state features;
-- **Afatinib:** epithelial and ERBB-associated features;
-- **Palbociclib:** RB1 and cell-cycle signals, but weak external transfer;
-- **Olaparib and gemcitabine:** plausible features without sufficient predictive stability.
+![Sensitive models recovered as the experimental budget increases; the shaded lineage range reflects tied predictions.](https://raw.githubusercontent.com/rsolerortuno/DrugMatch-Confidence/73db0eea2d464b78c1b4b048c094a7760188381e/reports/figures/review_screening_budget.png)
 
-These SHAP signals describe associations learned from cell lines. They are not causal biomarkers.
+This is retrospective evidence, not an experiment already completed. The [proposed MAPK pilot](https://github.com/rsolerortuno/DrugMatch-Confidence/blob/main/docs/MAPK_EXPERIMENT_PLAN.md) tests six prioritised models, two predicted-resistant controls and two uncertain or discordant cases. Viability, pathway readouts and biological replicates would test whether the ranking is useful in a new experiment.
 
-## How it is delivered
+## What uncertainty revealed
 
-DrugMatch-Confidence is a tested Python package with:
+The saved trametinib and afatinib predictions provide no categorical support under the strict 90% interval rule. Zero accepted decisions does not establish a useful decision policy.
 
-- a command-line interface for prediction and training;
-- five compact real-model bundles;
-- a Streamlit interface;
-- versioned metrics, figures and provenance manifests;
-- technical and non-technical documentation;
-- offline unit and integration tests.
+A feasibility audit instead measures how much the saved interval radius would need to shrink before technical support appears. It is a diagnostic of these predictions, not an estimate of nominal coverage or an isolated measurement of assay noise. The policy was not relaxed after inspecting the results.
+
+Historical v1.0 bundles and GDSC2 results remain in the repository for provenance. They are not validation of the revised matched protocol. SHAP explanations are associations, not causal biomarkers.
+
+## Software and evidence
+
+- Python 3.12+, command-line prediction and a Streamlit interface.
+- Five review bundles alongside five historical bundles.
+- Saved out-of-fold predictions, five reproducible figures and checksum manifests.
+- 41 passing tests, lint and type checks, and smoke checks for all ten models.
+- Passing [GitHub CI, package and Docker checks](https://github.com/rsolerortuno/DrugMatch-Confidence/actions/runs/34611440834) for the merged review.
+
+The source, results and limitations are documented in the [evidence review](https://github.com/rsolerortuno/DrugMatch-Confidence/blob/main/docs/PIERRE_FABRE_REVIEW.md).
 
 ## Scientific boundary
 
-This is preclinical research software. Cell lines do not reproduce the full tumour microenvironment, pharmacokinetics or patient heterogeneity, and the strict external subsets are small. The model cannot predict an unseen compound and must never be used to choose treatment for a person.
+This work establishes an evaluation that can reject unnecessary model complexity and identify where categorical decisions lack support. It supports planning the next experiment; it does not establish prospective utility or patient-response prediction. Cell lines do not reproduce the full tumour microenvironment, pharmacokinetics or patient heterogeneity, and the tool cannot predict an unseen compound.
 
 <div class="article-cta">
-  <p><strong>Inspect the models, external validation, example predictions and complete model card.</strong></p>
+  <p><strong>Inspect the matched predictions, uncertainty audit and proposed MAPK experiment.</strong></p>
   <a class="button button-primary" href="https://github.com/rsolerortuno/DrugMatch-Confidence">Open DrugMatch-Confidence on GitHub <span aria-hidden="true">↗</span></a>
 </div>

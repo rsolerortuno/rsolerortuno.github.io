@@ -132,8 +132,8 @@ Based in Lund, Sweden · Open to opportunities from September 2026
 <th scope="row" class="field-cell">Drug response prediction</th>
 <td data-label="Tool"><span class="tool-name">DrugMatch-Confidence</span></td>
 <td data-label="The problem">Cancer models respond very differently to the same drug, and predictions rarely say how much to trust them.</td>
-<td data-label="What it is for">Predicting how a preclinical cancer model will respond to a given drug.</td>
-<td data-label="What it adds">Every prediction carries a calibrated probability, an uncertainty interval and a warning when the input is unfamiliar.</td>
+<td data-label="What it is for">Prioritising preclinical cancer models for drug-response experiments.</td>
+<td data-label="What it adds">Matched baseline comparisons show when complexity helps; uncertainty checks expose when categorical decisions lack support.</td>
 <td data-label="Key skills applied"><ul class="skill-tags"><li>XGBoost</li><li>SHAP</li><li>Conformal prediction</li><li>Probability calibration</li><li>Grouped cross-validation</li><li>DepMap / PRISM / GDSC2</li></ul></td>
 </tr>
 <tr class="overview-row" style="--row-index: 6" data-field="Protein deep learning">
@@ -149,7 +149,7 @@ Based in Lund, Sweden · Open to opportunities from September 2026
 <td data-label="Tool"><span class="tool-name">Dev Autopilot</span></td>
 <td data-label="The problem">AI coding agents can move fast through a repository and leave no reliable trail of what changed or why.</td>
 <td data-label="What it is for">Running AI agents on real code with hard limits on what they may touch.</td>
-<td data-label="What it adds">Separate agents implement, audit and review; deterministic gates decide whether work advances, state survives restarts, and a person keeps merge authority.</td>
+<td data-label="What it adds">Separate implementation and review roles, evidence tied to the exact code changes, restart recovery and human release authority.</td>
 <td data-label="Key skills applied"><ul class="skill-tags"><li>Agentic AI orchestration</li><li>Pydantic</li><li>SQLite</li><li>Strict typing (mypy)</li><li>State machines</li><li>CI/CD</li></ul></td>
 </tr>
 </tbody>
@@ -257,15 +257,15 @@ Based in Lund, Sweden · Open to opportunities from September 2026
 <article class="project-card">
 <div class="card-topline">
 <span class="project-number">06</span>
-<span class="status-pill status-released">v1.0.1 · Released</span>
+<span class="status-pill status-preview">v1.1.0.dev0 · Evidence review</span>
 </div>
 <h3>DrugMatch-Confidence</h3>
-<p class="project-kicker">Interpretable cancer drug-response prediction</p>
-<p>Predicts sensitivity in preclinical cancer cell lines from DepMap multi-omics and PRISM response data, with SHAP drivers, calibrated uncertainty, prediction intervals and out-of-distribution warnings.</p>
+<p class="project-kicker">Evidence-led prioritisation of drug-response experiments</p>
+<p>Compares XGBoost with linear and lineage baselines on the same held-out cell lines. In a retrospective trametinib ranking, the top ten contain seven sensitive models, versus 2.53 expected at random.</p>
 <div class="metric-row" aria-label="DrugMatch validation highlights">
-<span><strong>5</strong> real drug models</span>
-<span><strong>2</strong> validated demos</span>
-<span><strong>GDSC2</strong> external test</span>
+<span><strong>5</strong> drugs compared</span>
+<span><strong>3</strong> matched model families</span>
+<span><strong>41</strong> passing tests</span>
 </div>
 <div class="tag-list"><span>XGBoost</span><span>SHAP</span><span>DepMap</span><span>PRISM</span></div>
 <div class="card-links">
@@ -296,14 +296,14 @@ Based in Lund, Sweden · Open to opportunities from September 2026
 <article class="project-card">
 <div class="card-topline">
 <span class="project-number">08</span>
-<span class="status-pill status-preview">v0.6.0 · Research preview</span>
+<span class="status-pill status-preview">v0.9.1 · CLI preview</span>
 </div>
 <h3>Dev Autopilot</h3>
 <p class="project-kicker">Auditable AI-agent workflow for scientific software</p>
-<p>A Python and SQLite orchestrator that keeps implementation, audit and review in separate hands. Deterministic gates decide whether work moves on, milestones survive a restart, and a person still signs off at the end.</p>
+<p>A Python and SQLite orchestrator that ties review evidence to the exact code changes. Changed code invalidates earlier reviews; durable state supports restart recovery, and a person retains release authority.</p>
 <div class="metric-row" aria-label="Dev Autopilot release highlights">
-<span><strong>M00–M05</strong> audited scope</span>
-<span><strong>1</strong> real-project validation run</span>
+<span><strong>418</strong> Linux tests passed</span>
+<span><strong>3.11–3.13</strong> Python CI</span>
 </div>
 <div class="tag-list"><span>Agentic AI</span><span>SQLite</span><span>Safety gates</span></div>
 <div class="card-links">
