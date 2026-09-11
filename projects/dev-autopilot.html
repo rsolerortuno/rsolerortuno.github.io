@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="description" content="A fail-closed Python and SQLite workflow coordinating implementation, adversarial audit, independent review, and final human approval.">
+<meta name="description" content="A persistent Python and SQLite orchestrator with reviews tied to exact code changes, bounded correction and human release authority.">
 
 <title>Dev Autopilot – Rafael Soler Ortuño</title>
 <style>
@@ -42,7 +42,7 @@ ul.task-list li input[type="checkbox"] {
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-3a8c703fb520cc07f7eefc65bb59a90d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-be9ea2f46684da68f705b6d67b70e0b7.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "language": {
     "search-no-results-text": "No results",
@@ -69,11 +69,11 @@ ul.task-list li input[type="checkbox"] {
 <link rel="stylesheet" href="../role-fix.css">
 <link rel="stylesheet" href="../refine.css">
 <meta property="og:title" content="Dev Autopilot – Rafael Soler Ortuño">
-<meta property="og:description" content="A fail-closed Python and SQLite workflow coordinating implementation, adversarial audit, independent review, and final human approval.">
+<meta property="og:description" content="A persistent Python and SQLite orchestrator with reviews tied to exact code changes, bounded correction and human release authority.">
 <meta property="og:site_name" content="Rafael Soler Ortuño">
 <meta property="og:locale" content="en_GB">
 <meta name="twitter:title" content="Dev Autopilot – Rafael Soler Ortuño">
-<meta name="twitter:description" content="A fail-closed Python and SQLite workflow coordinating implementation, adversarial audit, independent review, and final human approval.">
+<meta name="twitter:description" content="A persistent Python and SQLite orchestrator with reviews tied to exact code changes, bounded correction and human release authority.">
 <meta name="twitter:card" content="summary">
 </head>
 
@@ -129,14 +129,12 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#the-problem" id="toc-the-problem" class="nav-link active" data-scroll-target="#the-problem">The problem</a></li>
-  <li><a href="#authority-is-separated" id="toc-authority-is-separated" class="nav-link" data-scroll-target="#authority-is-separated">Authority is separated</a></li>
-  <li><a href="#continuous-project-execution" id="toc-continuous-project-execution" class="nav-link" data-scroll-target="#continuous-project-execution">Continuous project execution</a></li>
-  <li><a href="#what-persists" id="toc-what-persists" class="nav-link" data-scroll-target="#what-persists">What persists</a></li>
-  <li><a href="#safety-design" id="toc-safety-design" class="nav-link" data-scroll-target="#safety-design">Safety design</a></li>
-  <li><a href="#what-v0.6.0-changed" id="toc-what-v0.6.0-changed" class="nav-link" data-scroll-target="#what-v0.6.0-changed">What v0.6.0 changed</a></li>
-  <li><a href="#why-it-belongs-in-a-scientific-portfolio" id="toc-why-it-belongs-in-a-scientific-portfolio" class="nav-link" data-scroll-target="#why-it-belongs-in-a-scientific-portfolio">Why it belongs in a scientific portfolio</a></li>
-  <li><a href="#current-boundary" id="toc-current-boundary" class="nav-link" data-scroll-target="#current-boundary">Current boundary</a></li>
+  <li><a href="#the-engineering-problem" id="toc-the-engineering-problem" class="nav-link active" data-scroll-target="#the-engineering-problem">The engineering problem</a></li>
+  <li><a href="#reviews-follow-the-exact-code-changes" id="toc-reviews-follow-the-exact-code-changes" class="nav-link" data-scroll-target="#reviews-follow-the-exact-code-changes">Reviews follow the exact code changes</a></li>
+  <li><a href="#what-the-0.9.1-preview-adds" id="toc-what-the-0.9.1-preview-adds" class="nav-link" data-scroll-target="#what-the-0.9.1-preview-adds">What the 0.9.1 preview adds</a></li>
+  <li><a href="#what-has-been-demonstrated" id="toc-what-has-been-demonstrated" class="nav-link" data-scroll-target="#what-has-been-demonstrated">What has been demonstrated</a></li>
+  <li><a href="#a-practical-demonstration" id="toc-a-practical-demonstration" class="nav-link" data-scroll-target="#a-practical-demonstration">A practical demonstration</a></li>
+  <li><a href="#human-authority-and-current-limits" id="toc-human-authority-and-current-limits" class="nav-link" data-scroll-target="#human-authority-and-current-limits">Human authority and current limits</a></li>
   </ul>
 </nav>
     </div>
@@ -146,12 +144,12 @@ ul.task-list li input[type="checkbox"] {
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
 <h1 class="title">Dev Autopilot</h1>
-<p class="subtitle lead">Persistent, auditable orchestration for scientific software development</p>
+<p class="subtitle lead">AI development work accepted against explicit review evidence</p>
 </div>
 
 <div>
   <div class="description">
-    A fail-closed Python and SQLite workflow coordinating implementation, adversarial audit, independent review, and final human approval.
+    A persistent Python and SQLite orchestrator with reviews tied to exact code changes, bounded correction and human release authority.
   </div>
 </div>
 
@@ -169,98 +167,106 @@ ul.task-list li input[type="checkbox"] {
 
 
 <div class="article-status">
-<p><span class="status-pill status-preview">v0.6.0 · Research preview</span> <a href="https://github.com/rsolerortuno/dev-autopilot">View repository <span aria-hidden="true">↗</span></a></p>
+<p><span class="status-pill status-preview">v0.9.1 · CLI preview</span> <a href="https://github.com/rsolerortuno/dev-autopilot">View repository <span aria-hidden="true">↗</span></a></p>
 </div>
-<section id="the-problem" class="level2">
-<h2 class="anchored" data-anchor-id="the-problem">The problem</h2>
-<p>AI coding agents can produce useful work, but a scientific software project also needs durable state, explicit permissions, reproducible tests, independent review and a clear boundary around human authority.</p>
-<p>Dev Autopilot turns those requirements into a workflow instead of relying on one long prompt or one agent grading its own work.</p>
+<section id="the-engineering-problem" class="level2">
+<h2 class="anchored" data-anchor-id="the-engineering-problem">The engineering problem</h2>
+<p>An AI agent completing a task is not enough evidence that the code is ready. A scientific software workflow needs a record of what changed, which checks passed, which findings remain unresolved and who can approve the result.</p>
+<p>Dev Autopilot coordinates bounded implementation, deterministic checks, adversarial audit, independent review and correction. SQLite preserves progress across restarts. A verified review bundle brings the code changes and their evidence together for human approval.</p>
 </section>
-<section id="authority-is-separated" class="level2">
-<h2 class="anchored" data-anchor-id="authority-is-separated">Authority is separated</h2>
+<section id="reviews-follow-the-exact-code-changes" class="level2">
+<h2 class="anchored" data-anchor-id="reviews-follow-the-exact-code-changes">Reviews follow the exact code changes</h2>
+<p>Each finding records an identifier, severity, evidence and a hash of the code diff. Changing the diff invalidates earlier conclusions. Open critical or high-severity findings, and stale findings, block acceptance until the required review is completed.</p>
 <div class="cell" data-layout-align="default">
 <div class="cell-output-display">
 <div>
 <p></p><figure class="figure"><p></p>
 <div>
-<pre class="mermaid mermaid-js">flowchart LR
-    A[Project charter] --&gt; B[Milestone]
-    B --&gt; C[Implementation]
-    C --&gt; D[Deterministic gates]
-    D --&gt; E[Adversarial audit]
-    E --&gt; F[Independent review]
-    F --&gt; G[Bounded correction]
-    G --&gt; D
-    F --&gt; H[Milestone acceptance]
-    H --&gt; B
-    H --&gt; I[Ready for human release]
+<pre class="mermaid mermaid-js">flowchart TD
+    A[Bounded implementation] --&gt; B[Scope and test checks]
+    B --&gt; C[Audit and independent review]
+    C --&gt; D{Acceptance criteria met?}
+    D --&gt;|No| A
+    D --&gt;|Yes| E[Verified bundle for human approval]
 </pre>
 </div>
 <p></p></figure><p></p>
 </div>
 </div>
 </div>
-<p>Planning advice is not approval. The implementation agent cannot approve its own diff. Review agents cannot override mechanical gates. The system stops at <code>READY_FOR_HUMAN_RELEASE</code>, leaving commit, pull-request, tag and merge decisions to a person.</p>
-<p>Review conclusions are bound to the exact repository diff they were written against. Any later change invalidates them, and unresolved or invalidated P0/P1 findings block milestone acceptance.</p>
+<p>Implementation and review are separate workflow roles. Local actor labels do not authenticate separate people or prove that reviewers are statistically independent. Deterministic checks cannot be overridden by a favourable agent response.</p>
 </section>
-<section id="continuous-project-execution" class="level2">
-<h2 class="anchored" data-anchor-id="continuous-project-execution">Continuous project execution</h2>
-<p>A project starts from an immutable charter: mission, definition of done, non-goals, autonomy policy and a dependency-checked milestone DAG. <code>ask_questions: false</code> is enforced by the schema, so the workflow runs to completion on safe, reversible defaults rather than stopping to ask.</p>
-<p>When it genuinely cannot proceed, it writes a machine-readable blocker with one required action and an explicit resume condition, instead of a conversational question nobody is there to answer.</p>
-</section>
-<section id="what-persists" class="level2">
-<h2 class="anchored" data-anchor-id="what-persists">What persists</h2>
-<p>SQLite records:</p>
+<section id="what-the-0.9.1-preview-adds" class="level2">
+<h2 class="anchored" data-anchor-id="what-the-0.9.1-preview-adds">What the 0.9.1 preview adds</h2>
 <ul>
-<li>every legal state transition;</li>
-<li>append-only events and stop reasons;</li>
-<li>retry counts for each agent role;</li>
-<li>findings, reviews, assumptions and evidence;</li>
-<li>quota pauses and exact resume states;</li>
-<li>idempotency hashes and diff-keyed review caches;</li>
-<li>expiring exclusive run locks, leases, heartbeats and fencing tokens.</li>
+<li><strong>Durable execution:</strong> state transitions, retries, leases and quota pauses survive a process restart.</li>
+<li><strong>Reviewable evidence:</strong> findings and review conclusions are attached to the exact diff; verified bundles include a human-readable report.</li>
+<li><strong>Bounded code retrieval:</strong> searches over clean Git snapshots with context limits and source provenance.</li>
+<li><strong>Budget controls:</strong> durable reservations and shared project caps prevent the same reservation from being executed twice.</li>
+<li><strong>Execution boundaries:</strong> explicit permissions, minimal subprocess environments and an optional Docker adapter using a digest-pinned image.</li>
+<li><strong>Operational inspection:</strong> health commands, progress reporting and a deterministic offline demonstration.</li>
 </ul>
-<p>This allows a workflow to recover after process restarts without guessing where it left off.</p>
+<p>The original charter, milestone and correction workflow remains. A blocked run records the required action and resume condition instead of silently proceeding.</p>
 </section>
-<section id="safety-design" class="level2">
-<h2 class="anchored" data-anchor-id="safety-design">Safety design</h2>
-<p>Version 0.6.0 includes:</p>
-<ul>
-<li>validated YAML/JSON contracts with unknown fields rejected;</li>
-<li>scope, test, context-size and Git-metadata gates;</li>
-<li>bounded gate autocorrection instead of a terminal failure when an implementation can be repaired;</li>
-<li>fail-closed transitions and a fail-closed milestone acceptance decision;</li>
-<li>repository-bounded, read-only audit instructions with schema-constrained report output;</li>
-<li>deterministic jitter, short linear retry backoff and quota-reset support;</li>
-<li>bounded review and correction rounds;</li>
-<li>verified review bundles: JSON payloads, a human-readable HTML report and a folded digest;</li>
-<li>fake adapters for complete offline integration tests, including a simulated Drive API.</li>
-</ul>
-<p>Real execution requires an explicit network opt-in. Shell syntax inside test commands also requires an explicit opt-in because it expands the trust boundary.</p>
+<section id="what-has-been-demonstrated" class="level2">
+<h2 class="anchored" data-anchor-id="what-has-been-demonstrated">What has been demonstrated</h2>
+<p>The current repository records the following evidence. Software tests and synthetic demonstrations do not substitute for measured live-agent performance.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Area</th>
+<th>Evidence</th>
+<th>Scope or remaining work</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Linux compatibility</td>
+<td>418 tests passed; Python 3.11–3.13 CI</td>
+<td>One opt-in Docker test skipped in the suite</td>
+</tr>
+<tr class="even">
+<td>Docker runtime</td>
+<td>Separate live isolation and timeout-cleanup smoke passed</td>
+<td>Requires a configured Linux host and pinned image</td>
+</tr>
+<tr class="odd">
+<td>Restart durability</td>
+<td>SQLite recovery tests and about two observed hours of soak testing</td>
+<td>A full eight-hour run is not yet demonstrated</td>
+</tr>
+<tr class="even">
+<td>Colab</td>
+<td>Drive mount, installation and queue startup verified</td>
+<td>No completed job or interruption/recovery demonstration</td>
+</tr>
+<tr class="odd">
+<td>Provider quality and cost</td>
+<td>Evaluation harness and reporting implemented</td>
+<td>Matched live-provider comparisons and measured billing pending</td>
+</tr>
+</tbody>
+</table>
+<p>See the <a href="https://github.com/rsolerortuno/dev-autopilot/blob/main/VALIDATION.md">repository validation record</a> and <a href="https://github.com/rsolerortuno/dev-autopilot/blob/main/docs/PORTFOLIO-EVIDENCE.md">capability/evidence matrix</a>.</p>
 </section>
-<section id="what-v0.6.0-changed" class="level2">
-<h2 class="anchored" data-anchor-id="what-v0.6.0-changed">What v0.6.0 changed</h2>
-<p>The M00–M05 architecture is unchanged. This release folds in the fixes that only surfaced once the orchestrator was pointed at a real repository:</p>
-<ul>
-<li>built-in default commands for the Codex, AGY and Claude bridges, so a normal run no longer depends on environment variables;</li>
-<li>structured AGY auditing that starts in an isolated project, removing manual per-repository read permissions;</li>
-<li>continuous retry and resume behaviour for transient agent failures;</li>
-<li>stricter classification of provider quota exhaustion versus malformed bridge output;</li>
-<li>live verbose progress reporting and stricter changed-file validation;</li>
-<li>deterministic SHA-256 identifiers for long Google Drive <code>appProperties</code> keys.</li>
-</ul>
-<p>It was validated end to end against a real TargetIntel-IO milestone, covering implementation correction, deterministic gates, adversarial audit, independent review, evidence packaging and the final <code>READY_FOR_HUMAN_RELEASE</code> state.</p>
+<section id="a-practical-demonstration" class="level2">
+<h2 class="anchored" data-anchor-id="a-practical-demonstration">A practical demonstration</h2>
+<p>The packaged offline demo shows deterministic agents, explicit checks, saved state and a verifiable HTML/JSON review bundle. It makes recovery and acceptance rules inspectable without requiring paid model calls. It is a demonstration of workflow behaviour, not a benchmark of model quality.</p>
+<p>The <a href="https://github.com/rsolerortuno/dev-autopilot#installation">0.9.1 preview and installation instructions</a> support CLI use on Linux or WSL2. There is no graphical interface. Published downloads include checksums; those detect corruption and tampering but do not authenticate an unsigned bundle’s origin.</p>
 </section>
-<section id="why-it-belongs-in-a-scientific-portfolio" class="level2">
-<h2 class="anchored" data-anchor-id="why-it-belongs-in-a-scientific-portfolio">Why it belongs in a scientific portfolio</h2>
-<p>The project is not a claim that automation removes scientific judgment. It demonstrates the opposite: agentic workflows become more useful when scientific scope, mechanical correctness, adversarial review and human authority are represented as different responsibilities.</p>
-</section>
-<section id="current-boundary" class="level2">
-<h2 class="anchored" data-anchor-id="current-boundary">Current boundary</h2>
-<p>Dev Autopilot is research-preview software. It coordinates and audits work, but never stages, commits, pushes, tags or merges product code. A human must inspect the final diff and evidence.</p>
+<section id="human-authority-and-current-limits" class="level2">
+<h2 class="anchored" data-anchor-id="human-authority-and-current-limits">Human authority and current limits</h2>
+<p>The orchestrator’s authority ends before commit, push, pull request, tag, release publication or merge. A human reviews the final diff and evidence before approving publication.</p>
+<p>The local subprocess runtime is not a complete operating-system sandbox. Docker enforcement requires the optional adapter and live configuration. Colab still requires user authentication, and recovery of an arbitrary scientific program requires that program to save usable checkpoints.</p>
+<p>Version 0.9.1 is a development preview, not a completed 1.0.0 release. The <a href="https://github.com/rsolerortuno/dev-autopilot/blob/main/docs/PLAN-1.0.0.md">1.0.0 plan</a> retains the live evaluation, recovery and final acceptance requirements.</p>
 <div class="article-cta">
 <p>
-<strong>Review the state machine, charter schema, review-bundle format and the real-project execution evidence.</strong>
+<strong>Inspect the workflow, verified demo and evidence still needed for 1.0.0.</strong>
 </p>
 <p><a class="button button-primary" href="https://github.com/rsolerortuno/dev-autopilot">Open Dev Autopilot on GitHub <span aria-hidden="true">↗</span></a></p>
 </div>

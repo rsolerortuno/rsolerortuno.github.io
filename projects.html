@@ -42,7 +42,7 @@ ul.task-list li input[type="checkbox"] {
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-3a8c703fb520cc07f7eefc65bb59a90d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-be9ea2f46684da68f705b6d67b70e0b7.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "language": {
     "search-no-results-text": "No results",
@@ -357,10 +357,10 @@ Drug response prediction
 Cancer models respond very differently to the same drug, and predictions rarely say how much to trust them.
 </td>
 <td data-label="What it is for">
-Predicting how a preclinical cancer model will respond to a given drug.
+Prioritising preclinical cancer models for drug-response experiments.
 </td>
 <td data-label="What it adds">
-Every prediction carries a calibrated probability, an uncertainty interval and a warning when the input is unfamiliar.
+Matched baseline comparisons show when complexity helps; uncertainty checks expose when categorical decisions lack support.
 </td>
 <td data-label="Key skills applied">
 <ul class="skill-tags">
@@ -432,7 +432,7 @@ AI coding agents can move fast through a repository and leave no reliable trail 
 Running AI agents on real code with hard limits on what they may touch.
 </td>
 <td data-label="What it adds">
-Separate agents implement, audit and review; deterministic gates decide whether work advances, state survives restarts, and a person keeps merge authority.
+Separate implementation and review roles, evidence tied to the exact code changes, restart recovery and human release authority.
 </td>
 <td data-label="Key skills applied">
 <ul class="skill-tags">
@@ -690,26 +690,26 @@ The contextual-embedding protocol is preregistered but not yet executed. This re
 <section class="project-showcase project-showcase-alt page-columns page-full" aria-labelledby="drugmatch-title">
 <div class="showcase-copy">
 <div class="card-topline">
-<p><span class="project-number">06</span> <span class="status-pill status-released">v1.0.1 · Released</span></p>
+<p><span class="project-number">06</span> <span class="status-pill status-preview">v1.1.0.dev0 · Evidence review</span></p>
 </div>
 <h2 id="drugmatch-title" class="anchored">
 DrugMatch-Confidence
 </h2>
 <p class="project-kicker">
-Interpretable preclinical cancer drug-response prediction
+Matched evaluation for preclinical drug-response ranking
 </p>
 <p>
-Five real DepMap/PRISM XGBoost bundles produce continuous response, sensitive/resistant classification, calibrated probabilities, conformal intervals, out-of-distribution warnings and SHAP explanations.
+Five drugs evaluated with XGBoost, ElasticNet and lineage-only baselines on identical held-out cell lines. The review adds independent calibration, explicit abstention and an experimental-budget analysis.
 </p>
 <ul class="check-list">
 <li>
-Training-only feature selection and cell-line-grouped splits
+Fold-local feature selection and response cutoffs; separate calibration data
 </li>
 <li>
-Five-fold out-of-fold evaluation with locked GDSC2 validation
+Matched five-fold evaluation shows no demonstrated XGBoost advantage over ElasticNet
 </li>
 <li>
-Honest release labels: validated, exploratory or insufficient evidence
+Five review figures, interval-feasibility audit and a proposed MAPK experiment
 </li>
 </ul>
 <div class="button-row">
@@ -718,16 +718,16 @@ Honest release labels: validated, exploratory or insufficient evidence
 </div>
 <aside class="showcase-proof" aria-label="DrugMatch release evidence">
 <p class="proof-label">
-Release evidence
+Retrospective MAPK ranking
 </p>
 <div class="proof-stat">
-<strong>0.84</strong><span>Trametinib strict GDSC2 AUROC · n=20</span>
+<strong>7 / 10</strong><span>Sensitive trametinib models · XGBoost and ElasticNet</span>
 </div>
 <div class="proof-stat">
-<strong>0.83</strong><span>Afatinib strict GDSC2 AUROC · n=22</span>
+<strong>2.53 / 10</strong><span>Expected at random among 375 candidates</span>
 </div>
 <p class="proof-note">
-Preclinical research only. These are small external subsets and not patient-response models.
+Lineage recovers 5–6 depending on ties (5.2 expected). Review bundles remain unreviewed; this is not prospective validation.
 </p>
 </aside>
 </section>
@@ -778,7 +778,7 @@ Candidate-generating predictions only; experimental validation is required.
 <section class="project-showcase project-showcase-alt page-columns page-full" aria-labelledby="autopilot-title">
 <div class="showcase-copy">
 <div class="card-topline">
-<p><span class="project-number">08</span> <span class="status-pill status-preview">v0.6.0 · Research preview</span></p>
+<p><span class="project-number">08</span> <span class="status-pill status-preview">v0.9.1 · CLI preview</span></p>
 </div>
 <h2 id="autopilot-title" class="anchored">
 Dev Autopilot
@@ -787,7 +787,7 @@ Dev Autopilot
 Persistent, auditable development orchestration
 </p>
 <p>
-Coordinates implementation, adversarial audit and independent review while SQLite records state transitions, retries, findings and decisions across restarts. Version 0.6.0 hardens that loop against a real autonomous milestone rather than a synthetic one.
+Coordinates implementation, adversarial audit and independent review while SQLite preserves progress across restarts. The 0.9.1 CLI preview adds bounded code retrieval, durable budget controls and an optional Docker execution adapter.
 </p>
 <ul class="check-list">
 <li>
@@ -800,7 +800,7 @@ Mechanical scope, test, context and Git-metadata gates, with bounded autocorrect
 Review conclusions bound to an exact diff; any later change invalidates them
 </li>
 <li>
-Stops at <code>READY_FOR_HUMAN_RELEASE</code>; it never commits, pushes, tags or merges product code
+Produces a verified review bundle for human approval before commit, push or release
 </li>
 </ul>
 <div class="button-row">
@@ -815,7 +815,7 @@ Design principle
 Agents advise, implement and review. Deterministic gates decide whether work can advance. A person retains scientific and merge authority.
 </blockquote>
 <p class="proof-note">
-v0.6.0 was validated end to end on a real TargetIntel-IO milestone: implementation, deterministic gates, adversarial audit, independent review, evidence packaging and <code>READY_FOR_HUMAN_RELEASE</code>.
+418 Linux tests passed, with one opt-in Docker test skipped; a separate live Docker isolation and timeout-cleanup check passed. Live provider quality/cost comparisons and completed Colab job recovery remain pending.
 </p>
 </aside>
 </section>

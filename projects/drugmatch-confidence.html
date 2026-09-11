@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="description" content="An XGBoost tool trained on DepMap and PRISM that explains predictions, quantifies uncertainty, and exposes weak models.">
+<meta name="description" content="Matched evaluation of XGBoost and simple baselines, independent calibration, and a retrospective MAPK screening analysis.">
 
 <title>DrugMatch-Confidence – Rafael Soler Ortuño</title>
 <style>
@@ -42,7 +42,7 @@ ul.task-list li input[type="checkbox"] {
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-3a8c703fb520cc07f7eefc65bb59a90d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-be9ea2f46684da68f705b6d67b70e0b7.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "language": {
     "search-no-results-text": "No results",
@@ -59,9 +59,6 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 <style>html{ scroll-behavior: smooth; }</style>
-<script src="../site_libs/quarto-diagram/mermaid.min.js"></script>
-<script src="../site_libs/quarto-diagram/mermaid-init.js"></script>
-<link href="../site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
 
 
 <link rel="stylesheet" href="../styles.css">
@@ -69,11 +66,11 @@ ul.task-list li input[type="checkbox"] {
 <link rel="stylesheet" href="../role-fix.css">
 <link rel="stylesheet" href="../refine.css">
 <meta property="og:title" content="DrugMatch-Confidence – Rafael Soler Ortuño">
-<meta property="og:description" content="An XGBoost tool trained on DepMap and PRISM that explains predictions, quantifies uncertainty, and exposes weak models.">
+<meta property="og:description" content="Matched evaluation of XGBoost and simple baselines, independent calibration, and a retrospective MAPK screening analysis.">
 <meta property="og:site_name" content="Rafael Soler Ortuño">
 <meta property="og:locale" content="en_GB">
 <meta name="twitter:title" content="DrugMatch-Confidence – Rafael Soler Ortuño">
-<meta name="twitter:description" content="An XGBoost tool trained on DepMap and PRISM that explains predictions, quantifies uncertainty, and exposes weak models.">
+<meta name="twitter:description" content="Matched evaluation of XGBoost and simple baselines, independent calibration, and a retrospective MAPK screening analysis.">
 <meta name="twitter:card" content="summary">
 </head>
 
@@ -129,11 +126,11 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#the-question" id="toc-the-question" class="nav-link active" data-scroll-target="#the-question">The question</a></li>
-  <li><a href="#data-and-modelling" id="toc-data-and-modelling" class="nav-link" data-scroll-target="#data-and-modelling">Data and modelling</a></li>
-  <li><a href="#what-is-validated" id="toc-what-is-validated" class="nav-link" data-scroll-target="#what-is-validated">What is validated</a></li>
-  <li><a href="#what-makes-the-output-useful" id="toc-what-makes-the-output-useful" class="nav-link" data-scroll-target="#what-makes-the-output-useful">What makes the output useful</a></li>
-  <li><a href="#how-it-is-delivered" id="toc-how-it-is-delivered" class="nav-link" data-scroll-target="#how-it-is-delivered">How it is delivered</a></li>
+  <li><a href="#the-decision" id="toc-the-decision" class="nav-link active" data-scroll-target="#the-decision">The decision</a></li>
+  <li><a href="#a-comparison-that-can-detect-failure" id="toc-a-comparison-that-can-detect-failure" class="nav-link" data-scroll-target="#a-comparison-that-can-detect-failure">A comparison that can detect failure</a></li>
+  <li><a href="#mapk-turning-a-ranking-into-an-experiment" id="toc-mapk-turning-a-ranking-into-an-experiment" class="nav-link" data-scroll-target="#mapk-turning-a-ranking-into-an-experiment">MAPK: turning a ranking into an experiment</a></li>
+  <li><a href="#what-uncertainty-revealed" id="toc-what-uncertainty-revealed" class="nav-link" data-scroll-target="#what-uncertainty-revealed">What uncertainty revealed</a></li>
+  <li><a href="#software-and-evidence" id="toc-software-and-evidence" class="nav-link" data-scroll-target="#software-and-evidence">Software and evidence</a></li>
   <li><a href="#scientific-boundary" id="toc-scientific-boundary" class="nav-link" data-scroll-target="#scientific-boundary">Scientific boundary</a></li>
   </ul>
 </nav>
@@ -144,12 +141,12 @@ ul.task-list li input[type="checkbox"] {
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
 <h1 class="title">DrugMatch-Confidence</h1>
-<p class="subtitle lead">Interpretable and uncertainty-aware preclinical drug-response prediction</p>
+<p class="subtitle lead">Choosing which preclinical drug-response experiments to run next</p>
 </div>
 
 <div>
   <div class="description">
-    An XGBoost tool trained on DepMap and PRISM that explains predictions, quantifies uncertainty, and exposes weak models.
+    Matched evaluation of XGBoost and simple baselines, independent calibration, and a retrospective MAPK screening analysis.
   </div>
 </div>
 
@@ -167,147 +164,129 @@ ul.task-list li input[type="checkbox"] {
 
 
 <div class="article-status">
-<p><span class="status-pill status-released">v1.0.1 · Released</span> <a href="https://github.com/rsolerortuno/DrugMatch-Confidence">View repository <span aria-hidden="true">↗</span></a></p>
+<p><span class="status-pill status-preview">v1.1.0.dev0 · Evidence review</span> <a href="https://github.com/rsolerortuno/DrugMatch-Confidence">View repository <span aria-hidden="true">↗</span></a></p>
 </div>
-<section id="the-question" class="level2">
-<h2 class="anchored" data-anchor-id="the-question">The question</h2>
-<p>Can molecular profiles from cancer cell lines help predict which models will respond to a drug, and can the tool say when its own prediction should not be trusted?</p>
-<p>DrugMatch-Confidence combines DepMap molecular features with PRISM dose-response measurements. For a supported drug and cell line, it returns more than a sensitive/resistant label:</p>
-<ul>
-<li>a continuous response prediction;</li>
-<li>a calibrated sensitivity probability;</li>
-<li>an uncertainty interval;</li>
-<li>agreement between regression and classification heads;</li>
-<li>an out-of-distribution warning;</li>
-<li>input-coverage checks;</li>
-<li>SHAP features that pushed the prediction in either direction.</li>
-</ul>
+<section id="the-decision" class="level2">
+<h2 class="anchored" data-anchor-id="the-decision">The decision</h2>
+<p>Which cancer cell lines should a laboratory test first, and does a complex model improve that choice over a simpler one?</p>
+<p>DrugMatch combines DepMap molecular profiles with PRISM drug-response measurements. The current review establishes a matched comparison across five drugs, separates calibration from fitting, and makes unsupported decisions visible. Its useful present output is <strong>experimental ranking</strong>.</p>
+<p>For each supported drug, the tool returns a continuous response prediction, a calibrated probability for the response extremes, an uncertainty interval, SHAP explanations and input-support warnings. A separate policy returns <strong>sensitive, resistant or abstain</strong>, with reasons. The five review bundles remain <code>unreviewed</code> and therefore abstain from categorical screening decisions.</p>
 </section>
-<section id="data-and-modelling" class="level2">
-<h2 class="anchored" data-anchor-id="data-and-modelling">Data and modelling</h2>
-<div class="cell" data-layout-align="default">
-<div class="cell-output-display">
-<div>
-<p></p><figure class="figure"><p></p>
-<div>
-<pre class="mermaid mermaid-js">flowchart LR
-    A[DepMap expression, mutation, copy number] --&gt; C[Stable ModelID join]
-    B[PRISM drug-response AUC] --&gt; C
-    C --&gt; D[Grouped split + training-only selection]
-    D --&gt; E[Baselines + Elastic Net + XGBoost]
-    E --&gt; F[Calibration, conformal interval, OOD, SHAP]
-    F --&gt; G[Locked GDSC2 validation]
-</pre>
-</div>
-<p></p></figure><p></p>
-</div>
-</div>
-</div>
-<p>The safeguards are central to the project:</p>
-<ol type="1">
-<li>The same cell line cannot appear in both training and test data.</li>
-<li>Test data never select genes.</li>
-<li>GDSC2 is locked and cannot tune the model.</li>
-<li>XGBoost is compared against lineage-only and Elastic Net baselines.</li>
-<li>Weak results remain visible instead of being reframed as successes.</li>
-</ol>
-</section>
-<section id="what-is-validated" class="level2">
-<h2 class="anchored" data-anchor-id="what-is-validated">What is validated</h2>
-<p>Five real model bundles are included, but they do not receive the same release label.</p>
+<section id="a-comparison-that-can-detect-failure" class="level2">
+<h2 class="anchored" data-anchor-id="a-comparison-that-can-detect-failure">A comparison that can detect failure</h2>
+<p>XGBoost, ElasticNet and lineage-only baselines see the same five evaluation folds. Each held-out cell line is predicted without using its response to fit the model. Feature selection, response cutoffs and calibration remain local to the appropriate training subsets.</p>
+<p>The outer and inner split allocation uses full-cohort outcome-rank quartiles for stratification. This is retrospective outcome-stratified evaluation, not an outcome-blind prospective experiment.</p>
 <table class="caption-top table">
-<colgroup>
-<col style="width: 13%">
-<col style="width: 13%">
-<col style="width: 18%">
-<col style="width: 18%">
-<col style="width: 18%">
-<col style="width: 18%">
-</colgroup>
 <thead>
 <tr class="header">
 <th>Drug</th>
-<th>Status</th>
-<th style="text-align: right;">OOF AUROC</th>
-<th style="text-align: right;">OOF balanced accuracy</th>
-<th style="text-align: right;">Strict GDSC2 AUROC</th>
-<th style="text-align: right;">External n</th>
+<th style="text-align: right;">XGBoost AUROC</th>
+<th style="text-align: right;">ElasticNet AUROC</th>
+<th style="text-align: right;">Lineage AUROC</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td>Trametinib</td>
-<td>Validated demo</td>
-<td style="text-align: right;">0.86</td>
-<td style="text-align: right;">0.78</td>
-<td style="text-align: right;">0.84</td>
-<td style="text-align: right;">20</td>
+<td style="text-align: right;">0.848</td>
+<td style="text-align: right;">0.863</td>
+<td style="text-align: right;">0.755</td>
 </tr>
 <tr class="even">
 <td>Afatinib</td>
-<td>Validated demo</td>
-<td style="text-align: right;">0.92</td>
-<td style="text-align: right;">0.85</td>
-<td style="text-align: right;">0.83</td>
-<td style="text-align: right;">22</td>
+<td style="text-align: right;">0.905</td>
+<td style="text-align: right;">0.916</td>
+<td style="text-align: right;">0.774</td>
 </tr>
 <tr class="odd">
 <td>Palbociclib</td>
-<td>Exploratory</td>
-<td style="text-align: right;">0.75</td>
-<td style="text-align: right;">0.64</td>
-<td style="text-align: right;">0.51</td>
-<td style="text-align: right;">22</td>
+<td style="text-align: right;">0.722</td>
+<td style="text-align: right;">0.726</td>
+<td style="text-align: right;">0.561</td>
 </tr>
 <tr class="even">
 <td>Olaparib</td>
-<td>Insufficient evidence</td>
-<td style="text-align: right;">0.54</td>
-<td style="text-align: right;">0.52</td>
-<td style="text-align: right;">0.68</td>
-<td style="text-align: right;">24</td>
+<td style="text-align: right;">0.606</td>
+<td style="text-align: right;">0.575</td>
+<td style="text-align: right;">0.493</td>
 </tr>
 <tr class="odd">
 <td>Gemcitabine</td>
-<td>Insufficient evidence</td>
-<td style="text-align: right;">0.48</td>
-<td style="text-align: right;">0.49</td>
-<td style="text-align: right;">0.70</td>
-<td style="text-align: right;">18</td>
+<td style="text-align: right;">0.506</td>
+<td style="text-align: right;">0.609</td>
+<td style="text-align: right;">0.592</td>
 </tr>
 </tbody>
 </table>
-<p>Trametinib and afatinib are the portfolio demonstrations. Palbociclib is exploratory. Olaparib and gemcitabine are retained as transparent negative or weak results.</p>
+<p>AUROC measures how well the model ranks sensitive versus resistant response extremes: 0.5 is chance-level ranking. It is different from drug-response AUC, where a lower value indicates greater sensitivity.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://raw.githubusercontent.com/rsolerortuno/DrugMatch-Confidence/73db0eea2d464b78c1b4b048c094a7760188381e/reports/figures/review_matched_auroc.png" class="img-fluid figure-img"></p>
+<figcaption>Matched five-fold AUROC for five drugs and three model families.</figcaption>
+</figure>
+</div>
+<p><strong>There is no demonstrated XGBoost advantage over ElasticNet.</strong> For gemcitabine, complexity measurably hurts in this evaluation: the paired AUROC difference is −0.103, with an unadjusted 95% interval of −0.178 to −0.022. This interval is conditional on the saved predictions; it does not include uncertainty from retraining or correct for multiple comparisons.</p>
 </section>
-<section id="what-makes-the-output-useful" class="level2">
-<h2 class="anchored" data-anchor-id="what-makes-the-output-useful">What makes the output useful</h2>
-<p>The model explanations recover biologically plausible associations:</p>
-<ul>
-<li><strong>Trametinib:</strong> MAPK feedback and mesenchymal-state features;</li>
-<li><strong>Afatinib:</strong> epithelial and ERBB-associated features;</li>
-<li><strong>Palbociclib:</strong> RB1 and cell-cycle signals, but weak external transfer;</li>
-<li><strong>Olaparib and gemcitabine:</strong> plausible features without sufficient predictive stability.</li>
-</ul>
-<p>These SHAP signals describe associations learned from cell lines. They are not causal biomarkers.</p>
+<section id="mapk-turning-a-ranking-into-an-experiment" class="level2">
+<h2 class="anchored" data-anchor-id="mapk-turning-a-ranking-into-an-experiment">MAPK: turning a ranking into an experiment</h2>
+<p>Among 375 held-out trametinib candidates, the ten highest-ranked models contain:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Ranking</th>
+<th style="text-align: right;">Sensitive models in the top ten</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>XGBoost</td>
+<td style="text-align: right;">7</td>
+</tr>
+<tr class="even">
+<td>ElasticNet</td>
+<td style="text-align: right;">7</td>
+</tr>
+<tr class="odd">
+<td>Lineage only</td>
+<td style="text-align: right;">5–6, depending on ties; 5.2 expected</td>
+</tr>
+<tr class="even">
+<td>Random selection</td>
+<td style="text-align: right;">2.53 expected</td>
+</tr>
+</tbody>
+</table>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://raw.githubusercontent.com/rsolerortuno/DrugMatch-Confidence/73db0eea2d464b78c1b4b048c094a7760188381e/reports/figures/review_screening_budget.png" class="img-fluid figure-img"></p>
+<figcaption>Sensitive models recovered as the experimental budget increases; the shaded lineage range reflects tied predictions.</figcaption>
+</figure>
+</div>
+<p>This is retrospective evidence, not an experiment already completed. The <a href="https://github.com/rsolerortuno/DrugMatch-Confidence/blob/main/docs/MAPK_EXPERIMENT_PLAN.md">proposed MAPK pilot</a> tests six prioritised models, two predicted-resistant controls and two uncertain or discordant cases. Viability, pathway readouts and biological replicates would test whether the ranking is useful in a new experiment.</p>
 </section>
-<section id="how-it-is-delivered" class="level2">
-<h2 class="anchored" data-anchor-id="how-it-is-delivered">How it is delivered</h2>
-<p>DrugMatch-Confidence is a tested Python package with:</p>
+<section id="what-uncertainty-revealed" class="level2">
+<h2 class="anchored" data-anchor-id="what-uncertainty-revealed">What uncertainty revealed</h2>
+<p>The saved trametinib and afatinib predictions provide no categorical support under the strict 90% interval rule. Zero accepted decisions does not establish a useful decision policy.</p>
+<p>A feasibility audit instead measures how much the saved interval radius would need to shrink before technical support appears. It is a diagnostic of these predictions, not an estimate of nominal coverage or an isolated measurement of assay noise. The policy was not relaxed after inspecting the results.</p>
+<p>Historical v1.0 bundles and GDSC2 results remain in the repository for provenance. They are not validation of the revised matched protocol. SHAP explanations are associations, not causal biomarkers.</p>
+</section>
+<section id="software-and-evidence" class="level2">
+<h2 class="anchored" data-anchor-id="software-and-evidence">Software and evidence</h2>
 <ul>
-<li>a command-line interface for prediction and training;</li>
-<li>five compact real-model bundles;</li>
-<li>a Streamlit interface;</li>
-<li>versioned metrics, figures and provenance manifests;</li>
-<li>technical and non-technical documentation;</li>
-<li>offline unit and integration tests.</li>
+<li>Python 3.12+, command-line prediction and a Streamlit interface.</li>
+<li>Five review bundles alongside five historical bundles.</li>
+<li>Saved out-of-fold predictions, five reproducible figures and checksum manifests.</li>
+<li>41 passing tests, lint and type checks, and smoke checks for all ten models.</li>
+<li>Passing <a href="https://github.com/rsolerortuno/DrugMatch-Confidence/actions/runs/34611440834">GitHub CI, package and Docker checks</a> for the merged review.</li>
 </ul>
+<p>The source, results and limitations are documented in the <a href="https://github.com/rsolerortuno/DrugMatch-Confidence/blob/main/docs/PIERRE_FABRE_REVIEW.md">evidence review</a>.</p>
 </section>
 <section id="scientific-boundary" class="level2">
 <h2 class="anchored" data-anchor-id="scientific-boundary">Scientific boundary</h2>
-<p>This is preclinical research software. Cell lines do not reproduce the full tumour microenvironment, pharmacokinetics or patient heterogeneity, and the strict external subsets are small. The model cannot predict an unseen compound and must never be used to choose treatment for a person.</p>
+<p>This work establishes an evaluation that can reject unnecessary model complexity and identify where categorical decisions lack support. It supports planning the next experiment; it does not establish prospective utility or patient-response prediction. Cell lines do not reproduce the full tumour microenvironment, pharmacokinetics or patient heterogeneity, and the tool cannot predict an unseen compound.</p>
 <div class="article-cta">
 <p>
-<strong>Inspect the models, external validation, example predictions and complete model card.</strong>
+<strong>Inspect the matched predictions, uncertainty audit and proposed MAPK experiment.</strong>
 </p>
 <p><a class="button button-primary" href="https://github.com/rsolerortuno/DrugMatch-Confidence">Open DrugMatch-Confidence on GitHub <span aria-hidden="true">↗</span></a></p>
 </div>

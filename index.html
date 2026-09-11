@@ -42,7 +42,7 @@ ul.task-list li input[type="checkbox"] {
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-3a8c703fb520cc07f7eefc65bb59a90d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-be9ea2f46684da68f705b6d67b70e0b7.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "language": {
     "search-no-results-text": "No results",
@@ -415,10 +415,10 @@ Drug response prediction
 Cancer models respond very differently to the same drug, and predictions rarely say how much to trust them.
 </td>
 <td data-label="What it is for">
-Predicting how a preclinical cancer model will respond to a given drug.
+Prioritising preclinical cancer models for drug-response experiments.
 </td>
 <td data-label="What it adds">
-Every prediction carries a calibrated probability, an uncertainty interval and a warning when the input is unfamiliar.
+Matched baseline comparisons show when complexity helps; uncertainty checks expose when categorical decisions lack support.
 </td>
 <td data-label="Key skills applied">
 <ul class="skill-tags">
@@ -490,7 +490,7 @@ AI coding agents can move fast through a repository and leave no reliable trail 
 Running AI agents on real code with hard limits on what they may touch.
 </td>
 <td data-label="What it adds">
-Separate agents implement, audit and review; deterministic gates decide whether work advances, state survives restarts, and a person keeps merge authority.
+Separate implementation and review roles, evidence tied to the exact code changes, restart recovery and human release authority.
 </td>
 <td data-label="Key skills applied">
 <ul class="skill-tags">
@@ -637,19 +637,19 @@ A leakage-aware temporal-holdout benchmark testing whether Geneformer and scGPT 
 </article>
 <article class="project-card">
 <div class="card-topline">
-<p><span class="project-number">06</span> <span class="status-pill status-released">v1.0.1 · Released</span></p>
+<p><span class="project-number">06</span> <span class="status-pill status-preview">v1.1.0.dev0 · Evidence review</span></p>
 </div>
 <h3 class="anchored">
 DrugMatch-Confidence
 </h3>
 <p class="project-kicker">
-Interpretable cancer drug-response prediction
+Evidence-led prioritisation of drug-response experiments
 </p>
 <p>
-Predicts sensitivity in preclinical cancer cell lines from DepMap multi-omics and PRISM response data, with SHAP drivers, calibrated uncertainty, prediction intervals and out-of-distribution warnings.
+Compares XGBoost with linear and lineage baselines on the same held-out cell lines. In a retrospective trametinib ranking, the top ten contain seven sensitive models, versus 2.53 expected at random.
 </p>
 <div class="metric-row" aria-label="DrugMatch validation highlights">
-<p><span><strong>5</strong> real drug models</span> <span><strong>2</strong> validated demos</span> <span><strong>GDSC2</strong> external test</span></p>
+<p><span><strong>5</strong> drugs compared</span> <span><strong>3</strong> matched model families</span> <span><strong>41</strong> passing tests</span></p>
 </div>
 <div class="tag-list">
 <span>XGBoost</span><span>SHAP</span><span>DepMap</span><span>PRISM</span>
@@ -683,7 +683,7 @@ Screens human and mouse membrane-protein domains for transcription-factor-like s
 </article>
 <article class="project-card">
 <div class="card-topline">
-<p><span class="project-number">08</span> <span class="status-pill status-preview">v0.6.0 · Research preview</span></p>
+<p><span class="project-number">08</span> <span class="status-pill status-preview">v0.9.1 · CLI preview</span></p>
 </div>
 <h3 class="anchored">
 Dev Autopilot
@@ -692,10 +692,10 @@ Dev Autopilot
 Auditable AI-agent workflow for scientific software
 </p>
 <p>
-A Python and SQLite orchestrator that keeps implementation, audit and review in separate hands. Deterministic gates decide whether work moves on, milestones survive a restart, and a person still signs off at the end.
+A Python and SQLite orchestrator that ties review evidence to the exact code changes. Changed code invalidates earlier reviews; durable state supports restart recovery, and a person retains release authority.
 </p>
 <div class="metric-row" aria-label="Dev Autopilot release highlights">
-<p><span><strong>M00–M05</strong> audited scope</span> <span><strong>1</strong> real-project validation run</span></p>
+<p><span><strong>418</strong> Linux tests passed</span> <span><strong>3.11–3.13</strong> Python CI</span></p>
 </div>
 <div class="tag-list">
 <span>Agentic AI</span><span>SQLite</span><span>Safety gates</span>
