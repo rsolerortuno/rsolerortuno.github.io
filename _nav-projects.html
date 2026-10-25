@@ -1,0 +1,20 @@
+<script>
+// The Projects navbar item is a dropdown. On wide screens it opens on hover,
+// so a click on the label itself goes straight to the projects table.
+// On narrow screens it keeps Bootstrap's tap-to-open behaviour, and the
+// first menu item ("All projects") links to the table.
+(function () {
+  var menu = document.querySelector('.navbar .dropdown-menu a.dropdown-item');
+  if (!menu) return;
+  var toggle = menu.closest('.dropdown').querySelector('.dropdown-toggle');
+  if (!toggle) return;
+  toggle.setAttribute('href', menu.getAttribute('href'));
+  toggle.addEventListener('click', function (event) {
+    if (window.matchMedia('(min-width: 992px)').matches) {
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      window.location.href = toggle.href;
+    }
+  }, true);
+})();
+</script>
