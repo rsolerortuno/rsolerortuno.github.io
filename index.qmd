@@ -96,7 +96,7 @@ Based in Lund, Sweden · Open to opportunities from September 2026
 <td data-label="Project"><a class="tool-name" href="projects/virtual-cell-challenge.html">VCC 2026</a></td>
 <td data-label="The problem">A single-gene knockdown changes the expression of thousands of other genes, and that response has to be predicted in a cell context observed only in its untreated state.</td>
 <td data-label="What it is for">Predicting single-cell responses to gene knockdowns in unseen cell types, for the Virtual Cell Challenge 2026.</td>
-<td data-label="What it adds">A version-by-version record of fourteen submissions with official metrics, negative results and an analysis of why local gains often failed to transfer.</td>
+<td data-label="What it adds">A version-by-version record of fourteen validation submissions and the final test delivery, with official metrics, negative results and an analysis of why local gains often failed to transfer.</td>
 <td data-label="Key skills applied"><ul class="skill-tags"><li>Perturb-seq / CRISPRi</li><li>Single-cell counts</li><li>Cross-context transfer</li><li>Evaluation design</li><li>PIE / STATE / CPA</li><li>Geneformer &amp; scGPT</li></ul></td>
 </tr>
 <tr class="overview-row" style="--row-index: 1" data-field="Target discovery &amp; safety">
@@ -327,10 +327,10 @@ Based in Lund, Sweden · Open to opportunities from September 2026
 </div>
 <h3>VCC 2026</h3>
 <p class="project-kicker">Predicting perturbation responses in unseen cell types</p>
-<p>Fourteen submissions to the Virtual Cell Challenge 2026, from a five-cell transfer baseline to control-PC removal, with official metrics for each version and a full account of what did not work, including PIE, STATE and other foundation-model routes.</p>
+<p>Fourteen validation submissions and a final test delivery for the Virtual Cell Challenge 2026, from a five-cell transfer baseline to control-PC removal, with official metrics for each version and a full account of what did not work, including PIE, STATE and other foundation-model routes.</p>
 <div class="metric-row" aria-label="Virtual Cell Challenge highlights">
 <span><strong>0.2166</strong> best official score (v12)</span>
-<span><strong>14</strong> versions</span>
+<span><strong>14</strong> validation versions</span>
 </div>
 <div class="tag-list"><span>Perturb-seq</span><span>Single-cell</span><span>Evaluation design</span></div>
 <div class="card-links">

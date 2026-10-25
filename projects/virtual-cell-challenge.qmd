@@ -17,12 +17,12 @@ css: ../vcc.css
 ::: {.vcc-intro}
 This was my first project with perturbation data and my first attempt at the "virtual cell" problem. I am not a specialist in this area. I entered the Virtual Cell Challenge mainly to work with these datasets directly and understand how they behave in practice, beyond what the papers report.
 
-This page documents fourteen versions in chronological order: what each one tested, how it was implemented, what the official leaderboard returned, and what did not work. Negative results are reported alongside positive ones, because most of what I learned came from them.
+This page documents every version in chronological order, from the first baseline (v0) to the final delivery (v14): what each one tested, how it was implemented, what the official leaderboard returned, and what did not work. Negative results are reported alongside positive ones, because most of what I learned came from them.
 :::
 
 ```{=html}
 <div class="vcc-stats" aria-label="The project in numbers">
-  <div><strong>14</strong><span>named versions, September to October</span></div>
+  <div><strong>14</strong><span>validation versions (v0 to v13), plus the final v14-DEF</span></div>
   <div><strong>0.2166</strong><span>best official validation score (v12)</span></div>
   <div><strong>14,218</strong><span>logged results from local experiments</span></div>
   <div><strong>12</strong><span>alternative model routes in a matched comparison</span></div>
