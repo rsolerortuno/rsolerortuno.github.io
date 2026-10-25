@@ -206,7 +206,7 @@ Science has been a journey into the unknown, with a humbling lesson waiting at e
 </figure>
 </section>
 <nav class="section-dots" aria-label="Homepage sections">
-<a href="#hero-title" aria-label="Introduction"></a> <a href="#current-role-title" aria-label="Current role"></a> <a href="#tools-title" aria-label="Selected tools"></a> <a href="#experience-title" aria-label="Experience"></a> <a href="#contact-title" aria-label="Contact"></a>
+<a href="#hero-title" aria-label="Introduction"></a> <a href="#current-role-title" aria-label="Current role"></a> <a href="#tools-title" aria-label="Selected projects"></a> <a href="#experience-title" aria-label="Experience"></a> <a href="#contact-title" aria-label="Contact"></a>
 </nav>
 <section class="current-role" aria-labelledby="current-role-title">
 <div class="role-heading">
@@ -239,14 +239,14 @@ I carry out the computational work behind the BI-1206 anti-FcγRIIB and BI-1808 
 <div class="section-heading">
 <div>
 <p class="section-index">
-02 / Selected tools
+02 / Selected projects
 </p>
 <h2 id="tools-title" class="anchored">
 Research software that shows its working
 </h2>
 </div>
 <p>
-Eight public repositories, covering target discovery and safety, method reliability, drug response and protein modelling. Most of them started as something I needed for my own work and could not find.
+Eight public repositories, covering target discovery and safety, method reliability, drug response and protein modelling, plus a retrospective of my Virtual Cell Challenge 2026 entry. Most of the tools started as something I needed for my own work and could not find.
 </p>
 </div>
 <div class="tools-overview tools-overview-compact">
@@ -258,7 +258,7 @@ Eight public repositories, covering target discovery and safety, method reliabil
 Field
 </th>
 <th scope="col">
-Tool
+Project
 </th>
 <th scope="col">
 The problem
@@ -275,12 +275,51 @@ Key skills applied
 </tr>
 </thead>
 <tbody>
-<tr class="overview-row" style="--row-index: 0" data-field="Target discovery &amp; safety">
+<tr class="overview-row" style="--row-index: 0" data-field="Perturbation modelling">
+<th scope="row" class="field-cell">
+Perturbation modelling
+</th>
+<td data-label="Project">
+<a class="tool-name" href="projects/virtual-cell-challenge.html">VCC 2026</a>
+</td>
+<td data-label="The problem">
+A single-gene knockdown changes the expression of thousands of other genes, and that response has to be predicted in a cell context observed only in its untreated state.
+</td>
+<td data-label="What it is for">
+Predicting single-cell responses to gene knockdowns in unseen cell types, for the Virtual Cell Challenge 2026.
+</td>
+<td data-label="What it adds">
+A version-by-version record of fourteen validation submissions and the final test delivery, with official metrics, negative results and an analysis of why local gains often failed to transfer.
+</td>
+<td data-label="Key skills applied">
+<ul class="skill-tags">
+<li>
+Perturb-seq / CRISPRi
+</li>
+<li>
+Single-cell counts
+</li>
+<li>
+Cross-context transfer
+</li>
+<li>
+Evaluation design
+</li>
+<li>
+PIE / STATE / CPA
+</li>
+<li>
+Geneformer &amp; scGPT
+</li>
+</ul>
+</td>
+</tr>
+<tr class="overview-row" style="--row-index: 1" data-field="Target discovery &amp; safety">
 <th scope="row" rowspan="3" class="field-cell">
 Target discovery &amp; safety
 </th>
-<td data-label="Tool">
-<span class="tool-name">TargetIntel-IO</span>
+<td data-label="Project">
+<a class="tool-name" href="projects/targetintel-io.html">TargetIntel-IO</a>
 </td>
 <td data-label="The problem">
 A gene linked to disease is not automatically a good drug target, yet most tools collapse that judgement into a single score.
@@ -317,9 +356,9 @@ CI/CD
 </ul>
 </td>
 </tr>
-<tr class="overview-row" style="--row-index: 1" data-field="Target discovery &amp; safety">
-<td data-label="Tool">
-<span class="tool-name">Activation Liability</span>
+<tr class="overview-row" style="--row-index: 2" data-field="Target discovery &amp; safety">
+<td data-label="Project">
+<a class="tool-name" href="projects/activation-liability.html">Activation Liability</a>
 </td>
 <td data-label="The problem">
 A target can look safely tumour-specific in healthy resting tissue and stop looking that way once the tissue is inflamed.
@@ -350,9 +389,9 @@ Reproducible manifests
 </ul>
 </td>
 </tr>
-<tr class="overview-row" style="--row-index: 2" data-field="Target discovery &amp; safety">
-<td data-label="Tool">
-<span class="tool-name">reach-gap</span>
+<tr class="overview-row" style="--row-index: 3" data-field="Target discovery &amp; safety">
+<td data-label="Project">
+<a class="tool-name" href="projects/reach-gap.html">reach-gap</a>
 </td>
 <td data-label="The problem">
 A target can be highly expressed and still sit too far from a working blood vessel for an antibody to reach it.
@@ -383,12 +422,12 @@ Docker
 </ul>
 </td>
 </tr>
-<tr class="overview-row" style="--row-index: 3" data-field="Method reliability">
+<tr class="overview-row" style="--row-index: 4" data-field="Method reliability">
 <th scope="row" rowspan="2" class="field-cell">
 Method reliability
 </th>
-<td data-label="Tool">
-<span class="tool-name">segmentation-fragility</span>
+<td data-label="Project">
+<a class="tool-name" href="projects/segmentation-fragility.html">segmentation-fragility</a>
 </td>
 <td data-label="The problem">
 In spatial data, a small change in where a cell boundary is drawn can move a marker between cell types and flip the conclusion.
@@ -416,9 +455,9 @@ Abstention logic
 </ul>
 </td>
 </tr>
-<tr class="overview-row" style="--row-index: 4" data-field="Method reliability">
-<td data-label="Tool">
-<span class="tool-name">FM Value Audit</span>
+<tr class="overview-row" style="--row-index: 5" data-field="Method reliability">
+<td data-label="Project">
+<a class="tool-name" href="projects/fm-value-audit.html">FM Value Audit</a>
 </td>
 <td data-label="The problem">
 A foundation-model embedding can look biologically structured and still add nothing to a real decision.
@@ -449,12 +488,12 @@ Preregistration
 </ul>
 </td>
 </tr>
-<tr class="overview-row" style="--row-index: 5" data-field="Drug response prediction">
+<tr class="overview-row" style="--row-index: 6" data-field="Drug response prediction">
 <th scope="row" class="field-cell">
 Drug response prediction
 </th>
-<td data-label="Tool">
-<span class="tool-name">DrugMatch-Confidence</span>
+<td data-label="Project">
+<a class="tool-name" href="projects/drugmatch-confidence.html">DrugMatch-Confidence</a>
 </td>
 <td data-label="The problem">
 Cancer models respond very differently to the same drug, and predictions rarely say how much to trust them.
@@ -488,12 +527,12 @@ DepMap / PRISM / GDSC2
 </ul>
 </td>
 </tr>
-<tr class="overview-row" style="--row-index: 6" data-field="Protein deep learning">
+<tr class="overview-row" style="--row-index: 7" data-field="Protein deep learning">
 <th scope="row" class="field-cell">
 Protein deep learning
 </th>
-<td data-label="Tool">
-<span class="tool-name">MTF Prediction</span>
+<td data-label="Project">
+<a class="tool-name" href="projects/mtf-prediction.html">MTF Prediction</a>
 </td>
 <td data-label="The problem">
 Whether a membrane protein carries transcription-factor-like features can change depending on where you draw its boundary.
@@ -521,12 +560,12 @@ UniProtKB
 </ul>
 </td>
 </tr>
-<tr class="overview-row" style="--row-index: 7" data-field="Research engineering">
+<tr class="overview-row" style="--row-index: 8" data-field="Research engineering">
 <th scope="row" class="field-cell">
 Research engineering
 </th>
-<td data-label="Tool">
-<span class="tool-name">Dev Autopilot</span>
+<td data-label="Project">
+<a class="tool-name" href="projects/dev-autopilot.html">Dev Autopilot</a>
 </td>
 <td data-label="The problem">
 AI coding agents can move fast through a repository and leave no reliable trail of what changed or why.
@@ -747,6 +786,29 @@ A Python and SQLite orchestrator that ties review evidence to the exact code cha
 </div>
 <div class="card-links">
 <p><a href="projects/dev-autopilot.html">Case study <span aria-hidden="true">→</span></a> <a href="https://github.com/rsolerortuno/dev-autopilot">GitHub <span aria-hidden="true">↗</span></a></p>
+</div>
+</article>
+<article class="project-card">
+<div class="card-topline">
+<p><span class="project-number">09</span> <span class="status-pill status-preview">Competition retrospective</span></p>
+</div>
+<h3 class="anchored">
+VCC 2026
+</h3>
+<p class="project-kicker">
+Predicting perturbation responses in unseen cell types
+</p>
+<p>
+Fourteen validation submissions and a final test delivery for the Virtual Cell Challenge 2026, from a five-cell transfer baseline to control-PC removal, with official metrics for each version and a full account of what did not work, including PIE, STATE and other foundation-model routes.
+</p>
+<div class="metric-row" aria-label="Virtual Cell Challenge highlights">
+<p><span><strong>0.2166</strong> best official score (v12)</span> <span><strong>14</strong> validation versions</span></p>
+</div>
+<div class="tag-list">
+<span>Perturb-seq</span><span>Single-cell</span><span>Evaluation design</span>
+</div>
+<div class="card-links">
+<p><a href="projects/virtual-cell-challenge.html">Read the retrospective <span aria-hidden="true">→</span></a></p>
 </div>
 </article>
 </div>
