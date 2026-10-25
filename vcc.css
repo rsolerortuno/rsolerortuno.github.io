@@ -438,3 +438,43 @@ main.content table {
     grid-template-columns: 1fr;
   }
 }
+
+/* ---------- references ---------- */
+
+.vcc-refs {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr));
+  gap: 0.5rem 2rem;
+  margin: 1.2rem 0 2rem;
+}
+
+.vcc-refs h4 {
+  margin: 0.6rem 0 0.5rem;
+  color: #a94f35;
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.vcc-refs ul {
+  padding-left: 1.1rem;
+}
+
+.vcc-refs li {
+  margin-bottom: 0.35rem;
+  font-size: 0.9rem;
+  line-height: 1.45;
+  text-align: left !important;
+}
+
+.vcc-refs a {
+  color: var(--text);
+  text-decoration-color: rgba(201, 101, 69, 0.5);
+  text-underline-offset: 2px;
+}
+
+.vcc-refs a:hover {
+  color: #a94f35;
+}
