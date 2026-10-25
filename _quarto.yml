@@ -18,8 +18,29 @@ website:
     title: RSO.
     collapse-below: lg
     left:
-    - href: projects.qmd
-      text: Tools
+    - text: Projects
+      menu:
+      - href: projects.qmd
+        text: All projects
+      - text: "---"
+      - href: projects/virtual-cell-challenge.qmd
+        text: Virtual Cell Challenge 2026
+      - href: projects/targetintel-io.qmd
+        text: TargetIntel-IO
+      - href: projects/activation-liability.qmd
+        text: Activation Liability
+      - href: projects/reach-gap.qmd
+        text: reach-gap
+      - href: projects/segmentation-fragility.qmd
+        text: segmentation-fragility
+      - href: projects/fm-value-audit.qmd
+        text: FM Value Audit
+      - href: projects/drugmatch-confidence.qmd
+        text: DrugMatch-Confidence
+      - href: projects/mtf-prediction.qmd
+        text: MTF Prediction
+      - href: projects/dev-autopilot.qmd
+        text: Dev Autopilot
     - href: about.qmd
       text: Experience
     right:
@@ -42,11 +63,13 @@ format:
     - brand.css
     - role-fix.css
     - refine.css
+    - nav.css
     toc: false
     code-copy: true
     code-overflow: wrap
     link-external-newwindow: true
     smooth-scroll: true
     lang: en-GB
+    include-after-body: _nav-projects.html
 execute:
   freeze: auto

@@ -13,7 +13,7 @@ page-layout: full
 <p class="hero-lead">Computational biologist with a PhD in bioinformatics and six years of experience across immuno-oncology, tumour biology, autoimmune disease and computational drug discovery. I integrate multi-omics, machine learning, deep learning and agentic AI systems to identify biomarkers, prioritise and validate therapeutic targets, and stratify patients.</p>
 <p class="hero-personal">Science has been a journey into the unknown, with a humbling lesson waiting at every turn. I can't wait to be reminded again just how little I truly know, and how much is left to discover</p>
 <div class="button-row" aria-label="Primary links">
-<a class="button button-primary" href="projects.html">Explore my tools <span aria-hidden="true">↗</span></a>
+<a class="button button-primary" href="projects.html">Explore my projects <span aria-hidden="true">↗</span></a>
 <a class="button button-secondary" href="assets/Rafael_Soler_Ortuno_CV.pdf" target="_blank" rel="noopener" download>Download CV <span aria-hidden="true">↓</span></a>
 <a class="button button-secondary" href="mailto:rafaelsolersanblas@gmail.com">Get in touch</a>
 </div>

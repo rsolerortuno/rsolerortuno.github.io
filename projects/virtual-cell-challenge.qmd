@@ -29,15 +29,6 @@ So this isn't a victory lap. It's a diary of fourteen versions, written so that 
 </div>
 ```
 
-```{=html}
-<figure class="vcc-slot vcc-slot-hero" id="img-01">
-  <div class="vcc-slot-frame">
-    <span class="vcc-slot-tag">Illustration 01 · in progress</span>
-    <p>A cell drawn as a small city at night. One switch on a control panel is flipped off, and a ripple of lights changes across the streets.</p>
-  </div>
-</figure>
-```
-
 ## The challenge, in plain words
 
 Every cell in your body carries the same set of genes. You can think of a gene as a recipe card. What makes a liver cell different from a T cell is which recipes it's actually cooking, and how much of each. Scientists measure this as gene expression: for every cell, a count of how many copies of each recipe are in use right now.
@@ -47,15 +38,6 @@ Now, there's a lab technique called CRISPR interference (CRISPRi) that lets you 
 The challenge asked a simple-sounding question. If I show you a new type of cell, but only in its normal, untreated state, can you predict what will happen to all its genes when each of a list of target genes is switched off?
 
 The catch is that you never see the new cell type being perturbed. You only see its untreated "control" cells, plus whatever experiments other people have run on *other* cell types. And the answer can't be a vague description: you have to hand in a big table of whole-number counts for hundreds of simulated cells per target gene. Basically, fake but realistic single-cell data.
-
-```{=html}
-<figure class="vcc-slot" id="img-02">
-  <div class="vcc-slot-frame">
-    <span class="vcc-slot-tag">Illustration 02 · in progress</span>
-    <p>Left: a cell type we have seen perturbed many times, with a known ripple pattern. Right: a new cell type seen only at rest, with a question mark where its ripple should be. An arrow labelled "transfer?" joins them.</p>
-  </div>
-</figure>
-```
 
 ### How the score works
 
@@ -134,15 +116,6 @@ v2 went much wider. I added a long list of public datasets (Orion HCT116 and HEK
 
 v3 consolidated all that into what became my published reference: **0.1482**.
 
-```{=html}
-<figure class="vcc-slot" id="img-03">
-  <div class="vcc-slot-frame">
-    <span class="vcc-slot-tag">Illustration 03 · in progress</span>
-    <p>An arrow split into two strands: one strand labelled "direction" (where it points) gets input from many small voices; the other labelled "size" (how long) comes only from a trusted core of five cell types.</p>
-  </div>
-</figure>
-```
-
 ::: {.vcc-cols}
 ::: {.vcc-good}
 #### What went well
@@ -183,15 +156,6 @@ v3 consolidated all that into what became my published reference: **0.1482**.
 ### The idea
 
 Imagine 400 jars, one per simulated cell, and you have to share out 4,000 sugar cubes for a given gene. You can put ten in each jar, or you can be more realistic and let some jars get more and some fewer, the way real cells naturally vary. The total stays the same, but the pattern is very different. Tests that decide whether a gene "changed" look at that cell-to-cell spread, not only at the average.
-
-```{=html}
-<figure class="vcc-slot" id="img-04">
-  <div class="vcc-slot-frame">
-    <span class="vcc-slot-tag">Illustration 04 · in progress</span>
-    <p>Two rows of identical jars holding the same total number of sugar cubes. Top row: every jar has exactly the same amount. Bottom row: uneven, natural-looking amounts. A small scale shows both rows weigh the same.</p>
-  </div>
-</figure>
-```
 
 ### How I built it
 
@@ -247,15 +211,6 @@ This was probably the most useful thing I learned in the whole project, and it c
 ### The idea
 
 Instead of one universal average, build specialised *branches*, each tuned to a family of cell types, and send every hidden validation context (they were called A, B and C) down the branch whose controls look most like it.
-
-```{=html}
-<figure class="vcc-slot" id="img-05">
-  <div class="vcc-slot-frame">
-    <span class="vcc-slot-tag">Illustration 05 · in progress</span>
-    <p>A small railway junction. Three trains labelled A, B and C arrive; a signal box reads how each train looks and switches it onto one of two tracks: an "H1 multi-source" track or a "CD4 T cell" track.</p>
-  </div>
-</figure>
-```
 
 ### How I built it
 
@@ -319,15 +274,6 @@ Locally, the GEO plus L1000 setup looked like my best ever, around 0.2314.
 
 Officially: **0.1985**. A clear step backwards. The MSE score fell from 0.221 to 0.169.
 
-```{=html}
-<figure class="vcc-slot" id="img-06">
-  <div class="vcc-slot-frame">
-    <span class="vcc-slot-tag">Illustration 06 · in progress</span>
-    <p>A hiker with a hugely overstuffed backpack (labelled datasets, maps, masks, a big volume knob) struggling up a hill, next to a lighter hiker with a small pack walking past easily.</p>
-  </div>
-</figure>
-```
-
 **v11** was the step back. I kept the wider sources but switched off all three baseline transformations and turned the volume back to 0.99. Result: **0.2113**, better than both v10 (+0.0128) and v9 (+0.0028). The MSE score hit 0.239, the best it ever got.
 
 ::: {.vcc-cols}
@@ -372,15 +318,6 @@ There was also a sneaky one. An effect with a declared variance of zero gets *in
 ### The idea
 
 Even untreated cells differ from each other in big, recurring ways. Things like how far along the cell cycle a cell is, or how big or stressed it is. Those patterns can show up in a prediction and make every target look a bit alike. If I find the main patterns of variation in the control cells and remove them from my predictions, the target-specific part should stand out. It's like noise-cancelling headphones: find the hum, subtract it.
-
-```{=html}
-<figure class="vcc-slot" id="img-07">
-  <div class="vcc-slot-frame">
-    <span class="vcc-slot-tag">Illustration 07 · in progress</span>
-    <p>A sound-wave drawing: a messy wave labelled "prediction" goes through a pair of headphones and comes out as a clean, distinct melody. The removed hum floats away labelled "control patterns".</p>
-  </div>
-</figure>
-```
 
 ### How I built it
 
@@ -461,15 +398,6 @@ So the rule I'd set in advance kicked in: fall back to the best official histori
 
 The upload was about 3.2 GB, checksum verified, finished on 24 October at 14:21 UTC. The server shows it as published, with no score visible yet.
 
-```{=html}
-<figure class="vcc-slot" id="img-08">
-  <div class="vcc-slot-frame">
-    <span class="vcc-slot-tag">Illustration 08 · in progress</span>
-    <p>A traveller at a crossroads holding two maps: a shiny new one with blank areas and an older, well-worn one with a route already walked and marked. The traveller follows the worn map towards three doors labelled D, E and F.</p>
-  </div>
-</figure>
-```
-
 ::: {.vcc-cols}
 ::: {.vcc-good}
 #### What went well
@@ -534,15 +462,6 @@ Here's how their raw error compared with my three submitted recipes on two histo
 
 None of the twelve routes beat v11 on error in these panels. I want to be careful about what that means, though. It's a finding about *my* adapters, *my* training scope and these panels, not proof that these methods are bad. Several of them only produced predictions for a small share of the target-by-gene table (about 16.5% for CPA and 12.5% for STATE on H1). Four of them trained on seven selected groups, about 71,000 cells out of nearly 339,000 available. And using a frozen foundation model with a small layer on top isn't the same as fine-tuning it properly. Given more time and compute, I'd love to see this comparison done fairly.
 
-```{=html}
-<figure class="vcc-slot" id="img-09">
-  <div class="vcc-slot-frame">
-    <span class="vcc-slot-tag">Illustration 09 · in progress</span>
-    <p>A row of big, shiny, complicated machines with blinking lights, and at the end a small, well-used hand tool. A tape measure shows the hand tool's result landing closest to a target mark.</p>
-  </div>
-</figure>
-```
-
 ## The practice exam problem
 
 If I had to name the single theme of this project, it's this one. My local tests were like a practice exam. They were useful, but they didn't always predict the real exam.
@@ -560,15 +479,6 @@ A local evaluator can do the arithmetic perfectly and still rank recipes differe
 - Breaking the assembly line into stages showed that the final cell-spreading step alone could make the error worse: for v10 on VIPerturb, raw MSE went from 1.083 to 1.199 at that step, with identical gene totals.
 - A supposed factor-of-100 error in the CD4 data turned out not to exist. What actually mattered was *how* things were normalised: per cell or after summing.
 - Fourteen official targets on one platform always had an undefined MSE score, so I kept them separate. Adding 544 other targets didn't make them valid.
-
-```{=html}
-<figure class="vcc-slot" id="img-10">
-  <div class="vcc-slot-frame">
-    <span class="vcc-slot-tag">Illustration 10 · in progress</span>
-    <p>A student holding a practice test marked with a big A, standing in front of a closed exam-hall door. Through the keyhole you can see a different-looking exam paper.</p>
-  </div>
-</figure>
-```
 
 ## Working with AI assistants
 
