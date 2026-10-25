@@ -419,6 +419,8 @@ The same trade-off appeared locally on a held-out panel (VIPerturb B/C, with dis
 
 Removing control PCs improved discrimination, and the mixture had the lowest raw error. No variant was best on every metric, and this panel could not determine the behaviour on the hidden contexts.
 
+Paired bootstrap intervals on the two historical 24-target panels (2,000 target resamples, 95% CI) point the same way. On CD4, v12's PDS was higher than v11's (+0.034 to +0.221), and v13's was higher again than v12's (+0.009 to +0.123). On H1, where PDS is already close to its ceiling (0.93 to 0.96), the intervals cross zero. In native MSE on H1, v12 was slightly but clearly worse than v11 (+0.001 to +0.020), and v13 was worse than v12 (+0.003 to +0.028); on CD4 the MSE intervals cross zero. These intervals reflect target sampling only, not training variability or the hidden contexts.
+
 ::: {.vcc-cols}
 ::: {.vcc-good}
 #### What improved
