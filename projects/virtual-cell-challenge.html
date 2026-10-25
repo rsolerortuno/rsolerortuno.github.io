@@ -1,0 +1,1314 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-GB" xml:lang="en-GB"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.19">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="description" content="A plain-English retrospective of the Pedrito Amor entry to the Virtual Cell Challenge 2026: what each version tried, what worked, what broke and what I learned.">
+
+<title>Fourteen tries at a virtual cell – Rafael Soler Ortuño</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<link href="../assets/favicon.svg" rel="icon" type="image/svg+xml">
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-bf27225e3a48a9273f3daa8f8e829971.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-890df4807d457dbc410f87df85df408d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+
+
+<link rel="stylesheet" href="../styles.css">
+<link rel="stylesheet" href="../brand.css">
+<link rel="stylesheet" href="../role-fix.css">
+<link rel="stylesheet" href="../refine.css">
+<link rel="stylesheet" href="../vcc.css">
+<meta property="og:title" content="Fourteen tries at a virtual cell – Rafael Soler Ortuño">
+<meta property="og:description" content="A plain-English retrospective of the Pedrito Amor entry to the Virtual Cell Challenge 2026: what each version tried, what worked, what broke and what I learned.">
+<meta property="og:site_name" content="Rafael Soler Ortuño">
+<meta property="og:locale" content="en_GB">
+<meta name="twitter:title" content="Fourteen tries at a virtual cell – Rafael Soler Ortuño">
+<meta name="twitter:description" content="A plain-English retrospective of the Pedrito Amor entry to the Virtual Cell Challenge 2026: what each version tried, what worked, what broke and what I learned.">
+<meta name="twitter:card" content="summary">
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">RSO.</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../projects.html"> 
+<span class="menu-text">Tools</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../about.html"> 
+<span class="menu-text">Experience</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/in/rafael-soler-ortuno/"> <i class="bi bi-linkedin" role="img" aria-label="LinkedIn profile">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="mailto:rafaelsolersanblas@gmail.com"> <i class="bi bi-envelope" role="img" aria-label="Email Rafael">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul class="collapse">
+  <li><a href="#the-challenge-in-plain-words" id="toc-the-challenge-in-plain-words" class="nav-link active" data-scroll-target="#the-challenge-in-plain-words">The challenge, in plain words</a></li>
+  <li><a href="#the-whole-journey-in-one-chart" id="toc-the-whole-journey-in-one-chart" class="nav-link" data-scroll-target="#the-whole-journey-in-one-chart">The whole journey in one chart</a></li>
+  <li><a href="#chapter-1-v1-to-v3-borrowing-answers-from-other-cells" id="toc-chapter-1-v1-to-v3-borrowing-answers-from-other-cells" class="nav-link" data-scroll-target="#chapter-1-v1-to-v3-borrowing-answers-from-other-cells">Chapter 1 · v1 to v3: borrowing answers from other cells</a></li>
+  <li><a href="#chapter-2-v4-and-v5-same-totals-different-cells" id="toc-chapter-2-v4-and-v5-same-totals-different-cells" class="nav-link" data-scroll-target="#chapter-2-v4-and-v5-same-totals-different-cells">Chapter 2 · v4 and v5: same totals, different cells</a></li>
+  <li><a href="#chapter-3-v6-to-v9-the-right-source-for-each-cell" id="toc-chapter-3-v6-to-v9-the-right-source-for-each-cell" class="nav-link" data-scroll-target="#chapter-3-v6-to-v9-the-right-source-for-each-cell">Chapter 3 · v6 to v9: the right source for each cell</a></li>
+  <li><a href="#chapter-4-v10-and-v11-the-big-expansion-and-the-step-back" id="toc-chapter-4-v10-and-v11-the-big-expansion-and-the-step-back" class="nav-link" data-scroll-target="#chapter-4-v10-and-v11-the-big-expansion-and-the-step-back">Chapter 4 · v10 and v11: the big expansion, and the step back</a></li>
+  <li><a href="#chapter-5-v12-and-v13-turning-down-the-background-noise" id="toc-chapter-5-v12-and-v13-turning-down-the-background-noise" class="nav-link" data-scroll-target="#chapter-5-v12-and-v13-turning-down-the-background-noise">Chapter 5 · v12 and v13: turning down the background noise</a></li>
+  <li><a href="#chapter-6-v14-def-trust-the-evidence-not-the-newest-idea" id="toc-chapter-6-v14-def-trust-the-evidence-not-the-newest-idea" class="nav-link" data-scroll-target="#chapter-6-v14-def-trust-the-evidence-not-the-newest-idea">Chapter 6 · v14-DEF: trust the evidence, not the newest idea</a></li>
+  <li><a href="#behind-the-scenes-14218-tries" id="toc-behind-the-scenes-14218-tries" class="nav-link" data-scroll-target="#behind-the-scenes-14218-tries">Behind the scenes: 14,218 tries</a></li>
+  <li><a href="#did-the-big-ai-models-help" id="toc-did-the-big-ai-models-help" class="nav-link" data-scroll-target="#did-the-big-ai-models-help">Did the big AI models help?</a></li>
+  <li><a href="#the-practice-exam-problem" id="toc-the-practice-exam-problem" class="nav-link" data-scroll-target="#the-practice-exam-problem">The practice exam problem</a></li>
+  <li><a href="#working-with-ai-assistants" id="toc-working-with-ai-assistants" class="nav-link" data-scroll-target="#working-with-ai-assistants">Working with AI assistants</a></li>
+  <li><a href="#what-id-tell-myself-in-september" id="toc-what-id-tell-myself-in-september" class="nav-link" data-scroll-target="#what-id-tell-myself-in-september">What I’d tell myself in September</a></li>
+  <li><a href="#every-version-at-a-glance" id="toc-every-version-at-a-glance" class="nav-link" data-scroll-target="#every-version-at-a-glance">Every version at a glance</a></li>
+  <li><a href="#glossary" id="toc-glossary" class="nav-link" data-scroll-target="#glossary">Glossary</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Fourteen tries at a virtual cell</h1>
+<p class="subtitle lead">My first time with perturbation data: the Virtual Cell Challenge 2026, version by version</p>
+</div>
+
+<div>
+  <div class="description">
+    A plain-English retrospective of the Pedrito Amor entry to the Virtual Cell Challenge 2026: what each version tried, what worked, what broke and what I learned.
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="article-status">
+<p><span class="status-pill status-preview">Competition retrospective · October 2026</span> <span class="status-pill">Team name: Pedrito Amor</span></p>
+</div>
+<div class="vcc-intro">
+<p>Before anything else: this was my first time working with perturbation data, and my first time thinking seriously about the idea of a “virtual cell”. I’m not an expert in this area. I signed up for the Virtual Cell Challenge mostly because I wanted an excuse to get my hands dirty with these datasets and understand how they actually behave, beyond what the papers say.</p>
+<p>So this isn’t a victory lap. It’s a diary of fourteen versions, written so that anyone can follow it, including the parts where I got things wrong. Quite a lot of it is about getting things wrong.</p>
+</div>
+<div class="vcc-stats" aria-label="The project in numbers">
+  <div><strong>14</strong><span>named versions, September to October</span></div>
+  <div><strong>≈0.217</strong><span>best official validation score (v12)</span></div>
+  <div><strong>14,218</strong><span>logged results from local experiments</span></div>
+  <div><strong>12</strong><span>alternative AI model routes tested</span></div>
+</div>
+<figure class="vcc-slot vcc-slot-hero figure" id="img-01">
+  <div class="vcc-slot-frame">
+    <span class="vcc-slot-tag">Illustration 01 · in progress</span>
+    <p>A cell drawn as a small city at night. One switch on a control panel is flipped off, and a ripple of lights changes across the streets.</p>
+  </div>
+</figure>
+<section id="the-challenge-in-plain-words" class="level2">
+<h2 class="anchored" data-anchor-id="the-challenge-in-plain-words">The challenge, in plain words</h2>
+<p>Every cell in your body carries the same set of genes. You can think of a gene as a recipe card. What makes a liver cell different from a T cell is which recipes it’s actually cooking, and how much of each. Scientists measure this as gene expression: for every cell, a count of how many copies of each recipe are in use right now.</p>
+<p>Now, there’s a lab technique called CRISPR interference (CRISPRi) that lets you quietly switch off one gene. When you switch one off, it rarely stays a local event. Other genes react: some go up, some go down, many don’t care. That whole pattern of reactions is called a <em>perturbation response</em>.</p>
+<p>The challenge asked a simple-sounding question. If I show you a new type of cell, but only in its normal, untreated state, can you predict what will happen to all its genes when each of a list of target genes is switched off?</p>
+<p>The catch is that you never see the new cell type being perturbed. You only see its untreated “control” cells, plus whatever experiments other people have run on <em>other</em> cell types. And the answer can’t be a vague description: you have to hand in a big table of whole-number counts for hundreds of simulated cells per target gene. Basically, fake but realistic single-cell data.</p>
+<figure class="vcc-slot figure" id="img-02">
+  <div class="vcc-slot-frame">
+    <span class="vcc-slot-tag">Illustration 02 · in progress</span>
+    <p>Left: a cell type we have seen perturbed many times, with a known ripple pattern. Right: a new cell type seen only at rest, with a question mark where its ripple should be. An arrow labelled "transfer?" joins them.</p>
+  </div>
+</figure>
+<section id="how-the-score-works" class="level3">
+<h3 class="anchored" data-anchor-id="how-the-score-works">How the score works</h3>
+<p>The leaderboard combined six measurements into a single number. I’ll be honest, it took me a while to really understand what each of them rewards, and much of this story is about them pulling in different directions.</p>
+<div class="vcc-metrics">
+  <article><h4 class="anchored">PDS</h4><p>Can you tell the targets apart? If switching off gene A and gene B produce different responses, your predictions should be different too, and recognisably so.</p></article>
+  <article><h4 class="anchored">MSE</h4><p>How close are your predicted expression levels to the real ones? This is the "did you get the numbers right" metric.</p></article>
+  <article><h4 class="anchored">NMAE</h4><p>A second closeness check, based on the average size of each miss rather than the squared miss.</p></article>
+  <article><h4 class="anchored">Fidelity</h4><p>For the genes that really change, did you get the direction right? Up when it goes up, down when it goes down.</p></article>
+  <article><h4 class="anchored">Reach</h4><p>Of all the genes that really changed, how many did your prediction actually catch?</p></article>
+  <article><h4 class="anchored">Jaccard</h4><p>How much does your list of "changed genes" overlap with the real list? Mine hovered around zero the whole time.</p></article>
+</div>
+<p>Each measurement is normalised against a simple reference prediction, so 0 means “no better than the reference” and higher is better. That means the overall 0.2166 I got with v12 is not 21.66% accuracy. It’s a blend of six relative improvements. And if your raw error is worse than the reference, your MSE score is simply clipped to zero. For my first five versions, it was exactly that: zero.</p>
+</section>
+<section id="how-one-prediction-gets-built" class="level3">
+<h3 class="anchored" data-anchor-id="how-one-prediction-gets-built">How one prediction gets built</h3>
+<p>Almost every version used the same assembly line. What changed from version to version was one or two stations on it. I’ll refer back to this picture a lot.</p>
+<ol class="vcc-pipeline">
+  <li><span class="vcc-step">1</span><h4 class="anchored">Look at the new cell at rest</h4><p>Its untreated control cells give the starting expression levels and how much they naturally vary.</p><em>always</em></li>
+  <li><span class="vcc-step">2</span><h4 class="anchored">Borrow measured responses</h4><p>Find experiments where the same gene was switched off in other cell types.</p><em>v1, v2, v6, v8–v10</em></li>
+  <li><span class="vcc-step">3</span><h4 class="anchored">Combine and weigh them</h4><p>Decide how much to trust each source, gene by gene.</p><em>v6, v8, v10, v13</em></li>
+  <li><span class="vcc-step">4</span><h4 class="anchored">Clean the signal</h4><p>Strip out patterns shared by everything, and background noise seen in the controls.</p><em>v6, v12, v13</em></li>
+  <li><span class="vcc-step">5</span><h4 class="anchored">Set the volume</h4><p>Choose how strongly to apply the predicted change (I called it lambda, or amplitude).</p><em>v7, v10–v13</em></li>
+  <li><span class="vcc-step">6</span><h4 class="anchored">Mark the changed genes</h4><p>Make sure enough genes are clearly "called" as changed, in the right direction.</p><em>v7, v10, v12</em></li>
+  <li><span class="vcc-step">7</span><h4 class="anchored">Make individual cells</h4><p>Turn the average prediction into hundreds of realistic cells with whole-number counts.</p><em>v4, v5</em></li>
+</ol>
+<p>That last step deserves a word. I called the starting count matrix the <em>carrier</em> and the procedure that modifies it the <em>emitter</em>. Two predictions with the exact same average can score quite differently depending on how the counts are spread across individual cells. I didn’t appreciate that at all at the start.</p>
+</section>
+</section>
+<section id="the-whole-journey-in-one-chart" class="level2">
+<h2 class="anchored" data-anchor-id="the-whole-journey-in-one-chart">The whole journey in one chart</h2>
+<p>Here is the official overall score of every version I submitted to the validation leaderboard. Hollow dots are scores I only have as rounded records. Hover over a dot to see the number.</p>
+<figure class="vcc-chart vcc-chart-wide figure">
+<div class="vcc-scroll">
+<svg class="vcc-svg" viewbox="0 0 760 400" role="img" aria-label="Official overall score for each version, v1 to v14" xmlns="http://www.w3.org/2000/svg"><rect x="56.0" y="30" width="146.6" height="300" fill="rgba(201,101,69,0.06)"></rect><text class="t mono" x="129.3" y="44.0" font-size="10" fill="#a94f35" text-anchor="middle" font-weight="700">1</text><text class="t mono" x="129.3" y="57.0" font-size="10" fill="#292722" text-anchor="middle" font-weight="700">Borrow</text><rect x="202.6" y="30" width="97.7" height="300" fill="rgba(104,127,115,0.07)"></rect><text class="t mono" x="251.4" y="44.0" font-size="10" fill="#a94f35" text-anchor="middle" font-weight="700">2</text><text class="t mono" x="251.4" y="57.0" font-size="10" fill="#292722" text-anchor="middle" font-weight="700">Reshape</text><rect x="300.3" y="30" width="195.4" height="300" fill="rgba(201,101,69,0.06)"></rect><text class="t mono" x="398.0" y="44.0" font-size="10" fill="#a94f35" text-anchor="middle" font-weight="700">3</text><text class="t mono" x="398.0" y="57.0" font-size="10" fill="#292722" text-anchor="middle" font-weight="700">Route</text><rect x="495.7" y="30" width="97.7" height="300" fill="rgba(104,127,115,0.07)"></rect><text class="t mono" x="544.6" y="44.0" font-size="10" fill="#a94f35" text-anchor="middle" font-weight="700">4</text><text class="t mono" x="544.6" y="57.0" font-size="10" fill="#292722" text-anchor="middle" font-weight="700">Expand</text><rect x="593.4" y="30" width="97.7" height="300" fill="rgba(201,101,69,0.06)"></rect><text class="t mono" x="642.3" y="44.0" font-size="10" fill="#a94f35" text-anchor="middle" font-weight="700">5</text><text class="t mono" x="642.3" y="57.0" font-size="10" fill="#292722" text-anchor="middle" font-weight="700">Denoise</text><rect x="691.1" y="30" width="48.9" height="300" fill="rgba(104,127,115,0.07)"></rect><text class="t mono" x="715.6" y="44.0" font-size="10" fill="#a94f35" text-anchor="middle" font-weight="700">6</text><text class="t mono" x="715.6" y="57.0" font-size="10" fill="#292722" text-anchor="middle" font-weight="700">Final</text><line x1="56" x2="740" y1="330.0" y2="330.0" stroke="rgba(53,48,41,0.12)"></line><text class="t mono" x="48.0" y="334.0" font-size="11" fill="#6d675e" text-anchor="end" font-weight="400">0.12</text><line x1="56" x2="740" y1="281.6" y2="281.6" stroke="rgba(53,48,41,0.12)"></line><text class="t mono" x="48.0" y="285.6" font-size="11" fill="#6d675e" text-anchor="end" font-weight="400">0.14</text><line x1="56" x2="740" y1="233.3" y2="233.3" stroke="rgba(53,48,41,0.12)"></line><text class="t mono" x="48.0" y="237.3" font-size="11" fill="#6d675e" text-anchor="end" font-weight="400">0.16</text><line x1="56" x2="740" y1="184.9" y2="184.9" stroke="rgba(53,48,41,0.12)"></line><text class="t mono" x="48.0" y="188.9" font-size="11" fill="#6d675e" text-anchor="end" font-weight="400">0.18</text><line x1="56" x2="740" y1="136.5" y2="136.5" stroke="rgba(53,48,41,0.12)"></line><text class="t mono" x="48.0" y="140.5" font-size="11" fill="#6d675e" text-anchor="end" font-weight="400">0.20</text><line x1="56" x2="740" y1="88.2" y2="88.2" stroke="rgba(53,48,41,0.12)"></line><text class="t mono" x="48.0" y="92.2" font-size="11" fill="#6d675e" text-anchor="end" font-weight="400">0.22</text><line x1="56" x2="740" y1="330" y2="330" stroke="rgba(53,48,41,0.35)"></line><line x1="80.4" y1="296.6" x2="178.1" y2="261.9" stroke="#c96545" stroke-width="2" stroke-dasharray="4 4"></line><path d="M178.1,261.9 L227.0,265.8 L275.9,255.9 L324.7,207.8 L373.6,151.8 L422.4,116.3 L471.3,116.1 L520.1,140.2 L569.0,109.3 L617.9,96.4 L666.7,106.5" fill="none" stroke="#c96545" stroke-width="2" stroke-linejoin="round"></path><text class="t mono" x="80.4" y="350.0" font-size="11" fill="#292722" text-anchor="middle" font-weight="700">v1</text><g class="pt"><title>v1: ≈0.1338 (rounded record)</title><circle cx="80.4" cy="296.6" r="14" fill="transparent"></circle><circle cx="80.4" cy="296.6" r="5.5" fill="#fbf8f2" stroke="#c96545" stroke-width="2"></circle></g><text class="t mono" x="129.3" y="350.0" font-size="11" fill="#292722" text-anchor="middle" font-weight="700">v2</text><g><title>v2: no score recovered</title><line x1="129.3" x2="129.3" y1="324" y2="330" stroke="#6d675e" stroke-width="2"></line><text class="t mono" x="129.3" y="366" font-size="9.5" fill="#6d675e" text-anchor="middle">no score</text></g><text class="t mono" x="178.1" y="350.0" font-size="11" fill="#292722" text-anchor="middle" font-weight="700">v3</text><g class="pt"><title>v3: 0.1482</title><circle cx="178.1" cy="261.9" r="14" fill="transparent"></circle><circle cx="178.1" cy="261.9" r="5.5" fill="#c96545" stroke="#c96545" stroke-width="2"></circle></g><text class="t mono" x="227.0" y="350.0" font-size="11" fill="#292722" text-anchor="middle" font-weight="700">v4</text><g class="pt"><title>v4: 0.1465</title><circle cx="227.0" cy="265.8" r="14" fill="transparent"></circle><circle cx="227.0" cy="265.8" r="5.5" fill="#c96545" stroke="#c96545" stroke-width="2"></circle></g><text class="t mono" x="275.9" y="350.0" font-size="11" fill="#292722" text-anchor="middle" font-weight="700">v5</text><g class="pt"><title>v5: 0.1507</title><circle cx="275.9" cy="255.9" r="14" fill="transparent"></circle><circle cx="275.9" cy="255.9" r="5.5" fill="#c96545" stroke="#c96545" stroke-width="2"></circle></g><text class="t mono" x="324.7" y="350.0" font-size="11" fill="#292722" text-anchor="middle" font-weight="700">v6</text><g class="pt"><title>v6: 0.1705</title><circle cx="324.7" cy="207.8" r="14" fill="transparent"></circle><circle cx="324.7" cy="207.8" r="5.5" fill="#c96545" stroke="#c96545" stroke-width="2"></circle></g><text class="t mono" x="373.6" y="350.0" font-size="11" fill="#292722" text-anchor="middle" font-weight="700">v7</text><g class="pt"><title>v7: ≈0.1937 (rounded record)</title><circle cx="373.6" cy="151.8" r="14" fill="transparent"></circle><circle cx="373.6" cy="151.8" r="5.5" fill="#fbf8f2" stroke="#c96545" stroke-width="2"></circle></g><text class="t mono" x="422.4" y="350.0" font-size="11" fill="#292722" text-anchor="middle" font-weight="700">v8</text><g class="pt"><title>v8: 0.2084</title><circle cx="422.4" cy="116.3" r="14" fill="transparent"></circle><circle cx="422.4" cy="116.3" r="5.5" fill="#c96545" stroke="#c96545" stroke-width="2"></circle></g><text class="t mono" x="471.3" y="350.0" font-size="11" fill="#292722" text-anchor="middle" font-weight="700">v9</text><g class="pt"><title>v9: 0.2084</title><circle cx="471.3" cy="116.1" r="14" fill="transparent"></circle><circle cx="471.3" cy="116.1" r="5.5" fill="#c96545" stroke="#c96545" stroke-width="2"></circle></g><text class="t mono" x="520.1" y="350.0" font-size="11" fill="#292722" text-anchor="middle" font-weight="700">v10</text><g class="pt"><title>v10: 0.1985</title><circle cx="520.1" cy="140.2" r="14" fill="transparent"></circle><circle cx="520.1" cy="140.2" r="5.5" fill="#c96545" stroke="#c96545" stroke-width="2"></circle></g><text class="t mono" x="569.0" y="350.0" font-size="11" fill="#292722" text-anchor="middle" font-weight="700">v11</text><g class="pt"><title>v11: 0.2113</title><circle cx="569.0" cy="109.3" r="14" fill="transparent"></circle><circle cx="569.0" cy="109.3" r="5.5" fill="#c96545" stroke="#c96545" stroke-width="2"></circle></g><text class="t mono" x="617.9" y="350.0" font-size="11" fill="#292722" text-anchor="middle" font-weight="700">v12</text><g class="pt"><title>v12: ≈0.2166 (rounded record)</title><circle cx="617.9" cy="96.4" r="14" fill="transparent"></circle><circle cx="617.9" cy="96.4" r="5.5" fill="#fbf8f2" stroke="#c96545" stroke-width="2"></circle></g><text class="t mono" x="666.7" y="350.0" font-size="11" fill="#292722" text-anchor="middle" font-weight="700">v13</text><g class="pt"><title>v13: 0.2124</title><circle cx="666.7" cy="106.5" r="14" fill="transparent"></circle><circle cx="666.7" cy="106.5" r="5.5" fill="#c96545" stroke="#c96545" stroke-width="2"></circle></g><text class="t mono" x="715.6" y="350.0" font-size="11" fill="#292722" text-anchor="middle" font-weight="700">v14</text><g><title>v14: published, score hidden</title><line x1="715.6" x2="715.6" y1="324" y2="330" stroke="#6d675e" stroke-width="2"></line><text class="t mono" x="715.6" y="366" font-size="9.5" fill="#6d675e" text-anchor="middle">pending</text></g><line x1="227.0" x2="227.0" y1="273.8" y2="291.8" stroke="#6d675e" stroke-width="1"></line><text class="t" x="227.0" y="303.8" font-size="10.5" fill="#292722" text-anchor="middle" font-weight="400">my local score</text><text class="t" x="227.0" y="316.8" font-size="10.5" fill="#292722" text-anchor="middle" font-weight="400">said +24%</text><line x1="520.1" x2="520.1" y1="148.2" y2="168.2" stroke="#6d675e" stroke-width="1"></line><text class="t" x="520.1" y="180.2" font-size="10.5" fill="#292722" text-anchor="middle" font-weight="400">everything at</text><text class="t" x="520.1" y="193.2" font-size="10.5" fill="#292722" text-anchor="middle" font-weight="400">once: −0.010</text><line x1="617.9" x2="617.9" y1="88.4" y2="74.4" stroke="#6d675e" stroke-width="1"></line><text class="t" x="617.9" y="70.4" font-size="10.5" fill="#292722" text-anchor="middle" font-weight="400">best: ≈0.217</text><line x1="666.7" x2="666.7" y1="114.5" y2="134.5" stroke="#6d675e" stroke-width="1"></line><text class="t" x="666.7" y="146.5" font-size="10.5" fill="#292722" text-anchor="middle" font-weight="400">louder,</text><text class="t" x="666.7" y="159.5" font-size="10.5" fill="#292722" text-anchor="middle" font-weight="400">not better</text><line x1="80.4" x2="80.4" y1="288.6" y2="270.6" stroke="#6d675e" stroke-width="1"></line><text class="t" x="80.4" y="266.6" font-size="10.5" fill="#292722" text-anchor="middle" font-weight="400">first try</text><text class="t mono" x="12.0" y="20.0" font-size="11" fill="#6d675e" text-anchor="start" font-weight="400">Official overall score (higher is better)</text></svg>
+</div>
+<figcaption><span class="vcc-swipe">Swipe sideways to see every version. </span>Official overall validation score per version. v2 has no recovered score; v14 is the final test delivery, published but with its score not visible yet.</figcaption>
+</figure>
+<p>I grouped the versions into six chapters, because several of them were really the same idea being refined. Each chapter below follows the same pattern: what I was thinking, how I built it, what went well, what went wrong, what I tried that didn’t work, and what I carried into the next round.</p>
+<div class="vcc-note">
+<p>A quick honesty note. The record of what I did is pretty good for the later versions and patchy for the earliest ones. Where the archive doesn’t say <em>why</em> I did something, I’ve written my best reconstruction and marked it with “Looking back”.</p>
+</div>
+</section>
+<section id="chapter-1-v1-to-v3-borrowing-answers-from-other-cells" class="level2">
+<h2 class="anchored" data-anchor-id="chapter-1-v1-to-v3-borrowing-answers-from-other-cells">Chapter 1 · v1 to v3: borrowing answers from other cells</h2>
+<div class="vcc-chapter-head">
+  <span class="vcc-when">September · the starting point</span>
+  <div class="vcc-chips"><span>v1 ≈0.134</span><span>v2 no score</span><span>v3 0.148</span></div>
+</div>
+<section id="the-idea" class="level3">
+<h3 class="anchored" data-anchor-id="the-idea">The idea</h3>
+<p>The simplest honest approach I could think of: if switching off gene X in some well-studied cell line moves genes Y and Z, maybe it moves them in the new cell type too. So take responses that were already measured somewhere else, average them sensibly, and adjust them to the new cell.</p>
+</section>
+<section id="how-i-built-it" class="level3">
+<h3 class="anchored" data-anchor-id="how-i-built-it">How I built it</h3>
+<p>The early core used five cell types that have been perturbed a lot: H1 (stem cells), K562, RPE1, HepG2 and Jurkat. A first baseline using just those five, which I called <code>universal_5</code>, scored 0.1290.</p>
+<p>Then I tried something I still like. I split each response into two parts: its <em>direction</em> (which genes go up or down) and its <em>size</em> (by how much). Related stem-cell experiments (KOLF2.1J, HipSci and hESC) were allowed to vote on the direction, but with a low weight of 0.25 each, while the size stayed decided by the trusted core. A common generator then turned the averages into simulated cells. That became v1, at roughly 0.1338.</p>
+<p>v2 went much wider. I added a long list of public datasets (Orion HCT116 and HEK293T, CD4 T cells under different conditions, Jiang by cell line and cytokine, PerturbME, Frangieh, Tian, Papalexi and more KOLF samples) and started experimenting with learned transfer between contexts, shrinkage of uncertain estimates, and different ways of turning averages into cells.</p>
+<p>v3 consolidated all that into what became my published reference: <strong>0.1482</strong>.</p>
+<figure class="vcc-slot figure" id="img-03">
+  <div class="vcc-slot-frame">
+    <span class="vcc-slot-tag">Illustration 03 · in progress</span>
+    <p>An arrow split into two strands: one strand labelled "direction" (where it points) gets input from many small voices; the other labelled "size" (how long) comes only from a trusted core of five cell types.</p>
+  </div>
+</figure>
+<div class="vcc-cols">
+<section id="what-went-well" class="level4 vcc-good">
+<h4 class="anchored" data-anchor-id="what-went-well">What went well</h4>
+<ul>
+<li>I had a full pipeline running end to end and a real number on the board.</li>
+<li>The direction/size split let me use related data without letting noisy new sources decide how big the effect should be.</li>
+<li>The local test for the direction-bank idea improved several contexts.</li>
+</ul>
+</section>
+<section id="what-went-wrong" class="level4 vcc-bad">
+<h4 class="anchored" data-anchor-id="what-went-wrong">What went wrong</h4>
+<ul>
+<li>The MSE score was 0.0000. My predicted levels were no closer to reality than the simple reference.</li>
+<li>I found a bug where a cache of control cells was being reused across different cell contexts. That kind of mistake silently poisons everything downstream.</li>
+<li>Some reference panels had an undefined MSE score, which made comparisons slippery.</li>
+<li>My bookkeeping was a mess. I can’t fully link v1 to its submitted file, and I have two different entry IDs for v2 and no recovered score.</li>
+</ul>
+</section>
+</div>
+<section id="tried-didnt-work" class="level4">
+<h4 class="anchored" data-anchor-id="tried-didnt-work">Tried, didn’t work</h4>
+<ul>
+<li>Transferring KOLF, Jurkat, HipSci and hESC data to HepG2. Each one came out slightly below the baseline: a source that helps one cell type can hurt another.</li>
+<li>The direction-bank recipe cost a little in HepG2 even while helping elsewhere.</li>
+</ul>
+<div class="vcc-next">
+<p><strong>What I took into the next round.</strong> Looking back, I think my averages were roughly in the right neighbourhood, but the scores for “which genes changed” were weak. So my next suspicion was the last station of the assembly line: maybe the problem wasn’t <em>what</em> I predicted on average, but <em>how</em> I spread it across individual cells.</p>
+</div>
+</section>
+</section>
+</section>
+<section id="chapter-2-v4-and-v5-same-totals-different-cells" class="level2">
+<h2 class="anchored" data-anchor-id="chapter-2-v4-and-v5-same-totals-different-cells">Chapter 2 · v4 and v5: same totals, different cells</h2>
+<div class="vcc-chapter-head">
+  <span class="vcc-when">Reshaping the simulated cells</span>
+  <div class="vcc-chips"><span>v4 0.147</span><span>v5 0.151</span></div>
+</div>
+<section id="the-idea-1" class="level3">
+<h3 class="anchored" data-anchor-id="the-idea-1">The idea</h3>
+<p>Imagine 400 jars, one per simulated cell, and you have to share out 4,000 sugar cubes for a given gene. You can put ten in each jar, or you can be more realistic and let some jars get more and some fewer, the way real cells naturally vary. The total stays the same, but the pattern is very different. Tests that decide whether a gene “changed” look at that cell-to-cell spread, not only at the average.</p>
+<figure class="vcc-slot figure" id="img-04">
+  <div class="vcc-slot-frame">
+    <span class="vcc-slot-tag">Illustration 04 · in progress</span>
+    <p>Two rows of identical jars holding the same total number of sugar cubes. Top row: every jar has exactly the same amount. Bottom row: uneven, natural-looking amounts. A small scale shows both rows weigh the same.</p>
+  </div>
+</figure>
+</section>
+<section id="how-i-built-it-1" class="level3">
+<h3 class="anchored" data-anchor-id="how-i-built-it-1">How I built it</h3>
+<p><strong>v4</strong> used a transform called <code>joint_control_copula050_r1</code>. A copula is a statistical tool that copies how values vary <em>together</em>. Here it borrowed the shape of natural variation from real untreated cells and applied it to my predictions, while keeping each gene’s total exactly the same.</p>
+<p><strong>v5</strong> was gentler. It only reshaped weak effects (small changes, below 0.085 on a log scale), and it protected the 54 strongest effects, the target gene itself and genes with very few counts. Afterwards it repaired the whole-number totals so every row and column still added up.</p>
+</section>
+<section id="the-plot-twist-my-own-test-was-lying-to-me" class="level3">
+<h3 class="anchored" data-anchor-id="the-plot-twist-my-own-test-was-lying-to-me">The plot twist: my own test was lying to me</h3>
+<p>My local evaluation said v4 was a big jump: 0.2005 against 0.1614 for the old recipe. I was pretty excited. The official leaderboard said 0.1465, <em>lower</em> than v3.</p>
+<p>When I dug in, I found the reason. My local evaluator only looked at a sample of the predicted cells, <code>min(400, number of real cells)</code>. Redistributing counts changed which cells ended up in that sample, and that alone created a fake improvement in PDS. Once I fixed it to use all 400 cells, the gain mostly vanished, and what was left came from the “changed genes” metrics, not from PDS or MSE.</p>
+<p>This was probably the most useful thing I learned in the whole project, and it came from a failure: <strong>a better local score is not a better score.</strong> I kept relearning this until the very end.</p>
+<div class="vcc-cols">
+<section id="what-went-well-1" class="level4 vcc-good">
+<h4 class="anchored" data-anchor-id="what-went-well-1">What went well</h4>
+<ul>
+<li>Found and fixed a real bug in my evaluator. Every later comparison was more trustworthy because of it.</li>
+<li>v5 nudged the official score up to 0.1507.</li>
+<li>The v5 count matrix became the <em>carrier</em> that every later version reused. That stability helped a lot.</li>
+</ul>
+</section>
+<section id="what-went-wrong-1" class="level4 vcc-bad">
+<h4 class="anchored" data-anchor-id="what-went-wrong-1">What went wrong</h4>
+<ul>
+<li>v4 went backwards officially, after looking great locally.</li>
+<li>MSE score still zero in both versions.</li>
+<li>v5’s gains were supported by four development contexts, which isn’t the same as an independent confirmation.</li>
+</ul>
+</section>
+</div>
+<section id="tried-didnt-work-1" class="level4">
+<h4 class="anchored" data-anchor-id="tried-didnt-work-1">Tried, didn’t work</h4>
+<ul>
+<li>Real genome coordinates (GENCODE). I thought knowing where genes sit on the chromosome might help, since neighbouring genes sometimes react together. The effect was −0.0006, basically zero. Biologically plausible doesn’t mean useful.</li>
+<li>Tree models and TabICL. Gradient-boosted trees and a tabular foundation model reached 0.1646 and 0.1696 locally, a hair above the old recipe and below the copula candidate. Not worth it.</li>
+<li>Starting from resampled controls instead of the v5 carrier. It lost the predictive starting point that v5 had built.</li>
+</ul>
+<div class="vcc-next">
+<p><strong>What I took into the next round.</strong> The cells were now in decent shape, and I’d stopped fiddling with that station. Looking back, it was obvious the bigger lever was the response itself. If my borrowed responses were weak or came from the wrong kind of cell, no amount of reshaping would save them. Time to look for better sources.</p>
+</div>
+</section>
+</section>
+</section>
+<section id="chapter-3-v6-to-v9-the-right-source-for-each-cell" class="level2">
+<h2 class="anchored" data-anchor-id="chapter-3-v6-to-v9-the-right-source-for-each-cell">Chapter 3 · v6 to v9: the right source for each cell</h2>
+<div class="vcc-chapter-head">
+  <span class="vcc-when">The steady climb</span>
+  <div class="vcc-chips"><span>v6 0.171</span><span>v7 ≈0.194</span><span>v8 0.208</span><span>v9 0.208</span></div>
+</div>
+<section id="the-idea-2" class="level3">
+<h3 class="anchored" data-anchor-id="the-idea-2">The idea</h3>
+<p>Instead of one universal average, build specialised <em>branches</em>, each tuned to a family of cell types, and send every hidden validation context (they were called A, B and C) down the branch whose controls look most like it.</p>
+<figure class="vcc-slot figure" id="img-05">
+  <div class="vcc-slot-frame">
+    <span class="vcc-slot-tag">Illustration 05 · in progress</span>
+    <p>A small railway junction. Three trains labelled A, B and C arrive; a signal box reads how each train looks and switches it onto one of two tracks: an "H1 multi-source" track or a "CD4 T cell" track.</p>
+  </div>
+</figure>
+</section>
+<section id="how-i-built-it-2" class="level3">
+<h3 class="anchored" data-anchor-id="how-i-built-it-2">How I built it</h3>
+<p><strong>v6</strong> had two branches. The H1 branch averaged effects from the genome-wide K562 screen (GWPS), CD4 T cells, HCT116 and HEK293T. The CD4 branch used a centred version of GWPS plus a ridge-regression prediction from Jurkat. Context A went to the CD4 branch and B and C went to H1, chosen by a frozen similarity weighting between their control cells. I also started <em>centring</em>: subtracting part of the response that every target shares, so the predictions don’t all look alike. Result: <strong>0.1705</strong>, and for the first time my MSE score was above zero (0.150). That felt good.</p>
+<p><strong>v7</strong> worked on the “changed genes” side. I added a floor so that around 3,000 genes per target would be clearly called as changed, with a statistical threshold relaxed from 8 towards 4.5, plus a component for the target gene itself (which obviously should go down). In A, I also recalculated the volume after removing 10 background patterns. Result: about <strong>0.194</strong>, and the direction metric (fidelity) turned positive for the first time.</p>
+<p><strong>v8</strong> changed only context A. It moved to the H1 multi-source branch and added a genome-wide Jurkat screen (GSE249595). The Jurkat data was blended in gene by gene through a <em>noise gate</em>: the clearer a gene’s effect compared with its noise, the more Jurkat got to say. Result: <strong>0.2084</strong>.</p>
+<p><strong>v9</strong> added a dataset by Yao et al.&nbsp;(GSE221321) in THP1 cells, a myeloid cell line, stimulated for three hours. It covered 598 targets, but only 12 matched the official list. Result: <strong>0.20844</strong>. That’s +0.00006. Basically the same.</p>
+<div class="vcc-cols">
+<section id="what-went-well-2" class="level4 vcc-good">
+<h4 class="anchored" data-anchor-id="what-went-well-2">What went well</h4>
+<ul>
+<li>The biggest climb of the project: from 0.151 to 0.208 in four versions.</li>
+<li>MSE score went from zero to 0.221. My predicted levels finally beat the reference.</li>
+<li>Changing only context A in v8 was a cleaner experiment than usual.</li>
+</ul>
+</section>
+<section id="what-went-wrong-2" class="level4 vcc-bad">
+<h4 class="anchored" data-anchor-id="what-went-wrong-2">What went wrong</h4>
+<ul>
+<li>In v6 I changed sources, branches and cell generation all at once, so I couldn’t tell which part helped.</li>
+<li>Routing A to “CD4-like” doesn’t prove A <em>is</em> CD4 cells. It just means the controls looked similar.</li>
+<li>v9 added a lot of work for almost nothing. Stimulated THP1 cells aren’t resting T cells.</li>
+<li>I fitted a straight line through two points (v6 and v7) to forecast scores. Two points always fit a line perfectly, which is exactly why it told me nothing.</li>
+</ul>
+</section>
+</div>
+<section id="tried-didnt-work-2" class="level4">
+<h4 class="anchored" data-anchor-id="tried-didnt-work-2">Tried, didn’t work</h4>
+<ul>
+<li>Adding HipSci and PerturbFate to my best H1 recipe. Local score dropped from 0.3006 to 0.2993 and 0.2987. Related data can dilute a good signal.</li>
+<li>Glioma (A172, T98G, U87MG) and TeloHAEC variants. They didn’t pass the first promotion checks. I kept them as reference data instead.</li>
+<li>Jiang 2025. My first audit found only nine targets matching the official list, so I never gave it a real performance test. Low coverage on its own doesn’t prove it would have hurt.</li>
+</ul>
+<div class="vcc-next">
+<p><strong>What I took into the next round.</strong> Every source I added seemed to help a bit, so the natural thought was: what if I add <em>everything</em>, weighted properly by how reliable it is, and adjust each effect to the baseline of the new cell? You can probably guess where this is going.</p>
+</div>
+</section>
+</section>
+</section>
+<section id="chapter-4-v10-and-v11-the-big-expansion-and-the-step-back" class="level2">
+<h2 class="anchored" data-anchor-id="chapter-4-v10-and-v11-the-big-expansion-and-the-step-back">Chapter 4 · v10 and v11: the big expansion, and the step back</h2>
+<div class="vcc-chapter-head">
+  <span class="vcc-when">More is not always better</span>
+  <div class="vcc-chips"><span>v10 0.198</span><span>v11 0.211</span></div>
+</div>
+<section id="the-idea-3" class="level3">
+<h3 class="anchored" data-anchor-id="the-idea-3">The idea</h3>
+<p>Use far more data, combine it according to how much each source can be trusted, and translate each borrowed effect into the “language” of the new cell’s baseline expression.</p>
+</section>
+<section id="how-i-built-it-3" class="level3">
+<h3 class="anchored" data-anchor-id="how-i-built-it-3">How I built it</h3>
+<p><strong>v10</strong> was my most ambitious version. On top of the four base sources it added Orion and CD4 profiles with no minimum cell count (so rare targets weren’t thrown away), VIPerturb and DLD1 for B and C, Jurkat for A, plus eleven GEO studies and nine L1000 cell-line banks for everything.</p>
+<p>To combine them it used inverse-variance weighting for B and C (trust precise sources more) and a random-effects model for A (also allow for real differences between sources). Then it switched on three transformations to fit effects to the new cell: fold-change transfer, a transfer map, and a mask that ignored genes detected in fewer than 5% of the new cell’s controls. It also turned the volume up to 1.10 and raised the changed-gene target from 3,000 to 6,000.</p>
+<p>Locally, the GEO plus L1000 setup looked like my best ever, around 0.2314.</p>
+<p>Officially: <strong>0.1985</strong>. A clear step backwards. The MSE score fell from 0.221 to 0.169.</p>
+<figure class="vcc-slot figure" id="img-06">
+  <div class="vcc-slot-frame">
+    <span class="vcc-slot-tag">Illustration 06 · in progress</span>
+    <p>A hiker with a hugely overstuffed backpack (labelled datasets, maps, masks, a big volume knob) struggling up a hill, next to a lighter hiker with a small pack walking past easily.</p>
+  </div>
+</figure>
+<p><strong>v11</strong> was the step back. I kept the wider sources but switched off all three baseline transformations and turned the volume back to 0.99. Result: <strong>0.2113</strong>, better than both v10 (+0.0128) and v9 (+0.0028). The MSE score hit 0.239, the best it ever got.</p>
+<div class="vcc-cols">
+<section id="what-went-well-3" class="level4 vcc-good">
+<h4 class="anchored" data-anchor-id="what-went-well-3">What went well</h4>
+<ul>
+<li>v11 recovered and set a new best, with the best “getting the levels right” score of the whole project.</li>
+<li>Keeping the extra data but removing the risky transformations was a useful, fairly clean contrast.</li>
+<li>v11 became my reference for expression accuracy from then on.</li>
+</ul>
+</section>
+<section id="what-went-wrong-3" class="level4 vcc-bad">
+<h4 class="anchored" data-anchor-id="what-went-wrong-3">What went wrong</h4>
+<ul>
+<li>v10 changed many things at once. Baseline scaling, the louder volume and the way I picked local test panels are all plausible culprits, and I never ran a clean one-cause-at-a-time test officially.</li>
+<li>My forecast for v11 was 0.22685. Reality was 0.2113. Even after v10, my local tests were still too optimistic.</li>
+<li>v11’s reach and overlap metrics were worse than v9’s.</li>
+</ul>
+</section>
+</div>
+<section id="tried-didnt-work-3" class="level4">
+<h4 class="anchored" data-anchor-id="tried-didnt-work-3">Tried, didn’t work</h4>
+<ul>
+<li>Mixing all sources in bulk. About 0.2300 locally versus 0.2314 for GEO plus L1000. More wasn’t better.</li>
+<li>Transferring a “common perturbation response” (the part every knockdown seems to share). It agreed poorly across cell types and made local metrics worse.</li>
+<li>Removing the minimum cell count everywhere. It recovers rare targets, but it doesn’t fix a weak knockdown, a wrong control group, a double perturbation or an incompatible unit. It just lets those problems in.</li>
+</ul>
+<p>There was also a sneaky one. An effect with a declared variance of zero gets <em>infinite</em> trust under inverse-variance weighting, so one bad row can take over a gene. I had to add an uncertainty floor. Data plumbing like this was a big part of the job.</p>
+<div class="vcc-next">
+<p><strong>What I took into the next round.</strong> v11 got the levels right but wasn’t great at telling targets apart. The question became: can I keep v11’s accuracy and make the targets more distinguishable? My idea was to turn down the background noise.</p>
+</div>
+</section>
+</section>
+</section>
+<section id="chapter-5-v12-and-v13-turning-down-the-background-noise" class="level2">
+<h2 class="anchored" data-anchor-id="chapter-5-v12-and-v13-turning-down-the-background-noise">Chapter 5 · v12 and v13: turning down the background noise</h2>
+<div class="vcc-chapter-head">
+  <span class="vcc-when">The best version, and the one that tried too hard</span>
+  <div class="vcc-chips"><span>v12 ≈0.217</span><span>v13 0.212</span></div>
+</div>
+<section id="the-idea-4" class="level3">
+<h3 class="anchored" data-anchor-id="the-idea-4">The idea</h3>
+<p>Even untreated cells differ from each other in big, recurring ways. Things like how far along the cell cycle a cell is, or how big or stressed it is. Those patterns can show up in a prediction and make every target look a bit alike. If I find the main patterns of variation in the control cells and remove them from my predictions, the target-specific part should stand out. It’s like noise-cancelling headphones: find the hum, subtract it.</p>
+<figure class="vcc-slot figure" id="img-07">
+  <div class="vcc-slot-frame">
+    <span class="vcc-slot-tag">Illustration 07 · in progress</span>
+    <p>A sound-wave drawing: a messy wave labelled "prediction" goes through a pair of headphones and comes out as a clean, distinct melody. The removed hum floats away labelled "control patterns".</p>
+  </div>
+</figure>
+</section>
+<section id="how-i-built-it-4" class="level3">
+<h3 class="anchored" data-anchor-id="how-i-built-it-4">How I built it</h3>
+<p><strong>v12</strong> took up to 3,000 untreated controls per context, put them on a common scale (log1p of counts per 50,000), and found their 15 main patterns of variation with an SVD (a standard way of finding principal components, or PCs). Those 15 patterns were projected out of the predicted effects, then the volume was recalculated, which landed at 0.90, 0.925 and 0.975 for A, B and C. The changed-gene target went up from 6,000 to 8,000.</p>
+<p>Result: about <strong>0.2166</strong>. My best documented official score. (I only have that one rounded, without the six separate metrics, which annoys me.)</p>
+<p><strong>v13</strong> tried to push further. It weighted each gene by how much the sources agreed with each other, removed 8 patterns from the receiver plus an extra 15-pattern subspace from the VIPerturb controls, turned the volume up to 1.05 and allowed it to go much higher for some genes. Result: <strong>0.2124</strong>, below v12.</p>
+<p>The individual metrics tell the story. v13’s PDS score was 0.757, by far my best at telling targets apart. But its MSE score dropped from v11’s 0.239 to 0.192. Louder, more distinct predictions, but further from the real levels. The overall score cares about the balance, and v13 lost it.</p>
+<figure class="vcc-chart figure">
+<div class="vcc-multiples"><svg class="vcc-svg vcc-svg-mini" viewbox="0 0 380 230" role="img" aria-label="Telling targets apart (PDS score)" xmlns="http://www.w3.org/2000/svg"><text class="t" x="8.0" y="18.0" font-size="12" fill="#292722" text-anchor="start" font-weight="700">Telling targets apart (PDS score)</text><line x1="44" x2="366" y1="180.0" y2="180.0" stroke="rgba(53,48,41,0.12)"></line><text class="t mono" x="38.0" y="184.0" font-size="10" fill="#6d675e" text-anchor="end" font-weight="400">0.60</text><line x1="44" x2="366" y1="140.0" y2="140.0" stroke="rgba(53,48,41,0.12)"></line><text class="t mono" x="38.0" y="144.0" font-size="10" fill="#6d675e" text-anchor="end" font-weight="400">0.65</text><line x1="44" x2="366" y1="100.0" y2="100.0" stroke="rgba(53,48,41,0.12)"></line><text class="t mono" x="38.0" y="104.0" font-size="10" fill="#6d675e" text-anchor="end" font-weight="400">0.70</text><line x1="44" x2="366" y1="60.0" y2="60.0" stroke="rgba(53,48,41,0.12)"></line><text class="t mono" x="38.0" y="64.0" font-size="10" fill="#6d675e" text-anchor="end" font-weight="400">0.75</text><line x1="292.8" y1="136.2" x2="351.4" y2="54.2" stroke="#c96545" stroke-width="2" stroke-dasharray="3 4"></line><path d="M58.6,169.8 L87.9,179.0 L117.2,179.0 L146.5,138.8 L175.7,132.0 L205.0,137.4 L234.3,137.3 L263.5,146.4 L292.8,136.2" fill="none" stroke="#c96545" stroke-width="2"></path><path d="M351.4,54.2" fill="none" stroke="#c96545" stroke-width="2"></path><text class="t mono" x="58.6" y="212.0" font-size="9.5" fill="#6d675e" text-anchor="middle" font-weight="400">3</text><g class="pt"><title>v3: 0.6128</title><circle cx="58.6" cy="169.8" r="11" fill="transparent"></circle><circle cx="58.6" cy="169.8" r="4.5" fill="#c96545" stroke="#c96545" stroke-width="2"></circle></g><text class="t mono" x="87.9" y="212.0" font-size="9.5" fill="#6d675e" text-anchor="middle" font-weight="400">4</text><g class="pt"><title>v4: 0.6012</title><circle cx="87.9" cy="179.0" r="11" fill="transparent"></circle><circle cx="87.9" cy="179.0" r="4.5" fill="#c96545" stroke="#c96545" stroke-width="2"></circle></g><text class="t mono" x="117.2" y="212.0" font-size="9.5" fill="#6d675e" text-anchor="middle" font-weight="400">5</text><g class="pt"><title>v5: 0.6012</title><circle cx="117.2" cy="179.0" r="11" fill="transparent"></circle><circle cx="117.2" cy="179.0" r="4.5" fill="#c96545" stroke="#c96545" stroke-width="2"></circle></g><text class="t mono" x="146.5" y="212.0" font-size="9.5" fill="#6d675e" text-anchor="middle" font-weight="400">6</text><g class="pt"><title>v6: 0.6515</title><circle cx="146.5" cy="138.8" r="11" fill="transparent"></circle><circle cx="146.5" cy="138.8" r="4.5" fill="#c96545" stroke="#c96545" stroke-width="2"></circle></g><text class="t mono" x="175.7" y="212.0" font-size="9.5" fill="#6d675e" text-anchor="middle" font-weight="400">7</text><g class="pt"><title>v7: ≈0.6600</title><circle cx="175.7" cy="132.0" r="11" fill="transparent"></circle><circle cx="175.7" cy="132.0" r="4.5" fill="#fbf8f2" stroke="#c96545" stroke-width="2"></circle></g><text class="t mono" x="205.0" y="212.0" font-size="9.5" fill="#6d675e" text-anchor="middle" font-weight="400">8</text><g class="pt"><title>v8: 0.6533</title><circle cx="205.0" cy="137.4" r="11" fill="transparent"></circle><circle cx="205.0" cy="137.4" r="4.5" fill="#c96545" stroke="#c96545" stroke-width="2"></circle></g><text class="t mono" x="234.3" y="212.0" font-size="9.5" fill="#6d675e" text-anchor="middle" font-weight="400">9</text><g class="pt"><title>v9: 0.6534</title><circle cx="234.3" cy="137.3" r="11" fill="transparent"></circle><circle cx="234.3" cy="137.3" r="4.5" fill="#c96545" stroke="#c96545" stroke-width="2"></circle></g><text class="t mono" x="263.5" y="212.0" font-size="9.5" fill="#6d675e" text-anchor="middle" font-weight="400">10</text><g class="pt"><title>v10: 0.6420</title><circle cx="263.5" cy="146.4" r="11" fill="transparent"></circle><circle cx="263.5" cy="146.4" r="4.5" fill="#c96545" stroke="#c96545" stroke-width="2"></circle></g><text class="t mono" x="292.8" y="212.0" font-size="9.5" fill="#6d675e" text-anchor="middle" font-weight="400">11</text><g class="pt"><title>v11: 0.6547</title><circle cx="292.8" cy="136.2" r="11" fill="transparent"></circle><circle cx="292.8" cy="136.2" r="4.5" fill="#c96545" stroke="#c96545" stroke-width="2"></circle></g><text class="t mono" x="322.1" y="212.0" font-size="9.5" fill="#6d675e" text-anchor="middle" font-weight="400">12</text><text class="t mono" x="351.4" y="212.0" font-size="9.5" fill="#6d675e" text-anchor="middle" font-weight="400">13</text><g class="pt"><title>v13: 0.7573</title><circle cx="351.4" cy="54.2" r="11" fill="transparent"></circle><circle cx="351.4" cy="54.2" r="4.5" fill="#c96545" stroke="#c96545" stroke-width="2"></circle></g><text class="t" x="343.4" y="42.2" font-size="10" fill="#292722" text-anchor="end" font-weight="400">v13 jumps</text><text class="t mono" x="366.0" y="226.0" font-size="9.5" fill="#6d675e" text-anchor="end" font-weight="400">version</text></svg><svg class="vcc-svg vcc-svg-mini" viewbox="0 0 380 230" role="img" aria-label="Getting the levels right (MSE score)" xmlns="http://www.w3.org/2000/svg"><text class="t" x="8.0" y="18.0" font-size="12" fill="#292722" text-anchor="start" font-weight="700">Getting the levels right (MSE score)</text><line x1="44" x2="366" y1="196.0" y2="196.0" stroke="rgba(53,48,41,0.12)"></line><text class="t mono" x="38.0" y="200.0" font-size="10" fill="#6d675e" text-anchor="end" font-weight="400">0.00</text><line x1="44" x2="366" y1="164.0" y2="164.0" stroke="rgba(53,48,41,0.12)"></line><text class="t mono" x="38.0" y="168.0" font-size="10" fill="#6d675e" text-anchor="end" font-weight="400">0.05</text><line x1="44" x2="366" y1="132.0" y2="132.0" stroke="rgba(53,48,41,0.12)"></line><text class="t mono" x="38.0" y="136.0" font-size="10" fill="#6d675e" text-anchor="end" font-weight="400">0.10</text><line x1="44" x2="366" y1="100.0" y2="100.0" stroke="rgba(53,48,41,0.12)"></line><text class="t mono" x="38.0" y="104.0" font-size="10" fill="#6d675e" text-anchor="end" font-weight="400">0.15</text><line x1="44" x2="366" y1="68.0" y2="68.0" stroke="rgba(53,48,41,0.12)"></line><text class="t mono" x="38.0" y="72.0" font-size="10" fill="#6d675e" text-anchor="end" font-weight="400">0.20</text><line x1="44" x2="366" y1="36.0" y2="36.0" stroke="rgba(53,48,41,0.12)"></line><text class="t mono" x="38.0" y="40.0" font-size="10" fill="#6d675e" text-anchor="end" font-weight="400">0.25</text><line x1="292.8" y1="43.1" x2="351.4" y2="73.2" stroke="#c96545" stroke-width="2" stroke-dasharray="3 4"></line><path d="M58.6,196.0 L87.9,196.0 L117.2,196.0 L146.5,99.9 L175.7,81.4 L205.0,54.6 L234.3,54.6 L263.5,87.6 L292.8,43.1" fill="none" stroke="#c96545" stroke-width="2"></path><path d="M351.4,73.2" fill="none" stroke="#c96545" stroke-width="2"></path><text class="t mono" x="58.6" y="212.0" font-size="9.5" fill="#6d675e" text-anchor="middle" font-weight="400">3</text><g class="pt"><title>v3: 0.0000</title><circle cx="58.6" cy="196.0" r="11" fill="transparent"></circle><circle cx="58.6" cy="196.0" r="4.5" fill="#c96545" stroke="#c96545" stroke-width="2"></circle></g><text class="t mono" x="87.9" y="212.0" font-size="9.5" fill="#6d675e" text-anchor="middle" font-weight="400">4</text><g class="pt"><title>v4: 0.0000</title><circle cx="87.9" cy="196.0" r="11" fill="transparent"></circle><circle cx="87.9" cy="196.0" r="4.5" fill="#c96545" stroke="#c96545" stroke-width="2"></circle></g><text class="t mono" x="117.2" y="212.0" font-size="9.5" fill="#6d675e" text-anchor="middle" font-weight="400">5</text><g class="pt"><title>v5: 0.0000</title><circle cx="117.2" cy="196.0" r="11" fill="transparent"></circle><circle cx="117.2" cy="196.0" r="4.5" fill="#c96545" stroke="#c96545" stroke-width="2"></circle></g><text class="t mono" x="146.5" y="212.0" font-size="9.5" fill="#6d675e" text-anchor="middle" font-weight="400">6</text><g class="pt"><title>v6: 0.1502</title><circle cx="146.5" cy="99.9" r="11" fill="transparent"></circle><circle cx="146.5" cy="99.9" r="4.5" fill="#c96545" stroke="#c96545" stroke-width="2"></circle></g><text class="t mono" x="175.7" y="212.0" font-size="9.5" fill="#6d675e" text-anchor="middle" font-weight="400">7</text><g class="pt"><title>v7: ≈0.1790</title><circle cx="175.7" cy="81.4" r="11" fill="transparent"></circle><circle cx="175.7" cy="81.4" r="4.5" fill="#fbf8f2" stroke="#c96545" stroke-width="2"></circle></g><text class="t mono" x="205.0" y="212.0" font-size="9.5" fill="#6d675e" text-anchor="middle" font-weight="400">8</text><g class="pt"><title>v8: 0.2209</title><circle cx="205.0" cy="54.6" r="11" fill="transparent"></circle><circle cx="205.0" cy="54.6" r="4.5" fill="#c96545" stroke="#c96545" stroke-width="2"></circle></g><text class="t mono" x="234.3" y="212.0" font-size="9.5" fill="#6d675e" text-anchor="middle" font-weight="400">9</text><g class="pt"><title>v9: 0.2210</title><circle cx="234.3" cy="54.6" r="11" fill="transparent"></circle><circle cx="234.3" cy="54.6" r="4.5" fill="#c96545" stroke="#c96545" stroke-width="2"></circle></g><text class="t mono" x="263.5" y="212.0" font-size="9.5" fill="#6d675e" text-anchor="middle" font-weight="400">10</text><g class="pt"><title>v10: 0.1694</title><circle cx="263.5" cy="87.6" r="11" fill="transparent"></circle><circle cx="263.5" cy="87.6" r="4.5" fill="#c96545" stroke="#c96545" stroke-width="2"></circle></g><text class="t mono" x="292.8" y="212.0" font-size="9.5" fill="#6d675e" text-anchor="middle" font-weight="400">11</text><g class="pt"><title>v11: 0.2389</title><circle cx="292.8" cy="43.1" r="11" fill="transparent"></circle><circle cx="292.8" cy="43.1" r="4.5" fill="#c96545" stroke="#c96545" stroke-width="2"></circle></g><text class="t mono" x="322.1" y="212.0" font-size="9.5" fill="#6d675e" text-anchor="middle" font-weight="400">12</text><text class="t mono" x="351.4" y="212.0" font-size="9.5" fill="#6d675e" text-anchor="middle" font-weight="400">13</text><g class="pt"><title>v13: 0.1918</title><circle cx="351.4" cy="73.2" r="11" fill="transparent"></circle><circle cx="351.4" cy="73.2" r="4.5" fill="#c96545" stroke="#c96545" stroke-width="2"></circle></g><text class="t" x="284.8" y="31.1" font-size="10" fill="#292722" text-anchor="end" font-weight="400">v11 best</text><text class="t mono" x="366.0" y="226.0" font-size="9.5" fill="#6d675e" text-anchor="end" font-weight="400">version</text></svg></div>
+<figcaption>Two of the six official metric scores across versions (higher is better for both). v12's separate metrics weren't recovered, so the line is dashed there. When PDS jumps in v13, MSE drops.</figcaption>
+</figure>
+<p>I also checked the trade-off locally on a held-out panel (VIPerturb B/C, with separate control groups for generating and scoring). These are raw local numbers, not official scores:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Variant</th>
+<th style="text-align: right;">PDS ↑</th>
+<th style="text-align: right;">MSE ↓</th>
+<th style="text-align: right;">Reach ↑</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>v11</td>
+<td style="text-align: right;">0.578</td>
+<td style="text-align: right;">1.114</td>
+<td style="text-align: right;">0.510</td>
+</tr>
+<tr class="even">
+<td>50/50 mix</td>
+<td style="text-align: right;">0.580</td>
+<td style="text-align: right;">1.026</td>
+<td style="text-align: right;">0.538</td>
+</tr>
+<tr class="odd">
+<td>15 patterns removed, 6,000 genes</td>
+<td style="text-align: right;">0.602</td>
+<td style="text-align: right;">1.123</td>
+<td style="text-align: right;">0.504</td>
+</tr>
+<tr class="even">
+<td>15 patterns removed, 8,000 genes</td>
+<td style="text-align: right;">0.602</td>
+<td style="text-align: right;">1.166</td>
+<td style="text-align: right;">0.530</td>
+</tr>
+</tbody>
+</table>
+<p>Removing patterns helped tell targets apart. A mixture got the levels closest. No single variant won everything, and this panel couldn’t settle what the hidden contexts would do.</p>
+<div class="vcc-cols">
+<section id="what-went-well-4" class="level4 vcc-good">
+<h4 class="anchored" data-anchor-id="what-went-well-4">What went well</h4>
+<ul>
+<li>v12 was the best documented official result, and its package and generator are fully preserved.</li>
+<li>The background-removal idea did what I hoped for PDS.</li>
+<li>v13 taught me, very clearly, what over-amplifying costs.</li>
+</ul>
+</section>
+<section id="what-went-wrong-4" class="level4 vcc-bad">
+<h4 class="anchored" data-anchor-id="what-went-wrong-4">What went wrong</h4>
+<ul>
+<li>Removing control patterns can also remove real signal, which costs MSE.</li>
+<li>v13 changed reliability weights, removed patterns <em>and</em> turned up the volume. Too much volume is my main suspect, but I can’t prove it was the only cause.</li>
+<li>Two different recipes were both called “v13” at some point. The one I submitted was candidate c12133. Naming things properly is underrated.</li>
+</ul>
+</section>
+</div>
+<section id="tried-didnt-work-4" class="level4">
+<h4 class="anchored" data-anchor-id="tried-didnt-work-4">Tried, didn’t work</h4>
+<ul>
+<li>More patterns removed, or more weight on VIPerturb. Small, inconsistent changes or regressions. Turning a dial further isn’t progress by itself.</li>
+<li>Reliability scores that included the receiver’s own data. They looked amazing because they were contaminated. Rejected.</li>
+<li>Direct effects without the carrier. Looked promising against a control-only baseline, but worse on realistic baselines. Changing the starting point can fake a gain.</li>
+</ul>
+<div class="vcc-next">
+<p><strong>What I took into the next round.</strong> The newest version wasn’t the best. For the final round, I decided ahead of time that if I couldn’t show something beat v12, I’d go with v12.</p>
+</div>
+</section>
+</section>
+</section>
+<section id="chapter-6-v14-def-trust-the-evidence-not-the-newest-idea" class="level2">
+<h2 class="anchored" data-anchor-id="chapter-6-v14-def-trust-the-evidence-not-the-newest-idea">Chapter 6 · v14-DEF: trust the evidence, not the newest idea</h2>
+<div class="vcc-chapter-head">
+  <span class="vcc-when">The final test delivery · 24 October</span>
+  <div class="vcc-chips"><span>v14-DEF published · score not visible</span></div>
+</div>
+<section id="the-idea-5" class="level3">
+<h3 class="anchored" data-anchor-id="the-idea-5">The idea</h3>
+<p>The final round used three new hidden contexts, D, E and F. Again, only their untreated controls were available. I wanted to use the strongest recipe I had evidence for, rather than whatever I’d built most recently.</p>
+</section>
+<section id="how-i-built-it-5" class="level3">
+<h3 class="anchored" data-anchor-id="how-i-built-it-5">How I built it</h3>
+<p>I rebuilt the controls and target lists for the final panel. Looking at the controls gave some clues: D resembled HL60 and other myeloid cells, E was close to the glioma line U87MG, and F looked mesenchymal or fibroblast-like, near AC16 heart cells. These were clues, not identities. Looking like a cell line doesn’t give you its perturbation responses.</p>
+<p>D used the recipe from context A, and E and F used the recipe from B and C. I ran a quick comparison on look-alike datasets (Yao THP1, U87MG and T98G, with 18, 21 and 21 usable targets). It couldn’t produce a fair winner, because some MSE values were undefined.</p>
+<p>So the rule I’d set in advance kicked in: fall back to the best official historical evidence, which was v12. The final delivery used v12’s recipe (15 patterns removed, volume ratio 0.99, 8,000 changed genes) with the new controls and targets, under the name <code>pedrito-amor-v14-DEF</code>.</p>
+<p>The upload was about 3.2 GB, checksum verified, finished on 24 October at 14:21 UTC. The server shows it as published, with no score visible yet.</p>
+<figure class="vcc-slot figure" id="img-08">
+  <div class="vcc-slot-frame">
+    <span class="vcc-slot-tag">Illustration 08 · in progress</span>
+    <p>A traveller at a crossroads holding two maps: a shiny new one with blank areas and an older, well-worn one with a route already walked and marked. The traveller follows the worn map towards three doors labelled D, E and F.</p>
+  </div>
+</figure>
+<div class="vcc-cols">
+<section id="what-went-well-5" class="level4 vcc-good">
+<h4 class="anchored" data-anchor-id="what-went-well-5">What went well</h4>
+<ul>
+<li>I decided the fallback rule <em>before</em> seeing results, which stopped me from fooling myself at the last minute.</li>
+<li>It’s a genuine new prediction with new controls and targets, not a relabelled old file.</li>
+<li>The upload was verified byte for byte.</li>
+</ul>
+</section>
+<section id="what-i-still-dont-know" class="level4 vcc-bad">
+<h4 class="anchored" data-anchor-id="what-i-still-dont-know">What I still don’t know</h4>
+<ul>
+<li>Whether it worked. There’s no visible score, and “published” isn’t the same as zero or as good.</li>
+<li>Whether v12’s recipe transfers to D, E and F. There were no real perturbed answers for those cells to check against.</li>
+</ul>
+</section>
+</div>
+</section>
+</section>
+<section id="behind-the-scenes-14218-tries" class="level2">
+<h2 class="anchored" data-anchor-id="behind-the-scenes-14218-tries">Behind the scenes: 14,218 tries</h2>
+<p>The versions are only the tip of it. Behind them I logged 14,218 results in eleven log journals. To be clear, that’s 14,218 rows in log files, not 14,218 independent models or validated experiments. Some are tiny variations of each other.</p>
+<figure class="vcc-chart vcc-chart-wide figure">
+<div class="vcc-scroll">
+<svg class="vcc-svg" viewbox="0 0 760 304" role="img" aria-label="Number of logged result records per search campaign" xmlns="http://www.w3.org/2000/svg"><line x1="178.0" x2="178.0" y1="10" y2="278" stroke="rgba(53,48,41,0.12)"></line><text class="t mono" x="178.0" y="294.0" font-size="10.5" fill="#6d675e" text-anchor="middle" font-weight="400">0</text><line x1="308.5" x2="308.5" y1="10" y2="278" stroke="rgba(53,48,41,0.12)"></line><text class="t mono" x="308.5" y="294.0" font-size="10.5" fill="#6d675e" text-anchor="middle" font-weight="400">2,500</text><line x1="439.0" x2="439.0" y1="10" y2="278" stroke="rgba(53,48,41,0.12)"></line><text class="t mono" x="439.0" y="294.0" font-size="10.5" fill="#6d675e" text-anchor="middle" font-weight="400">5,000</text><line x1="569.5" x2="569.5" y1="10" y2="278" stroke="rgba(53,48,41,0.12)"></line><text class="t mono" x="569.5" y="294.0" font-size="10.5" fill="#6d675e" text-anchor="middle" font-weight="400">7,500</text><line x1="700.0" x2="700.0" y1="10" y2="278" stroke="rgba(53,48,41,0.12)"></line><text class="t mono" x="700.0" y="294.0" font-size="10.5" fill="#6d675e" text-anchor="middle" font-weight="400">10,000</text><text class="t" x="168.0" y="30.0" font-size="11.5" fill="#292722" text-anchor="end" font-weight="400">Fast continuous grid</text><g><title>Fast continuous grid: 10,000 records</title><rect x="178" y="19" width="522.0" height="16" rx="3" fill="#c96545"></rect></g><text class="t mono" x="706.0" y="30.0" font-size="10.5" fill="#6d675e" text-anchor="start" font-weight="400">10,000</text><text class="t" x="168.0" y="56.0" font-size="11.5" fill="#292722" text-anchor="end" font-weight="400">Source-bank combiner</text><g><title>Source-bank combiner: 1,200 records</title><rect x="178" y="45" width="62.6" height="16" rx="3" fill="#c96545"></rect></g><text class="t mono" x="246.6" y="56.0" font-size="10.5" fill="#6d675e" text-anchor="start" font-weight="400">1,200</text><text class="t" x="168.0" y="82.0" font-size="11.5" fill="#292722" text-anchor="end" font-weight="400">Projected-source KRR</text><g><title>Projected-source KRR: 960 records</title><rect x="178" y="71" width="50.1" height="16" rx="3" fill="#c96545"></rect></g><text class="t mono" x="234.1" y="82.0" font-size="10.5" fill="#6d675e" text-anchor="start" font-weight="400">960</text><text class="t" x="168.0" y="108.0" font-size="11.5" fill="#292722" text-anchor="end" font-weight="400">KRR</text><g><title>KRR: 600 records</title><rect x="178" y="97" width="31.3" height="16" rx="3" fill="#c96545"></rect></g><text class="t mono" x="215.3" y="108.0" font-size="10.5" fill="#6d675e" text-anchor="start" font-weight="400">600</text><text class="t" x="168.0" y="134.0" font-size="11.5" fill="#292722" text-anchor="end" font-weight="400">Claude CELLSEARCH</text><g><title>Claude CELLSEARCH: 364 records</title><rect x="178" y="123" width="19.0" height="16" rx="3" fill="#c96545"></rect></g><text class="t mono" x="203.0" y="134.0" font-size="10.5" fill="#6d675e" text-anchor="start" font-weight="400">364</text><text class="t" x="168.0" y="160.0" font-size="11.5" fill="#292722" text-anchor="end" font-weight="400">Random search + stack</text><g><title>Random search + stack: 355 records</title><rect x="178" y="149" width="18.5" height="16" rx="3" fill="#c96545"></rect></g><text class="t mono" x="202.5" y="160.0" font-size="10.5" fill="#6d675e" text-anchor="start" font-weight="400">355</text><text class="t" x="168.0" y="186.0" font-size="11.5" fill="#292722" text-anchor="end" font-weight="400">Claude FASTSEARCH</text><g><title>Claude FASTSEARCH: 315 records</title><rect x="178" y="175" width="16.4" height="16" rx="3" fill="#c96545"></rect></g><text class="t mono" x="200.4" y="186.0" font-size="10.5" fill="#6d675e" text-anchor="start" font-weight="400">315</text><text class="t" x="168.0" y="212.0" font-size="11.5" fill="#292722" text-anchor="end" font-weight="400">Early closure (pre-v5)</text><g><title>Early closure (pre-v5): 255 records</title><rect x="178" y="201" width="13.3" height="16" rx="3" fill="#c96545"></rect></g><text class="t mono" x="197.3" y="212.0" font-size="10.5" fill="#6d675e" text-anchor="start" font-weight="400">255</text><text class="t" x="168.0" y="238.0" font-size="11.5" fill="#292722" text-anchor="end" font-weight="400">Ridge</text><g><title>Ridge: 160 records</title><rect x="178" y="227" width="8.4" height="16" rx="3" fill="#c96545"></rect></g><text class="t mono" x="192.4" y="238.0" font-size="10.5" fill="#6d675e" text-anchor="start" font-weight="400">160</text><text class="t" x="168.0" y="264.0" font-size="11.5" fill="#292722" text-anchor="end" font-weight="400">Ridge/KRR blends</text><g><title>Ridge/KRR blends: 9 records</title><rect x="178" y="253" width="2.0" height="16" rx="3" fill="#c96545"></rect></g><text class="t mono" x="184.5" y="264.0" font-size="10.5" fill="#6d675e" text-anchor="start" font-weight="400">9</text></svg>
+</div>
+<figcaption><span class="vcc-swipe">Swipe sideways to see the full bars. </span>Logged result records per search campaign. The Claude searches were runs where an AI assistant proposed and queued variants for me.</figcaption>
+</figure>
+<p>The biggest one was a fast search over 10,000 continuous combinations: mixtures of versions, patterns removed, volume and masks. 2,857 of them passed an eligibility check, which is not the same as 2,857 improvements. The winner was 90% v10 plus 10% v11, with some extra pattern removal, a mask on low-expression genes and the volume at 0.85. On 60 internal test cases it improved PDS from 0.592 to 0.605. But it was never turned into actual cells with whole-number counts, so its real MSE remained unknown. I didn’t submit it.</p>
+<p>A separate source-combining recipe did go all the way to real counts on a training panel, and it beat both v11 and the 15-pattern recipe there, on PDS (0.611 against 0.566 and 0.598) and on raw error (1.081 against 1.165 and 1.211). It’s the one local result I’d still like to test properly. But it was picked on training data, and its normalised MSE score was still zero.</p>
+</section>
+<section id="did-the-big-ai-models-help" class="level2">
+<h2 class="anchored" data-anchor-id="did-the-big-ai-models-help">Did the big AI models help?</h2>
+<p>Of course I had to try the fancy stuff. In total I tested twelve alternative routes, including some of the best-known models for single-cell perturbation:</p>
+<div class="vcc-models">
+  <article><h4 class="anchored">CPA</h4><p>Separates "which cell" from "what was done to it", then recombines them. No error improvement over v11.</p></article>
+  <article><h4 class="anchored">scGen</h4><p>Treats a perturbation as a shift inside a learned summary space of cells. No improvement.</p></article>
+  <article><h4 class="anchored">GEARS</h4><p>Uses a map of how genes relate functionally. Some fits finished, but the long queue was stopped for cost, so it never got a complete row.</p></article>
+  <article><h4 class="anchored">STATE</h4><p>Learns responses from whole sets of observed cells. Trained on a smaller subset; worse error than v11. A bigger all-cells run was prepared but never finished.</p></article>
+  <article><h4 class="anchored">PRESAGE</h4><p>Predicts responses using structured gene knowledge. Run with a simplified knowledge setup. No gain.</p></article>
+  <article><h4 class="anchored">scLAMBDA</h4><p>Another learned-latent-space model for perturbations. No gain.</p></article>
+  <article><h4 class="anchored">Ridge</h4><p>The deliberately boring baseline, to check whether complexity buys anything. No gain either.</p></article>
+  <article><h4 class="anchored">STRING &amp; GenePT readers</h4><p>Small networks that guess a gene's response from similar genes, using protein interaction maps or text-based gene descriptions.</p></article>
+  <article><h4 class="anchored">Geneformer &amp; scGPT</h4><p>Large pretrained models of gene expression, used frozen, with a small trained layer on top. Not fine-tuned for perturbations.</p></article>
+  <article><h4 class="anchored">PIE</h4><p>A pilot that never reached a verified comparison, due to early scaling problems and an open question about overlap with its pretraining data.</p></article>
+</div>
+<p>Here’s how their raw error compared with my three submitted recipes on two historical test panels. Lower is better; the dashed line marks v11.</p>
+<figure class="vcc-chart figure">
+<div class="vcc-multiples"><svg class="vcc-svg vcc-svg-mini" viewbox="0 0 380 349" role="img" aria-label="H1 panel · error (lower is better)" xmlns="http://www.w3.org/2000/svg"><text class="t" x="4.0" y="18.0" font-size="12" fill="#292722" text-anchor="start" font-weight="700">H1 panel · error (lower is better)</text><line x1="104.0" x2="104.0" y1="30" y2="323" stroke="rgba(53,48,41,0.12)"></line><text class="t mono" x="104.0" y="337.0" font-size="10" fill="#6d675e" text-anchor="middle" font-weight="400">0</text><line x1="142.3" x2="142.3" y1="30" y2="323" stroke="rgba(53,48,41,0.12)"></line><text class="t mono" x="142.3" y="337.0" font-size="10" fill="#6d675e" text-anchor="middle" font-weight="400">1</text><line x1="180.7" x2="180.7" y1="30" y2="323" stroke="rgba(53,48,41,0.12)"></line><text class="t mono" x="180.7" y="337.0" font-size="10" fill="#6d675e" text-anchor="middle" font-weight="400">2</text><line x1="219.0" x2="219.0" y1="30" y2="323" stroke="rgba(53,48,41,0.12)"></line><text class="t mono" x="219.0" y="337.0" font-size="10" fill="#6d675e" text-anchor="middle" font-weight="400">3</text><line x1="257.3" x2="257.3" y1="30" y2="323" stroke="rgba(53,48,41,0.12)"></line><text class="t mono" x="257.3" y="337.0" font-size="10" fill="#6d675e" text-anchor="middle" font-weight="400">4</text><line x1="295.7" x2="295.7" y1="30" y2="323" stroke="rgba(53,48,41,0.12)"></line><text class="t mono" x="295.7" y="337.0" font-size="10" fill="#6d675e" text-anchor="middle" font-weight="400">5</text><line x1="334.0" x2="334.0" y1="30" y2="323" stroke="rgba(53,48,41,0.12)"></line><text class="t mono" x="334.0" y="337.0" font-size="10" fill="#6d675e" text-anchor="middle" font-weight="400">6</text><text class="t" x="96.0" y="46.0" font-size="10.5" fill="#292722" text-anchor="end" font-weight="700">v11 (mine)</text><g><title>v11 (mine): 0.8407</title><rect x="104" y="37" width="32.2" height="13" rx="3" fill="#c96545"></rect></g><text class="t mono" x="141.2" y="46.0" font-size="9.5" fill="#6d675e" text-anchor="start" font-weight="400">0.84</text><text class="t" x="96.0" y="65.0" font-size="10.5" fill="#292722" text-anchor="end" font-weight="700">v12 (mine)</text><g><title>v12 (mine): 0.8513</title><rect x="104" y="56" width="32.6" height="13" rx="3" fill="#c96545"></rect></g><text class="t mono" x="141.6" y="65.0" font-size="9.5" fill="#6d675e" text-anchor="start" font-weight="400">0.85</text><text class="t" x="96.0" y="84.0" font-size="10.5" fill="#292722" text-anchor="end" font-weight="700">v13 (mine)</text><g><title>v13 (mine): 0.8678</title><rect x="104" y="75" width="33.3" height="13" rx="3" fill="#c96545"></rect></g><text class="t mono" x="142.3" y="84.0" font-size="9.5" fill="#6d675e" text-anchor="start" font-weight="400">0.87</text><text class="t" x="96.0" y="103.0" font-size="10.5" fill="#6d675e" text-anchor="end" font-weight="400">CPA</text><g><title>CPA: 1.0062</title><rect x="104" y="94" width="38.6" height="13" rx="3" fill="#a59d92"></rect></g><text class="t mono" x="147.6" y="103.0" font-size="9.5" fill="#6d675e" text-anchor="start" font-weight="400">1.01</text><text class="t" x="96.0" y="122.0" font-size="10.5" fill="#6d675e" text-anchor="end" font-weight="400">scGen</text><g><title>scGen: 1.0066</title><rect x="104" y="113" width="38.6" height="13" rx="3" fill="#a59d92"></rect></g><text class="t mono" x="147.6" y="122.0" font-size="9.5" fill="#6d675e" text-anchor="start" font-weight="400">1.01</text><text class="t" x="96.0" y="141.0" font-size="10.5" fill="#6d675e" text-anchor="end" font-weight="400">STATE</text><g><title>STATE: 1.0122</title><rect x="104" y="132" width="38.8" height="13" rx="3" fill="#a59d92"></rect></g><text class="t mono" x="147.8" y="141.0" font-size="9.5" fill="#6d675e" text-anchor="start" font-weight="400">1.01</text><text class="t" x="96.0" y="160.0" font-size="10.5" fill="#6d675e" text-anchor="end" font-weight="400">GenePT MLP</text><g><title>GenePT MLP: 1.1941</title><rect x="104" y="151" width="45.8" height="13" rx="3" fill="#a59d92"></rect></g><text class="t mono" x="154.8" y="160.0" font-size="9.5" fill="#6d675e" text-anchor="start" font-weight="400">1.19</text><text class="t" x="96.0" y="179.0" font-size="10.5" fill="#6d675e" text-anchor="end" font-weight="400">scLAMBDA</text><g><title>scLAMBDA: 1.4053</title><rect x="104" y="170" width="53.9" height="13" rx="3" fill="#a59d92"></rect></g><text class="t mono" x="162.9" y="179.0" font-size="9.5" fill="#6d675e" text-anchor="start" font-weight="400">1.41</text><text class="t" x="96.0" y="198.0" font-size="10.5" fill="#6d675e" text-anchor="end" font-weight="400">STRING MLP</text><g><title>STRING MLP: 1.5492</title><rect x="104" y="189" width="59.4" height="13" rx="3" fill="#a59d92"></rect></g><text class="t mono" x="168.4" y="198.0" font-size="9.5" fill="#6d675e" text-anchor="start" font-weight="400">1.55</text><text class="t" x="96.0" y="217.0" font-size="10.5" fill="#6d675e" text-anchor="end" font-weight="400">scGPT</text><g><title>scGPT: 1.5673</title><rect x="104" y="208" width="60.1" height="13" rx="3" fill="#a59d92"></rect></g><text class="t mono" x="169.1" y="217.0" font-size="9.5" fill="#6d675e" text-anchor="start" font-weight="400">1.57</text><text class="t" x="96.0" y="236.0" font-size="10.5" fill="#6d675e" text-anchor="end" font-weight="400">Geneformer</text><g><title>Geneformer: 1.8406</title><rect x="104" y="227" width="70.6" height="13" rx="3" fill="#a59d92"></rect></g><text class="t mono" x="179.6" y="236.0" font-size="9.5" fill="#6d675e" text-anchor="start" font-weight="400">1.84</text><text class="t" x="96.0" y="255.0" font-size="10.5" fill="#6d675e" text-anchor="end" font-weight="400">STRING linear</text><g><title>STRING linear: 1.9167</title><rect x="104" y="246" width="73.5" height="13" rx="3" fill="#a59d92"></rect></g><text class="t mono" x="182.5" y="255.0" font-size="9.5" fill="#6d675e" text-anchor="start" font-weight="400">1.92</text><text class="t" x="96.0" y="274.0" font-size="10.5" fill="#6d675e" text-anchor="end" font-weight="400">GenePT linear</text><g><title>GenePT linear: 1.9334</title><rect x="104" y="265" width="74.1" height="13" rx="3" fill="#a59d92"></rect></g><text class="t mono" x="183.1" y="274.0" font-size="9.5" fill="#6d675e" text-anchor="start" font-weight="400">1.93</text><text class="t" x="96.0" y="293.0" font-size="10.5" fill="#6d675e" text-anchor="end" font-weight="400">Ridge</text><g><title>Ridge: 3.0309</title><rect x="104" y="284" width="116.2" height="13" rx="3" fill="#a59d92"></rect></g><text class="t mono" x="225.2" y="293.0" font-size="9.5" fill="#6d675e" text-anchor="start" font-weight="400">3.03</text><text class="t" x="96.0" y="312.0" font-size="10.5" fill="#6d675e" text-anchor="end" font-weight="400">PRESAGE</text><g><title>PRESAGE: 4.5656</title><rect x="104" y="303" width="175.0" height="13" rx="3" fill="#a59d92"></rect></g><text class="t mono" x="284.0" y="312.0" font-size="9.5" fill="#6d675e" text-anchor="start" font-weight="400">4.57</text><line x1="136.2" x2="136.2" y1="28" y2="323" stroke="#2b6fb0" stroke-width="1.5" stroke-dasharray="4 3"></line></svg><svg class="vcc-svg vcc-svg-mini" viewbox="0 0 380 349" role="img" aria-label="CD4 panel · error (lower is better)" xmlns="http://www.w3.org/2000/svg"><text class="t" x="4.0" y="18.0" font-size="12" fill="#292722" text-anchor="start" font-weight="700">CD4 panel · error (lower is better)</text><line x1="104.0" x2="104.0" y1="30" y2="323" stroke="rgba(53,48,41,0.12)"></line><text class="t mono" x="104.0" y="337.0" font-size="10" fill="#6d675e" text-anchor="middle" font-weight="400">0</text><line x1="142.3" x2="142.3" y1="30" y2="323" stroke="rgba(53,48,41,0.12)"></line><text class="t mono" x="142.3" y="337.0" font-size="10" fill="#6d675e" text-anchor="middle" font-weight="400">1</text><line x1="180.7" x2="180.7" y1="30" y2="323" stroke="rgba(53,48,41,0.12)"></line><text class="t mono" x="180.7" y="337.0" font-size="10" fill="#6d675e" text-anchor="middle" font-weight="400">2</text><line x1="219.0" x2="219.0" y1="30" y2="323" stroke="rgba(53,48,41,0.12)"></line><text class="t mono" x="219.0" y="337.0" font-size="10" fill="#6d675e" text-anchor="middle" font-weight="400">3</text><line x1="257.3" x2="257.3" y1="30" y2="323" stroke="rgba(53,48,41,0.12)"></line><text class="t mono" x="257.3" y="337.0" font-size="10" fill="#6d675e" text-anchor="middle" font-weight="400">4</text><line x1="295.7" x2="295.7" y1="30" y2="323" stroke="rgba(53,48,41,0.12)"></line><text class="t mono" x="295.7" y="337.0" font-size="10" fill="#6d675e" text-anchor="middle" font-weight="400">5</text><line x1="334.0" x2="334.0" y1="30" y2="323" stroke="rgba(53,48,41,0.12)"></line><text class="t mono" x="334.0" y="337.0" font-size="10" fill="#6d675e" text-anchor="middle" font-weight="400">6</text><text class="t" x="96.0" y="46.0" font-size="10.5" fill="#292722" text-anchor="end" font-weight="700">v11 (mine)</text><g><title>v11 (mine): 0.9940</title><rect x="104" y="37" width="38.1" height="13" rx="3" fill="#c96545"></rect></g><text class="t mono" x="147.1" y="46.0" font-size="9.5" fill="#6d675e" text-anchor="start" font-weight="400">0.99</text><text class="t" x="96.0" y="65.0" font-size="10.5" fill="#292722" text-anchor="end" font-weight="700">v12 (mine)</text><g><title>v12 (mine): 1.0018</title><rect x="104" y="56" width="38.4" height="13" rx="3" fill="#c96545"></rect></g><text class="t mono" x="147.4" y="65.0" font-size="9.5" fill="#6d675e" text-anchor="start" font-weight="400">1.00</text><text class="t" x="96.0" y="84.0" font-size="10.5" fill="#292722" text-anchor="end" font-weight="700">v13 (mine)</text><g><title>v13 (mine): 1.0019</title><rect x="104" y="75" width="38.4" height="13" rx="3" fill="#c96545"></rect></g><text class="t mono" x="147.4" y="84.0" font-size="9.5" fill="#6d675e" text-anchor="start" font-weight="400">1.00</text><text class="t" x="96.0" y="103.0" font-size="10.5" fill="#6d675e" text-anchor="end" font-weight="400">CPA</text><g><title>CPA: 1.0269</title><rect x="104" y="94" width="39.4" height="13" rx="3" fill="#a59d92"></rect></g><text class="t mono" x="148.4" y="103.0" font-size="9.5" fill="#6d675e" text-anchor="start" font-weight="400">1.03</text><text class="t" x="96.0" y="122.0" font-size="10.5" fill="#6d675e" text-anchor="end" font-weight="400">scGen</text><g><title>scGen: 1.0919</title><rect x="104" y="113" width="41.9" height="13" rx="3" fill="#a59d92"></rect></g><text class="t mono" x="150.9" y="122.0" font-size="9.5" fill="#6d675e" text-anchor="start" font-weight="400">1.09</text><text class="t" x="96.0" y="141.0" font-size="10.5" fill="#6d675e" text-anchor="end" font-weight="400">STATE</text><g><title>STATE: 4.1700</title><rect x="104" y="132" width="159.9" height="13" rx="3" fill="#a59d92"></rect></g><text class="t mono" x="268.9" y="141.0" font-size="9.5" fill="#6d675e" text-anchor="start" font-weight="400">4.17</text><text class="t" x="96.0" y="160.0" font-size="10.5" fill="#6d675e" text-anchor="end" font-weight="400">GenePT MLP</text><g><title>GenePT MLP: 1.0614</title><rect x="104" y="151" width="40.7" height="13" rx="3" fill="#a59d92"></rect></g><text class="t mono" x="149.7" y="160.0" font-size="9.5" fill="#6d675e" text-anchor="start" font-weight="400">1.06</text><text class="t" x="96.0" y="179.0" font-size="10.5" fill="#6d675e" text-anchor="end" font-weight="400">scLAMBDA</text><g><title>scLAMBDA: 1.8209</title><rect x="104" y="170" width="69.8" height="13" rx="3" fill="#a59d92"></rect></g><text class="t mono" x="178.8" y="179.0" font-size="9.5" fill="#6d675e" text-anchor="start" font-weight="400">1.82</text><text class="t" x="96.0" y="198.0" font-size="10.5" fill="#6d675e" text-anchor="end" font-weight="400">STRING MLP</text><g><title>STRING MLP: 1.0206</title><rect x="104" y="189" width="39.1" height="13" rx="3" fill="#a59d92"></rect></g><text class="t mono" x="148.1" y="198.0" font-size="9.5" fill="#6d675e" text-anchor="start" font-weight="400">1.02</text><text class="t" x="96.0" y="217.0" font-size="10.5" fill="#6d675e" text-anchor="end" font-weight="400">scGPT</text><g><title>scGPT: 1.0622</title><rect x="104" y="208" width="40.7" height="13" rx="3" fill="#a59d92"></rect></g><text class="t mono" x="149.7" y="217.0" font-size="9.5" fill="#6d675e" text-anchor="start" font-weight="400">1.06</text><text class="t" x="96.0" y="236.0" font-size="10.5" fill="#6d675e" text-anchor="end" font-weight="400">Geneformer</text><g><title>Geneformer: 1.0524</title><rect x="104" y="227" width="40.3" height="13" rx="3" fill="#a59d92"></rect></g><text class="t mono" x="149.3" y="236.0" font-size="9.5" fill="#6d675e" text-anchor="start" font-weight="400">1.05</text><text class="t" x="96.0" y="255.0" font-size="10.5" fill="#6d675e" text-anchor="end" font-weight="400">STRING linear</text><g><title>STRING linear: 1.3645</title><rect x="104" y="246" width="52.3" height="13" rx="3" fill="#a59d92"></rect></g><text class="t mono" x="161.3" y="255.0" font-size="9.5" fill="#6d675e" text-anchor="start" font-weight="400">1.36</text><text class="t" x="96.0" y="274.0" font-size="10.5" fill="#6d675e" text-anchor="end" font-weight="400">GenePT linear</text><g><title>GenePT linear: 1.2794</title><rect x="104" y="265" width="49.0" height="13" rx="3" fill="#a59d92"></rect></g><text class="t mono" x="158.0" y="274.0" font-size="9.5" fill="#6d675e" text-anchor="start" font-weight="400">1.28</text><text class="t" x="96.0" y="293.0" font-size="10.5" fill="#6d675e" text-anchor="end" font-weight="400">Ridge</text><g><title>Ridge: 3.4351</title><rect x="104" y="284" width="131.7" height="13" rx="3" fill="#a59d92"></rect></g><text class="t mono" x="240.7" y="293.0" font-size="9.5" fill="#6d675e" text-anchor="start" font-weight="400">3.44</text><text class="t" x="96.0" y="312.0" font-size="10.5" fill="#6d675e" text-anchor="end" font-weight="400">PRESAGE</text><g><title>PRESAGE: 5.5021</title><rect x="104" y="303" width="210.9" height="13" rx="3" fill="#a59d92"></rect></g><text class="t mono" x="319.9" y="312.0" font-size="9.5" fill="#6d675e" text-anchor="start" font-weight="400">5.50</text><line x1="142.1" x2="142.1" y1="28" y2="323" stroke="#2b6fb0" stroke-width="1.5" stroke-dasharray="4 3"></line></svg></div>
+<figcaption>Native corrected MSE on historical 24-target H1 and CD4 panels (raw local error, not official scores). My recipes are in terracotta; the dashed blue line is v11.</figcaption>
+</figure>
+<p>None of the twelve routes beat v11 on error in these panels. I want to be careful about what that means, though. It’s a finding about <em>my</em> adapters, <em>my</em> training scope and these panels, not proof that these methods are bad. Several of them only produced predictions for a small share of the target-by-gene table (about 16.5% for CPA and 12.5% for STATE on H1). Four of them trained on seven selected groups, about 71,000 cells out of nearly 339,000 available. And using a frozen foundation model with a small layer on top isn’t the same as fine-tuning it properly. Given more time and compute, I’d love to see this comparison done fairly.</p>
+<figure class="vcc-slot figure" id="img-09">
+  <div class="vcc-slot-frame">
+    <span class="vcc-slot-tag">Illustration 09 · in progress</span>
+    <p>A row of big, shiny, complicated machines with blinking lights, and at the end a small, well-used hand tool. A tape measure shows the hand tool's result landing closest to a target mark.</p>
+  </div>
+</figure>
+</section>
+<section id="the-practice-exam-problem" class="level2">
+<h2 class="anchored" data-anchor-id="the-practice-exam-problem">The practice exam problem</h2>
+<p>If I had to name the single theme of this project, it’s this one. My local tests were like a practice exam. They were useful, but they didn’t always predict the real exam.</p>
+<figure class="vcc-chart figure">
+<p class="vcc-legend"><span><i style="background:#2b6fb0"></i>what my local tests said</span><span><i style="background:#c96545"></i>what the official leaderboard said</span></p><svg class="vcc-svg" viewbox="0 0 760 190" role="img" aria-label="Local estimate versus official result for v10 and v11" xmlns="http://www.w3.org/2000/svg"><line x1="70.0" x2="70.0" y1="32" y2="156" stroke="rgba(53,48,41,0.12)"></line><text class="t mono" x="70.0" y="174.0" font-size="10.5" fill="#6d675e" text-anchor="middle" font-weight="400">0.18</text><line x1="180.0" x2="180.0" y1="32" y2="156" stroke="rgba(53,48,41,0.12)"></line><text class="t mono" x="180.0" y="174.0" font-size="10.5" fill="#6d675e" text-anchor="middle" font-weight="400">0.19</text><line x1="290.0" x2="290.0" y1="32" y2="156" stroke="rgba(53,48,41,0.12)"></line><text class="t mono" x="290.0" y="174.0" font-size="10.5" fill="#6d675e" text-anchor="middle" font-weight="400">0.20</text><line x1="400.0" x2="400.0" y1="32" y2="156" stroke="rgba(53,48,41,0.12)"></line><text class="t mono" x="400.0" y="174.0" font-size="10.5" fill="#6d675e" text-anchor="middle" font-weight="400">0.21</text><line x1="510.0" x2="510.0" y1="32" y2="156" stroke="rgba(53,48,41,0.12)"></line><text class="t mono" x="510.0" y="174.0" font-size="10.5" fill="#6d675e" text-anchor="middle" font-weight="400">0.22</text><line x1="620.0" x2="620.0" y1="32" y2="156" stroke="rgba(53,48,41,0.12)"></line><text class="t mono" x="620.0" y="174.0" font-size="10.5" fill="#6d675e" text-anchor="middle" font-weight="400">0.23</text><line x1="730.0" x2="730.0" y1="32" y2="156" stroke="rgba(53,48,41,0.12)"></line><text class="t mono" x="730.0" y="174.0" font-size="10.5" fill="#6d675e" text-anchor="middle" font-weight="400">0.24</text><text class="t mono" x="56.0" y="68.0" font-size="12" fill="#292722" text-anchor="end" font-weight="700">v10</text><line x1="273.4" x2="635.4" y1="64" y2="64" stroke="#6d675e" stroke-width="2"></line><g><title>v10 my local test: 0.2314</title><circle cx="635.4" cy="64" r="7" fill="#2b6fb0" stroke="#fbf8f2" stroke-width="2"></circle></g><g><title>v10 official: 0.1985</title><circle cx="273.4" cy="64" r="7" fill="#c96545" stroke="#fbf8f2" stroke-width="2"></circle></g><text class="t" x="635.4" y="50.0" font-size="10.5" fill="#292722" text-anchor="middle" font-weight="400">my local test 0.231</text><text class="t" x="273.4" y="50.0" font-size="10.5" fill="#292722" text-anchor="middle" font-weight="400">official 0.198</text><text class="t mono" x="56.0" y="126.0" font-size="12" fill="#292722" text-anchor="end" font-weight="700">v11</text><line x1="414.1" x2="585.4" y1="122" y2="122" stroke="#6d675e" stroke-width="2"></line><g><title>v11 my forecast: 0.22685</title><circle cx="585.4" cy="122" r="7" fill="#2b6fb0" stroke="#fbf8f2" stroke-width="2"></circle></g><g><title>v11 official: 0.2113</title><circle cx="414.1" cy="122" r="7" fill="#c96545" stroke="#fbf8f2" stroke-width="2"></circle></g><text class="t" x="585.4" y="108.0" font-size="10.5" fill="#292722" text-anchor="middle" font-weight="400">my forecast 0.227</text><text class="t" x="414.1" y="108.0" font-size="10.5" fill="#292722" text-anchor="middle" font-weight="400">official 0.211</text></svg>
+<figcaption>What my local tests said versus what the official leaderboard said, for the two versions where I have both numbers.</figcaption>
+</figure>
+<p>A local evaluator can do the arithmetic perfectly and still rank recipes differently from the hidden competition. Which targets you test on, which sources you leave out, how you split the controls and which starting carrier you use all change the answer. Some examples I ran into:</p>
+<ul>
+<li>The official order was v11 &gt; v9 &gt; v10. On my 300-target VIPerturb panel, v10 was also the worst, but v11 didn’t beat v9. My 24-target CD4 panel didn’t reproduce the official order either. I didn’t force them to agree.</li>
+<li>Breaking the assembly line into stages showed that the final cell-spreading step alone could make the error worse: for v10 on VIPerturb, raw MSE went from 1.083 to 1.199 at that step, with identical gene totals.</li>
+<li>A supposed factor-of-100 error in the CD4 data turned out not to exist. What actually mattered was <em>how</em> things were normalised: per cell or after summing.</li>
+<li>Fourteen official targets on one platform always had an undefined MSE score, so I kept them separate. Adding 544 other targets didn’t make them valid.</li>
+</ul>
+<figure class="vcc-slot figure" id="img-10">
+  <div class="vcc-slot-frame">
+    <span class="vcc-slot-tag">Illustration 10 · in progress</span>
+    <p>A student holding a practice test marked with a big A, standing in front of a closed exam-hall door. Through the keyhole you can see a different-looking exam paper.</p>
+  </div>
+</figure>
+</section>
+<section id="working-with-ai-assistants" class="level2">
+<h2 class="anchored" data-anchor-id="working-with-ai-assistants">Working with AI assistants</h2>
+<p>I used Codex and Claude a lot: to find datasets, write extractors and adapters, propose experiments, coordinate audits and job queues, and set up Colab notebooks. I also wrote self-contained prompts for ChatGPT Pro. They were genuinely helpful, but I treated their suggestions as ideas to test, not as evidence. I set the priorities and decided what got submitted.</p>
+<p>Honestly, a big chunk of the time went into engineering rather than science: package versions that refused to cooperate, cache locks on Google Drive, losing everything after a Colab reconnect, files being hashed again and again, slow graph preparation for GEARS, fits that never finished. The fixes were unglamorous: isolated environments, checkpoints, cache keys based on file content, logs per phase, timers, and only reusing results that were marked complete. A smoke test passing never counted as a scientific win.</p>
+</section>
+<section id="what-id-tell-myself-in-september" class="level2">
+<h2 class="anchored" data-anchor-id="what-id-tell-myself-in-september">What I’d tell myself in September</h2>
+<ol type="1">
+<li><strong>Build the evaluator first, then distrust it.</strong> My biggest jump in understanding came from finding the bug in my own test.</li>
+<li><strong>Change one thing at a time when you can.</strong> v6, v10 and v13 each changed several things together, and I still can’t say for sure what helped or hurt.</li>
+<li><strong>Data isn’t free.</strong> Every new dataset brings its own units, controls, treatments and quirks. More sources made v10 worse, not better.</li>
+<li><strong>Look at all six metrics, not just the total.</strong> v13 had my best PDS and still lost.</li>
+<li><strong>Write things down properly.</strong> I can’t fully reconstruct v1 or v2. Name your versions and keep the receipts.</li>
+<li><strong>Simple baselines are hard to beat.</strong> A careful transfer recipe beat every big model I tried, at least in my hands.</li>
+</ol>
+<p>I went in wanting to understand perturbation data better, and I think I did. Mostly by watching my ideas fail in instructive ways.</p>
+</section>
+<section id="every-version-at-a-glance" class="level2">
+<h2 class="anchored" data-anchor-id="every-version-at-a-glance">Every version at a glance</h2>
+<p>All values are official normalised scores (higher is better). A dash means the value wasn’t recovered. v1, v7 and v12 are rounded records.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 11%">
+<col style="width: 11%">
+<col style="width: 11%">
+<col style="width: 11%">
+<col style="width: 11%">
+<col style="width: 11%">
+<col style="width: 11%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Version</th>
+<th>Main idea</th>
+<th style="text-align: right;">PDS</th>
+<th style="text-align: right;">MSE</th>
+<th style="text-align: right;">NMAE</th>
+<th style="text-align: right;">Fidelity</th>
+<th style="text-align: right;">Reach</th>
+<th style="text-align: right;">Jaccard</th>
+<th style="text-align: right;">Overall</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>v1</td>
+<td>Direction/size split</td>
+<td style="text-align: right;">–</td>
+<td style="text-align: right;">–</td>
+<td style="text-align: right;">–</td>
+<td style="text-align: right;">–</td>
+<td style="text-align: right;">–</td>
+<td style="text-align: right;">–</td>
+<td style="text-align: right;">≈0.1338</td>
+</tr>
+<tr class="even">
+<td>v2</td>
+<td>Wider source catalogue</td>
+<td style="text-align: right;">–</td>
+<td style="text-align: right;">–</td>
+<td style="text-align: right;">–</td>
+<td style="text-align: right;">–</td>
+<td style="text-align: right;">–</td>
+<td style="text-align: right;">–</td>
+<td style="text-align: right;">–</td>
+</tr>
+<tr class="odd">
+<td>v3</td>
+<td>Published reference</td>
+<td style="text-align: right;">0.6128</td>
+<td style="text-align: right;">0.0000</td>
+<td style="text-align: right;">0.1442</td>
+<td style="text-align: right;">−0.0161</td>
+<td style="text-align: right;">0.1494</td>
+<td style="text-align: right;">−0.0014</td>
+<td style="text-align: right;">0.1482</td>
+</tr>
+<tr class="even">
+<td>v4</td>
+<td>Copula cell reshaping</td>
+<td style="text-align: right;">0.6012</td>
+<td style="text-align: right;">0.0000</td>
+<td style="text-align: right;">0.1493</td>
+<td style="text-align: right;">−0.0268</td>
+<td style="text-align: right;">0.1507</td>
+<td style="text-align: right;">0.0048</td>
+<td style="text-align: right;">0.1465</td>
+</tr>
+<tr class="odd">
+<td>v5</td>
+<td>Reshape weak effects only</td>
+<td style="text-align: right;">0.6012</td>
+<td style="text-align: right;">0.0000</td>
+<td style="text-align: right;">0.1493</td>
+<td style="text-align: right;">−0.0252</td>
+<td style="text-align: right;">0.1790</td>
+<td style="text-align: right;">−0.0004</td>
+<td style="text-align: right;">0.1507</td>
+</tr>
+<tr class="even">
+<td>v6</td>
+<td>Specialised branches</td>
+<td style="text-align: right;">0.6515</td>
+<td style="text-align: right;">0.1502</td>
+<td style="text-align: right;">0.1437</td>
+<td style="text-align: right;">−0.0836</td>
+<td style="text-align: right;">0.1678</td>
+<td style="text-align: right;">−0.0065</td>
+<td style="text-align: right;">0.1705</td>
+</tr>
+<tr class="odd">
+<td>v7</td>
+<td>Changed-gene floor</td>
+<td style="text-align: right;">0.660</td>
+<td style="text-align: right;">0.179</td>
+<td style="text-align: right;">0.165</td>
+<td style="text-align: right;">0.008</td>
+<td style="text-align: right;">0.166</td>
+<td style="text-align: right;">−0.016</td>
+<td style="text-align: right;">≈0.1937</td>
+</tr>
+<tr class="even">
+<td>v8</td>
+<td>A to H1 branch + Jurkat</td>
+<td style="text-align: right;">0.6533</td>
+<td style="text-align: right;">0.2209</td>
+<td style="text-align: right;">0.1872</td>
+<td style="text-align: right;">0.0172</td>
+<td style="text-align: right;">0.1873</td>
+<td style="text-align: right;">−0.0156</td>
+<td style="text-align: right;">0.2084</td>
+</tr>
+<tr class="odd">
+<td>v9</td>
+<td>Added Yao THP1</td>
+<td style="text-align: right;">0.6534</td>
+<td style="text-align: right;">0.2210</td>
+<td style="text-align: right;">0.1868</td>
+<td style="text-align: right;">0.0170</td>
+<td style="text-align: right;">0.1881</td>
+<td style="text-align: right;">−0.0156</td>
+<td style="text-align: right;">0.2084</td>
+</tr>
+<tr class="even">
+<td>v10</td>
+<td>Everything at once</td>
+<td style="text-align: right;">0.6420</td>
+<td style="text-align: right;">0.1694</td>
+<td style="text-align: right;">0.1884</td>
+<td style="text-align: right;">0.0275</td>
+<td style="text-align: right;">0.1755</td>
+<td style="text-align: right;">−0.0119</td>
+<td style="text-align: right;">0.1985</td>
+</tr>
+<tr class="odd">
+<td>v11</td>
+<td>Step back</td>
+<td style="text-align: right;">0.6547</td>
+<td style="text-align: right;">0.2389</td>
+<td style="text-align: right;">0.1943</td>
+<td style="text-align: right;">0.0224</td>
+<td style="text-align: right;">0.1760</td>
+<td style="text-align: right;">−0.0186</td>
+<td style="text-align: right;">0.2113</td>
+</tr>
+<tr class="even">
+<td>v12</td>
+<td>Remove 15 control patterns</td>
+<td style="text-align: right;">–</td>
+<td style="text-align: right;">–</td>
+<td style="text-align: right;">–</td>
+<td style="text-align: right;">–</td>
+<td style="text-align: right;">–</td>
+<td style="text-align: right;">–</td>
+<td style="text-align: right;">≈0.2166</td>
+</tr>
+<tr class="odd">
+<td>v13</td>
+<td>Reliability + louder</td>
+<td style="text-align: right;">0.7573</td>
+<td style="text-align: right;">0.1918</td>
+<td style="text-align: right;">0.1604</td>
+<td style="text-align: right;">0.0139</td>
+<td style="text-align: right;">0.1683</td>
+<td style="text-align: right;">−0.0170</td>
+<td style="text-align: right;">0.2124</td>
+</tr>
+<tr class="even">
+<td>v14-DEF</td>
+<td>v12 recipe on D/E/F</td>
+<td style="text-align: right;">–</td>
+<td style="text-align: right;">–</td>
+<td style="text-align: right;">–</td>
+<td style="text-align: right;">–</td>
+<td style="text-align: right;">–</td>
+<td style="text-align: right;">–</td>
+<td style="text-align: right;">not visible</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="glossary" class="level2">
+<h2 class="anchored" data-anchor-id="glossary">Glossary</h2>
+<dl class="vcc-glossary">
+  <div><dt>Control (NTC)</dt><dd>Cells that went through the experiment without any gene being switched off. They show the normal starting point.</dd></div>
+  <div><dt>Source and receiver</dt><dd>A source is an experiment someone already measured. The receiver is the new cell type I'm predicting for.</dd></div>
+  <div><dt>Perturbation</dt><dd>Switching off (here, quieting with CRISPRi) one gene and seeing what happens.</dd></div>
+  <div><dt>Proxy</dt><dd>My local stand-in for the hidden official evaluation. Only as good as how well its conclusions transfer.</dd></div>
+  <div><dt>Control PCs</dt><dd>The main patterns of natural variation among untreated cells. Removing them can reduce noise, or remove real signal.</dd></div>
+  <div><dt>Lambda / amplitude</dt><dd>The volume knob: how strongly the predicted change is applied.</dd></div>
+  <div><dt>CP50K</dt><dd>A common scale where each cell's counts are rescaled to add up to 50,000, then log-transformed. Mixing scales silently is a classic bug.</dd></div>
+  <div><dt>Leakage</dt><dd>Accidentally using the answers (or something derived from them) to build the prediction. Makes results look great and mean nothing.</dd></div>
+  <div><dt>Carrier and emitter</dt><dd>The starting count matrix, and the procedure that modifies it into the final simulated cells.</dd></div>
+  <div><dt>Pseudobulk</dt><dd>The average of many cells treated as one sample. Handy for comparing, but it hides cell-to-cell variation.</dd></div>
+</dl>
+<div class="vcc-note">
+<p><strong>About the evidence.</strong> This page is based on a retrospective I put together from my archives on 24 October 2026: official responses, 14,218 logged results, an index of 8,665 experiment files and 54 evidence sources. Nothing was retrained or resubmitted to write it. Where a number is missing, I’ve left it missing rather than guess it.</p>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/rsolerortuno\.github\.io");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>© 2026 Rafael Soler Ortuño</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+<p>Computational biology · Translational science · Research software</p>
+</div>
+  </div>
+</footer>
+
+
+
+
+<script src="../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>
