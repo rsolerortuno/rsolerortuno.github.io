@@ -653,6 +653,8 @@ The main public resources used in this project. Only links that could be confirm
   <div><dt>Lambda / amplitude</dt><dd>The scale applied to the predicted change. Larger values separate targets more but can worsen expression accuracy.</dd></div>
   <div><dt>CP50K</dt><dd>Counts rescaled to 50,000 per cell, usually followed by log1p. Mixing normalisation conventions silently is a common source of error.</dd></div>
   <div><dt>Proxy</dt><dd>A local stand-in for the hidden official evaluation. It is useful only to the extent that its conclusions transfer.</dd></div>
+  <div><dt>Native vs normalised MSE</dt><dd>Native MSE is the raw error computed locally from emitted cells (lower is better). The leaderboard's MSE score is normalised against a reference and clipped at zero (higher is better).</dd></div>
+  <div><dt>Paired bootstrap interval</dt><dd>Targets are resampled with replacement 2,000 times and the difference between two models is recomputed on each resample. The central 95% of those differences gives the interval.</dd></div>
   <div><dt>Leakage</dt><dd>Using evaluation answers, or anything derived from them, to build a prediction. It inflates results and invalidates them.</dd></div>
 </dl>
 ```
