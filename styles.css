@@ -1704,7 +1704,7 @@ code {
 }
 
 /* Compact variant of the overview table for the homepage.
-   The homepage column is narrower than the Tools page, so tighten the
+   The homepage column is narrower than the Projects page, so tighten the
    horizontal rhythm slightly to avoid a few pixels of pointless scroll. */
 .tools-overview-compact {
   margin: 0 0 2.6rem;

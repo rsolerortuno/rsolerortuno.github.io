@@ -724,7 +724,7 @@ main.content p {
  * already say, so the same eight tools are read twice in a row.
  *
  * Scoped to .tools-overview-compact, which only the homepage copy carries;
- * the Tools page keeps its table in card form, since there it is the
+ * the Projects page keeps its table in card form, since there it is the
  * content rather than a summary. Above 900px nothing changes anywhere.
  */
 @media (max-width: 900px) {
