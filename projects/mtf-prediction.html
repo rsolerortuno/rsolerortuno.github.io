@@ -68,6 +68,7 @@ ul.task-list li input[type="checkbox"] {
 <link rel="stylesheet" href="../brand.css">
 <link rel="stylesheet" href="../role-fix.css">
 <link rel="stylesheet" href="../refine.css">
+<link rel="stylesheet" href="../nav.css">
 <meta property="og:title" content="MTF Prediction – Rafael Soler Ortuño">
 <meta property="og:description" content="A research analysis using DeepTFactor and Captum to identify and interpret transcription-factor-like sequence features.">
 <meta property="og:site_name" content="Rafael Soler Ortuño">
@@ -93,10 +94,54 @@ ul.task-list li input[type="checkbox"] {
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
-  <li class="nav-item">
-    <a class="nav-link" href="../projects.html"> 
-<span class="menu-text">Tools</span></a>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-projects" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Projects</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-projects">    
+        <li>
+    <a class="dropdown-item" href="../projects.html">
+ <span class="dropdown-text">All projects</span></a>
   </li>  
+        <li><hr class="dropdown-divider"></li>
+        <li>
+    <a class="dropdown-item" href="../projects/virtual-cell-challenge.html">
+ <span class="dropdown-text">Virtual Cell Challenge 2026</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../projects/targetintel-io.html">
+ <span class="dropdown-text">TargetIntel-IO</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../projects/activation-liability.html">
+ <span class="dropdown-text">Activation Liability</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../projects/reach-gap.html">
+ <span class="dropdown-text">reach-gap</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../projects/segmentation-fragility.html">
+ <span class="dropdown-text">segmentation-fragility</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../projects/fm-value-audit.html">
+ <span class="dropdown-text">FM Value Audit</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../projects/drugmatch-confidence.html">
+ <span class="dropdown-text">DrugMatch-Confidence</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../projects/mtf-prediction.html">
+ <span class="dropdown-text">MTF Prediction</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../projects/dev-autopilot.html">
+ <span class="dropdown-text">Dev Autopilot</span></a>
+  </li>  
+    </ul>
+  </li>
   <li class="nav-item">
     <a class="nav-link" href="../about.html"> 
 <span class="menu-text">Experience</span></a>
@@ -253,6 +298,26 @@ ul.task-list li input[type="checkbox"] {
 </section>
 
 </main> <!-- /main -->
+<script>
+// The Projects navbar item is a dropdown. On wide screens it opens on hover,
+// so a click on the label itself goes straight to the projects table.
+// On narrow screens it keeps Bootstrap's tap-to-open behaviour, and the
+// first menu item ("All projects") links to the table.
+(function () {
+  var menu = document.querySelector('.navbar .dropdown-menu a.dropdown-item');
+  if (!menu) return;
+  var toggle = menu.closest('.dropdown').querySelector('.dropdown-toggle');
+  if (!toggle) return;
+  toggle.setAttribute('href', menu.getAttribute('href'));
+  toggle.addEventListener('click', function (event) {
+    if (window.matchMedia('(min-width: 992px)').matches) {
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      window.location.href = toggle.href;
+    }
+  }, true);
+})();
+</script>
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";

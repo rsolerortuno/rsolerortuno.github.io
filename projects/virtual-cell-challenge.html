@@ -65,6 +65,7 @@ ul.task-list li input[type="checkbox"] {
 <link rel="stylesheet" href="../brand.css">
 <link rel="stylesheet" href="../role-fix.css">
 <link rel="stylesheet" href="../refine.css">
+<link rel="stylesheet" href="../nav.css">
 <link rel="stylesheet" href="../vcc.css">
 <meta property="og:title" content="Fourteen tries at a virtual cell – Rafael Soler Ortuño">
 <meta property="og:description" content="A plain-English retrospective of the Pedrito Amor entry to the Virtual Cell Challenge 2026: what each version tried, what worked, what broke and what I learned.">
@@ -91,10 +92,54 @@ ul.task-list li input[type="checkbox"] {
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
-  <li class="nav-item">
-    <a class="nav-link" href="../projects.html"> 
-<span class="menu-text">Tools</span></a>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-projects" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Projects</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-projects">    
+        <li>
+    <a class="dropdown-item" href="../projects.html">
+ <span class="dropdown-text">All projects</span></a>
   </li>  
+        <li><hr class="dropdown-divider"></li>
+        <li>
+    <a class="dropdown-item" href="../projects/virtual-cell-challenge.html">
+ <span class="dropdown-text">Virtual Cell Challenge 2026</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../projects/targetintel-io.html">
+ <span class="dropdown-text">TargetIntel-IO</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../projects/activation-liability.html">
+ <span class="dropdown-text">Activation Liability</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../projects/reach-gap.html">
+ <span class="dropdown-text">reach-gap</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../projects/segmentation-fragility.html">
+ <span class="dropdown-text">segmentation-fragility</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../projects/fm-value-audit.html">
+ <span class="dropdown-text">FM Value Audit</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../projects/drugmatch-confidence.html">
+ <span class="dropdown-text">DrugMatch-Confidence</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../projects/mtf-prediction.html">
+ <span class="dropdown-text">MTF Prediction</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../projects/dev-autopilot.html">
+ <span class="dropdown-text">Dev Autopilot</span></a>
+  </li>  
+    </ul>
+  </li>
   <li class="nav-item">
     <a class="nav-link" href="../about.html"> 
 <span class="menu-text">Experience</span></a>
@@ -186,24 +231,12 @@ ul.task-list li input[type="checkbox"] {
   <div><strong>14,218</strong><span>logged results from local experiments</span></div>
   <div><strong>12</strong><span>alternative AI model routes tested</span></div>
 </div>
-<figure class="vcc-slot vcc-slot-hero figure" id="img-01">
-  <div class="vcc-slot-frame">
-    <span class="vcc-slot-tag">Illustration 01 · in progress</span>
-    <p>A cell drawn as a small city at night. One switch on a control panel is flipped off, and a ripple of lights changes across the streets.</p>
-  </div>
-</figure>
 <section id="the-challenge-in-plain-words" class="level2">
 <h2 class="anchored" data-anchor-id="the-challenge-in-plain-words">The challenge, in plain words</h2>
 <p>Every cell in your body carries the same set of genes. You can think of a gene as a recipe card. What makes a liver cell different from a T cell is which recipes it’s actually cooking, and how much of each. Scientists measure this as gene expression: for every cell, a count of how many copies of each recipe are in use right now.</p>
 <p>Now, there’s a lab technique called CRISPR interference (CRISPRi) that lets you quietly switch off one gene. When you switch one off, it rarely stays a local event. Other genes react: some go up, some go down, many don’t care. That whole pattern of reactions is called a <em>perturbation response</em>.</p>
 <p>The challenge asked a simple-sounding question. If I show you a new type of cell, but only in its normal, untreated state, can you predict what will happen to all its genes when each of a list of target genes is switched off?</p>
 <p>The catch is that you never see the new cell type being perturbed. You only see its untreated “control” cells, plus whatever experiments other people have run on <em>other</em> cell types. And the answer can’t be a vague description: you have to hand in a big table of whole-number counts for hundreds of simulated cells per target gene. Basically, fake but realistic single-cell data.</p>
-<figure class="vcc-slot figure" id="img-02">
-  <div class="vcc-slot-frame">
-    <span class="vcc-slot-tag">Illustration 02 · in progress</span>
-    <p>Left: a cell type we have seen perturbed many times, with a known ripple pattern. Right: a new cell type seen only at rest, with a question mark where its ripple should be. An arrow labelled "transfer?" joins them.</p>
-  </div>
-</figure>
 <section id="how-the-score-works" class="level3">
 <h3 class="anchored" data-anchor-id="how-the-score-works">How the score works</h3>
 <p>The leaderboard combined six measurements into a single number. I’ll be honest, it took me a while to really understand what each of them rewards, and much of this story is about them pulling in different directions.</p>
@@ -262,12 +295,6 @@ ul.task-list li input[type="checkbox"] {
 <p>Then I tried something I still like. I split each response into two parts: its <em>direction</em> (which genes go up or down) and its <em>size</em> (by how much). Related stem-cell experiments (KOLF2.1J, HipSci and hESC) were allowed to vote on the direction, but with a low weight of 0.25 each, while the size stayed decided by the trusted core. A common generator then turned the averages into simulated cells. That became v1, at roughly 0.1338.</p>
 <p>v2 went much wider. I added a long list of public datasets (Orion HCT116 and HEK293T, CD4 T cells under different conditions, Jiang by cell line and cytokine, PerturbME, Frangieh, Tian, Papalexi and more KOLF samples) and started experimenting with learned transfer between contexts, shrinkage of uncertain estimates, and different ways of turning averages into cells.</p>
 <p>v3 consolidated all that into what became my published reference: <strong>0.1482</strong>.</p>
-<figure class="vcc-slot figure" id="img-03">
-  <div class="vcc-slot-frame">
-    <span class="vcc-slot-tag">Illustration 03 · in progress</span>
-    <p>An arrow split into two strands: one strand labelled "direction" (where it points) gets input from many small voices; the other labelled "size" (how long) comes only from a trusted core of five cell types.</p>
-  </div>
-</figure>
 <div class="vcc-cols">
 <section id="what-went-well" class="level4 vcc-good">
 <h4 class="anchored" data-anchor-id="what-went-well">What went well</h4>
@@ -308,12 +335,6 @@ ul.task-list li input[type="checkbox"] {
 <section id="the-idea-1" class="level3">
 <h3 class="anchored" data-anchor-id="the-idea-1">The idea</h3>
 <p>Imagine 400 jars, one per simulated cell, and you have to share out 4,000 sugar cubes for a given gene. You can put ten in each jar, or you can be more realistic and let some jars get more and some fewer, the way real cells naturally vary. The total stays the same, but the pattern is very different. Tests that decide whether a gene “changed” look at that cell-to-cell spread, not only at the average.</p>
-<figure class="vcc-slot figure" id="img-04">
-  <div class="vcc-slot-frame">
-    <span class="vcc-slot-tag">Illustration 04 · in progress</span>
-    <p>Two rows of identical jars holding the same total number of sugar cubes. Top row: every jar has exactly the same amount. Bottom row: uneven, natural-looking amounts. A small scale shows both rows weigh the same.</p>
-  </div>
-</figure>
 </section>
 <section id="how-i-built-it-1" class="level3">
 <h3 class="anchored" data-anchor-id="how-i-built-it-1">How I built it</h3>
@@ -365,12 +386,6 @@ ul.task-list li input[type="checkbox"] {
 <section id="the-idea-2" class="level3">
 <h3 class="anchored" data-anchor-id="the-idea-2">The idea</h3>
 <p>Instead of one universal average, build specialised <em>branches</em>, each tuned to a family of cell types, and send every hidden validation context (they were called A, B and C) down the branch whose controls look most like it.</p>
-<figure class="vcc-slot figure" id="img-05">
-  <div class="vcc-slot-frame">
-    <span class="vcc-slot-tag">Illustration 05 · in progress</span>
-    <p>A small railway junction. Three trains labelled A, B and C arrive; a signal box reads how each train looks and switches it onto one of two tracks: an "H1 multi-source" track or a "CD4 T cell" track.</p>
-  </div>
-</figure>
 </section>
 <section id="how-i-built-it-2" class="level3">
 <h3 class="anchored" data-anchor-id="how-i-built-it-2">How I built it</h3>
@@ -426,12 +441,6 @@ ul.task-list li input[type="checkbox"] {
 <p>To combine them it used inverse-variance weighting for B and C (trust precise sources more) and a random-effects model for A (also allow for real differences between sources). Then it switched on three transformations to fit effects to the new cell: fold-change transfer, a transfer map, and a mask that ignored genes detected in fewer than 5% of the new cell’s controls. It also turned the volume up to 1.10 and raised the changed-gene target from 3,000 to 6,000.</p>
 <p>Locally, the GEO plus L1000 setup looked like my best ever, around 0.2314.</p>
 <p>Officially: <strong>0.1985</strong>. A clear step backwards. The MSE score fell from 0.221 to 0.169.</p>
-<figure class="vcc-slot figure" id="img-06">
-  <div class="vcc-slot-frame">
-    <span class="vcc-slot-tag">Illustration 06 · in progress</span>
-    <p>A hiker with a hugely overstuffed backpack (labelled datasets, maps, masks, a big volume knob) struggling up a hill, next to a lighter hiker with a small pack walking past easily.</p>
-  </div>
-</figure>
 <p><strong>v11</strong> was the step back. I kept the wider sources but switched off all three baseline transformations and turned the volume back to 0.99. Result: <strong>0.2113</strong>, better than both v10 (+0.0128) and v9 (+0.0028). The MSE score hit 0.239, the best it ever got.</p>
 <div class="vcc-cols">
 <section id="what-went-well-3" class="level4 vcc-good">
@@ -474,12 +483,6 @@ ul.task-list li input[type="checkbox"] {
 <section id="the-idea-4" class="level3">
 <h3 class="anchored" data-anchor-id="the-idea-4">The idea</h3>
 <p>Even untreated cells differ from each other in big, recurring ways. Things like how far along the cell cycle a cell is, or how big or stressed it is. Those patterns can show up in a prediction and make every target look a bit alike. If I find the main patterns of variation in the control cells and remove them from my predictions, the target-specific part should stand out. It’s like noise-cancelling headphones: find the hum, subtract it.</p>
-<figure class="vcc-slot figure" id="img-07">
-  <div class="vcc-slot-frame">
-    <span class="vcc-slot-tag">Illustration 07 · in progress</span>
-    <p>A sound-wave drawing: a messy wave labelled "prediction" goes through a pair of headphones and comes out as a clean, distinct melody. The removed hum floats away labelled "control patterns".</p>
-  </div>
-</figure>
 </section>
 <section id="how-i-built-it-4" class="level3">
 <h3 class="anchored" data-anchor-id="how-i-built-it-4">How I built it</h3>
@@ -576,12 +579,6 @@ ul.task-list li input[type="checkbox"] {
 <p>D used the recipe from context A, and E and F used the recipe from B and C. I ran a quick comparison on look-alike datasets (Yao THP1, U87MG and T98G, with 18, 21 and 21 usable targets). It couldn’t produce a fair winner, because some MSE values were undefined.</p>
 <p>So the rule I’d set in advance kicked in: fall back to the best official historical evidence, which was v12. The final delivery used v12’s recipe (15 patterns removed, volume ratio 0.99, 8,000 changed genes) with the new controls and targets, under the name <code>pedrito-amor-v14-DEF</code>.</p>
 <p>The upload was about 3.2 GB, checksum verified, finished on 24 October at 14:21 UTC. The server shows it as published, with no score visible yet.</p>
-<figure class="vcc-slot figure" id="img-08">
-  <div class="vcc-slot-frame">
-    <span class="vcc-slot-tag">Illustration 08 · in progress</span>
-    <p>A traveller at a crossroads holding two maps: a shiny new one with blank areas and an older, well-worn one with a route already walked and marked. The traveller follows the worn map towards three doors labelled D, E and F.</p>
-  </div>
-</figure>
 <div class="vcc-cols">
 <section id="what-went-well-5" class="level4 vcc-good">
 <h4 class="anchored" data-anchor-id="what-went-well-5">What went well</h4>
@@ -634,12 +631,6 @@ ul.task-list li input[type="checkbox"] {
 <figcaption>Native corrected MSE on historical 24-target H1 and CD4 panels (raw local error, not official scores). My recipes are in terracotta; the dashed blue line is v11.</figcaption>
 </figure>
 <p>None of the twelve routes beat v11 on error in these panels. I want to be careful about what that means, though. It’s a finding about <em>my</em> adapters, <em>my</em> training scope and these panels, not proof that these methods are bad. Several of them only produced predictions for a small share of the target-by-gene table (about 16.5% for CPA and 12.5% for STATE on H1). Four of them trained on seven selected groups, about 71,000 cells out of nearly 339,000 available. And using a frozen foundation model with a small layer on top isn’t the same as fine-tuning it properly. Given more time and compute, I’d love to see this comparison done fairly.</p>
-<figure class="vcc-slot figure" id="img-09">
-  <div class="vcc-slot-frame">
-    <span class="vcc-slot-tag">Illustration 09 · in progress</span>
-    <p>A row of big, shiny, complicated machines with blinking lights, and at the end a small, well-used hand tool. A tape measure shows the hand tool's result landing closest to a target mark.</p>
-  </div>
-</figure>
 </section>
 <section id="the-practice-exam-problem" class="level2">
 <h2 class="anchored" data-anchor-id="the-practice-exam-problem">The practice exam problem</h2>
@@ -655,12 +646,6 @@ ul.task-list li input[type="checkbox"] {
 <li>A supposed factor-of-100 error in the CD4 data turned out not to exist. What actually mattered was <em>how</em> things were normalised: per cell or after summing.</li>
 <li>Fourteen official targets on one platform always had an undefined MSE score, so I kept them separate. Adding 544 other targets didn’t make them valid.</li>
 </ul>
-<figure class="vcc-slot figure" id="img-10">
-  <div class="vcc-slot-frame">
-    <span class="vcc-slot-tag">Illustration 10 · in progress</span>
-    <p>A student holding a practice test marked with a big A, standing in front of a closed exam-hall door. Through the keyhole you can see a different-looking exam paper.</p>
-  </div>
-</figure>
 </section>
 <section id="working-with-ai-assistants" class="level2">
 <h2 class="anchored" data-anchor-id="working-with-ai-assistants">Working with AI assistants</h2>
@@ -887,6 +872,26 @@ ul.task-list li input[type="checkbox"] {
 </section>
 
 </main> <!-- /main -->
+<script>
+// The Projects navbar item is a dropdown. On wide screens it opens on hover,
+// so a click on the label itself goes straight to the projects table.
+// On narrow screens it keeps Bootstrap's tap-to-open behaviour, and the
+// first menu item ("All projects") links to the table.
+(function () {
+  var menu = document.querySelector('.navbar .dropdown-menu a.dropdown-item');
+  if (!menu) return;
+  var toggle = menu.closest('.dropdown').querySelector('.dropdown-toggle');
+  if (!toggle) return;
+  toggle.setAttribute('href', menu.getAttribute('href'));
+  toggle.addEventListener('click', function (event) {
+    if (window.matchMedia('(min-width: 992px)').matches) {
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      window.location.href = toggle.href;
+    }
+  }, true);
+})();
+</script>
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";

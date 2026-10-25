@@ -1,0 +1,61 @@
+/*
+ * Projects dropdown in the navbar and clickable project names in the
+ * projects table.
+ */
+
+@media (min-width: 992px) {
+  .navbar .nav-item.dropdown:hover > .dropdown-menu,
+  .navbar .nav-item.dropdown:focus-within > .dropdown-menu {
+    display: block;
+    margin-top: 0;
+  }
+}
+
+.navbar .dropdown-menu {
+  padding: 0.45rem;
+  background: var(--cream-card);
+  border: 1px solid var(--hairline);
+  border-radius: 14px;
+  box-shadow: var(--shadow-soft);
+}
+
+.navbar .dropdown-item {
+  padding: 0.45rem 0.8rem;
+  color: var(--text);
+  border-radius: 9px;
+  font-family: var(--humanist);
+  font-size: 0.92rem;
+}
+
+.navbar .dropdown-item:hover,
+.navbar .dropdown-item:focus {
+  color: #a94f35;
+  background: var(--cream-deep);
+}
+
+.navbar .dropdown-menu li:first-child .dropdown-item {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.navbar .dropdown-divider {
+  border-color: var(--hairline);
+}
+
+a.tool-name,
+a.tool-name:hover {
+  color: var(--ink);
+  text-decoration: none;
+}
+
+a.tool-name::after {
+  transform: scaleX(0.35);
+}
+
+a.tool-name:hover::after,
+a.tool-name:focus-visible::after {
+  transform: scaleX(1);
+}

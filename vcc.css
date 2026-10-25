@@ -69,64 +69,6 @@
   text-transform: uppercase;
 }
 
-/* ---------- illustration slots ---------- */
-
-.vcc-slot {
-  margin: 2rem 0;
-}
-
-.vcc-slot-frame {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 0.7rem;
-  min-height: 15rem;
-  aspect-ratio: 16 / 7;
-  padding: 1.6rem 2rem;
-  background:
-    linear-gradient(rgba(53, 48, 41, 0.035) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(53, 48, 41, 0.035) 1px, transparent 1px),
-    linear-gradient(135deg, var(--peach), var(--sage));
-  background-size: 24px 24px, 24px 24px, 100% 100%;
-  border: 1.5px dashed rgba(169, 79, 53, 0.45);
-  border-radius: 18px;
-}
-
-.vcc-slot-hero .vcc-slot-frame {
-  aspect-ratio: 16 / 6;
-}
-
-.vcc-slot-tag {
-  width: fit-content;
-  padding: 0.35rem 0.6rem;
-  color: #a94f35;
-  background: rgba(255, 253, 248, 0.7);
-  border-radius: 999px;
-  font-family: var(--mono);
-  font-size: 0.64rem;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-}
-
-.vcc-slot-frame p {
-  max-width: 40rem;
-  margin: 0;
-  color: var(--text) !important;
-  font-family: var(--editorial);
-  font-size: 1.02rem;
-  font-style: italic;
-  line-height: 1.5;
-  text-align: left !important;
-}
-
-/* Once an image exists, swap the frame for <img class="vcc-illustration"> */
-.vcc-illustration {
-  width: 100%;
-  height: auto;
-  border-radius: 18px;
-}
-
 /* ---------- metric cards, model cards ---------- */
 
 .vcc-metrics,
@@ -473,13 +415,6 @@ main.content table {
 @media (max-width: 760px) {
   .vcc-stats {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .vcc-slot-frame,
-  .vcc-slot-hero .vcc-slot-frame {
-    aspect-ratio: auto;
-    min-height: 11rem;
-    padding: 1.2rem;
   }
 }
 
