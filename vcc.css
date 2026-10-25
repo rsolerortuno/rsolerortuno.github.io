@@ -478,3 +478,7 @@ main.content table {
 .vcc-refs a:hover {
   color: #a94f35;
 }
+
+.vcc-search article:nth-child(1) { background: var(--peach); }
+.vcc-search article:nth-child(2) { background: var(--mist); }
+.vcc-search article:nth-child(3) { background: var(--sage); }
