@@ -25,7 +25,7 @@ This page documents fourteen versions in chronological order: what each one test
   <div><strong>14</strong><span>named versions, September to October</span></div>
   <div><strong>0.2166</strong><span>best official validation score (v12)</span></div>
   <div><strong>14,218</strong><span>logged results from local experiments</span></div>
-  <div><strong>12</strong><span>alternative model routes compared</span></div>
+  <div><strong>12</strong><span>alternative model routes in a matched comparison</span></div>
 </div>
 ```
 
@@ -528,7 +528,7 @@ One further result is worth noting. A separate source-combiner configuration was
 
 ## Alternative models
 
-I compared twelve alternative routes, including several of the best-known single-cell perturbation models. They are not twelve equally fine-tuned foundation models: they include native perturbation models, effect regressors and supervised readouts of frozen pretrained representations.
+Twelve alternative routes completed a matched comparison against my recipes; GEARS was only partly run, and PIE was tested separately (Chapter 4). They are not twelve equally fine-tuned foundation models: they include native perturbation models, effect regressors and supervised readouts of frozen pretrained representations.
 
 ```{=html}
 <div class="vcc-models">
