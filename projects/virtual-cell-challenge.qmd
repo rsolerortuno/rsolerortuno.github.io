@@ -650,7 +650,3 @@ The main public resources used in this project. Only links that could be confirm
   <div><dt>Leakage</dt><dd>Using evaluation answers, or anything derived from them, to build a prediction. It inflates results and invalidates them.</dd></div>
 </dl>
 ```
-
-::: {.vcc-note}
-**About the evidence.** This page is based on a retrospective compiled from my archives on 24 October 2026: official responses and result emails, 14,218 logged results, an index of 8,665 experiment artefacts and 54 evidence sources, plus the PIE run records on Google Drive. Nothing was retrained or resubmitted to write it. Missing values are left missing rather than estimated.
-:::
