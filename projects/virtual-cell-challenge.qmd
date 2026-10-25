@@ -454,7 +454,15 @@ The final round introduced three new hidden contexts, D, E and F, again with onl
 
 ### Implementation
 
-I rebuilt the controls and target lists for the final panel. Comparing the controls with reference atlases gave indications but not identities: D was closest to HL60 and other myeloid references, E to the glioma line U87MG, and F showed a mesenchymal or fibroblast-like profile near AC16. Expression similarity does not provide perturbation responses or prove the exact cell line.
+I rebuilt the controls and target lists for the final panel and compared each context's control cells with a reference atlas of control profiles, using Spearman correlation of expression ranks across roughly 17,700 measured genes. The nearest references were:
+
+| Context | Nearest | Second | Third |
+|---|---|---|---|
+| D | HL60, 0.877 | THP-1, 0.859 | CD4, stimulated 48 h, 0.858 |
+| E | U87MG, 0.871 | UMRC3 (kidney), 0.867 | KMRC20 (kidney), 0.867 |
+| F | KMRC20 (kidney), 0.868 | UMRC3 (kidney), 0.867 | AC16, 0.866 |
+
+D is clearly myeloid-like and E is closest to the glioma line U87MG, while F has a mesenchymal or fibroblast-like profile with several references within 0.002 of each other. These are indications, not identities: the margins are small, and expression similarity does not provide perturbation responses or establish the exact cell line.
 
 D used the arm developed for context A, and E and F the arm for B and C. A quick comparison on analogue datasets (Yao THP-1 with LPS, U87MG and T98G, with 18, 21 and 21 evaluable targets) could not produce a comparable six-metric ranking, because some corrected MSE values were undefined.
 
