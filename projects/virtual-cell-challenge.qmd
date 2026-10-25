@@ -278,7 +278,7 @@ A single universal average ignores that some sources match some receivers better
 
 ```{=html}
 <div class="vcc-chapter-head">
-  <span class="vcc-when">More data, worse score</span>
+  <span class="vcc-when">More data, worse score · v11 submitted 16 October</span>
   <div class="vcc-chips"><span>v10 0.198</span><span>v11 0.211</span></div>
 </div>
 ```
@@ -295,7 +295,7 @@ Sources were combined by inverse-variance weighting in B and C and by a random-e
 
 Locally, the GEO plus L1000 configuration was the best result so far, at about 0.2314. The official score was **0.1985**, a clear regression. The MSE component fell from 0.221 to 0.169.
 
-**v11** reverted the risky part. It kept the wider source set but disabled all three baseline transformations and returned the amplitude to 0.99. v11 scored **0.2113**, above both v10 (+0.0128) and v9 (+0.0028). Its MSE component, 0.239, was the highest of the project.
+**v11** reverted the risky part. It kept the wider source set but disabled all three baseline transformations and returned the amplitude to 0.99. v11, submitted on 16 October, scored **0.2113**, above both v10 (+0.0128) and v9 (+0.0028), and ranked 241st on the validation leaderboard at the time. Its MSE component, 0.239, was the highest of the project.
 
 ::: {.vcc-cols}
 ::: {.vcc-good}
@@ -325,7 +325,7 @@ One implementation detail mattered more than expected. Under inverse-variance we
 
 ### Side study: benchmarking PIE against v11 {#pie-vs-v11}
 
-With v11 as the reference, a large part of October went into testing whether PIE, a perturbation-effect model from Arc Institute, could beat it. PIE received more effort than any other alternative model, so it is documented here in full. Every comparison below is against v11.
+From mid-October, a large part of the work went into testing whether PIE, a perturbation-effect model from Arc Institute, could beat v11. PIE received more effort than any other alternative model, so it is documented here in full. Every comparison below is against v11.
 
 **Pilots (10 to 18 October).** I downloaded PIE's preprocessed public datasets and ran a high-memory Colab pilot on CD4 T cells, followed by a version trained only on my own data banks. Both runs had problems with scale and with DE calling, and their numbers were not used.
 
@@ -382,7 +382,7 @@ PIE was therefore tested end to end: trained from scratch, run as published, int
 
 ```{=html}
 <div class="vcc-chapter-head">
-  <span class="vcc-when">Best version, and an over-amplified successor</span>
+  <span class="vcc-when">Best version, and an over-amplified successor · second half of October</span>
   <div class="vcc-chips"><span>v12 0.2166</span><span>v13 0.212</span></div>
 </div>
 ```
