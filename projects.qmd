@@ -313,6 +313,32 @@ page-layout: full
 </aside>
 </section>
 
+<section class="project-showcase" aria-labelledby="vcc-title">
+<div class="showcase-copy">
+<div class="card-topline">
+<span class="project-number">Side project</span>
+<span class="status-pill status-preview">Competition retrospective · Oct 2026</span>
+</div>
+<h2 id="vcc-title">Fourteen tries at a virtual cell</h2>
+<p class="project-kicker">Virtual Cell Challenge 2026, version by version</p>
+<p>My first time with perturbation data. I joined the challenge to learn how these datasets behave, and wrote up all fourteen versions in plain English: what each one tried, what worked, what broke and what I'd do differently.</p>
+<ul class="check-list">
+<li>Transfer of measured gene-knockdown responses to unseen cell types</li>
+<li>Why better local scores kept failing to become better official scores</li>
+<li>Twelve alternative AI routes, including CPA, scGen, STATE, Geneformer and scGPT</li>
+</ul>
+<div class="button-row">
+<a class="button button-primary" href="projects/virtual-cell-challenge.html">Read the story</a>
+</div>
+</div>
+<aside class="showcase-proof" aria-label="Virtual Cell Challenge in numbers">
+<p class="proof-label">In numbers</p>
+<div class="proof-stat"><strong>≈0.217</strong><span>best official validation score (v12)</span></div>
+<div class="proof-stat"><strong>14,218</strong><span>logged local results</span></div>
+<p class="proof-note">The newest version wasn't the best one. The final delivery reused v12's recipe.</p>
+</aside>
+</section>
+
 <section class="contact-panel compact-contact">
 <p class="section-index">Collaboration</p>
 <h2>Interested in the science or the implementation?</h2>
