@@ -453,7 +453,7 @@ Of course I had to try the fancy stuff. In total I tested twelve alternative rou
   <article><h4>Ridge</h4><p>The deliberately boring baseline, to check whether complexity buys anything. No gain either.</p></article>
   <article><h4>STRING &amp; GenePT readers</h4><p>Small networks that guess a gene's response from similar genes, using protein interaction maps or text-based gene descriptions.</p></article>
   <article><h4>Geneformer &amp; scGPT</h4><p>Large pretrained models of gene expression, used frozen, with a small trained layer on top. Not fine-tuned for perturbations.</p></article>
-  <article><h4>PIE</h4><p>A pilot that never reached a verified comparison, due to early scaling problems and an open question about overlap with its pretraining data.</p></article>
+  <article><h4>PIE</h4><p>Arc Institute's perturbation model, and the one I took furthest: I trained it from scratch on public data plus my own banks, and also ran Arc's published checkpoint. Neither beat v11. Full story below.</p></article>
 </div>
 ```
 
@@ -467,6 +467,43 @@ Here's how their raw error compared with my three submitted recipes on two histo
 ```
 
 None of the twelve routes beat v11 on error in these panels. I want to be careful about what that means, though. It's a finding about *my* adapters, *my* training scope and these panels, not proof that these methods are bad. Several of them only produced predictions for a small share of the target-by-gene table (about 16.5% for CPA and 12.5% for STATE on H1). Four of them trained on seven selected groups, about 71,000 cells out of nearly 339,000 available. And using a frozen foundation model with a small layer on top isn't the same as fine-tuning it properly. Given more time and compute, I'd love to see this comparison done fairly.
+
+### PIE: the one I took all the way
+
+PIE got more of my time than any other model, so it deserves its own story. It isn't in the chart above because it was tested on a different panel.
+
+**First attempts (10 to 18 October).** I downloaded PIE's preprocessed public datasets and started with a high-memory Colab pilot on CD4 T cells, then a version trained only on my own data banks. These early runs hit problems with scale and with how changed genes were called, so I didn't trust their numbers.
+
+**Training PIE from scratch on everything (18 to 19 October).** Then I went big. I kept PIE's architecture (a Perceiver network with 512 latent slots and 14 layers in total) but started every response parameter from zero. I didn't load any checkpoint that had already seen real responses. I trained it on five public datasets together: Replogle/Nadig, Tahoe-100M, Jiang, ARC VCC 2025 and X-Atlas/Orion. That's about 76,000 public profiles, plus 45,000 profiles from my own banks, around 68 GB of inputs and 274,000 training rows in all. It also used PIE's eleven knowledge sources, things like protein language-model embeddings (ESM2), STRING, DepMap, gene and perturbation text descriptions, L1000, PRISM and JUMP. Each kind of measurement kept its own output head, so I never had to mix units.
+
+```{=html}
+<div class="vcc-stats vcc-stats-3" aria-label="PIE training run">
+  <div><strong>6,250</strong><span>training steps on GPU before I stopped it</span></div>
+  <div><strong>0.864</strong><span>best validation error ratio (1.0 = predicting no change)</span></div>
+  <div><strong>300</strong><span>VIPerturb K562 targets predicted with the frozen model</span></div>
+</div>
+```
+
+The validation error fell fast, from 5.22 at step 50 to about 0.87 by step 500, and then it plateaued between 0.86 and 0.92 for the next 5,750 steps. So I stopped it by hand and froze the best checkpoint. It had seen every training task once, but not every gene of every profile, and it never finished its planned training budget.
+
+**Plugging it into my pipeline (19 October).** I built a bridge that turned PIE's predictions into count cells and mixed them with v11 at four strengths (0%, 25%, 50% and 100% PIE). Then I scored them on held-out VIPerturb targets: 21 to choose a mix, plus 27 sealed ones kept for confirmation. The verdict was "no comparable six-metric score, keep v11". One of the local reference points broke: the Jaccard anchor was higher for a generic answer than for real replicates. So the comparison couldn't produce a fair overall number at all.
+
+**Running Arc's own published checkpoint (19 to 20 October).** In case my training was the problem, I also ran the checkpoint Arc published for the Replogle K562 benchmark. First I made sure I was running it correctly, and it reproduced their published numbers almost exactly:
+
+| Arc's metric | Published | My run |
+|---|---:|---:|
+| AUPRC for changed genes | 0.1984 | 0.1984 |
+| Jaccard of significant genes | 0.1004 | 0.1004 |
+| Direction match | 0.7083 | 0.7082 |
+| Spearman, significance | 0.4749 | 0.4749 |
+| Spearman, fold change | 0.4010 | 0.4003 |
+| Discrimination (L1) | 0.6815 | 0.6814 |
+
+The biggest difference was 0.0007, inside the 0.005 tolerance I'd set beforehand. So the model ran exactly as published. The trouble came when I moved it to my problem. On 170 VIPerturb K562 targets, PIE's predicted changes were barely closer to the truth than the same predictions shuffled between targets (median error ratio 4.26 against 4.33). A plain generic response did better (2.32), and the cosine similarity between PIE's changes and the real ones was essentially zero. About 37% of what it predicted was a common change shared by every target. In other words, PIE knew a lot about the benchmark it was trained for, and very little that was target-specific about this new study.
+
+I still compared it fairly against v11, with a stricter rule I wrote down before running that comparison: a paired bootstrap across targets, a correction for testing several candidates at once, and margins for every metric. The candidates were v11, pure PIE, two PIE/v11 mixes (10% and 25% PIE) and a "null" mix with no PIE signal at all. The result was "keep v11", because the metrics didn't have enough targets in common for a fair comparison (for example, only 69% for fidelity, below the 80% I required).
+
+So yes, I tested PIE properly: trained from scratch, run as published, bridged into my pipeline and compared under a rule fixed in advance. It just never earned a place over v11, and I never submitted a PIE-based version. Two honest caveats: my own training run stopped before its full budget, and I couldn't verify how much PIE's pretraining data overlapped with the data I evaluated on.
 
 ## The practice exam problem
 
