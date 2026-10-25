@@ -1,0 +1,630 @@
+---
+title: "Fourteen tries at a virtual cell"
+subtitle: "My first time with perturbation data: the Virtual Cell Challenge 2026, version by version"
+description: "A plain-English retrospective of the Pedrito Amor entry to the Virtual Cell Challenge 2026: what each version tried, what worked, what broke and what I learned."
+page-layout: article
+toc: true
+toc-title: "On this page"
+toc-depth: 2
+css: ../vcc.css
+---
+
+<div class="article-status">
+  <span class="status-pill status-preview">Competition retrospective · October 2026</span>
+  <span class="status-pill">Team name: Pedrito Amor</span>
+</div>
+
+::: {.vcc-intro}
+Before anything else: this was my first time working with perturbation data, and my first time thinking seriously about the idea of a "virtual cell". I'm not an expert in this area. I signed up for the Virtual Cell Challenge mostly because I wanted an excuse to get my hands dirty with these datasets and understand how they actually behave, beyond what the papers say.
+
+So this isn't a victory lap. It's a diary of fourteen versions, written so that anyone can follow it, including the parts where I got things wrong. Quite a lot of it is about getting things wrong.
+:::
+
+```{=html}
+<div class="vcc-stats" aria-label="The project in numbers">
+  <div><strong>14</strong><span>named versions, September to October</span></div>
+  <div><strong>≈0.217</strong><span>best official validation score (v12)</span></div>
+  <div><strong>14,218</strong><span>logged results from local experiments</span></div>
+  <div><strong>12</strong><span>alternative AI model routes tested</span></div>
+</div>
+```
+
+```{=html}
+<figure class="vcc-slot vcc-slot-hero" id="img-01">
+  <div class="vcc-slot-frame">
+    <span class="vcc-slot-tag">Illustration 01 · in progress</span>
+    <p>A cell drawn as a small city at night. One switch on a control panel is flipped off, and a ripple of lights changes across the streets.</p>
+  </div>
+</figure>
+```
+
+## The challenge, in plain words
+
+Every cell in your body carries the same set of genes. You can think of a gene as a recipe card. What makes a liver cell different from a T cell is which recipes it's actually cooking, and how much of each. Scientists measure this as gene expression: for every cell, a count of how many copies of each recipe are in use right now.
+
+Now, there's a lab technique called CRISPR interference (CRISPRi) that lets you quietly switch off one gene. When you switch one off, it rarely stays a local event. Other genes react: some go up, some go down, many don't care. That whole pattern of reactions is called a *perturbation response*.
+
+The challenge asked a simple-sounding question. If I show you a new type of cell, but only in its normal, untreated state, can you predict what will happen to all its genes when each of a list of target genes is switched off?
+
+The catch is that you never see the new cell type being perturbed. You only see its untreated "control" cells, plus whatever experiments other people have run on *other* cell types. And the answer can't be a vague description: you have to hand in a big table of whole-number counts for hundreds of simulated cells per target gene. Basically, fake but realistic single-cell data.
+
+```{=html}
+<figure class="vcc-slot" id="img-02">
+  <div class="vcc-slot-frame">
+    <span class="vcc-slot-tag">Illustration 02 · in progress</span>
+    <p>Left: a cell type we have seen perturbed many times, with a known ripple pattern. Right: a new cell type seen only at rest, with a question mark where its ripple should be. An arrow labelled "transfer?" joins them.</p>
+  </div>
+</figure>
+```
+
+### How the score works
+
+The leaderboard combined six measurements into a single number. I'll be honest, it took me a while to really understand what each of them rewards, and much of this story is about them pulling in different directions.
+
+```{=html}
+<div class="vcc-metrics">
+  <article><h4>PDS</h4><p>Can you tell the targets apart? If switching off gene A and gene B produce different responses, your predictions should be different too, and recognisably so.</p></article>
+  <article><h4>MSE</h4><p>How close are your predicted expression levels to the real ones? This is the "did you get the numbers right" metric.</p></article>
+  <article><h4>NMAE</h4><p>A second closeness check, based on the average size of each miss rather than the squared miss.</p></article>
+  <article><h4>Fidelity</h4><p>For the genes that really change, did you get the direction right? Up when it goes up, down when it goes down.</p></article>
+  <article><h4>Reach</h4><p>Of all the genes that really changed, how many did your prediction actually catch?</p></article>
+  <article><h4>Jaccard</h4><p>How much does your list of "changed genes" overlap with the real list? Mine hovered around zero the whole time.</p></article>
+</div>
+```
+
+Each measurement is normalised against a simple reference prediction, so 0 means "no better than the reference" and higher is better. That means the overall 0.2166 I got with v12 is not 21.66% accuracy. It's a blend of six relative improvements. And if your raw error is worse than the reference, your MSE score is simply clipped to zero. For my first five versions, it was exactly that: zero.
+
+### How one prediction gets built
+
+Almost every version used the same assembly line. What changed from version to version was one or two stations on it. I'll refer back to this picture a lot.
+
+```{=html}
+<ol class="vcc-pipeline">
+  <li><span class="vcc-step">1</span><h4>Look at the new cell at rest</h4><p>Its untreated control cells give the starting expression levels and how much they naturally vary.</p><em>always</em></li>
+  <li><span class="vcc-step">2</span><h4>Borrow measured responses</h4><p>Find experiments where the same gene was switched off in other cell types.</p><em>v1, v2, v6, v8–v10</em></li>
+  <li><span class="vcc-step">3</span><h4>Combine and weigh them</h4><p>Decide how much to trust each source, gene by gene.</p><em>v6, v8, v10, v13</em></li>
+  <li><span class="vcc-step">4</span><h4>Clean the signal</h4><p>Strip out patterns shared by everything, and background noise seen in the controls.</p><em>v6, v12, v13</em></li>
+  <li><span class="vcc-step">5</span><h4>Set the volume</h4><p>Choose how strongly to apply the predicted change (I called it lambda, or amplitude).</p><em>v7, v10–v13</em></li>
+  <li><span class="vcc-step">6</span><h4>Mark the changed genes</h4><p>Make sure enough genes are clearly "called" as changed, in the right direction.</p><em>v7, v10, v12</em></li>
+  <li><span class="vcc-step">7</span><h4>Make individual cells</h4><p>Turn the average prediction into hundreds of realistic cells with whole-number counts.</p><em>v4, v5</em></li>
+</ol>
+```
+
+That last step deserves a word. I called the starting count matrix the *carrier* and the procedure that modifies it the *emitter*. Two predictions with the exact same average can score quite differently depending on how the counts are spread across individual cells. I didn't appreciate that at all at the start.
+
+## The whole journey in one chart
+
+Here is the official overall score of every version I submitted to the validation leaderboard. Hollow dots are scores I only have as rounded records. Hover over a dot to see the number.
+
+```{=html}
+<figure class="vcc-chart vcc-chart-wide">
+<div class="vcc-scroll">
+<svg class="vcc-svg" viewBox="0 0 760 400" role="img" aria-label="Official overall score for each version, v1 to v14" xmlns="http://www.w3.org/2000/svg"><rect x="56.0" y="30" width="146.6" height="300" fill="rgba(201,101,69,0.06)"/><text class="t mono" x="129.3" y="44.0" font-size="10" fill="#a94f35" text-anchor="middle" font-weight="700">1</text><text class="t mono" x="129.3" y="57.0" font-size="10" fill="#292722" text-anchor="middle" font-weight="700">Borrow</text><rect x="202.6" y="30" width="97.7" height="300" fill="rgba(104,127,115,0.07)"/><text class="t mono" x="251.4" y="44.0" font-size="10" fill="#a94f35" text-anchor="middle" font-weight="700">2</text><text class="t mono" x="251.4" y="57.0" font-size="10" fill="#292722" text-anchor="middle" font-weight="700">Reshape</text><rect x="300.3" y="30" width="195.4" height="300" fill="rgba(201,101,69,0.06)"/><text class="t mono" x="398.0" y="44.0" font-size="10" fill="#a94f35" text-anchor="middle" font-weight="700">3</text><text class="t mono" x="398.0" y="57.0" font-size="10" fill="#292722" text-anchor="middle" font-weight="700">Route</text><rect x="495.7" y="30" width="97.7" height="300" fill="rgba(104,127,115,0.07)"/><text class="t mono" x="544.6" y="44.0" font-size="10" fill="#a94f35" text-anchor="middle" font-weight="700">4</text><text class="t mono" x="544.6" y="57.0" font-size="10" fill="#292722" text-anchor="middle" font-weight="700">Expand</text><rect x="593.4" y="30" width="97.7" height="300" fill="rgba(201,101,69,0.06)"/><text class="t mono" x="642.3" y="44.0" font-size="10" fill="#a94f35" text-anchor="middle" font-weight="700">5</text><text class="t mono" x="642.3" y="57.0" font-size="10" fill="#292722" text-anchor="middle" font-weight="700">Denoise</text><rect x="691.1" y="30" width="48.9" height="300" fill="rgba(104,127,115,0.07)"/><text class="t mono" x="715.6" y="44.0" font-size="10" fill="#a94f35" text-anchor="middle" font-weight="700">6</text><text class="t mono" x="715.6" y="57.0" font-size="10" fill="#292722" text-anchor="middle" font-weight="700">Final</text><line x1="56" x2="740" y1="330.0" y2="330.0" stroke="rgba(53,48,41,0.12)"/><text class="t mono" x="48.0" y="334.0" font-size="11" fill="#6d675e" text-anchor="end" font-weight="400">0.12</text><line x1="56" x2="740" y1="281.6" y2="281.6" stroke="rgba(53,48,41,0.12)"/><text class="t mono" x="48.0" y="285.6" font-size="11" fill="#6d675e" text-anchor="end" font-weight="400">0.14</text><line x1="56" x2="740" y1="233.3" y2="233.3" stroke="rgba(53,48,41,0.12)"/><text class="t mono" x="48.0" y="237.3" font-size="11" fill="#6d675e" text-anchor="end" font-weight="400">0.16</text><line x1="56" x2="740" y1="184.9" y2="184.9" stroke="rgba(53,48,41,0.12)"/><text class="t mono" x="48.0" y="188.9" font-size="11" fill="#6d675e" text-anchor="end" font-weight="400">0.18</text><line x1="56" x2="740" y1="136.5" y2="136.5" stroke="rgba(53,48,41,0.12)"/><text class="t mono" x="48.0" y="140.5" font-size="11" fill="#6d675e" text-anchor="end" font-weight="400">0.20</text><line x1="56" x2="740" y1="88.2" y2="88.2" stroke="rgba(53,48,41,0.12)"/><text class="t mono" x="48.0" y="92.2" font-size="11" fill="#6d675e" text-anchor="end" font-weight="400">0.22</text><line x1="56" x2="740" y1="330" y2="330" stroke="rgba(53,48,41,0.35)"/><line x1="80.4" y1="296.6" x2="178.1" y2="261.9" stroke="#c96545" stroke-width="2" stroke-dasharray="4 4"/><path d="M178.1,261.9 L227.0,265.8 L275.9,255.9 L324.7,207.8 L373.6,151.8 L422.4,116.3 L471.3,116.1 L520.1,140.2 L569.0,109.3 L617.9,96.4 L666.7,106.5" fill="none" stroke="#c96545" stroke-width="2" stroke-linejoin="round"/><text class="t mono" x="80.4" y="350.0" font-size="11" fill="#292722" text-anchor="middle" font-weight="700">v1</text><g class="pt"><title>v1: ≈0.1338 (rounded record)</title><circle cx="80.4" cy="296.6" r="14" fill="transparent"/><circle cx="80.4" cy="296.6" r="5.5" fill="#fbf8f2" stroke="#c96545" stroke-width="2"/></g><text class="t mono" x="129.3" y="350.0" font-size="11" fill="#292722" text-anchor="middle" font-weight="700">v2</text><g><title>v2: no score recovered</title><line x1="129.3" x2="129.3" y1="324" y2="330" stroke="#6d675e" stroke-width="2"/><text class="t mono" x="129.3" y="366" font-size="9.5" fill="#6d675e" text-anchor="middle">no score</text></g><text class="t mono" x="178.1" y="350.0" font-size="11" fill="#292722" text-anchor="middle" font-weight="700">v3</text><g class="pt"><title>v3: 0.1482</title><circle cx="178.1" cy="261.9" r="14" fill="transparent"/><circle cx="178.1" cy="261.9" r="5.5" fill="#c96545" stroke="#c96545" stroke-width="2"/></g><text class="t mono" x="227.0" y="350.0" font-size="11" fill="#292722" text-anchor="middle" font-weight="700">v4</text><g class="pt"><title>v4: 0.1465</title><circle cx="227.0" cy="265.8" r="14" fill="transparent"/><circle cx="227.0" cy="265.8" r="5.5" fill="#c96545" stroke="#c96545" stroke-width="2"/></g><text class="t mono" x="275.9" y="350.0" font-size="11" fill="#292722" text-anchor="middle" font-weight="700">v5</text><g class="pt"><title>v5: 0.1507</title><circle cx="275.9" cy="255.9" r="14" fill="transparent"/><circle cx="275.9" cy="255.9" r="5.5" fill="#c96545" stroke="#c96545" stroke-width="2"/></g><text class="t mono" x="324.7" y="350.0" font-size="11" fill="#292722" text-anchor="middle" font-weight="700">v6</text><g class="pt"><title>v6: 0.1705</title><circle cx="324.7" cy="207.8" r="14" fill="transparent"/><circle cx="324.7" cy="207.8" r="5.5" fill="#c96545" stroke="#c96545" stroke-width="2"/></g><text class="t mono" x="373.6" y="350.0" font-size="11" fill="#292722" text-anchor="middle" font-weight="700">v7</text><g class="pt"><title>v7: ≈0.1937 (rounded record)</title><circle cx="373.6" cy="151.8" r="14" fill="transparent"/><circle cx="373.6" cy="151.8" r="5.5" fill="#fbf8f2" stroke="#c96545" stroke-width="2"/></g><text class="t mono" x="422.4" y="350.0" font-size="11" fill="#292722" text-anchor="middle" font-weight="700">v8</text><g class="pt"><title>v8: 0.2084</title><circle cx="422.4" cy="116.3" r="14" fill="transparent"/><circle cx="422.4" cy="116.3" r="5.5" fill="#c96545" stroke="#c96545" stroke-width="2"/></g><text class="t mono" x="471.3" y="350.0" font-size="11" fill="#292722" text-anchor="middle" font-weight="700">v9</text><g class="pt"><title>v9: 0.2084</title><circle cx="471.3" cy="116.1" r="14" fill="transparent"/><circle cx="471.3" cy="116.1" r="5.5" fill="#c96545" stroke="#c96545" stroke-width="2"/></g><text class="t mono" x="520.1" y="350.0" font-size="11" fill="#292722" text-anchor="middle" font-weight="700">v10</text><g class="pt"><title>v10: 0.1985</title><circle cx="520.1" cy="140.2" r="14" fill="transparent"/><circle cx="520.1" cy="140.2" r="5.5" fill="#c96545" stroke="#c96545" stroke-width="2"/></g><text class="t mono" x="569.0" y="350.0" font-size="11" fill="#292722" text-anchor="middle" font-weight="700">v11</text><g class="pt"><title>v11: 0.2113</title><circle cx="569.0" cy="109.3" r="14" fill="transparent"/><circle cx="569.0" cy="109.3" r="5.5" fill="#c96545" stroke="#c96545" stroke-width="2"/></g><text class="t mono" x="617.9" y="350.0" font-size="11" fill="#292722" text-anchor="middle" font-weight="700">v12</text><g class="pt"><title>v12: ≈0.2166 (rounded record)</title><circle cx="617.9" cy="96.4" r="14" fill="transparent"/><circle cx="617.9" cy="96.4" r="5.5" fill="#fbf8f2" stroke="#c96545" stroke-width="2"/></g><text class="t mono" x="666.7" y="350.0" font-size="11" fill="#292722" text-anchor="middle" font-weight="700">v13</text><g class="pt"><title>v13: 0.2124</title><circle cx="666.7" cy="106.5" r="14" fill="transparent"/><circle cx="666.7" cy="106.5" r="5.5" fill="#c96545" stroke="#c96545" stroke-width="2"/></g><text class="t mono" x="715.6" y="350.0" font-size="11" fill="#292722" text-anchor="middle" font-weight="700">v14</text><g><title>v14: published, score hidden</title><line x1="715.6" x2="715.6" y1="324" y2="330" stroke="#6d675e" stroke-width="2"/><text class="t mono" x="715.6" y="366" font-size="9.5" fill="#6d675e" text-anchor="middle">pending</text></g><line x1="227.0" x2="227.0" y1="273.8" y2="291.8" stroke="#6d675e" stroke-width="1"/><text class="t" x="227.0" y="303.8" font-size="10.5" fill="#292722" text-anchor="middle" font-weight="400">my local score</text><text class="t" x="227.0" y="316.8" font-size="10.5" fill="#292722" text-anchor="middle" font-weight="400">said +24%</text><line x1="520.1" x2="520.1" y1="148.2" y2="168.2" stroke="#6d675e" stroke-width="1"/><text class="t" x="520.1" y="180.2" font-size="10.5" fill="#292722" text-anchor="middle" font-weight="400">everything at</text><text class="t" x="520.1" y="193.2" font-size="10.5" fill="#292722" text-anchor="middle" font-weight="400">once: −0.010</text><line x1="617.9" x2="617.9" y1="88.4" y2="74.4" stroke="#6d675e" stroke-width="1"/><text class="t" x="617.9" y="70.4" font-size="10.5" fill="#292722" text-anchor="middle" font-weight="400">best: ≈0.217</text><line x1="666.7" x2="666.7" y1="114.5" y2="134.5" stroke="#6d675e" stroke-width="1"/><text class="t" x="666.7" y="146.5" font-size="10.5" fill="#292722" text-anchor="middle" font-weight="400">louder,</text><text class="t" x="666.7" y="159.5" font-size="10.5" fill="#292722" text-anchor="middle" font-weight="400">not better</text><line x1="80.4" x2="80.4" y1="288.6" y2="270.6" stroke="#6d675e" stroke-width="1"/><text class="t" x="80.4" y="266.6" font-size="10.5" fill="#292722" text-anchor="middle" font-weight="400">first try</text><text class="t mono" x="12.0" y="20.0" font-size="11" fill="#6d675e" text-anchor="start" font-weight="400">Official overall score (higher is better)</text></svg>
+</div>
+<figcaption><span class="vcc-swipe">Swipe sideways to see every version. </span>Official overall validation score per version. v2 has no recovered score; v14 is the final test delivery, published but with its score not visible yet.</figcaption>
+</figure>
+```
+
+I grouped the versions into six chapters, because several of them were really the same idea being refined. Each chapter below follows the same pattern: what I was thinking, how I built it, what went well, what went wrong, what I tried that didn't work, and what I carried into the next round.
+
+::: {.vcc-note}
+A quick honesty note. The record of what I did is pretty good for the later versions and patchy for the earliest ones. Where the archive doesn't say *why* I did something, I've written my best reconstruction and marked it with "Looking back".
+:::
+
+## Chapter 1 · v1 to v3: borrowing answers from other cells
+
+```{=html}
+<div class="vcc-chapter-head">
+  <span class="vcc-when">September · the starting point</span>
+  <div class="vcc-chips"><span>v1 ≈0.134</span><span>v2 no score</span><span>v3 0.148</span></div>
+</div>
+```
+
+### The idea
+
+The simplest honest approach I could think of: if switching off gene X in some well-studied cell line moves genes Y and Z, maybe it moves them in the new cell type too. So take responses that were already measured somewhere else, average them sensibly, and adjust them to the new cell.
+
+### How I built it
+
+The early core used five cell types that have been perturbed a lot: H1 (stem cells), K562, RPE1, HepG2 and Jurkat. A first baseline using just those five, which I called `universal_5`, scored 0.1290.
+
+Then I tried something I still like. I split each response into two parts: its *direction* (which genes go up or down) and its *size* (by how much). Related stem-cell experiments (KOLF2.1J, HipSci and hESC) were allowed to vote on the direction, but with a low weight of 0.25 each, while the size stayed decided by the trusted core. A common generator then turned the averages into simulated cells. That became v1, at roughly 0.1338.
+
+v2 went much wider. I added a long list of public datasets (Orion HCT116 and HEK293T, CD4 T cells under different conditions, Jiang by cell line and cytokine, PerturbME, Frangieh, Tian, Papalexi and more KOLF samples) and started experimenting with learned transfer between contexts, shrinkage of uncertain estimates, and different ways of turning averages into cells.
+
+v3 consolidated all that into what became my published reference: **0.1482**.
+
+```{=html}
+<figure class="vcc-slot" id="img-03">
+  <div class="vcc-slot-frame">
+    <span class="vcc-slot-tag">Illustration 03 · in progress</span>
+    <p>An arrow split into two strands: one strand labelled "direction" (where it points) gets input from many small voices; the other labelled "size" (how long) comes only from a trusted core of five cell types.</p>
+  </div>
+</figure>
+```
+
+::: {.vcc-cols}
+::: {.vcc-good}
+#### What went well
+
+- I had a full pipeline running end to end and a real number on the board.
+- The direction/size split let me use related data without letting noisy new sources decide how big the effect should be.
+- The local test for the direction-bank idea improved several contexts.
+:::
+
+::: {.vcc-bad}
+#### What went wrong
+
+- The MSE score was 0.0000. My predicted levels were no closer to reality than the simple reference.
+- I found a bug where a cache of control cells was being reused across different cell contexts. That kind of mistake silently poisons everything downstream.
+- Some reference panels had an undefined MSE score, which made comparisons slippery.
+- My bookkeeping was a mess. I can't fully link v1 to its submitted file, and I have two different entry IDs for v2 and no recovered score.
+:::
+:::
+
+#### Tried, didn't work
+
+- Transferring KOLF, Jurkat, HipSci and hESC data to HepG2. Each one came out slightly below the baseline: a source that helps one cell type can hurt another.
+- The direction-bank recipe cost a little in HepG2 even while helping elsewhere.
+
+::: {.vcc-next}
+**What I took into the next round.** Looking back, I think my averages were roughly in the right neighbourhood, but the scores for "which genes changed" were weak. So my next suspicion was the last station of the assembly line: maybe the problem wasn't *what* I predicted on average, but *how* I spread it across individual cells.
+:::
+
+## Chapter 2 · v4 and v5: same totals, different cells
+
+```{=html}
+<div class="vcc-chapter-head">
+  <span class="vcc-when">Reshaping the simulated cells</span>
+  <div class="vcc-chips"><span>v4 0.147</span><span>v5 0.151</span></div>
+</div>
+```
+
+### The idea
+
+Imagine 400 jars, one per simulated cell, and you have to share out 4,000 sugar cubes for a given gene. You can put ten in each jar, or you can be more realistic and let some jars get more and some fewer, the way real cells naturally vary. The total stays the same, but the pattern is very different. Tests that decide whether a gene "changed" look at that cell-to-cell spread, not only at the average.
+
+```{=html}
+<figure class="vcc-slot" id="img-04">
+  <div class="vcc-slot-frame">
+    <span class="vcc-slot-tag">Illustration 04 · in progress</span>
+    <p>Two rows of identical jars holding the same total number of sugar cubes. Top row: every jar has exactly the same amount. Bottom row: uneven, natural-looking amounts. A small scale shows both rows weigh the same.</p>
+  </div>
+</figure>
+```
+
+### How I built it
+
+**v4** used a transform called `joint_control_copula050_r1`. A copula is a statistical tool that copies how values vary *together*. Here it borrowed the shape of natural variation from real untreated cells and applied it to my predictions, while keeping each gene's total exactly the same.
+
+**v5** was gentler. It only reshaped weak effects (small changes, below 0.085 on a log scale), and it protected the 54 strongest effects, the target gene itself and genes with very few counts. Afterwards it repaired the whole-number totals so every row and column still added up.
+
+### The plot twist: my own test was lying to me
+
+My local evaluation said v4 was a big jump: 0.2005 against 0.1614 for the old recipe. I was pretty excited. The official leaderboard said 0.1465, *lower* than v3.
+
+When I dug in, I found the reason. My local evaluator only looked at a sample of the predicted cells, `min(400, number of real cells)`. Redistributing counts changed which cells ended up in that sample, and that alone created a fake improvement in PDS. Once I fixed it to use all 400 cells, the gain mostly vanished, and what was left came from the "changed genes" metrics, not from PDS or MSE.
+
+This was probably the most useful thing I learned in the whole project, and it came from a failure: **a better local score is not a better score.** I kept relearning this until the very end.
+
+::: {.vcc-cols}
+::: {.vcc-good}
+#### What went well
+
+- Found and fixed a real bug in my evaluator. Every later comparison was more trustworthy because of it.
+- v5 nudged the official score up to 0.1507.
+- The v5 count matrix became the *carrier* that every later version reused. That stability helped a lot.
+:::
+
+::: {.vcc-bad}
+#### What went wrong
+
+- v4 went backwards officially, after looking great locally.
+- MSE score still zero in both versions.
+- v5's gains were supported by four development contexts, which isn't the same as an independent confirmation.
+:::
+:::
+
+#### Tried, didn't work
+
+- Real genome coordinates (GENCODE). I thought knowing where genes sit on the chromosome might help, since neighbouring genes sometimes react together. The effect was −0.0006, basically zero. Biologically plausible doesn't mean useful.
+- Tree models and TabICL. Gradient-boosted trees and a tabular foundation model reached 0.1646 and 0.1696 locally, a hair above the old recipe and below the copula candidate. Not worth it.
+- Starting from resampled controls instead of the v5 carrier. It lost the predictive starting point that v5 had built.
+
+::: {.vcc-next}
+**What I took into the next round.** The cells were now in decent shape, and I'd stopped fiddling with that station. Looking back, it was obvious the bigger lever was the response itself. If my borrowed responses were weak or came from the wrong kind of cell, no amount of reshaping would save them. Time to look for better sources.
+:::
+
+## Chapter 3 · v6 to v9: the right source for each cell
+
+```{=html}
+<div class="vcc-chapter-head">
+  <span class="vcc-when">The steady climb</span>
+  <div class="vcc-chips"><span>v6 0.171</span><span>v7 ≈0.194</span><span>v8 0.208</span><span>v9 0.208</span></div>
+</div>
+```
+
+### The idea
+
+Instead of one universal average, build specialised *branches*, each tuned to a family of cell types, and send every hidden validation context (they were called A, B and C) down the branch whose controls look most like it.
+
+```{=html}
+<figure class="vcc-slot" id="img-05">
+  <div class="vcc-slot-frame">
+    <span class="vcc-slot-tag">Illustration 05 · in progress</span>
+    <p>A small railway junction. Three trains labelled A, B and C arrive; a signal box reads how each train looks and switches it onto one of two tracks: an "H1 multi-source" track or a "CD4 T cell" track.</p>
+  </div>
+</figure>
+```
+
+### How I built it
+
+**v6** had two branches. The H1 branch averaged effects from the genome-wide K562 screen (GWPS), CD4 T cells, HCT116 and HEK293T. The CD4 branch used a centred version of GWPS plus a ridge-regression prediction from Jurkat. Context A went to the CD4 branch and B and C went to H1, chosen by a frozen similarity weighting between their control cells. I also started *centring*: subtracting part of the response that every target shares, so the predictions don't all look alike. Result: **0.1705**, and for the first time my MSE score was above zero (0.150). That felt good.
+
+**v7** worked on the "changed genes" side. I added a floor so that around 3,000 genes per target would be clearly called as changed, with a statistical threshold relaxed from 8 towards 4.5, plus a component for the target gene itself (which obviously should go down). In A, I also recalculated the volume after removing 10 background patterns. Result: about **0.194**, and the direction metric (fidelity) turned positive for the first time.
+
+**v8** changed only context A. It moved to the H1 multi-source branch and added a genome-wide Jurkat screen (GSE249595). The Jurkat data was blended in gene by gene through a *noise gate*: the clearer a gene's effect compared with its noise, the more Jurkat got to say. Result: **0.2084**.
+
+**v9** added a dataset by Yao et al. (GSE221321) in THP1 cells, a myeloid cell line, stimulated for three hours. It covered 598 targets, but only 12 matched the official list. Result: **0.20844**. That's +0.00006. Basically the same.
+
+::: {.vcc-cols}
+::: {.vcc-good}
+#### What went well
+
+- The biggest climb of the project: from 0.151 to 0.208 in four versions.
+- MSE score went from zero to 0.221. My predicted levels finally beat the reference.
+- Changing only context A in v8 was a cleaner experiment than usual.
+:::
+
+::: {.vcc-bad}
+#### What went wrong
+
+- In v6 I changed sources, branches and cell generation all at once, so I couldn't tell which part helped.
+- Routing A to "CD4-like" doesn't prove A *is* CD4 cells. It just means the controls looked similar.
+- v9 added a lot of work for almost nothing. Stimulated THP1 cells aren't resting T cells.
+- I fitted a straight line through two points (v6 and v7) to forecast scores. Two points always fit a line perfectly, which is exactly why it told me nothing.
+:::
+:::
+
+#### Tried, didn't work
+
+- Adding HipSci and PerturbFate to my best H1 recipe. Local score dropped from 0.3006 to 0.2993 and 0.2987. Related data can dilute a good signal.
+- Glioma (A172, T98G, U87MG) and TeloHAEC variants. They didn't pass the first promotion checks. I kept them as reference data instead.
+- Jiang 2025. My first audit found only nine targets matching the official list, so I never gave it a real performance test. Low coverage on its own doesn't prove it would have hurt.
+
+::: {.vcc-next}
+**What I took into the next round.** Every source I added seemed to help a bit, so the natural thought was: what if I add *everything*, weighted properly by how reliable it is, and adjust each effect to the baseline of the new cell? You can probably guess where this is going.
+:::
+
+## Chapter 4 · v10 and v11: the big expansion, and the step back
+
+```{=html}
+<div class="vcc-chapter-head">
+  <span class="vcc-when">More is not always better</span>
+  <div class="vcc-chips"><span>v10 0.198</span><span>v11 0.211</span></div>
+</div>
+```
+
+### The idea
+
+Use far more data, combine it according to how much each source can be trusted, and translate each borrowed effect into the "language" of the new cell's baseline expression.
+
+### How I built it
+
+**v10** was my most ambitious version. On top of the four base sources it added Orion and CD4 profiles with no minimum cell count (so rare targets weren't thrown away), VIPerturb and DLD1 for B and C, Jurkat for A, plus eleven GEO studies and nine L1000 cell-line banks for everything.
+
+To combine them it used inverse-variance weighting for B and C (trust precise sources more) and a random-effects model for A (also allow for real differences between sources). Then it switched on three transformations to fit effects to the new cell: fold-change transfer, a transfer map, and a mask that ignored genes detected in fewer than 5% of the new cell's controls. It also turned the volume up to 1.10 and raised the changed-gene target from 3,000 to 6,000.
+
+Locally, the GEO plus L1000 setup looked like my best ever, around 0.2314.
+
+Officially: **0.1985**. A clear step backwards. The MSE score fell from 0.221 to 0.169.
+
+```{=html}
+<figure class="vcc-slot" id="img-06">
+  <div class="vcc-slot-frame">
+    <span class="vcc-slot-tag">Illustration 06 · in progress</span>
+    <p>A hiker with a hugely overstuffed backpack (labelled datasets, maps, masks, a big volume knob) struggling up a hill, next to a lighter hiker with a small pack walking past easily.</p>
+  </div>
+</figure>
+```
+
+**v11** was the step back. I kept the wider sources but switched off all three baseline transformations and turned the volume back to 0.99. Result: **0.2113**, better than both v10 (+0.0128) and v9 (+0.0028). The MSE score hit 0.239, the best it ever got.
+
+::: {.vcc-cols}
+::: {.vcc-good}
+#### What went well
+
+- v11 recovered and set a new best, with the best "getting the levels right" score of the whole project.
+- Keeping the extra data but removing the risky transformations was a useful, fairly clean contrast.
+- v11 became my reference for expression accuracy from then on.
+:::
+
+::: {.vcc-bad}
+#### What went wrong
+
+- v10 changed many things at once. Baseline scaling, the louder volume and the way I picked local test panels are all plausible culprits, and I never ran a clean one-cause-at-a-time test officially.
+- My forecast for v11 was 0.22685. Reality was 0.2113. Even after v10, my local tests were still too optimistic.
+- v11's reach and overlap metrics were worse than v9's.
+:::
+:::
+
+#### Tried, didn't work
+
+- Mixing all sources in bulk. About 0.2300 locally versus 0.2314 for GEO plus L1000. More wasn't better.
+- Transferring a "common perturbation response" (the part every knockdown seems to share). It agreed poorly across cell types and made local metrics worse.
+- Removing the minimum cell count everywhere. It recovers rare targets, but it doesn't fix a weak knockdown, a wrong control group, a double perturbation or an incompatible unit. It just lets those problems in.
+
+There was also a sneaky one. An effect with a declared variance of zero gets *infinite* trust under inverse-variance weighting, so one bad row can take over a gene. I had to add an uncertainty floor. Data plumbing like this was a big part of the job.
+
+::: {.vcc-next}
+**What I took into the next round.** v11 got the levels right but wasn't great at telling targets apart. The question became: can I keep v11's accuracy and make the targets more distinguishable? My idea was to turn down the background noise.
+:::
+
+## Chapter 5 · v12 and v13: turning down the background noise
+
+```{=html}
+<div class="vcc-chapter-head">
+  <span class="vcc-when">The best version, and the one that tried too hard</span>
+  <div class="vcc-chips"><span>v12 ≈0.217</span><span>v13 0.212</span></div>
+</div>
+```
+
+### The idea
+
+Even untreated cells differ from each other in big, recurring ways. Things like how far along the cell cycle a cell is, or how big or stressed it is. Those patterns can show up in a prediction and make every target look a bit alike. If I find the main patterns of variation in the control cells and remove them from my predictions, the target-specific part should stand out. It's like noise-cancelling headphones: find the hum, subtract it.
+
+```{=html}
+<figure class="vcc-slot" id="img-07">
+  <div class="vcc-slot-frame">
+    <span class="vcc-slot-tag">Illustration 07 · in progress</span>
+    <p>A sound-wave drawing: a messy wave labelled "prediction" goes through a pair of headphones and comes out as a clean, distinct melody. The removed hum floats away labelled "control patterns".</p>
+  </div>
+</figure>
+```
+
+### How I built it
+
+**v12** took up to 3,000 untreated controls per context, put them on a common scale (log1p of counts per 50,000), and found their 15 main patterns of variation with an SVD (a standard way of finding principal components, or PCs). Those 15 patterns were projected out of the predicted effects, then the volume was recalculated, which landed at 0.90, 0.925 and 0.975 for A, B and C. The changed-gene target went up from 6,000 to 8,000.
+
+Result: about **0.2166**. My best documented official score. (I only have that one rounded, without the six separate metrics, which annoys me.)
+
+**v13** tried to push further. It weighted each gene by how much the sources agreed with each other, removed 8 patterns from the receiver plus an extra 15-pattern subspace from the VIPerturb controls, turned the volume up to 1.05 and allowed it to go much higher for some genes. Result: **0.2124**, below v12.
+
+The individual metrics tell the story. v13's PDS score was 0.757, by far my best at telling targets apart. But its MSE score dropped from v11's 0.239 to 0.192. Louder, more distinct predictions, but further from the real levels. The overall score cares about the balance, and v13 lost it.
+
+```{=html}
+<figure class="vcc-chart">
+<div class="vcc-multiples"><svg class="vcc-svg vcc-svg-mini" viewBox="0 0 380 230" role="img" aria-label="Telling targets apart (PDS score)" xmlns="http://www.w3.org/2000/svg"><text class="t" x="8.0" y="18.0" font-size="12" fill="#292722" text-anchor="start" font-weight="700">Telling targets apart (PDS score)</text><line x1="44" x2="366" y1="180.0" y2="180.0" stroke="rgba(53,48,41,0.12)"/><text class="t mono" x="38.0" y="184.0" font-size="10" fill="#6d675e" text-anchor="end" font-weight="400">0.60</text><line x1="44" x2="366" y1="140.0" y2="140.0" stroke="rgba(53,48,41,0.12)"/><text class="t mono" x="38.0" y="144.0" font-size="10" fill="#6d675e" text-anchor="end" font-weight="400">0.65</text><line x1="44" x2="366" y1="100.0" y2="100.0" stroke="rgba(53,48,41,0.12)"/><text class="t mono" x="38.0" y="104.0" font-size="10" fill="#6d675e" text-anchor="end" font-weight="400">0.70</text><line x1="44" x2="366" y1="60.0" y2="60.0" stroke="rgba(53,48,41,0.12)"/><text class="t mono" x="38.0" y="64.0" font-size="10" fill="#6d675e" text-anchor="end" font-weight="400">0.75</text><line x1="292.8" y1="136.2" x2="351.4" y2="54.2" stroke="#c96545" stroke-width="2" stroke-dasharray="3 4"/><path d="M58.6,169.8 L87.9,179.0 L117.2,179.0 L146.5,138.8 L175.7,132.0 L205.0,137.4 L234.3,137.3 L263.5,146.4 L292.8,136.2" fill="none" stroke="#c96545" stroke-width="2"/><path d="M351.4,54.2" fill="none" stroke="#c96545" stroke-width="2"/><text class="t mono" x="58.6" y="212.0" font-size="9.5" fill="#6d675e" text-anchor="middle" font-weight="400">3</text><g class="pt"><title>v3: 0.6128</title><circle cx="58.6" cy="169.8" r="11" fill="transparent"/><circle cx="58.6" cy="169.8" r="4.5" fill="#c96545" stroke="#c96545" stroke-width="2"/></g><text class="t mono" x="87.9" y="212.0" font-size="9.5" fill="#6d675e" text-anchor="middle" font-weight="400">4</text><g class="pt"><title>v4: 0.6012</title><circle cx="87.9" cy="179.0" r="11" fill="transparent"/><circle cx="87.9" cy="179.0" r="4.5" fill="#c96545" stroke="#c96545" stroke-width="2"/></g><text class="t mono" x="117.2" y="212.0" font-size="9.5" fill="#6d675e" text-anchor="middle" font-weight="400">5</text><g class="pt"><title>v5: 0.6012</title><circle cx="117.2" cy="179.0" r="11" fill="transparent"/><circle cx="117.2" cy="179.0" r="4.5" fill="#c96545" stroke="#c96545" stroke-width="2"/></g><text class="t mono" x="146.5" y="212.0" font-size="9.5" fill="#6d675e" text-anchor="middle" font-weight="400">6</text><g class="pt"><title>v6: 0.6515</title><circle cx="146.5" cy="138.8" r="11" fill="transparent"/><circle cx="146.5" cy="138.8" r="4.5" fill="#c96545" stroke="#c96545" stroke-width="2"/></g><text class="t mono" x="175.7" y="212.0" font-size="9.5" fill="#6d675e" text-anchor="middle" font-weight="400">7</text><g class="pt"><title>v7: ≈0.6600</title><circle cx="175.7" cy="132.0" r="11" fill="transparent"/><circle cx="175.7" cy="132.0" r="4.5" fill="#fbf8f2" stroke="#c96545" stroke-width="2"/></g><text class="t mono" x="205.0" y="212.0" font-size="9.5" fill="#6d675e" text-anchor="middle" font-weight="400">8</text><g class="pt"><title>v8: 0.6533</title><circle cx="205.0" cy="137.4" r="11" fill="transparent"/><circle cx="205.0" cy="137.4" r="4.5" fill="#c96545" stroke="#c96545" stroke-width="2"/></g><text class="t mono" x="234.3" y="212.0" font-size="9.5" fill="#6d675e" text-anchor="middle" font-weight="400">9</text><g class="pt"><title>v9: 0.6534</title><circle cx="234.3" cy="137.3" r="11" fill="transparent"/><circle cx="234.3" cy="137.3" r="4.5" fill="#c96545" stroke="#c96545" stroke-width="2"/></g><text class="t mono" x="263.5" y="212.0" font-size="9.5" fill="#6d675e" text-anchor="middle" font-weight="400">10</text><g class="pt"><title>v10: 0.6420</title><circle cx="263.5" cy="146.4" r="11" fill="transparent"/><circle cx="263.5" cy="146.4" r="4.5" fill="#c96545" stroke="#c96545" stroke-width="2"/></g><text class="t mono" x="292.8" y="212.0" font-size="9.5" fill="#6d675e" text-anchor="middle" font-weight="400">11</text><g class="pt"><title>v11: 0.6547</title><circle cx="292.8" cy="136.2" r="11" fill="transparent"/><circle cx="292.8" cy="136.2" r="4.5" fill="#c96545" stroke="#c96545" stroke-width="2"/></g><text class="t mono" x="322.1" y="212.0" font-size="9.5" fill="#6d675e" text-anchor="middle" font-weight="400">12</text><text class="t mono" x="351.4" y="212.0" font-size="9.5" fill="#6d675e" text-anchor="middle" font-weight="400">13</text><g class="pt"><title>v13: 0.7573</title><circle cx="351.4" cy="54.2" r="11" fill="transparent"/><circle cx="351.4" cy="54.2" r="4.5" fill="#c96545" stroke="#c96545" stroke-width="2"/></g><text class="t" x="343.4" y="42.2" font-size="10" fill="#292722" text-anchor="end" font-weight="400">v13 jumps</text><text class="t mono" x="366.0" y="226.0" font-size="9.5" fill="#6d675e" text-anchor="end" font-weight="400">version</text></svg><svg class="vcc-svg vcc-svg-mini" viewBox="0 0 380 230" role="img" aria-label="Getting the levels right (MSE score)" xmlns="http://www.w3.org/2000/svg"><text class="t" x="8.0" y="18.0" font-size="12" fill="#292722" text-anchor="start" font-weight="700">Getting the levels right (MSE score)</text><line x1="44" x2="366" y1="196.0" y2="196.0" stroke="rgba(53,48,41,0.12)"/><text class="t mono" x="38.0" y="200.0" font-size="10" fill="#6d675e" text-anchor="end" font-weight="400">0.00</text><line x1="44" x2="366" y1="164.0" y2="164.0" stroke="rgba(53,48,41,0.12)"/><text class="t mono" x="38.0" y="168.0" font-size="10" fill="#6d675e" text-anchor="end" font-weight="400">0.05</text><line x1="44" x2="366" y1="132.0" y2="132.0" stroke="rgba(53,48,41,0.12)"/><text class="t mono" x="38.0" y="136.0" font-size="10" fill="#6d675e" text-anchor="end" font-weight="400">0.10</text><line x1="44" x2="366" y1="100.0" y2="100.0" stroke="rgba(53,48,41,0.12)"/><text class="t mono" x="38.0" y="104.0" font-size="10" fill="#6d675e" text-anchor="end" font-weight="400">0.15</text><line x1="44" x2="366" y1="68.0" y2="68.0" stroke="rgba(53,48,41,0.12)"/><text class="t mono" x="38.0" y="72.0" font-size="10" fill="#6d675e" text-anchor="end" font-weight="400">0.20</text><line x1="44" x2="366" y1="36.0" y2="36.0" stroke="rgba(53,48,41,0.12)"/><text class="t mono" x="38.0" y="40.0" font-size="10" fill="#6d675e" text-anchor="end" font-weight="400">0.25</text><line x1="292.8" y1="43.1" x2="351.4" y2="73.2" stroke="#c96545" stroke-width="2" stroke-dasharray="3 4"/><path d="M58.6,196.0 L87.9,196.0 L117.2,196.0 L146.5,99.9 L175.7,81.4 L205.0,54.6 L234.3,54.6 L263.5,87.6 L292.8,43.1" fill="none" stroke="#c96545" stroke-width="2"/><path d="M351.4,73.2" fill="none" stroke="#c96545" stroke-width="2"/><text class="t mono" x="58.6" y="212.0" font-size="9.5" fill="#6d675e" text-anchor="middle" font-weight="400">3</text><g class="pt"><title>v3: 0.0000</title><circle cx="58.6" cy="196.0" r="11" fill="transparent"/><circle cx="58.6" cy="196.0" r="4.5" fill="#c96545" stroke="#c96545" stroke-width="2"/></g><text class="t mono" x="87.9" y="212.0" font-size="9.5" fill="#6d675e" text-anchor="middle" font-weight="400">4</text><g class="pt"><title>v4: 0.0000</title><circle cx="87.9" cy="196.0" r="11" fill="transparent"/><circle cx="87.9" cy="196.0" r="4.5" fill="#c96545" stroke="#c96545" stroke-width="2"/></g><text class="t mono" x="117.2" y="212.0" font-size="9.5" fill="#6d675e" text-anchor="middle" font-weight="400">5</text><g class="pt"><title>v5: 0.0000</title><circle cx="117.2" cy="196.0" r="11" fill="transparent"/><circle cx="117.2" cy="196.0" r="4.5" fill="#c96545" stroke="#c96545" stroke-width="2"/></g><text class="t mono" x="146.5" y="212.0" font-size="9.5" fill="#6d675e" text-anchor="middle" font-weight="400">6</text><g class="pt"><title>v6: 0.1502</title><circle cx="146.5" cy="99.9" r="11" fill="transparent"/><circle cx="146.5" cy="99.9" r="4.5" fill="#c96545" stroke="#c96545" stroke-width="2"/></g><text class="t mono" x="175.7" y="212.0" font-size="9.5" fill="#6d675e" text-anchor="middle" font-weight="400">7</text><g class="pt"><title>v7: ≈0.1790</title><circle cx="175.7" cy="81.4" r="11" fill="transparent"/><circle cx="175.7" cy="81.4" r="4.5" fill="#fbf8f2" stroke="#c96545" stroke-width="2"/></g><text class="t mono" x="205.0" y="212.0" font-size="9.5" fill="#6d675e" text-anchor="middle" font-weight="400">8</text><g class="pt"><title>v8: 0.2209</title><circle cx="205.0" cy="54.6" r="11" fill="transparent"/><circle cx="205.0" cy="54.6" r="4.5" fill="#c96545" stroke="#c96545" stroke-width="2"/></g><text class="t mono" x="234.3" y="212.0" font-size="9.5" fill="#6d675e" text-anchor="middle" font-weight="400">9</text><g class="pt"><title>v9: 0.2210</title><circle cx="234.3" cy="54.6" r="11" fill="transparent"/><circle cx="234.3" cy="54.6" r="4.5" fill="#c96545" stroke="#c96545" stroke-width="2"/></g><text class="t mono" x="263.5" y="212.0" font-size="9.5" fill="#6d675e" text-anchor="middle" font-weight="400">10</text><g class="pt"><title>v10: 0.1694</title><circle cx="263.5" cy="87.6" r="11" fill="transparent"/><circle cx="263.5" cy="87.6" r="4.5" fill="#c96545" stroke="#c96545" stroke-width="2"/></g><text class="t mono" x="292.8" y="212.0" font-size="9.5" fill="#6d675e" text-anchor="middle" font-weight="400">11</text><g class="pt"><title>v11: 0.2389</title><circle cx="292.8" cy="43.1" r="11" fill="transparent"/><circle cx="292.8" cy="43.1" r="4.5" fill="#c96545" stroke="#c96545" stroke-width="2"/></g><text class="t mono" x="322.1" y="212.0" font-size="9.5" fill="#6d675e" text-anchor="middle" font-weight="400">12</text><text class="t mono" x="351.4" y="212.0" font-size="9.5" fill="#6d675e" text-anchor="middle" font-weight="400">13</text><g class="pt"><title>v13: 0.1918</title><circle cx="351.4" cy="73.2" r="11" fill="transparent"/><circle cx="351.4" cy="73.2" r="4.5" fill="#c96545" stroke="#c96545" stroke-width="2"/></g><text class="t" x="284.8" y="31.1" font-size="10" fill="#292722" text-anchor="end" font-weight="400">v11 best</text><text class="t mono" x="366.0" y="226.0" font-size="9.5" fill="#6d675e" text-anchor="end" font-weight="400">version</text></svg></div>
+<figcaption>Two of the six official metric scores across versions (higher is better for both). v12's separate metrics weren't recovered, so the line is dashed there. When PDS jumps in v13, MSE drops.</figcaption>
+</figure>
+```
+
+I also checked the trade-off locally on a held-out panel (VIPerturb B/C, with separate control groups for generating and scoring). These are raw local numbers, not official scores:
+
+| Variant | PDS ↑ | MSE ↓ | Reach ↑ |
+|---|---:|---:|---:|
+| v11 | 0.578 | 1.114 | 0.510 |
+| 50/50 mix | 0.580 | 1.026 | 0.538 |
+| 15 patterns removed, 6,000 genes | 0.602 | 1.123 | 0.504 |
+| 15 patterns removed, 8,000 genes | 0.602 | 1.166 | 0.530 |
+
+Removing patterns helped tell targets apart. A mixture got the levels closest. No single variant won everything, and this panel couldn't settle what the hidden contexts would do.
+
+::: {.vcc-cols}
+::: {.vcc-good}
+#### What went well
+
+- v12 was the best documented official result, and its package and generator are fully preserved.
+- The background-removal idea did what I hoped for PDS.
+- v13 taught me, very clearly, what over-amplifying costs.
+:::
+
+::: {.vcc-bad}
+#### What went wrong
+
+- Removing control patterns can also remove real signal, which costs MSE.
+- v13 changed reliability weights, removed patterns *and* turned up the volume. Too much volume is my main suspect, but I can't prove it was the only cause.
+- Two different recipes were both called "v13" at some point. The one I submitted was candidate c12133. Naming things properly is underrated.
+:::
+:::
+
+#### Tried, didn't work
+
+- More patterns removed, or more weight on VIPerturb. Small, inconsistent changes or regressions. Turning a dial further isn't progress by itself.
+- Reliability scores that included the receiver's own data. They looked amazing because they were contaminated. Rejected.
+- Direct effects without the carrier. Looked promising against a control-only baseline, but worse on realistic baselines. Changing the starting point can fake a gain.
+
+::: {.vcc-next}
+**What I took into the next round.** The newest version wasn't the best. For the final round, I decided ahead of time that if I couldn't show something beat v12, I'd go with v12.
+:::
+
+## Chapter 6 · v14-DEF: trust the evidence, not the newest idea
+
+```{=html}
+<div class="vcc-chapter-head">
+  <span class="vcc-when">The final test delivery · 24 October</span>
+  <div class="vcc-chips"><span>v14-DEF published · score not visible</span></div>
+</div>
+```
+
+### The idea
+
+The final round used three new hidden contexts, D, E and F. Again, only their untreated controls were available. I wanted to use the strongest recipe I had evidence for, rather than whatever I'd built most recently.
+
+### How I built it
+
+I rebuilt the controls and target lists for the final panel. Looking at the controls gave some clues: D resembled HL60 and other myeloid cells, E was close to the glioma line U87MG, and F looked mesenchymal or fibroblast-like, near AC16 heart cells. These were clues, not identities. Looking like a cell line doesn't give you its perturbation responses.
+
+D used the recipe from context A, and E and F used the recipe from B and C. I ran a quick comparison on look-alike datasets (Yao THP1, U87MG and T98G, with 18, 21 and 21 usable targets). It couldn't produce a fair winner, because some MSE values were undefined.
+
+So the rule I'd set in advance kicked in: fall back to the best official historical evidence, which was v12. The final delivery used v12's recipe (15 patterns removed, volume ratio 0.99, 8,000 changed genes) with the new controls and targets, under the name `pedrito-amor-v14-DEF`.
+
+The upload was about 3.2 GB, checksum verified, finished on 24 October at 14:21 UTC. The server shows it as published, with no score visible yet.
+
+```{=html}
+<figure class="vcc-slot" id="img-08">
+  <div class="vcc-slot-frame">
+    <span class="vcc-slot-tag">Illustration 08 · in progress</span>
+    <p>A traveller at a crossroads holding two maps: a shiny new one with blank areas and an older, well-worn one with a route already walked and marked. The traveller follows the worn map towards three doors labelled D, E and F.</p>
+  </div>
+</figure>
+```
+
+::: {.vcc-cols}
+::: {.vcc-good}
+#### What went well
+
+- I decided the fallback rule *before* seeing results, which stopped me from fooling myself at the last minute.
+- It's a genuine new prediction with new controls and targets, not a relabelled old file.
+- The upload was verified byte for byte.
+:::
+
+::: {.vcc-bad}
+#### What I still don't know
+
+- Whether it worked. There's no visible score, and "published" isn't the same as zero or as good.
+- Whether v12's recipe transfers to D, E and F. There were no real perturbed answers for those cells to check against.
+:::
+:::
+
+## Behind the scenes: 14,218 tries
+
+The versions are only the tip of it. Behind them I logged 14,218 results in eleven log journals. To be clear, that's 14,218 rows in log files, not 14,218 independent models or validated experiments. Some are tiny variations of each other.
+
+```{=html}
+<figure class="vcc-chart vcc-chart-wide">
+<div class="vcc-scroll">
+<svg class="vcc-svg" viewBox="0 0 760 304" role="img" aria-label="Number of logged result records per search campaign" xmlns="http://www.w3.org/2000/svg"><line x1="178.0" x2="178.0" y1="10" y2="278" stroke="rgba(53,48,41,0.12)"/><text class="t mono" x="178.0" y="294.0" font-size="10.5" fill="#6d675e" text-anchor="middle" font-weight="400">0</text><line x1="308.5" x2="308.5" y1="10" y2="278" stroke="rgba(53,48,41,0.12)"/><text class="t mono" x="308.5" y="294.0" font-size="10.5" fill="#6d675e" text-anchor="middle" font-weight="400">2,500</text><line x1="439.0" x2="439.0" y1="10" y2="278" stroke="rgba(53,48,41,0.12)"/><text class="t mono" x="439.0" y="294.0" font-size="10.5" fill="#6d675e" text-anchor="middle" font-weight="400">5,000</text><line x1="569.5" x2="569.5" y1="10" y2="278" stroke="rgba(53,48,41,0.12)"/><text class="t mono" x="569.5" y="294.0" font-size="10.5" fill="#6d675e" text-anchor="middle" font-weight="400">7,500</text><line x1="700.0" x2="700.0" y1="10" y2="278" stroke="rgba(53,48,41,0.12)"/><text class="t mono" x="700.0" y="294.0" font-size="10.5" fill="#6d675e" text-anchor="middle" font-weight="400">10,000</text><text class="t" x="168.0" y="30.0" font-size="11.5" fill="#292722" text-anchor="end" font-weight="400">Fast continuous grid</text><g><title>Fast continuous grid: 10,000 records</title><rect x="178" y="19" width="522.0" height="16" rx="3" fill="#c96545"/></g><text class="t mono" x="706.0" y="30.0" font-size="10.5" fill="#6d675e" text-anchor="start" font-weight="400">10,000</text><text class="t" x="168.0" y="56.0" font-size="11.5" fill="#292722" text-anchor="end" font-weight="400">Source-bank combiner</text><g><title>Source-bank combiner: 1,200 records</title><rect x="178" y="45" width="62.6" height="16" rx="3" fill="#c96545"/></g><text class="t mono" x="246.6" y="56.0" font-size="10.5" fill="#6d675e" text-anchor="start" font-weight="400">1,200</text><text class="t" x="168.0" y="82.0" font-size="11.5" fill="#292722" text-anchor="end" font-weight="400">Projected-source KRR</text><g><title>Projected-source KRR: 960 records</title><rect x="178" y="71" width="50.1" height="16" rx="3" fill="#c96545"/></g><text class="t mono" x="234.1" y="82.0" font-size="10.5" fill="#6d675e" text-anchor="start" font-weight="400">960</text><text class="t" x="168.0" y="108.0" font-size="11.5" fill="#292722" text-anchor="end" font-weight="400">KRR</text><g><title>KRR: 600 records</title><rect x="178" y="97" width="31.3" height="16" rx="3" fill="#c96545"/></g><text class="t mono" x="215.3" y="108.0" font-size="10.5" fill="#6d675e" text-anchor="start" font-weight="400">600</text><text class="t" x="168.0" y="134.0" font-size="11.5" fill="#292722" text-anchor="end" font-weight="400">Claude CELLSEARCH</text><g><title>Claude CELLSEARCH: 364 records</title><rect x="178" y="123" width="19.0" height="16" rx="3" fill="#c96545"/></g><text class="t mono" x="203.0" y="134.0" font-size="10.5" fill="#6d675e" text-anchor="start" font-weight="400">364</text><text class="t" x="168.0" y="160.0" font-size="11.5" fill="#292722" text-anchor="end" font-weight="400">Random search + stack</text><g><title>Random search + stack: 355 records</title><rect x="178" y="149" width="18.5" height="16" rx="3" fill="#c96545"/></g><text class="t mono" x="202.5" y="160.0" font-size="10.5" fill="#6d675e" text-anchor="start" font-weight="400">355</text><text class="t" x="168.0" y="186.0" font-size="11.5" fill="#292722" text-anchor="end" font-weight="400">Claude FASTSEARCH</text><g><title>Claude FASTSEARCH: 315 records</title><rect x="178" y="175" width="16.4" height="16" rx="3" fill="#c96545"/></g><text class="t mono" x="200.4" y="186.0" font-size="10.5" fill="#6d675e" text-anchor="start" font-weight="400">315</text><text class="t" x="168.0" y="212.0" font-size="11.5" fill="#292722" text-anchor="end" font-weight="400">Early closure (pre-v5)</text><g><title>Early closure (pre-v5): 255 records</title><rect x="178" y="201" width="13.3" height="16" rx="3" fill="#c96545"/></g><text class="t mono" x="197.3" y="212.0" font-size="10.5" fill="#6d675e" text-anchor="start" font-weight="400">255</text><text class="t" x="168.0" y="238.0" font-size="11.5" fill="#292722" text-anchor="end" font-weight="400">Ridge</text><g><title>Ridge: 160 records</title><rect x="178" y="227" width="8.4" height="16" rx="3" fill="#c96545"/></g><text class="t mono" x="192.4" y="238.0" font-size="10.5" fill="#6d675e" text-anchor="start" font-weight="400">160</text><text class="t" x="168.0" y="264.0" font-size="11.5" fill="#292722" text-anchor="end" font-weight="400">Ridge/KRR blends</text><g><title>Ridge/KRR blends: 9 records</title><rect x="178" y="253" width="2.0" height="16" rx="3" fill="#c96545"/></g><text class="t mono" x="184.5" y="264.0" font-size="10.5" fill="#6d675e" text-anchor="start" font-weight="400">9</text></svg>
+</div>
+<figcaption><span class="vcc-swipe">Swipe sideways to see the full bars. </span>Logged result records per search campaign. The Claude searches were runs where an AI assistant proposed and queued variants for me.</figcaption>
+</figure>
+```
+
+The biggest one was a fast search over 10,000 continuous combinations: mixtures of versions, patterns removed, volume and masks. 2,857 of them passed an eligibility check, which is not the same as 2,857 improvements. The winner was 90% v10 plus 10% v11, with some extra pattern removal, a mask on low-expression genes and the volume at 0.85. On 60 internal test cases it improved PDS from 0.592 to 0.605. But it was never turned into actual cells with whole-number counts, so its real MSE remained unknown. I didn't submit it.
+
+A separate source-combining recipe did go all the way to real counts on a training panel, and it beat both v11 and the 15-pattern recipe there, on PDS (0.611 against 0.566 and 0.598) and on raw error (1.081 against 1.165 and 1.211). It's the one local result I'd still like to test properly. But it was picked on training data, and its normalised MSE score was still zero.
+
+## Did the big AI models help?
+
+Of course I had to try the fancy stuff. In total I tested twelve alternative routes, including some of the best-known models for single-cell perturbation:
+
+```{=html}
+<div class="vcc-models">
+  <article><h4>CPA</h4><p>Separates "which cell" from "what was done to it", then recombines them. No error improvement over v11.</p></article>
+  <article><h4>scGen</h4><p>Treats a perturbation as a shift inside a learned summary space of cells. No improvement.</p></article>
+  <article><h4>GEARS</h4><p>Uses a map of how genes relate functionally. Some fits finished, but the long queue was stopped for cost, so it never got a complete row.</p></article>
+  <article><h4>STATE</h4><p>Learns responses from whole sets of observed cells. Trained on a smaller subset; worse error than v11. A bigger all-cells run was prepared but never finished.</p></article>
+  <article><h4>PRESAGE</h4><p>Predicts responses using structured gene knowledge. Run with a simplified knowledge setup. No gain.</p></article>
+  <article><h4>scLAMBDA</h4><p>Another learned-latent-space model for perturbations. No gain.</p></article>
+  <article><h4>Ridge</h4><p>The deliberately boring baseline, to check whether complexity buys anything. No gain either.</p></article>
+  <article><h4>STRING &amp; GenePT readers</h4><p>Small networks that guess a gene's response from similar genes, using protein interaction maps or text-based gene descriptions.</p></article>
+  <article><h4>Geneformer &amp; scGPT</h4><p>Large pretrained models of gene expression, used frozen, with a small trained layer on top. Not fine-tuned for perturbations.</p></article>
+  <article><h4>PIE</h4><p>A pilot that never reached a verified comparison, due to early scaling problems and an open question about overlap with its pretraining data.</p></article>
+</div>
+```
+
+Here's how their raw error compared with my three submitted recipes on two historical test panels. Lower is better; the dashed line marks v11.
+
+```{=html}
+<figure class="vcc-chart">
+<div class="vcc-multiples"><svg class="vcc-svg vcc-svg-mini" viewBox="0 0 380 349" role="img" aria-label="H1 panel · error (lower is better)" xmlns="http://www.w3.org/2000/svg"><text class="t" x="4.0" y="18.0" font-size="12" fill="#292722" text-anchor="start" font-weight="700">H1 panel · error (lower is better)</text><line x1="104.0" x2="104.0" y1="30" y2="323" stroke="rgba(53,48,41,0.12)"/><text class="t mono" x="104.0" y="337.0" font-size="10" fill="#6d675e" text-anchor="middle" font-weight="400">0</text><line x1="142.3" x2="142.3" y1="30" y2="323" stroke="rgba(53,48,41,0.12)"/><text class="t mono" x="142.3" y="337.0" font-size="10" fill="#6d675e" text-anchor="middle" font-weight="400">1</text><line x1="180.7" x2="180.7" y1="30" y2="323" stroke="rgba(53,48,41,0.12)"/><text class="t mono" x="180.7" y="337.0" font-size="10" fill="#6d675e" text-anchor="middle" font-weight="400">2</text><line x1="219.0" x2="219.0" y1="30" y2="323" stroke="rgba(53,48,41,0.12)"/><text class="t mono" x="219.0" y="337.0" font-size="10" fill="#6d675e" text-anchor="middle" font-weight="400">3</text><line x1="257.3" x2="257.3" y1="30" y2="323" stroke="rgba(53,48,41,0.12)"/><text class="t mono" x="257.3" y="337.0" font-size="10" fill="#6d675e" text-anchor="middle" font-weight="400">4</text><line x1="295.7" x2="295.7" y1="30" y2="323" stroke="rgba(53,48,41,0.12)"/><text class="t mono" x="295.7" y="337.0" font-size="10" fill="#6d675e" text-anchor="middle" font-weight="400">5</text><line x1="334.0" x2="334.0" y1="30" y2="323" stroke="rgba(53,48,41,0.12)"/><text class="t mono" x="334.0" y="337.0" font-size="10" fill="#6d675e" text-anchor="middle" font-weight="400">6</text><text class="t" x="96.0" y="46.0" font-size="10.5" fill="#292722" text-anchor="end" font-weight="700">v11 (mine)</text><g><title>v11 (mine): 0.8407</title><rect x="104" y="37" width="32.2" height="13" rx="3" fill="#c96545"/></g><text class="t mono" x="141.2" y="46.0" font-size="9.5" fill="#6d675e" text-anchor="start" font-weight="400">0.84</text><text class="t" x="96.0" y="65.0" font-size="10.5" fill="#292722" text-anchor="end" font-weight="700">v12 (mine)</text><g><title>v12 (mine): 0.8513</title><rect x="104" y="56" width="32.6" height="13" rx="3" fill="#c96545"/></g><text class="t mono" x="141.6" y="65.0" font-size="9.5" fill="#6d675e" text-anchor="start" font-weight="400">0.85</text><text class="t" x="96.0" y="84.0" font-size="10.5" fill="#292722" text-anchor="end" font-weight="700">v13 (mine)</text><g><title>v13 (mine): 0.8678</title><rect x="104" y="75" width="33.3" height="13" rx="3" fill="#c96545"/></g><text class="t mono" x="142.3" y="84.0" font-size="9.5" fill="#6d675e" text-anchor="start" font-weight="400">0.87</text><text class="t" x="96.0" y="103.0" font-size="10.5" fill="#6d675e" text-anchor="end" font-weight="400">CPA</text><g><title>CPA: 1.0062</title><rect x="104" y="94" width="38.6" height="13" rx="3" fill="#a59d92"/></g><text class="t mono" x="147.6" y="103.0" font-size="9.5" fill="#6d675e" text-anchor="start" font-weight="400">1.01</text><text class="t" x="96.0" y="122.0" font-size="10.5" fill="#6d675e" text-anchor="end" font-weight="400">scGen</text><g><title>scGen: 1.0066</title><rect x="104" y="113" width="38.6" height="13" rx="3" fill="#a59d92"/></g><text class="t mono" x="147.6" y="122.0" font-size="9.5" fill="#6d675e" text-anchor="start" font-weight="400">1.01</text><text class="t" x="96.0" y="141.0" font-size="10.5" fill="#6d675e" text-anchor="end" font-weight="400">STATE</text><g><title>STATE: 1.0122</title><rect x="104" y="132" width="38.8" height="13" rx="3" fill="#a59d92"/></g><text class="t mono" x="147.8" y="141.0" font-size="9.5" fill="#6d675e" text-anchor="start" font-weight="400">1.01</text><text class="t" x="96.0" y="160.0" font-size="10.5" fill="#6d675e" text-anchor="end" font-weight="400">GenePT MLP</text><g><title>GenePT MLP: 1.1941</title><rect x="104" y="151" width="45.8" height="13" rx="3" fill="#a59d92"/></g><text class="t mono" x="154.8" y="160.0" font-size="9.5" fill="#6d675e" text-anchor="start" font-weight="400">1.19</text><text class="t" x="96.0" y="179.0" font-size="10.5" fill="#6d675e" text-anchor="end" font-weight="400">scLAMBDA</text><g><title>scLAMBDA: 1.4053</title><rect x="104" y="170" width="53.9" height="13" rx="3" fill="#a59d92"/></g><text class="t mono" x="162.9" y="179.0" font-size="9.5" fill="#6d675e" text-anchor="start" font-weight="400">1.41</text><text class="t" x="96.0" y="198.0" font-size="10.5" fill="#6d675e" text-anchor="end" font-weight="400">STRING MLP</text><g><title>STRING MLP: 1.5492</title><rect x="104" y="189" width="59.4" height="13" rx="3" fill="#a59d92"/></g><text class="t mono" x="168.4" y="198.0" font-size="9.5" fill="#6d675e" text-anchor="start" font-weight="400">1.55</text><text class="t" x="96.0" y="217.0" font-size="10.5" fill="#6d675e" text-anchor="end" font-weight="400">scGPT</text><g><title>scGPT: 1.5673</title><rect x="104" y="208" width="60.1" height="13" rx="3" fill="#a59d92"/></g><text class="t mono" x="169.1" y="217.0" font-size="9.5" fill="#6d675e" text-anchor="start" font-weight="400">1.57</text><text class="t" x="96.0" y="236.0" font-size="10.5" fill="#6d675e" text-anchor="end" font-weight="400">Geneformer</text><g><title>Geneformer: 1.8406</title><rect x="104" y="227" width="70.6" height="13" rx="3" fill="#a59d92"/></g><text class="t mono" x="179.6" y="236.0" font-size="9.5" fill="#6d675e" text-anchor="start" font-weight="400">1.84</text><text class="t" x="96.0" y="255.0" font-size="10.5" fill="#6d675e" text-anchor="end" font-weight="400">STRING linear</text><g><title>STRING linear: 1.9167</title><rect x="104" y="246" width="73.5" height="13" rx="3" fill="#a59d92"/></g><text class="t mono" x="182.5" y="255.0" font-size="9.5" fill="#6d675e" text-anchor="start" font-weight="400">1.92</text><text class="t" x="96.0" y="274.0" font-size="10.5" fill="#6d675e" text-anchor="end" font-weight="400">GenePT linear</text><g><title>GenePT linear: 1.9334</title><rect x="104" y="265" width="74.1" height="13" rx="3" fill="#a59d92"/></g><text class="t mono" x="183.1" y="274.0" font-size="9.5" fill="#6d675e" text-anchor="start" font-weight="400">1.93</text><text class="t" x="96.0" y="293.0" font-size="10.5" fill="#6d675e" text-anchor="end" font-weight="400">Ridge</text><g><title>Ridge: 3.0309</title><rect x="104" y="284" width="116.2" height="13" rx="3" fill="#a59d92"/></g><text class="t mono" x="225.2" y="293.0" font-size="9.5" fill="#6d675e" text-anchor="start" font-weight="400">3.03</text><text class="t" x="96.0" y="312.0" font-size="10.5" fill="#6d675e" text-anchor="end" font-weight="400">PRESAGE</text><g><title>PRESAGE: 4.5656</title><rect x="104" y="303" width="175.0" height="13" rx="3" fill="#a59d92"/></g><text class="t mono" x="284.0" y="312.0" font-size="9.5" fill="#6d675e" text-anchor="start" font-weight="400">4.57</text><line x1="136.2" x2="136.2" y1="28" y2="323" stroke="#2b6fb0" stroke-width="1.5" stroke-dasharray="4 3"/></svg><svg class="vcc-svg vcc-svg-mini" viewBox="0 0 380 349" role="img" aria-label="CD4 panel · error (lower is better)" xmlns="http://www.w3.org/2000/svg"><text class="t" x="4.0" y="18.0" font-size="12" fill="#292722" text-anchor="start" font-weight="700">CD4 panel · error (lower is better)</text><line x1="104.0" x2="104.0" y1="30" y2="323" stroke="rgba(53,48,41,0.12)"/><text class="t mono" x="104.0" y="337.0" font-size="10" fill="#6d675e" text-anchor="middle" font-weight="400">0</text><line x1="142.3" x2="142.3" y1="30" y2="323" stroke="rgba(53,48,41,0.12)"/><text class="t mono" x="142.3" y="337.0" font-size="10" fill="#6d675e" text-anchor="middle" font-weight="400">1</text><line x1="180.7" x2="180.7" y1="30" y2="323" stroke="rgba(53,48,41,0.12)"/><text class="t mono" x="180.7" y="337.0" font-size="10" fill="#6d675e" text-anchor="middle" font-weight="400">2</text><line x1="219.0" x2="219.0" y1="30" y2="323" stroke="rgba(53,48,41,0.12)"/><text class="t mono" x="219.0" y="337.0" font-size="10" fill="#6d675e" text-anchor="middle" font-weight="400">3</text><line x1="257.3" x2="257.3" y1="30" y2="323" stroke="rgba(53,48,41,0.12)"/><text class="t mono" x="257.3" y="337.0" font-size="10" fill="#6d675e" text-anchor="middle" font-weight="400">4</text><line x1="295.7" x2="295.7" y1="30" y2="323" stroke="rgba(53,48,41,0.12)"/><text class="t mono" x="295.7" y="337.0" font-size="10" fill="#6d675e" text-anchor="middle" font-weight="400">5</text><line x1="334.0" x2="334.0" y1="30" y2="323" stroke="rgba(53,48,41,0.12)"/><text class="t mono" x="334.0" y="337.0" font-size="10" fill="#6d675e" text-anchor="middle" font-weight="400">6</text><text class="t" x="96.0" y="46.0" font-size="10.5" fill="#292722" text-anchor="end" font-weight="700">v11 (mine)</text><g><title>v11 (mine): 0.9940</title><rect x="104" y="37" width="38.1" height="13" rx="3" fill="#c96545"/></g><text class="t mono" x="147.1" y="46.0" font-size="9.5" fill="#6d675e" text-anchor="start" font-weight="400">0.99</text><text class="t" x="96.0" y="65.0" font-size="10.5" fill="#292722" text-anchor="end" font-weight="700">v12 (mine)</text><g><title>v12 (mine): 1.0018</title><rect x="104" y="56" width="38.4" height="13" rx="3" fill="#c96545"/></g><text class="t mono" x="147.4" y="65.0" font-size="9.5" fill="#6d675e" text-anchor="start" font-weight="400">1.00</text><text class="t" x="96.0" y="84.0" font-size="10.5" fill="#292722" text-anchor="end" font-weight="700">v13 (mine)</text><g><title>v13 (mine): 1.0019</title><rect x="104" y="75" width="38.4" height="13" rx="3" fill="#c96545"/></g><text class="t mono" x="147.4" y="84.0" font-size="9.5" fill="#6d675e" text-anchor="start" font-weight="400">1.00</text><text class="t" x="96.0" y="103.0" font-size="10.5" fill="#6d675e" text-anchor="end" font-weight="400">CPA</text><g><title>CPA: 1.0269</title><rect x="104" y="94" width="39.4" height="13" rx="3" fill="#a59d92"/></g><text class="t mono" x="148.4" y="103.0" font-size="9.5" fill="#6d675e" text-anchor="start" font-weight="400">1.03</text><text class="t" x="96.0" y="122.0" font-size="10.5" fill="#6d675e" text-anchor="end" font-weight="400">scGen</text><g><title>scGen: 1.0919</title><rect x="104" y="113" width="41.9" height="13" rx="3" fill="#a59d92"/></g><text class="t mono" x="150.9" y="122.0" font-size="9.5" fill="#6d675e" text-anchor="start" font-weight="400">1.09</text><text class="t" x="96.0" y="141.0" font-size="10.5" fill="#6d675e" text-anchor="end" font-weight="400">STATE</text><g><title>STATE: 4.1700</title><rect x="104" y="132" width="159.9" height="13" rx="3" fill="#a59d92"/></g><text class="t mono" x="268.9" y="141.0" font-size="9.5" fill="#6d675e" text-anchor="start" font-weight="400">4.17</text><text class="t" x="96.0" y="160.0" font-size="10.5" fill="#6d675e" text-anchor="end" font-weight="400">GenePT MLP</text><g><title>GenePT MLP: 1.0614</title><rect x="104" y="151" width="40.7" height="13" rx="3" fill="#a59d92"/></g><text class="t mono" x="149.7" y="160.0" font-size="9.5" fill="#6d675e" text-anchor="start" font-weight="400">1.06</text><text class="t" x="96.0" y="179.0" font-size="10.5" fill="#6d675e" text-anchor="end" font-weight="400">scLAMBDA</text><g><title>scLAMBDA: 1.8209</title><rect x="104" y="170" width="69.8" height="13" rx="3" fill="#a59d92"/></g><text class="t mono" x="178.8" y="179.0" font-size="9.5" fill="#6d675e" text-anchor="start" font-weight="400">1.82</text><text class="t" x="96.0" y="198.0" font-size="10.5" fill="#6d675e" text-anchor="end" font-weight="400">STRING MLP</text><g><title>STRING MLP: 1.0206</title><rect x="104" y="189" width="39.1" height="13" rx="3" fill="#a59d92"/></g><text class="t mono" x="148.1" y="198.0" font-size="9.5" fill="#6d675e" text-anchor="start" font-weight="400">1.02</text><text class="t" x="96.0" y="217.0" font-size="10.5" fill="#6d675e" text-anchor="end" font-weight="400">scGPT</text><g><title>scGPT: 1.0622</title><rect x="104" y="208" width="40.7" height="13" rx="3" fill="#a59d92"/></g><text class="t mono" x="149.7" y="217.0" font-size="9.5" fill="#6d675e" text-anchor="start" font-weight="400">1.06</text><text class="t" x="96.0" y="236.0" font-size="10.5" fill="#6d675e" text-anchor="end" font-weight="400">Geneformer</text><g><title>Geneformer: 1.0524</title><rect x="104" y="227" width="40.3" height="13" rx="3" fill="#a59d92"/></g><text class="t mono" x="149.3" y="236.0" font-size="9.5" fill="#6d675e" text-anchor="start" font-weight="400">1.05</text><text class="t" x="96.0" y="255.0" font-size="10.5" fill="#6d675e" text-anchor="end" font-weight="400">STRING linear</text><g><title>STRING linear: 1.3645</title><rect x="104" y="246" width="52.3" height="13" rx="3" fill="#a59d92"/></g><text class="t mono" x="161.3" y="255.0" font-size="9.5" fill="#6d675e" text-anchor="start" font-weight="400">1.36</text><text class="t" x="96.0" y="274.0" font-size="10.5" fill="#6d675e" text-anchor="end" font-weight="400">GenePT linear</text><g><title>GenePT linear: 1.2794</title><rect x="104" y="265" width="49.0" height="13" rx="3" fill="#a59d92"/></g><text class="t mono" x="158.0" y="274.0" font-size="9.5" fill="#6d675e" text-anchor="start" font-weight="400">1.28</text><text class="t" x="96.0" y="293.0" font-size="10.5" fill="#6d675e" text-anchor="end" font-weight="400">Ridge</text><g><title>Ridge: 3.4351</title><rect x="104" y="284" width="131.7" height="13" rx="3" fill="#a59d92"/></g><text class="t mono" x="240.7" y="293.0" font-size="9.5" fill="#6d675e" text-anchor="start" font-weight="400">3.44</text><text class="t" x="96.0" y="312.0" font-size="10.5" fill="#6d675e" text-anchor="end" font-weight="400">PRESAGE</text><g><title>PRESAGE: 5.5021</title><rect x="104" y="303" width="210.9" height="13" rx="3" fill="#a59d92"/></g><text class="t mono" x="319.9" y="312.0" font-size="9.5" fill="#6d675e" text-anchor="start" font-weight="400">5.50</text><line x1="142.1" x2="142.1" y1="28" y2="323" stroke="#2b6fb0" stroke-width="1.5" stroke-dasharray="4 3"/></svg></div>
+<figcaption>Native corrected MSE on historical 24-target H1 and CD4 panels (raw local error, not official scores). My recipes are in terracotta; the dashed blue line is v11.</figcaption>
+</figure>
+```
+
+None of the twelve routes beat v11 on error in these panels. I want to be careful about what that means, though. It's a finding about *my* adapters, *my* training scope and these panels, not proof that these methods are bad. Several of them only produced predictions for a small share of the target-by-gene table (about 16.5% for CPA and 12.5% for STATE on H1). Four of them trained on seven selected groups, about 71,000 cells out of nearly 339,000 available. And using a frozen foundation model with a small layer on top isn't the same as fine-tuning it properly. Given more time and compute, I'd love to see this comparison done fairly.
+
+```{=html}
+<figure class="vcc-slot" id="img-09">
+  <div class="vcc-slot-frame">
+    <span class="vcc-slot-tag">Illustration 09 · in progress</span>
+    <p>A row of big, shiny, complicated machines with blinking lights, and at the end a small, well-used hand tool. A tape measure shows the hand tool's result landing closest to a target mark.</p>
+  </div>
+</figure>
+```
+
+## The practice exam problem
+
+If I had to name the single theme of this project, it's this one. My local tests were like a practice exam. They were useful, but they didn't always predict the real exam.
+
+```{=html}
+<figure class="vcc-chart">
+<p class="vcc-legend"><span><i style="background:#2b6fb0"></i>what my local tests said</span><span><i style="background:#c96545"></i>what the official leaderboard said</span></p><svg class="vcc-svg" viewBox="0 0 760 190" role="img" aria-label="Local estimate versus official result for v10 and v11" xmlns="http://www.w3.org/2000/svg"><line x1="70.0" x2="70.0" y1="32" y2="156" stroke="rgba(53,48,41,0.12)"/><text class="t mono" x="70.0" y="174.0" font-size="10.5" fill="#6d675e" text-anchor="middle" font-weight="400">0.18</text><line x1="180.0" x2="180.0" y1="32" y2="156" stroke="rgba(53,48,41,0.12)"/><text class="t mono" x="180.0" y="174.0" font-size="10.5" fill="#6d675e" text-anchor="middle" font-weight="400">0.19</text><line x1="290.0" x2="290.0" y1="32" y2="156" stroke="rgba(53,48,41,0.12)"/><text class="t mono" x="290.0" y="174.0" font-size="10.5" fill="#6d675e" text-anchor="middle" font-weight="400">0.20</text><line x1="400.0" x2="400.0" y1="32" y2="156" stroke="rgba(53,48,41,0.12)"/><text class="t mono" x="400.0" y="174.0" font-size="10.5" fill="#6d675e" text-anchor="middle" font-weight="400">0.21</text><line x1="510.0" x2="510.0" y1="32" y2="156" stroke="rgba(53,48,41,0.12)"/><text class="t mono" x="510.0" y="174.0" font-size="10.5" fill="#6d675e" text-anchor="middle" font-weight="400">0.22</text><line x1="620.0" x2="620.0" y1="32" y2="156" stroke="rgba(53,48,41,0.12)"/><text class="t mono" x="620.0" y="174.0" font-size="10.5" fill="#6d675e" text-anchor="middle" font-weight="400">0.23</text><line x1="730.0" x2="730.0" y1="32" y2="156" stroke="rgba(53,48,41,0.12)"/><text class="t mono" x="730.0" y="174.0" font-size="10.5" fill="#6d675e" text-anchor="middle" font-weight="400">0.24</text><text class="t mono" x="56.0" y="68.0" font-size="12" fill="#292722" text-anchor="end" font-weight="700">v10</text><line x1="273.4" x2="635.4" y1="64" y2="64" stroke="#6d675e" stroke-width="2"/><g><title>v10 my local test: 0.2314</title><circle cx="635.4" cy="64" r="7" fill="#2b6fb0" stroke="#fbf8f2" stroke-width="2"/></g><g><title>v10 official: 0.1985</title><circle cx="273.4" cy="64" r="7" fill="#c96545" stroke="#fbf8f2" stroke-width="2"/></g><text class="t" x="635.4" y="50.0" font-size="10.5" fill="#292722" text-anchor="middle" font-weight="400">my local test 0.231</text><text class="t" x="273.4" y="50.0" font-size="10.5" fill="#292722" text-anchor="middle" font-weight="400">official 0.198</text><text class="t mono" x="56.0" y="126.0" font-size="12" fill="#292722" text-anchor="end" font-weight="700">v11</text><line x1="414.1" x2="585.4" y1="122" y2="122" stroke="#6d675e" stroke-width="2"/><g><title>v11 my forecast: 0.22685</title><circle cx="585.4" cy="122" r="7" fill="#2b6fb0" stroke="#fbf8f2" stroke-width="2"/></g><g><title>v11 official: 0.2113</title><circle cx="414.1" cy="122" r="7" fill="#c96545" stroke="#fbf8f2" stroke-width="2"/></g><text class="t" x="585.4" y="108.0" font-size="10.5" fill="#292722" text-anchor="middle" font-weight="400">my forecast 0.227</text><text class="t" x="414.1" y="108.0" font-size="10.5" fill="#292722" text-anchor="middle" font-weight="400">official 0.211</text></svg>
+<figcaption>What my local tests said versus what the official leaderboard said, for the two versions where I have both numbers.</figcaption>
+</figure>
+```
+
+A local evaluator can do the arithmetic perfectly and still rank recipes differently from the hidden competition. Which targets you test on, which sources you leave out, how you split the controls and which starting carrier you use all change the answer. Some examples I ran into:
+
+- The official order was v11 > v9 > v10. On my 300-target VIPerturb panel, v10 was also the worst, but v11 didn't beat v9. My 24-target CD4 panel didn't reproduce the official order either. I didn't force them to agree.
+- Breaking the assembly line into stages showed that the final cell-spreading step alone could make the error worse: for v10 on VIPerturb, raw MSE went from 1.083 to 1.199 at that step, with identical gene totals.
+- A supposed factor-of-100 error in the CD4 data turned out not to exist. What actually mattered was *how* things were normalised: per cell or after summing.
+- Fourteen official targets on one platform always had an undefined MSE score, so I kept them separate. Adding 544 other targets didn't make them valid.
+
+```{=html}
+<figure class="vcc-slot" id="img-10">
+  <div class="vcc-slot-frame">
+    <span class="vcc-slot-tag">Illustration 10 · in progress</span>
+    <p>A student holding a practice test marked with a big A, standing in front of a closed exam-hall door. Through the keyhole you can see a different-looking exam paper.</p>
+  </div>
+</figure>
+```
+
+## Working with AI assistants
+
+I used Codex and Claude a lot: to find datasets, write extractors and adapters, propose experiments, coordinate audits and job queues, and set up Colab notebooks. I also wrote self-contained prompts for ChatGPT Pro. They were genuinely helpful, but I treated their suggestions as ideas to test, not as evidence. I set the priorities and decided what got submitted.
+
+Honestly, a big chunk of the time went into engineering rather than science: package versions that refused to cooperate, cache locks on Google Drive, losing everything after a Colab reconnect, files being hashed again and again, slow graph preparation for GEARS, fits that never finished. The fixes were unglamorous: isolated environments, checkpoints, cache keys based on file content, logs per phase, timers, and only reusing results that were marked complete. A smoke test passing never counted as a scientific win.
+
+## What I'd tell myself in September
+
+1. **Build the evaluator first, then distrust it.** My biggest jump in understanding came from finding the bug in my own test.
+2. **Change one thing at a time when you can.** v6, v10 and v13 each changed several things together, and I still can't say for sure what helped or hurt.
+3. **Data isn't free.** Every new dataset brings its own units, controls, treatments and quirks. More sources made v10 worse, not better.
+4. **Look at all six metrics, not just the total.** v13 had my best PDS and still lost.
+5. **Write things down properly.** I can't fully reconstruct v1 or v2. Name your versions and keep the receipts.
+6. **Simple baselines are hard to beat.** A careful transfer recipe beat every big model I tried, at least in my hands.
+
+I went in wanting to understand perturbation data better, and I think I did. Mostly by watching my ideas fail in instructive ways.
+
+## Every version at a glance
+
+All values are official normalised scores (higher is better). A dash means the value wasn't recovered. v1, v7 and v12 are rounded records.
+
+| Version | Main idea | PDS | MSE | NMAE | Fidelity | Reach | Jaccard | Overall |
+|---|---|---:|---:|---:|---:|---:|---:|---:|
+| v1 | Direction/size split | – | – | – | – | – | – | ≈0.1338 |
+| v2 | Wider source catalogue | – | – | – | – | – | – | – |
+| v3 | Published reference | 0.6128 | 0.0000 | 0.1442 | −0.0161 | 0.1494 | −0.0014 | 0.1482 |
+| v4 | Copula cell reshaping | 0.6012 | 0.0000 | 0.1493 | −0.0268 | 0.1507 | 0.0048 | 0.1465 |
+| v5 | Reshape weak effects only | 0.6012 | 0.0000 | 0.1493 | −0.0252 | 0.1790 | −0.0004 | 0.1507 |
+| v6 | Specialised branches | 0.6515 | 0.1502 | 0.1437 | −0.0836 | 0.1678 | −0.0065 | 0.1705 |
+| v7 | Changed-gene floor | 0.660 | 0.179 | 0.165 | 0.008 | 0.166 | −0.016 | ≈0.1937 |
+| v8 | A to H1 branch + Jurkat | 0.6533 | 0.2209 | 0.1872 | 0.0172 | 0.1873 | −0.0156 | 0.2084 |
+| v9 | Added Yao THP1 | 0.6534 | 0.2210 | 0.1868 | 0.0170 | 0.1881 | −0.0156 | 0.2084 |
+| v10 | Everything at once | 0.6420 | 0.1694 | 0.1884 | 0.0275 | 0.1755 | −0.0119 | 0.1985 |
+| v11 | Step back | 0.6547 | 0.2389 | 0.1943 | 0.0224 | 0.1760 | −0.0186 | 0.2113 |
+| v12 | Remove 15 control patterns | – | – | – | – | – | – | ≈0.2166 |
+| v13 | Reliability + louder | 0.7573 | 0.1918 | 0.1604 | 0.0139 | 0.1683 | −0.0170 | 0.2124 |
+| v14-DEF | v12 recipe on D/E/F | – | – | – | – | – | – | not visible |
+
+## Glossary
+
+```{=html}
+<dl class="vcc-glossary">
+  <div><dt>Control (NTC)</dt><dd>Cells that went through the experiment without any gene being switched off. They show the normal starting point.</dd></div>
+  <div><dt>Source and receiver</dt><dd>A source is an experiment someone already measured. The receiver is the new cell type I'm predicting for.</dd></div>
+  <div><dt>Perturbation</dt><dd>Switching off (here, quieting with CRISPRi) one gene and seeing what happens.</dd></div>
+  <div><dt>Proxy</dt><dd>My local stand-in for the hidden official evaluation. Only as good as how well its conclusions transfer.</dd></div>
+  <div><dt>Control PCs</dt><dd>The main patterns of natural variation among untreated cells. Removing them can reduce noise, or remove real signal.</dd></div>
+  <div><dt>Lambda / amplitude</dt><dd>The volume knob: how strongly the predicted change is applied.</dd></div>
+  <div><dt>CP50K</dt><dd>A common scale where each cell's counts are rescaled to add up to 50,000, then log-transformed. Mixing scales silently is a classic bug.</dd></div>
+  <div><dt>Leakage</dt><dd>Accidentally using the answers (or something derived from them) to build the prediction. Makes results look great and mean nothing.</dd></div>
+  <div><dt>Carrier and emitter</dt><dd>The starting count matrix, and the procedure that modifies it into the final simulated cells.</dd></div>
+  <div><dt>Pseudobulk</dt><dd>The average of many cells treated as one sample. Handy for comparing, but it hides cell-to-cell variation.</dd></div>
+</dl>
+```
+
+::: {.vcc-note}
+**About the evidence.** This page is based on a retrospective I put together from my archives on 24 October 2026: official responses, 14,218 logged results, an index of 8,665 experiment files and 54 evidence sources. Nothing was retrained or resubmitted to write it. Where a number is missing, I've left it missing rather than guess it.
+:::
