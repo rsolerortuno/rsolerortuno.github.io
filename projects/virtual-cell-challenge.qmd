@@ -29,6 +29,14 @@ This page documents fourteen versions in chronological order: what each one test
 </div>
 ```
 
+## Summary
+
+- **Best result.** v12 scored 0.2166 on the validation leaderboard. It combined multi-source effect transfer with removal of 15 control principal components. The final test delivery (v14-DEF) reused this recipe; its score is not visible.
+- **Where the gains came from.** The largest improvement (0.151 to 0.208, v5 to v8) came from choosing better-matched source data for each hidden context, not from more complex models. The expression-accuracy (MSE) component stayed at zero until v6.
+- **Main trade-off.** Methods that made targets easier to tell apart (PDS) tended to cost expression accuracy (MSE). v12 struck the best balance; v13 pushed discrimination further and lost overall.
+- **Local evaluation was optimistic.** In both cases where a local estimate and an official score can be compared, the local number was higher, and one early local gain was produced by a bug in my own evaluator.
+- **Alternative models.** None of twelve alternative routes (CPA, scGen, STATE, Geneformer, scGPT and others) beat my v11 recipe on error in matched panels. PIE, tested end to end, reproduced its published benchmark but carried almost no target-specific signal on my data.
+
 ## The task
 
 A CRISPR interference (CRISPRi) knockdown silences one gene. The effect rarely stays local: through regulatory networks, hundreds or thousands of other genes change expression. The full transcriptome-wide change is the *perturbation response*.
