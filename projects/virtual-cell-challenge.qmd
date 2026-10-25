@@ -47,12 +47,12 @@ In practice, this splits into two problems. The first is estimating the average 
 
 ### How the score works
 
-The leaderboard combines six metrics into one overall score. Much of this project is about how they pull in different directions.
+The leaderboard combines six metrics into one overall score. The four differential-expression (DE) metrics are computed from Wilcoxon rank-sum tests between perturbed and control cells. Much of this project is about how the metrics pull in different directions.
 
 ```{=html}
 <div class="vcc-metrics">
-  <article><h4>PDS</h4><p>Perturbation discrimination. Whether each predicted profile is closer to its own true profile than to the profiles of other targets. It rewards predictions that are distinct and correctly matched.</p></article>
-  <article><h4>MSE</h4><p>Expression accuracy. Mean squared error between predicted and observed pseudobulk expression, i.e. whether the predicted levels are right.</p></article>
+  <article><h4>PDS</h4><p>Perturbation discrimination. Whether each predicted profile is closer, by cosine similarity, to its own true profile than to those of other targets. It rewards predictions that are distinct and correctly matched.</p></article>
+  <article><h4>MSE</h4><p>Expression accuracy. An unbiased, capped and normalised mean squared error between predicted and observed pseudobulk expression: whether the predicted levels are right.</p></article>
   <article><h4>NMAE</h4><p>DE log-fold-change accuracy. Normalised mean absolute error of the predicted fold changes for differentially expressed genes.</p></article>
   <article><h4>Fidelity</h4><p>DE direction fidelity. For genes that change, whether the predicted direction (up or down) matches.</p></article>
   <article><h4>Reach</h4><p>DE direction reach. How many of the truly changed genes the prediction recovers with the correct direction.</p></article>
