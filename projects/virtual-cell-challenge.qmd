@@ -529,17 +529,6 @@ I used Codex and Claude a lot: to find datasets, write extractors and adapters, 
 
 Honestly, a big chunk of the time went into engineering rather than science: package versions that refused to cooperate, cache locks on Google Drive, losing everything after a Colab reconnect, files being hashed again and again, slow graph preparation for GEARS, fits that never finished. The fixes were unglamorous: isolated environments, checkpoints, cache keys based on file content, logs per phase, timers, and only reusing results that were marked complete. A smoke test passing never counted as a scientific win.
 
-## What I'd tell myself in September
-
-1. **Build the evaluator first, then distrust it.** My biggest jump in understanding came from finding the bug in my own test.
-2. **Change one thing at a time when you can.** v6, v10 and v13 each changed several things together, and I still can't say for sure what helped or hurt.
-3. **Data isn't free.** Every new dataset brings its own units, controls, treatments and quirks. More sources made v10 worse, not better.
-4. **Look at all six metrics, not just the total.** v13 had my best PDS and still lost.
-5. **Write things down properly.** I had to dig v1's and v2's scores out of old emails and match them to versions by date. Name your versions and keep the receipts.
-6. **Simple baselines are hard to beat.** A careful transfer recipe beat every big model I tried, at least in my hands.
-
-I went in wanting to understand perturbation data better, and I think I did. Mostly by watching my ideas fail in instructive ways.
-
 ## Every version at a glance
 
 All values are official normalised scores (higher is better). A dash means the value wasn't recovered. v7 is a rounded record. The test, v0, v1 and v2 rows come from the official result emails; I matched them to versions myself, since the emails don't name the model.
