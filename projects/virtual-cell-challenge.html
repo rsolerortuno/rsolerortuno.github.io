@@ -185,6 +185,7 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#the-practice-exam-problem" id="toc-the-practice-exam-problem" class="nav-link" data-scroll-target="#the-practice-exam-problem">The practice exam problem</a></li>
   <li><a href="#working-with-ai-assistants" id="toc-working-with-ai-assistants" class="nav-link" data-scroll-target="#working-with-ai-assistants">Working with AI assistants</a></li>
   <li><a href="#every-version-at-a-glance" id="toc-every-version-at-a-glance" class="nav-link" data-scroll-target="#every-version-at-a-glance">Every version at a glance</a></li>
+  <li><a href="#data-models-and-links" id="toc-data-models-and-links" class="nav-link" data-scroll-target="#data-models-and-links">Data, models and links</a></li>
   <li><a href="#glossary" id="toc-glossary" class="nav-link" data-scroll-target="#glossary">Glossary</a></li>
   </ul>
 </nav>
@@ -471,10 +472,76 @@ ul.task-list li input[type="checkbox"] {
 <li>Removing the minimum cell count everywhere. It recovers rare targets, but it doesn’t fix a weak knockdown, a wrong control group, a double perturbation or an incompatible unit. It just lets those problems in.</li>
 </ul>
 <p>There was also a sneaky one. An effect with a declared variance of zero gets <em>infinite</em> trust under inverse-variance weighting, so one bad row can take over a gene. I had to add an uncertainty floor. Data plumbing like this was a big part of the job.</p>
-<div class="vcc-next">
-<p><strong>What I took into the next round.</strong> v11 got the levels right but wasn’t great at telling targets apart. The question became: can I keep v11’s accuracy and make the targets more distinguishable? My idea was to turn down the background noise.</p>
-</div>
 </section>
+</section>
+<section id="pie-vs-v11" class="level3">
+<h3 class="anchored" data-anchor-id="pie-vs-v11">Side quest: trying to beat v11 with PIE</h3>
+<p>Once v11 was my reference, I spent a big chunk of October trying to beat it with PIE, a perturbation model from Arc Institute. It got more of my time than any other model, so it gets its own story here. Every PIE comparison below is against v11.</p>
+<p><strong>First attempts (10 to 18 October).</strong> I downloaded PIE’s preprocessed public datasets and started with a high-memory Colab pilot on CD4 T cells, then a version trained only on my own data banks. These early runs hit problems with scale and with how changed genes were called, so I didn’t trust their numbers.</p>
+<p><strong>Training PIE from scratch on everything (18 to 19 October).</strong> Then I went big. I kept PIE’s architecture (a Perceiver network with 512 latent slots and 14 layers in total) but started every response parameter from zero. I didn’t load any checkpoint that had already seen real responses. I trained it on five public datasets together: Replogle/Nadig, Tahoe-100M, Jiang, ARC VCC 2025 and X-Atlas/Orion. That’s about 76,000 public profiles, plus 45,000 profiles from my own banks, around 68 GB of inputs and 274,000 training rows in all. It also used PIE’s eleven knowledge sources, things like protein language-model embeddings (ESM2), STRING, DepMap, gene and perturbation text descriptions, L1000, PRISM and JUMP. Each kind of measurement kept its own output head, so I never had to mix units.</p>
+<div class="vcc-stats vcc-stats-3" aria-label="PIE training run">
+  <div><strong>6,250</strong><span>training steps on GPU before I stopped it</span></div>
+  <div><strong>0.864</strong><span>best validation error ratio (1.0 = predicting no change)</span></div>
+  <div><strong>300</strong><span>VIPerturb K562 targets predicted with the frozen model</span></div>
+</div>
+<p>The validation error fell fast, from 5.22 at step 50 to about 0.87 by step 500, and then it plateaued between 0.86 and 0.92 for the next 5,750 steps. So I stopped it by hand and froze the best checkpoint. It had seen every training task once, but not every gene of every profile, and it never finished its planned training budget.</p>
+<figure class="vcc-chart figure">
+<svg class="vcc-svg" viewbox="0 0 760 280" role="img" aria-label="Validation error of the from-scratch PIE run by training step" xmlns="http://www.w3.org/2000/svg"><line x1="56" x2="736" y1="236.0" y2="236.0" stroke="rgba(53,48,41,0.12)"></line><text class="t mono" x="48.0" y="240.0" font-size="10.5" fill="#6d675e" text-anchor="end" font-weight="400">0.8</text><line x1="56" x2="736" y1="204.0" y2="204.0" stroke="rgba(53,48,41,0.12)"></line><text class="t mono" x="48.0" y="208.0" font-size="10.5" fill="#6d675e" text-anchor="end" font-weight="400">0.9</text><line x1="56" x2="736" y1="172.0" y2="172.0" stroke="rgba(53,48,41,0.12)"></line><text class="t mono" x="48.0" y="176.0" font-size="10.5" fill="#6d675e" text-anchor="end" font-weight="400">1.0</text><line x1="56" x2="736" y1="140.0" y2="140.0" stroke="rgba(53,48,41,0.12)"></line><text class="t mono" x="48.0" y="144.0" font-size="10.5" fill="#6d675e" text-anchor="end" font-weight="400">1.1</text><line x1="56" x2="736" y1="108.0" y2="108.0" stroke="rgba(53,48,41,0.12)"></line><text class="t mono" x="48.0" y="112.0" font-size="10.5" fill="#6d675e" text-anchor="end" font-weight="400">1.2</text><line x1="56" x2="736" y1="76.0" y2="76.0" stroke="rgba(53,48,41,0.12)"></line><text class="t mono" x="48.0" y="80.0" font-size="10.5" fill="#6d675e" text-anchor="end" font-weight="400">1.3</text><line x1="56" x2="736" y1="44.0" y2="44.0" stroke="rgba(53,48,41,0.12)"></line><text class="t mono" x="48.0" y="48.0" font-size="10.5" fill="#6d675e" text-anchor="end" font-weight="400">1.4</text><line x1="56" x2="736" y1="172.0" y2="172.0" stroke="#2b6fb0" stroke-width="1.5" stroke-dasharray="5 4"></line><text class="t" x="736.0" y="166.0" font-size="10.5" fill="#292722" text-anchor="end" font-weight="400">predicting no change = 1.0</text><text class="t mono" x="56.0" y="254.0" font-size="10.5" fill="#6d675e" text-anchor="middle" font-weight="400">0</text><text class="t mono" x="164.8" y="254.0" font-size="10.5" fill="#6d675e" text-anchor="middle" font-weight="400">1,000</text><text class="t mono" x="273.6" y="254.0" font-size="10.5" fill="#6d675e" text-anchor="middle" font-weight="400">2,000</text><text class="t mono" x="382.4" y="254.0" font-size="10.5" fill="#6d675e" text-anchor="middle" font-weight="400">3,000</text><text class="t mono" x="491.2" y="254.0" font-size="10.5" fill="#6d675e" text-anchor="middle" font-weight="400">4,000</text><text class="t mono" x="600.0" y="254.0" font-size="10.5" fill="#6d675e" text-anchor="middle" font-weight="400">5,000</text><text class="t mono" x="708.8" y="254.0" font-size="10.5" fill="#6d675e" text-anchor="middle" font-weight="400">6,000</text><text class="t mono" x="736.0" y="274.0" font-size="10" fill="#6d675e" text-anchor="end" font-weight="400">training step</text><line x1="61.4" y1="28" x2="83.2" y2="52.3" stroke="#c96545" stroke-width="2" stroke-dasharray="3 4"></line><path d="M83.2,52.3 L110.4,212.0 L137.6,209.3 L164.8,212.7 L192.0,214.0 L219.2,209.2 L246.4,210.1 L273.6,210.8 L300.8,201.2 L328.0,207.8 L355.2,214.2 L382.4,198.7 L409.6,211.2 L436.8,214.8 L464.0,213.1 L491.2,210.0 L518.4,213.8 L545.6,206.5 L572.8,208.6 L600.0,197.4 L627.2,211.7 L654.4,212.2 L681.6,207.8 L708.8,205.6 L736.0,215.4" fill="none" stroke="#c96545" stroke-width="2" stroke-linejoin="round"></path><g><title>step 50: 5.22 (above the axis)</title><path d="M55.4,38 L67.4,38 L61.4,27 Z" fill="#c96545"></path></g><text class="t" x="71.4" y="37.0" font-size="10.5" fill="#292722" text-anchor="start" font-weight="400">step 50: 5.22</text><g class="pt"><title>step 250: 1.374</title><circle cx="83.2" cy="52.3" r="10" fill="transparent"></circle><circle cx="83.2" cy="52.3" r="3.5" fill="#c96545" stroke="#fbf8f2" stroke-width="1.5"></circle></g><g class="pt"><title>step 500: 0.875</title><circle cx="110.4" cy="212.0" r="10" fill="transparent"></circle><circle cx="110.4" cy="212.0" r="3.5" fill="#c96545" stroke="#fbf8f2" stroke-width="1.5"></circle></g><g class="pt"><title>step 750: 0.883</title><circle cx="137.6" cy="209.3" r="10" fill="transparent"></circle><circle cx="137.6" cy="209.3" r="3.5" fill="#c96545" stroke="#fbf8f2" stroke-width="1.5"></circle></g><g class="pt"><title>step 1,000: 0.873</title><circle cx="164.8" cy="212.7" r="10" fill="transparent"></circle><circle cx="164.8" cy="212.7" r="3.5" fill="#c96545" stroke="#fbf8f2" stroke-width="1.5"></circle></g><g class="pt"><title>step 1,250: 0.869</title><circle cx="192.0" cy="214.0" r="10" fill="transparent"></circle><circle cx="192.0" cy="214.0" r="3.5" fill="#c96545" stroke="#fbf8f2" stroke-width="1.5"></circle></g><g class="pt"><title>step 1,500: 0.884</title><circle cx="219.2" cy="209.2" r="10" fill="transparent"></circle><circle cx="219.2" cy="209.2" r="3.5" fill="#c96545" stroke="#fbf8f2" stroke-width="1.5"></circle></g><g class="pt"><title>step 1,750: 0.881</title><circle cx="246.4" cy="210.1" r="10" fill="transparent"></circle><circle cx="246.4" cy="210.1" r="3.5" fill="#c96545" stroke="#fbf8f2" stroke-width="1.5"></circle></g><g class="pt"><title>step 2,000: 0.879</title><circle cx="273.6" cy="210.8" r="10" fill="transparent"></circle><circle cx="273.6" cy="210.8" r="3.5" fill="#c96545" stroke="#fbf8f2" stroke-width="1.5"></circle></g><g class="pt"><title>step 2,250: 0.909</title><circle cx="300.8" cy="201.2" r="10" fill="transparent"></circle><circle cx="300.8" cy="201.2" r="3.5" fill="#c96545" stroke="#fbf8f2" stroke-width="1.5"></circle></g><g class="pt"><title>step 2,500: 0.888</title><circle cx="328.0" cy="207.8" r="10" fill="transparent"></circle><circle cx="328.0" cy="207.8" r="3.5" fill="#c96545" stroke="#fbf8f2" stroke-width="1.5"></circle></g><g class="pt"><title>step 2,750: 0.868</title><circle cx="355.2" cy="214.2" r="10" fill="transparent"></circle><circle cx="355.2" cy="214.2" r="3.5" fill="#c96545" stroke="#fbf8f2" stroke-width="1.5"></circle></g><g class="pt"><title>step 3,000: 0.916</title><circle cx="382.4" cy="198.7" r="10" fill="transparent"></circle><circle cx="382.4" cy="198.7" r="3.5" fill="#c96545" stroke="#fbf8f2" stroke-width="1.5"></circle></g><g class="pt"><title>step 3,250: 0.877</title><circle cx="409.6" cy="211.2" r="10" fill="transparent"></circle><circle cx="409.6" cy="211.2" r="3.5" fill="#c96545" stroke="#fbf8f2" stroke-width="1.5"></circle></g><g class="pt"><title>step 3,500: 0.866</title><circle cx="436.8" cy="214.8" r="10" fill="transparent"></circle><circle cx="436.8" cy="214.8" r="3.5" fill="#c96545" stroke="#fbf8f2" stroke-width="1.5"></circle></g><g class="pt"><title>step 3,750: 0.872</title><circle cx="464.0" cy="213.1" r="10" fill="transparent"></circle><circle cx="464.0" cy="213.1" r="3.5" fill="#c96545" stroke="#fbf8f2" stroke-width="1.5"></circle></g><g class="pt"><title>step 4,000: 0.881</title><circle cx="491.2" cy="210.0" r="10" fill="transparent"></circle><circle cx="491.2" cy="210.0" r="3.5" fill="#c96545" stroke="#fbf8f2" stroke-width="1.5"></circle></g><g class="pt"><title>step 4,250: 0.870</title><circle cx="518.4" cy="213.8" r="10" fill="transparent"></circle><circle cx="518.4" cy="213.8" r="3.5" fill="#c96545" stroke="#fbf8f2" stroke-width="1.5"></circle></g><g class="pt"><title>step 4,500: 0.892</title><circle cx="545.6" cy="206.5" r="10" fill="transparent"></circle><circle cx="545.6" cy="206.5" r="3.5" fill="#c96545" stroke="#fbf8f2" stroke-width="1.5"></circle></g><g class="pt"><title>step 4,750: 0.886</title><circle cx="572.8" cy="208.6" r="10" fill="transparent"></circle><circle cx="572.8" cy="208.6" r="3.5" fill="#c96545" stroke="#fbf8f2" stroke-width="1.5"></circle></g><g class="pt"><title>step 5,000: 0.920</title><circle cx="600.0" cy="197.4" r="10" fill="transparent"></circle><circle cx="600.0" cy="197.4" r="3.5" fill="#c96545" stroke="#fbf8f2" stroke-width="1.5"></circle></g><g class="pt"><title>step 5,250: 0.876</title><circle cx="627.2" cy="211.7" r="10" fill="transparent"></circle><circle cx="627.2" cy="211.7" r="3.5" fill="#c96545" stroke="#fbf8f2" stroke-width="1.5"></circle></g><g class="pt"><title>step 5,500: 0.874</title><circle cx="654.4" cy="212.2" r="10" fill="transparent"></circle><circle cx="654.4" cy="212.2" r="3.5" fill="#c96545" stroke="#fbf8f2" stroke-width="1.5"></circle></g><g class="pt"><title>step 5,750: 0.888</title><circle cx="681.6" cy="207.8" r="10" fill="transparent"></circle><circle cx="681.6" cy="207.8" r="3.5" fill="#c96545" stroke="#fbf8f2" stroke-width="1.5"></circle></g><g class="pt"><title>step 6,000: 0.895</title><circle cx="708.8" cy="205.6" r="10" fill="transparent"></circle><circle cx="708.8" cy="205.6" r="3.5" fill="#c96545" stroke="#fbf8f2" stroke-width="1.5"></circle></g><g class="pt"><title>step 6,250: 0.864</title><circle cx="736.0" cy="215.4" r="10" fill="transparent"></circle><circle cx="736.0" cy="215.4" r="5" fill="#c96545" stroke="#fbf8f2" stroke-width="1.5"></circle></g><text class="t" x="732.0" y="233.4" font-size="10.5" fill="#292722" text-anchor="end" font-weight="400">best 0.864, then stopped</text><text class="t" x="404.2" y="184.0" font-size="10.5" fill="#292722" text-anchor="middle" font-weight="400">plateau: 0.86 to 0.92 for 5,750 steps</text></svg>
+<figcaption>Validation error of my from-scratch PIE run, as a ratio to predicting "no change" (below 1.0 is better than no change). Step 50 sat at 5.22, far above the axis. After step 500 the curve went flat.</figcaption>
+</figure>
+<p><strong>Plugging it into my pipeline (19 October).</strong> I built a bridge that turned PIE’s predictions into count cells and mixed them with v11 at four strengths (0%, 25%, 50% and 100% PIE). Then I scored them on held-out VIPerturb targets: 21 to choose a mix, plus 27 sealed ones kept for confirmation. The verdict was “no comparable six-metric score, keep v11”. One of the local reference points broke: the Jaccard anchor was higher for a generic answer than for real replicates. So the comparison couldn’t produce a fair overall number at all.</p>
+<p><strong>Running Arc’s own published checkpoint (19 to 20 October).</strong> In case my training was the problem, I also ran the checkpoint Arc published for the Replogle K562 benchmark. First I made sure I was running it correctly, and it reproduced their published numbers almost exactly:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Arc’s metric</th>
+<th style="text-align: right;">Published</th>
+<th style="text-align: right;">My run</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>AUPRC for changed genes</td>
+<td style="text-align: right;">0.1984</td>
+<td style="text-align: right;">0.1984</td>
+</tr>
+<tr class="even">
+<td>Jaccard of significant genes</td>
+<td style="text-align: right;">0.1004</td>
+<td style="text-align: right;">0.1004</td>
+</tr>
+<tr class="odd">
+<td>Direction match</td>
+<td style="text-align: right;">0.7083</td>
+<td style="text-align: right;">0.7082</td>
+</tr>
+<tr class="even">
+<td>Spearman, significance</td>
+<td style="text-align: right;">0.4749</td>
+<td style="text-align: right;">0.4749</td>
+</tr>
+<tr class="odd">
+<td>Spearman, fold change</td>
+<td style="text-align: right;">0.4010</td>
+<td style="text-align: right;">0.4003</td>
+</tr>
+<tr class="even">
+<td>Discrimination (L1)</td>
+<td style="text-align: right;">0.6815</td>
+<td style="text-align: right;">0.6814</td>
+</tr>
+</tbody>
+</table>
+<p>The biggest difference was 0.0007, inside the 0.005 tolerance I’d set beforehand. So the model ran exactly as published. The trouble came when I moved it to my problem. On 170 VIPerturb K562 targets, PIE’s predicted changes were barely closer to the truth than the same predictions shuffled between targets (median error ratio 4.26 against 4.33). A plain generic response did better (2.32), and the cosine similarity between PIE’s changes and the real ones was essentially zero. About 37% of what it predicted was a common change shared by every target. In other words, PIE knew a lot about the benchmark it was trained for, and very little that was target-specific about this new study.</p>
+<figure class="vcc-chart figure">
+<svg class="vcc-svg" viewbox="0 0 760 166" role="img" aria-label="Median error ratio of PIE on VIPerturb against shuffled and generic baselines" xmlns="http://www.w3.org/2000/svg"><line x1="210.0" x2="210.0" y1="10" y2="122" stroke="rgba(53,48,41,0.12)"></line><text class="t mono" x="210.0" y="140.0" font-size="10.5" fill="#6d675e" text-anchor="middle" font-weight="400">0</text><line x1="306.0" x2="306.0" y1="10" y2="122" stroke="rgba(53,48,41,0.12)"></line><text class="t mono" x="306.0" y="140.0" font-size="10.5" fill="#6d675e" text-anchor="middle" font-weight="400">1</text><line x1="402.0" x2="402.0" y1="10" y2="122" stroke="rgba(53,48,41,0.12)"></line><text class="t mono" x="402.0" y="140.0" font-size="10.5" fill="#6d675e" text-anchor="middle" font-weight="400">2</text><line x1="498.0" x2="498.0" y1="10" y2="122" stroke="rgba(53,48,41,0.12)"></line><text class="t mono" x="498.0" y="140.0" font-size="10.5" fill="#6d675e" text-anchor="middle" font-weight="400">3</text><line x1="594.0" x2="594.0" y1="10" y2="122" stroke="rgba(53,48,41,0.12)"></line><text class="t mono" x="594.0" y="140.0" font-size="10.5" fill="#6d675e" text-anchor="middle" font-weight="400">4</text><line x1="690.0" x2="690.0" y1="10" y2="122" stroke="rgba(53,48,41,0.12)"></line><text class="t mono" x="690.0" y="140.0" font-size="10.5" fill="#6d675e" text-anchor="middle" font-weight="400">5</text><text class="t" x="200.0" y="36.0" font-size="11.5" fill="#292722" text-anchor="end" font-weight="400">Generic average response</text><g><title>Generic average response: 2.32</title><rect x="210" y="22" width="223.0" height="20" rx="4" fill="#a59d92"></rect></g><text class="t mono" x="439.0" y="36.0" font-size="10.5" fill="#6d675e" text-anchor="start" font-weight="400">2.32</text><text class="t" x="200.0" y="72.0" font-size="11.5" fill="#292722" text-anchor="end" font-weight="700">PIE (Arc checkpoint)</text><g><title>PIE (Arc checkpoint): 4.26</title><rect x="210" y="58" width="409.1" height="20" rx="4" fill="#c96545"></rect></g><text class="t mono" x="625.1" y="72.0" font-size="10.5" fill="#6d675e" text-anchor="start" font-weight="400">4.26</text><text class="t" x="200.0" y="108.0" font-size="11.5" fill="#292722" text-anchor="end" font-weight="400">PIE, shuffled between targets</text><g><title>PIE, shuffled between targets: 4.33</title><rect x="210" y="94" width="415.3" height="20" rx="4" fill="#a59d92"></rect></g><text class="t mono" x="631.3" y="108.0" font-size="10.5" fill="#6d675e" text-anchor="start" font-weight="400">4.33</text><text class="t mono" x="756.0" y="156.0" font-size="10" fill="#6d675e" text-anchor="end" font-weight="400">error ratio (lower is better)</text></svg>
+<figcaption>Arc's published PIE checkpoint on 170 VIPerturb K562 targets: median error of the predicted change, as a ratio to the real change (lower is better). Shuffling PIE's predictions between targets barely hurt them, which means almost none of the signal was specific to each target, and a generic average response beat both.</figcaption>
+</figure>
+<p>I still compared it fairly against v11, with a stricter rule I wrote down before running that comparison: a paired bootstrap across targets, a correction for testing several candidates at once, and margins for every metric. The candidates were v11, pure PIE, two PIE/v11 mixes (10% and 25% PIE) and a “null” mix with no PIE signal at all. The result was “keep v11”, because the metrics didn’t have enough targets in common for a fair comparison (for example, only 69% for fidelity, below the 80% I required).</p>
+<p>So yes, I tested PIE properly: trained from scratch, run as published, bridged into my pipeline and compared under a rule fixed in advance. It just never earned a place over v11, and I never submitted a PIE-based version. Two honest caveats: my own training run stopped before its full budget, and I couldn’t verify how much PIE’s pretraining data overlapped with the data I evaluated on.</p>
+<div class="vcc-next">
+<p><strong>What I took into the next round.</strong> v11 got the levels right, and not even PIE could beat it, but it wasn’t great at telling targets apart. The question became: can I keep v11’s accuracy and make the targets more distinguishable? My idea was to turn down the background noise.</p>
+</div>
 </section>
 </section>
 <section id="chapter-5-v12-and-v13-turning-down-the-background-noise" class="level2">
@@ -626,72 +693,14 @@ ul.task-list li input[type="checkbox"] {
   <article><h4 class="anchored">Ridge</h4><p>The deliberately boring baseline, to check whether complexity buys anything. No gain either.</p></article>
   <article><h4 class="anchored">STRING &amp; GenePT readers</h4><p>Small networks that guess a gene's response from similar genes, using protein interaction maps or text-based gene descriptions.</p></article>
   <article><h4 class="anchored">Geneformer &amp; scGPT</h4><p>Large pretrained models of gene expression, used frozen, with a small trained layer on top. Not fine-tuned for perturbations.</p></article>
-  <article><h4 class="anchored">PIE</h4><p>Arc Institute's perturbation model, and the one I took furthest: I trained it from scratch on public data plus my own banks, and also ran Arc's published checkpoint. Neither beat v11. Full story below.</p></article>
+  <article><h4 class="anchored">PIE</h4><p>Arc Institute's perturbation model, and the one I took furthest: I trained it from scratch on public data plus my own banks, and also ran Arc's published checkpoint. Neither beat v11. <a href="#pie-vs-v11">Full story in Chapter 4</a>.</p></article>
 </div>
 <p>Here’s how their raw error compared with my three submitted recipes on two historical test panels. Lower is better; the dashed line marks v11.</p>
 <figure class="vcc-chart figure">
 <div class="vcc-multiples"><svg class="vcc-svg vcc-svg-mini" viewbox="0 0 380 349" role="img" aria-label="H1 panel · error (lower is better)" xmlns="http://www.w3.org/2000/svg"><text class="t" x="4.0" y="18.0" font-size="12" fill="#292722" text-anchor="start" font-weight="700">H1 panel · error (lower is better)</text><line x1="104.0" x2="104.0" y1="30" y2="323" stroke="rgba(53,48,41,0.12)"></line><text class="t mono" x="104.0" y="337.0" font-size="10" fill="#6d675e" text-anchor="middle" font-weight="400">0</text><line x1="142.3" x2="142.3" y1="30" y2="323" stroke="rgba(53,48,41,0.12)"></line><text class="t mono" x="142.3" y="337.0" font-size="10" fill="#6d675e" text-anchor="middle" font-weight="400">1</text><line x1="180.7" x2="180.7" y1="30" y2="323" stroke="rgba(53,48,41,0.12)"></line><text class="t mono" x="180.7" y="337.0" font-size="10" fill="#6d675e" text-anchor="middle" font-weight="400">2</text><line x1="219.0" x2="219.0" y1="30" y2="323" stroke="rgba(53,48,41,0.12)"></line><text class="t mono" x="219.0" y="337.0" font-size="10" fill="#6d675e" text-anchor="middle" font-weight="400">3</text><line x1="257.3" x2="257.3" y1="30" y2="323" stroke="rgba(53,48,41,0.12)"></line><text class="t mono" x="257.3" y="337.0" font-size="10" fill="#6d675e" text-anchor="middle" font-weight="400">4</text><line x1="295.7" x2="295.7" y1="30" y2="323" stroke="rgba(53,48,41,0.12)"></line><text class="t mono" x="295.7" y="337.0" font-size="10" fill="#6d675e" text-anchor="middle" font-weight="400">5</text><line x1="334.0" x2="334.0" y1="30" y2="323" stroke="rgba(53,48,41,0.12)"></line><text class="t mono" x="334.0" y="337.0" font-size="10" fill="#6d675e" text-anchor="middle" font-weight="400">6</text><text class="t" x="96.0" y="46.0" font-size="10.5" fill="#292722" text-anchor="end" font-weight="700">v11 (mine)</text><g><title>v11 (mine): 0.8407</title><rect x="104" y="37" width="32.2" height="13" rx="3" fill="#c96545"></rect></g><text class="t mono" x="141.2" y="46.0" font-size="9.5" fill="#6d675e" text-anchor="start" font-weight="400">0.84</text><text class="t" x="96.0" y="65.0" font-size="10.5" fill="#292722" text-anchor="end" font-weight="700">v12 (mine)</text><g><title>v12 (mine): 0.8513</title><rect x="104" y="56" width="32.6" height="13" rx="3" fill="#c96545"></rect></g><text class="t mono" x="141.6" y="65.0" font-size="9.5" fill="#6d675e" text-anchor="start" font-weight="400">0.85</text><text class="t" x="96.0" y="84.0" font-size="10.5" fill="#292722" text-anchor="end" font-weight="700">v13 (mine)</text><g><title>v13 (mine): 0.8678</title><rect x="104" y="75" width="33.3" height="13" rx="3" fill="#c96545"></rect></g><text class="t mono" x="142.3" y="84.0" font-size="9.5" fill="#6d675e" text-anchor="start" font-weight="400">0.87</text><text class="t" x="96.0" y="103.0" font-size="10.5" fill="#6d675e" text-anchor="end" font-weight="400">CPA</text><g><title>CPA: 1.0062</title><rect x="104" y="94" width="38.6" height="13" rx="3" fill="#a59d92"></rect></g><text class="t mono" x="147.6" y="103.0" font-size="9.5" fill="#6d675e" text-anchor="start" font-weight="400">1.01</text><text class="t" x="96.0" y="122.0" font-size="10.5" fill="#6d675e" text-anchor="end" font-weight="400">scGen</text><g><title>scGen: 1.0066</title><rect x="104" y="113" width="38.6" height="13" rx="3" fill="#a59d92"></rect></g><text class="t mono" x="147.6" y="122.0" font-size="9.5" fill="#6d675e" text-anchor="start" font-weight="400">1.01</text><text class="t" x="96.0" y="141.0" font-size="10.5" fill="#6d675e" text-anchor="end" font-weight="400">STATE</text><g><title>STATE: 1.0122</title><rect x="104" y="132" width="38.8" height="13" rx="3" fill="#a59d92"></rect></g><text class="t mono" x="147.8" y="141.0" font-size="9.5" fill="#6d675e" text-anchor="start" font-weight="400">1.01</text><text class="t" x="96.0" y="160.0" font-size="10.5" fill="#6d675e" text-anchor="end" font-weight="400">GenePT MLP</text><g><title>GenePT MLP: 1.1941</title><rect x="104" y="151" width="45.8" height="13" rx="3" fill="#a59d92"></rect></g><text class="t mono" x="154.8" y="160.0" font-size="9.5" fill="#6d675e" text-anchor="start" font-weight="400">1.19</text><text class="t" x="96.0" y="179.0" font-size="10.5" fill="#6d675e" text-anchor="end" font-weight="400">scLAMBDA</text><g><title>scLAMBDA: 1.4053</title><rect x="104" y="170" width="53.9" height="13" rx="3" fill="#a59d92"></rect></g><text class="t mono" x="162.9" y="179.0" font-size="9.5" fill="#6d675e" text-anchor="start" font-weight="400">1.41</text><text class="t" x="96.0" y="198.0" font-size="10.5" fill="#6d675e" text-anchor="end" font-weight="400">STRING MLP</text><g><title>STRING MLP: 1.5492</title><rect x="104" y="189" width="59.4" height="13" rx="3" fill="#a59d92"></rect></g><text class="t mono" x="168.4" y="198.0" font-size="9.5" fill="#6d675e" text-anchor="start" font-weight="400">1.55</text><text class="t" x="96.0" y="217.0" font-size="10.5" fill="#6d675e" text-anchor="end" font-weight="400">scGPT</text><g><title>scGPT: 1.5673</title><rect x="104" y="208" width="60.1" height="13" rx="3" fill="#a59d92"></rect></g><text class="t mono" x="169.1" y="217.0" font-size="9.5" fill="#6d675e" text-anchor="start" font-weight="400">1.57</text><text class="t" x="96.0" y="236.0" font-size="10.5" fill="#6d675e" text-anchor="end" font-weight="400">Geneformer</text><g><title>Geneformer: 1.8406</title><rect x="104" y="227" width="70.6" height="13" rx="3" fill="#a59d92"></rect></g><text class="t mono" x="179.6" y="236.0" font-size="9.5" fill="#6d675e" text-anchor="start" font-weight="400">1.84</text><text class="t" x="96.0" y="255.0" font-size="10.5" fill="#6d675e" text-anchor="end" font-weight="400">STRING linear</text><g><title>STRING linear: 1.9167</title><rect x="104" y="246" width="73.5" height="13" rx="3" fill="#a59d92"></rect></g><text class="t mono" x="182.5" y="255.0" font-size="9.5" fill="#6d675e" text-anchor="start" font-weight="400">1.92</text><text class="t" x="96.0" y="274.0" font-size="10.5" fill="#6d675e" text-anchor="end" font-weight="400">GenePT linear</text><g><title>GenePT linear: 1.9334</title><rect x="104" y="265" width="74.1" height="13" rx="3" fill="#a59d92"></rect></g><text class="t mono" x="183.1" y="274.0" font-size="9.5" fill="#6d675e" text-anchor="start" font-weight="400">1.93</text><text class="t" x="96.0" y="293.0" font-size="10.5" fill="#6d675e" text-anchor="end" font-weight="400">Ridge</text><g><title>Ridge: 3.0309</title><rect x="104" y="284" width="116.2" height="13" rx="3" fill="#a59d92"></rect></g><text class="t mono" x="225.2" y="293.0" font-size="9.5" fill="#6d675e" text-anchor="start" font-weight="400">3.03</text><text class="t" x="96.0" y="312.0" font-size="10.5" fill="#6d675e" text-anchor="end" font-weight="400">PRESAGE</text><g><title>PRESAGE: 4.5656</title><rect x="104" y="303" width="175.0" height="13" rx="3" fill="#a59d92"></rect></g><text class="t mono" x="284.0" y="312.0" font-size="9.5" fill="#6d675e" text-anchor="start" font-weight="400">4.57</text><line x1="136.2" x2="136.2" y1="28" y2="323" stroke="#2b6fb0" stroke-width="1.5" stroke-dasharray="4 3"></line></svg><svg class="vcc-svg vcc-svg-mini" viewbox="0 0 380 349" role="img" aria-label="CD4 panel · error (lower is better)" xmlns="http://www.w3.org/2000/svg"><text class="t" x="4.0" y="18.0" font-size="12" fill="#292722" text-anchor="start" font-weight="700">CD4 panel · error (lower is better)</text><line x1="104.0" x2="104.0" y1="30" y2="323" stroke="rgba(53,48,41,0.12)"></line><text class="t mono" x="104.0" y="337.0" font-size="10" fill="#6d675e" text-anchor="middle" font-weight="400">0</text><line x1="142.3" x2="142.3" y1="30" y2="323" stroke="rgba(53,48,41,0.12)"></line><text class="t mono" x="142.3" y="337.0" font-size="10" fill="#6d675e" text-anchor="middle" font-weight="400">1</text><line x1="180.7" x2="180.7" y1="30" y2="323" stroke="rgba(53,48,41,0.12)"></line><text class="t mono" x="180.7" y="337.0" font-size="10" fill="#6d675e" text-anchor="middle" font-weight="400">2</text><line x1="219.0" x2="219.0" y1="30" y2="323" stroke="rgba(53,48,41,0.12)"></line><text class="t mono" x="219.0" y="337.0" font-size="10" fill="#6d675e" text-anchor="middle" font-weight="400">3</text><line x1="257.3" x2="257.3" y1="30" y2="323" stroke="rgba(53,48,41,0.12)"></line><text class="t mono" x="257.3" y="337.0" font-size="10" fill="#6d675e" text-anchor="middle" font-weight="400">4</text><line x1="295.7" x2="295.7" y1="30" y2="323" stroke="rgba(53,48,41,0.12)"></line><text class="t mono" x="295.7" y="337.0" font-size="10" fill="#6d675e" text-anchor="middle" font-weight="400">5</text><line x1="334.0" x2="334.0" y1="30" y2="323" stroke="rgba(53,48,41,0.12)"></line><text class="t mono" x="334.0" y="337.0" font-size="10" fill="#6d675e" text-anchor="middle" font-weight="400">6</text><text class="t" x="96.0" y="46.0" font-size="10.5" fill="#292722" text-anchor="end" font-weight="700">v11 (mine)</text><g><title>v11 (mine): 0.9940</title><rect x="104" y="37" width="38.1" height="13" rx="3" fill="#c96545"></rect></g><text class="t mono" x="147.1" y="46.0" font-size="9.5" fill="#6d675e" text-anchor="start" font-weight="400">0.99</text><text class="t" x="96.0" y="65.0" font-size="10.5" fill="#292722" text-anchor="end" font-weight="700">v12 (mine)</text><g><title>v12 (mine): 1.0018</title><rect x="104" y="56" width="38.4" height="13" rx="3" fill="#c96545"></rect></g><text class="t mono" x="147.4" y="65.0" font-size="9.5" fill="#6d675e" text-anchor="start" font-weight="400">1.00</text><text class="t" x="96.0" y="84.0" font-size="10.5" fill="#292722" text-anchor="end" font-weight="700">v13 (mine)</text><g><title>v13 (mine): 1.0019</title><rect x="104" y="75" width="38.4" height="13" rx="3" fill="#c96545"></rect></g><text class="t mono" x="147.4" y="84.0" font-size="9.5" fill="#6d675e" text-anchor="start" font-weight="400">1.00</text><text class="t" x="96.0" y="103.0" font-size="10.5" fill="#6d675e" text-anchor="end" font-weight="400">CPA</text><g><title>CPA: 1.0269</title><rect x="104" y="94" width="39.4" height="13" rx="3" fill="#a59d92"></rect></g><text class="t mono" x="148.4" y="103.0" font-size="9.5" fill="#6d675e" text-anchor="start" font-weight="400">1.03</text><text class="t" x="96.0" y="122.0" font-size="10.5" fill="#6d675e" text-anchor="end" font-weight="400">scGen</text><g><title>scGen: 1.0919</title><rect x="104" y="113" width="41.9" height="13" rx="3" fill="#a59d92"></rect></g><text class="t mono" x="150.9" y="122.0" font-size="9.5" fill="#6d675e" text-anchor="start" font-weight="400">1.09</text><text class="t" x="96.0" y="141.0" font-size="10.5" fill="#6d675e" text-anchor="end" font-weight="400">STATE</text><g><title>STATE: 4.1700</title><rect x="104" y="132" width="159.9" height="13" rx="3" fill="#a59d92"></rect></g><text class="t mono" x="268.9" y="141.0" font-size="9.5" fill="#6d675e" text-anchor="start" font-weight="400">4.17</text><text class="t" x="96.0" y="160.0" font-size="10.5" fill="#6d675e" text-anchor="end" font-weight="400">GenePT MLP</text><g><title>GenePT MLP: 1.0614</title><rect x="104" y="151" width="40.7" height="13" rx="3" fill="#a59d92"></rect></g><text class="t mono" x="149.7" y="160.0" font-size="9.5" fill="#6d675e" text-anchor="start" font-weight="400">1.06</text><text class="t" x="96.0" y="179.0" font-size="10.5" fill="#6d675e" text-anchor="end" font-weight="400">scLAMBDA</text><g><title>scLAMBDA: 1.8209</title><rect x="104" y="170" width="69.8" height="13" rx="3" fill="#a59d92"></rect></g><text class="t mono" x="178.8" y="179.0" font-size="9.5" fill="#6d675e" text-anchor="start" font-weight="400">1.82</text><text class="t" x="96.0" y="198.0" font-size="10.5" fill="#6d675e" text-anchor="end" font-weight="400">STRING MLP</text><g><title>STRING MLP: 1.0206</title><rect x="104" y="189" width="39.1" height="13" rx="3" fill="#a59d92"></rect></g><text class="t mono" x="148.1" y="198.0" font-size="9.5" fill="#6d675e" text-anchor="start" font-weight="400">1.02</text><text class="t" x="96.0" y="217.0" font-size="10.5" fill="#6d675e" text-anchor="end" font-weight="400">scGPT</text><g><title>scGPT: 1.0622</title><rect x="104" y="208" width="40.7" height="13" rx="3" fill="#a59d92"></rect></g><text class="t mono" x="149.7" y="217.0" font-size="9.5" fill="#6d675e" text-anchor="start" font-weight="400">1.06</text><text class="t" x="96.0" y="236.0" font-size="10.5" fill="#6d675e" text-anchor="end" font-weight="400">Geneformer</text><g><title>Geneformer: 1.0524</title><rect x="104" y="227" width="40.3" height="13" rx="3" fill="#a59d92"></rect></g><text class="t mono" x="149.3" y="236.0" font-size="9.5" fill="#6d675e" text-anchor="start" font-weight="400">1.05</text><text class="t" x="96.0" y="255.0" font-size="10.5" fill="#6d675e" text-anchor="end" font-weight="400">STRING linear</text><g><title>STRING linear: 1.3645</title><rect x="104" y="246" width="52.3" height="13" rx="3" fill="#a59d92"></rect></g><text class="t mono" x="161.3" y="255.0" font-size="9.5" fill="#6d675e" text-anchor="start" font-weight="400">1.36</text><text class="t" x="96.0" y="274.0" font-size="10.5" fill="#6d675e" text-anchor="end" font-weight="400">GenePT linear</text><g><title>GenePT linear: 1.2794</title><rect x="104" y="265" width="49.0" height="13" rx="3" fill="#a59d92"></rect></g><text class="t mono" x="158.0" y="274.0" font-size="9.5" fill="#6d675e" text-anchor="start" font-weight="400">1.28</text><text class="t" x="96.0" y="293.0" font-size="10.5" fill="#6d675e" text-anchor="end" font-weight="400">Ridge</text><g><title>Ridge: 3.4351</title><rect x="104" y="284" width="131.7" height="13" rx="3" fill="#a59d92"></rect></g><text class="t mono" x="240.7" y="293.0" font-size="9.5" fill="#6d675e" text-anchor="start" font-weight="400">3.44</text><text class="t" x="96.0" y="312.0" font-size="10.5" fill="#6d675e" text-anchor="end" font-weight="400">PRESAGE</text><g><title>PRESAGE: 5.5021</title><rect x="104" y="303" width="210.9" height="13" rx="3" fill="#a59d92"></rect></g><text class="t mono" x="319.9" y="312.0" font-size="9.5" fill="#6d675e" text-anchor="start" font-weight="400">5.50</text><line x1="142.1" x2="142.1" y1="28" y2="323" stroke="#2b6fb0" stroke-width="1.5" stroke-dasharray="4 3"></line></svg></div>
 <figcaption>Native corrected MSE on historical 24-target H1 and CD4 panels (raw local error, not official scores). My recipes are in terracotta; the dashed blue line is v11.</figcaption>
 </figure>
-<p>None of the twelve routes beat v11 on error in these panels. I want to be careful about what that means, though. It’s a finding about <em>my</em> adapters, <em>my</em> training scope and these panels, not proof that these methods are bad. Several of them only produced predictions for a small share of the target-by-gene table (about 16.5% for CPA and 12.5% for STATE on H1). Four of them trained on seven selected groups, about 71,000 cells out of nearly 339,000 available. And using a frozen foundation model with a small layer on top isn’t the same as fine-tuning it properly. Given more time and compute, I’d love to see this comparison done fairly.</p>
-<section id="pie-the-one-i-took-all-the-way" class="level3">
-<h3 class="anchored" data-anchor-id="pie-the-one-i-took-all-the-way">PIE: the one I took all the way</h3>
-<p>PIE got more of my time than any other model, so it deserves its own story. It isn’t in the chart above because it was tested on a different panel.</p>
-<p><strong>First attempts (10 to 18 October).</strong> I downloaded PIE’s preprocessed public datasets and started with a high-memory Colab pilot on CD4 T cells, then a version trained only on my own data banks. These early runs hit problems with scale and with how changed genes were called, so I didn’t trust their numbers.</p>
-<p><strong>Training PIE from scratch on everything (18 to 19 October).</strong> Then I went big. I kept PIE’s architecture (a Perceiver network with 512 latent slots and 14 layers in total) but started every response parameter from zero. I didn’t load any checkpoint that had already seen real responses. I trained it on five public datasets together: Replogle/Nadig, Tahoe-100M, Jiang, ARC VCC 2025 and X-Atlas/Orion. That’s about 76,000 public profiles, plus 45,000 profiles from my own banks, around 68 GB of inputs and 274,000 training rows in all. It also used PIE’s eleven knowledge sources, things like protein language-model embeddings (ESM2), STRING, DepMap, gene and perturbation text descriptions, L1000, PRISM and JUMP. Each kind of measurement kept its own output head, so I never had to mix units.</p>
-<div class="vcc-stats vcc-stats-3" aria-label="PIE training run">
-  <div><strong>6,250</strong><span>training steps on GPU before I stopped it</span></div>
-  <div><strong>0.864</strong><span>best validation error ratio (1.0 = predicting no change)</span></div>
-  <div><strong>300</strong><span>VIPerturb K562 targets predicted with the frozen model</span></div>
-</div>
-<p>The validation error fell fast, from 5.22 at step 50 to about 0.87 by step 500, and then it plateaued between 0.86 and 0.92 for the next 5,750 steps. So I stopped it by hand and froze the best checkpoint. It had seen every training task once, but not every gene of every profile, and it never finished its planned training budget.</p>
-<p><strong>Plugging it into my pipeline (19 October).</strong> I built a bridge that turned PIE’s predictions into count cells and mixed them with v11 at four strengths (0%, 25%, 50% and 100% PIE). Then I scored them on held-out VIPerturb targets: 21 to choose a mix, plus 27 sealed ones kept for confirmation. The verdict was “no comparable six-metric score, keep v11”. One of the local reference points broke: the Jaccard anchor was higher for a generic answer than for real replicates. So the comparison couldn’t produce a fair overall number at all.</p>
-<p><strong>Running Arc’s own published checkpoint (19 to 20 October).</strong> In case my training was the problem, I also ran the checkpoint Arc published for the Replogle K562 benchmark. First I made sure I was running it correctly, and it reproduced their published numbers almost exactly:</p>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>Arc’s metric</th>
-<th style="text-align: right;">Published</th>
-<th style="text-align: right;">My run</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>AUPRC for changed genes</td>
-<td style="text-align: right;">0.1984</td>
-<td style="text-align: right;">0.1984</td>
-</tr>
-<tr class="even">
-<td>Jaccard of significant genes</td>
-<td style="text-align: right;">0.1004</td>
-<td style="text-align: right;">0.1004</td>
-</tr>
-<tr class="odd">
-<td>Direction match</td>
-<td style="text-align: right;">0.7083</td>
-<td style="text-align: right;">0.7082</td>
-</tr>
-<tr class="even">
-<td>Spearman, significance</td>
-<td style="text-align: right;">0.4749</td>
-<td style="text-align: right;">0.4749</td>
-</tr>
-<tr class="odd">
-<td>Spearman, fold change</td>
-<td style="text-align: right;">0.4010</td>
-<td style="text-align: right;">0.4003</td>
-</tr>
-<tr class="even">
-<td>Discrimination (L1)</td>
-<td style="text-align: right;">0.6815</td>
-<td style="text-align: right;">0.6814</td>
-</tr>
-</tbody>
-</table>
-<p>The biggest difference was 0.0007, inside the 0.005 tolerance I’d set beforehand. So the model ran exactly as published. The trouble came when I moved it to my problem. On 170 VIPerturb K562 targets, PIE’s predicted changes were barely closer to the truth than the same predictions shuffled between targets (median error ratio 4.26 against 4.33). A plain generic response did better (2.32), and the cosine similarity between PIE’s changes and the real ones was essentially zero. About 37% of what it predicted was a common change shared by every target. In other words, PIE knew a lot about the benchmark it was trained for, and very little that was target-specific about this new study.</p>
-<p>I still compared it fairly against v11, with a stricter rule I wrote down before running that comparison: a paired bootstrap across targets, a correction for testing several candidates at once, and margins for every metric. The candidates were v11, pure PIE, two PIE/v11 mixes (10% and 25% PIE) and a “null” mix with no PIE signal at all. The result was “keep v11”, because the metrics didn’t have enough targets in common for a fair comparison (for example, only 69% for fidelity, below the 80% I required).</p>
-<p>So yes, I tested PIE properly: trained from scratch, run as published, bridged into my pipeline and compared under a rule fixed in advance. It just never earned a place over v11, and I never submitted a PIE-based version. Two honest caveats: my own training run stopped before its full budget, and I couldn’t verify how much PIE’s pretraining data overlapped with the data I evaluated on.</p>
-</section>
+<p>None of the twelve routes beat v11 on error in these panels. (PIE isn’t in this chart because it was tested on a different panel; its story is in Chapter 4.) I want to be careful about what that means, though. It’s a finding about <em>my</em> adapters, <em>my</em> training scope and these panels, not proof that these methods are bad. Several of them only produced predictions for a small share of the target-by-gene table (about 16.5% for CPA and 12.5% for STATE on H1). Four of them trained on seven selected groups, about 71,000 cells out of nearly 339,000 available. And using a frozen foundation model with a small layer on top isn’t the same as fine-tuning it properly. Given more time and compute, I’d love to see this comparison done fairly.</p>
 </section>
 <section id="the-practice-exam-problem" class="level2">
 <h2 class="anchored" data-anchor-id="the-practice-exam-problem">The practice exam problem</h2>
@@ -715,217 +724,67 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="every-version-at-a-glance" class="level2">
 <h2 class="anchored" data-anchor-id="every-version-at-a-glance">Every version at a glance</h2>
-<p>All values are official normalised scores (higher is better). A dash means the value wasn’t recovered. v7 is a rounded record. The test, v0, v1 and v2 rows come from the official result emails; I matched them to versions myself, since the emails don’t name the model.</p>
+<p>All values are official normalised scores (higher is better). v7 is a rounded record. The test (0.0230 overall), v0, v1 and v2 scores come from the official result emails; I matched them to versions myself, since the emails don’t name the model. v14-DEF, the final test delivery, has no visible score yet.</p>
 <figure class="vcc-chart vcc-chart-wide figure">
 <div class="vcc-scroll">
 <svg class="vcc-svg" viewbox="0 0 760 282" role="img" aria-label="Heatmap of the six official metrics and the overall score for v0 to v13" xmlns="http://www.w3.org/2000/svg"><text class="t mono" x="98.3" y="16.0" font-size="11" fill="#292722" text-anchor="middle" font-weight="700">v0</text><text class="t mono" x="146.9" y="16.0" font-size="11" fill="#292722" text-anchor="middle" font-weight="700">v1</text><text class="t mono" x="195.4" y="16.0" font-size="11" fill="#292722" text-anchor="middle" font-weight="700">v2</text><text class="t mono" x="244.0" y="16.0" font-size="11" fill="#292722" text-anchor="middle" font-weight="700">v3</text><text class="t mono" x="292.6" y="16.0" font-size="11" fill="#292722" text-anchor="middle" font-weight="700">v4</text><text class="t mono" x="341.1" y="16.0" font-size="11" fill="#292722" text-anchor="middle" font-weight="700">v5</text><text class="t mono" x="389.7" y="16.0" font-size="11" fill="#292722" text-anchor="middle" font-weight="700">v6</text><text class="t mono" x="438.3" y="16.0" font-size="11" fill="#292722" text-anchor="middle" font-weight="700">v7</text><text class="t mono" x="486.9" y="16.0" font-size="11" fill="#292722" text-anchor="middle" font-weight="700">v8</text><text class="t mono" x="535.4" y="16.0" font-size="11" fill="#292722" text-anchor="middle" font-weight="700">v9</text><text class="t mono" x="584.0" y="16.0" font-size="11" fill="#292722" text-anchor="middle" font-weight="700">v10</text><text class="t mono" x="632.6" y="16.0" font-size="11" fill="#292722" text-anchor="middle" font-weight="700">v11</text><text class="t mono" x="681.1" y="16.0" font-size="11" fill="#292722" text-anchor="middle" font-weight="700">v12</text><text class="t mono" x="729.7" y="16.0" font-size="11" fill="#292722" text-anchor="middle" font-weight="700">v13</text><text class="t" x="66.0" y="47.0" font-size="11.5" fill="#292722" text-anchor="end" font-weight="400">PDS</text><g><title>v0 PDS: 0.5012</title><rect x="75.0" y="27.0" width="46.6" height="32" rx="4" fill="#f0dfd4"></rect><text class="t mono" x="98.3" y="46.5" font-size="9.5" fill="#292722" text-anchor="middle">0.5012</text></g><g><title>v1 PDS: 0.5156</title><rect x="123.6" y="27.0" width="46.6" height="32" rx="4" fill="#ecd6cb"></rect><text class="t mono" x="146.9" y="46.5" font-size="9.5" fill="#292722" text-anchor="middle">0.5156</text></g><g><title>v2 PDS: 0.6012</title><rect x="172.1" y="27.0" width="46.6" height="32" rx="4" fill="#d4a696"></rect><text class="t mono" x="195.4" y="46.5" font-size="9.5" fill="#292722" text-anchor="middle">0.6012</text></g><g><title>v3 PDS: 0.6128</title><rect x="220.7" y="27.0" width="46.6" height="32" rx="4" fill="#d1a08f"></rect><text class="t mono" x="244.0" y="46.5" font-size="9.5" fill="#292722" text-anchor="middle">0.6128</text></g><g><title>v4 PDS: 0.6012</title><rect x="269.3" y="27.0" width="46.6" height="32" rx="4" fill="#d4a696"></rect><text class="t mono" x="292.6" y="46.5" font-size="9.5" fill="#292722" text-anchor="middle">0.6012</text></g><g><title>v5 PDS: 0.6012</title><rect x="317.9" y="27.0" width="46.6" height="32" rx="4" fill="#d4a696"></rect><text class="t mono" x="341.1" y="46.5" font-size="9.5" fill="#292722" text-anchor="middle">0.6012</text></g><g><title>v6 PDS: 0.6515</title><rect x="366.4" y="27.0" width="46.6" height="32" rx="4" fill="#c68a77"></rect><text class="t mono" x="389.7" y="46.5" font-size="9.5" fill="#fffaf1" text-anchor="middle">0.6515</text></g><g><title>v7 PDS: ≈0.6600</title><rect x="415.0" y="27.0" width="46.6" height="32" rx="4" fill="#c48671"></rect><text class="t mono" x="438.3" y="46.5" font-size="9.5" fill="#fffaf1" text-anchor="middle">0.660</text></g><g><title>v8 PDS: 0.6533</title><rect x="463.6" y="27.0" width="46.6" height="32" rx="4" fill="#c68976"></rect><text class="t mono" x="486.9" y="46.5" font-size="9.5" fill="#fffaf1" text-anchor="middle">0.6533</text></g><g><title>v9 PDS: 0.6534</title><rect x="512.1" y="27.0" width="46.6" height="32" rx="4" fill="#c68976"></rect><text class="t mono" x="535.4" y="46.5" font-size="9.5" fill="#fffaf1" text-anchor="middle">0.6534</text></g><g><title>v10 PDS: 0.6420</title><rect x="560.7" y="27.0" width="46.6" height="32" rx="4" fill="#c9907d"></rect><text class="t mono" x="584.0" y="46.5" font-size="9.5" fill="#292722" text-anchor="middle">0.6420</text></g><g><title>v11 PDS: 0.6547</title><rect x="609.3" y="27.0" width="46.6" height="32" rx="4" fill="#c58875"></rect><text class="t mono" x="632.6" y="46.5" font-size="9.5" fill="#fffaf1" text-anchor="middle">0.6547</text></g><g><title>v12 PDS: 0.7426</title><rect x="657.9" y="27.0" width="46.6" height="32" rx="4" fill="#ad573e"></rect><text class="t mono" x="681.1" y="46.5" font-size="9.5" fill="#fffaf1" text-anchor="middle">0.7426</text></g><g><title>v13 PDS: 0.7573</title><rect x="706.4" y="27.0" width="46.6" height="32" rx="4" fill="#a94f35"></rect><text class="t mono" x="729.7" y="46.5" font-size="9.5" fill="#fffaf1" text-anchor="middle">0.7573</text></g><text class="t" x="66.0" y="81.0" font-size="11.5" fill="#292722" text-anchor="end" font-weight="400">MSE</text><g><title>v0 MSE: 0.0000</title><rect x="75.0" y="61.0" width="46.6" height="32" rx="4" fill="#f0dfd4"></rect><text class="t mono" x="98.3" y="80.5" font-size="9.5" fill="#292722" text-anchor="middle">0</text></g><g><title>v1 MSE: 0.0000</title><rect x="123.6" y="61.0" width="46.6" height="32" rx="4" fill="#f0dfd4"></rect><text class="t mono" x="146.9" y="80.5" font-size="9.5" fill="#292722" text-anchor="middle">0</text></g><g><title>v2 MSE: 0.0000</title><rect x="172.1" y="61.0" width="46.6" height="32" rx="4" fill="#f0dfd4"></rect><text class="t mono" x="195.4" y="80.5" font-size="9.5" fill="#292722" text-anchor="middle">0</text></g><g><title>v3 MSE: 0.0000</title><rect x="220.7" y="61.0" width="46.6" height="32" rx="4" fill="#f0dfd4"></rect><text class="t mono" x="244.0" y="80.5" font-size="9.5" fill="#292722" text-anchor="middle">0</text></g><g><title>v4 MSE: 0.0000</title><rect x="269.3" y="61.0" width="46.6" height="32" rx="4" fill="#f0dfd4"></rect><text class="t mono" x="292.6" y="80.5" font-size="9.5" fill="#292722" text-anchor="middle">0</text></g><g><title>v5 MSE: 0.0000</title><rect x="317.9" y="61.0" width="46.6" height="32" rx="4" fill="#f0dfd4"></rect><text class="t mono" x="341.1" y="80.5" font-size="9.5" fill="#292722" text-anchor="middle">0</text></g><g><title>v6 MSE: 0.1502</title><rect x="366.4" y="61.0" width="46.6" height="32" rx="4" fill="#c38470"></rect><text class="t mono" x="389.7" y="80.5" font-size="9.5" fill="#fffaf1" text-anchor="middle">0.1502</text></g><g><title>v7 MSE: ≈0.1790</title><rect x="415.0" y="61.0" width="46.6" height="32" rx="4" fill="#bb735d"></rect><text class="t mono" x="438.3" y="80.5" font-size="9.5" fill="#fffaf1" text-anchor="middle">0.179</text></g><g><title>v8 MSE: 0.2209</title><rect x="463.6" y="61.0" width="46.6" height="32" rx="4" fill="#ae5a41"></rect><text class="t mono" x="486.9" y="80.5" font-size="9.5" fill="#fffaf1" text-anchor="middle">0.2209</text></g><g><title>v9 MSE: 0.2210</title><rect x="512.1" y="61.0" width="46.6" height="32" rx="4" fill="#ae5a41"></rect><text class="t mono" x="535.4" y="80.5" font-size="9.5" fill="#fffaf1" text-anchor="middle">0.2210</text></g><g><title>v10 MSE: 0.1694</title><rect x="560.7" y="61.0" width="46.6" height="32" rx="4" fill="#be7963"></rect><text class="t mono" x="584.0" y="80.5" font-size="9.5" fill="#fffaf1" text-anchor="middle">0.1694</text></g><g><title>v11 MSE: 0.2389</title><rect x="609.3" y="61.0" width="46.6" height="32" rx="4" fill="#a94f35"></rect><text class="t mono" x="632.6" y="80.5" font-size="9.5" fill="#fffaf1" text-anchor="middle">0.2389</text></g><g><title>v12 MSE: 0.2114</title><rect x="657.9" y="61.0" width="46.6" height="32" rx="4" fill="#b16047"></rect><text class="t mono" x="681.1" y="80.5" font-size="9.5" fill="#fffaf1" text-anchor="middle">0.2114</text></g><g><title>v13 MSE: 0.1918</title><rect x="706.4" y="61.0" width="46.6" height="32" rx="4" fill="#b76b54"></rect><text class="t mono" x="729.7" y="80.5" font-size="9.5" fill="#fffaf1" text-anchor="middle">0.1918</text></g><text class="t" x="66.0" y="115.0" font-size="11.5" fill="#292722" text-anchor="end" font-weight="400">NMAE</text><g><title>v0 NMAE: 0.1319</title><rect x="75.0" y="95.0" width="46.6" height="32" rx="4" fill="#f0dfd4"></rect><text class="t mono" x="98.3" y="114.5" font-size="9.5" fill="#292722" text-anchor="middle">0.1319</text></g><g><title>v1 NMAE: 0.1329</title><rect x="123.6" y="95.0" width="46.6" height="32" rx="4" fill="#efdcd2"></rect><text class="t mono" x="146.9" y="114.5" font-size="9.5" fill="#292722" text-anchor="middle">0.1329</text></g><g><title>v2 NMAE: 0.1333</title><rect x="172.1" y="95.0" width="46.6" height="32" rx="4" fill="#eedbd1"></rect><text class="t mono" x="195.4" y="114.5" font-size="9.5" fill="#292722" text-anchor="middle">0.1333</text></g><g><title>v3 NMAE: 0.1442</title><rect x="220.7" y="95.0" width="46.6" height="32" rx="4" fill="#e2c2b5"></rect><text class="t mono" x="244.0" y="114.5" font-size="9.5" fill="#292722" text-anchor="middle">0.1442</text></g><g><title>v4 NMAE: 0.1493</title><rect x="269.3" y="95.0" width="46.6" height="32" rx="4" fill="#dcb6a8"></rect><text class="t mono" x="292.6" y="114.5" font-size="9.5" fill="#292722" text-anchor="middle">0.1493</text></g><g><title>v5 NMAE: 0.1493</title><rect x="317.9" y="95.0" width="46.6" height="32" rx="4" fill="#dcb6a8"></rect><text class="t mono" x="341.1" y="114.5" font-size="9.5" fill="#292722" text-anchor="middle">0.1493</text></g><g><title>v6 NMAE: 0.1437</title><rect x="366.4" y="95.0" width="46.6" height="32" rx="4" fill="#e2c3b6"></rect><text class="t mono" x="389.7" y="114.5" font-size="9.5" fill="#292722" text-anchor="middle">0.1437</text></g><g><title>v7 NMAE: ≈0.1650</title><rect x="415.0" y="95.0" width="46.6" height="32" rx="4" fill="#ca9280"></rect><text class="t mono" x="438.3" y="114.5" font-size="9.5" fill="#292722" text-anchor="middle">0.165</text></g><g><title>v8 NMAE: 0.1872</title><rect x="463.6" y="95.0" width="46.6" height="32" rx="4" fill="#b15f47"></rect><text class="t mono" x="486.9" y="114.5" font-size="9.5" fill="#fffaf1" text-anchor="middle">0.1872</text></g><g><title>v9 NMAE: 0.1868</title><rect x="512.1" y="95.0" width="46.6" height="32" rx="4" fill="#b26048"></rect><text class="t mono" x="535.4" y="114.5" font-size="9.5" fill="#fffaf1" text-anchor="middle">0.1868</text></g><g><title>v10 NMAE: 0.1884</title><rect x="560.7" y="95.0" width="46.6" height="32" rx="4" fill="#b05d44"></rect><text class="t mono" x="584.0" y="114.5" font-size="9.5" fill="#fffaf1" text-anchor="middle">0.1884</text></g><g><title>v11 NMAE: 0.1943</title><rect x="609.3" y="95.0" width="46.6" height="32" rx="4" fill="#a94f35"></rect><text class="t mono" x="632.6" y="114.5" font-size="9.5" fill="#fffaf1" text-anchor="middle">0.1943</text></g><g><title>v12 NMAE: 0.1909</title><rect x="657.9" y="95.0" width="46.6" height="32" rx="4" fill="#ad573e"></rect><text class="t mono" x="681.1" y="114.5" font-size="9.5" fill="#fffaf1" text-anchor="middle">0.1909</text></g><g><title>v13 NMAE: 0.1604</title><rect x="706.4" y="95.0" width="46.6" height="32" rx="4" fill="#cf9d8b"></rect><text class="t mono" x="729.7" y="114.5" font-size="9.5" fill="#292722" text-anchor="middle">0.1604</text></g><text class="t" x="66.0" y="149.0" font-size="11.5" fill="#292722" text-anchor="end" font-weight="400">Fidelity</text><g><title>v0 Fidelity: −0.0344</title><rect x="75.0" y="129.0" width="46.6" height="32" rx="4" fill="#d09f8e"></rect><text class="t mono" x="98.3" y="148.5" font-size="9.5" fill="#292722" text-anchor="middle">−0.0344</text></g><g><title>v1 Fidelity: −0.0312</title><rect x="123.6" y="129.0" width="46.6" height="32" rx="4" fill="#ce9b89"></rect><text class="t mono" x="146.9" y="148.5" font-size="9.5" fill="#292722" text-anchor="middle">−0.0312</text></g><g><title>v2 Fidelity: −0.0153</title><rect x="172.1" y="129.0" width="46.6" height="32" rx="4" fill="#c48672"></rect><text class="t mono" x="195.4" y="148.5" font-size="9.5" fill="#fffaf1" text-anchor="middle">−0.0153</text></g><g><title>v3 Fidelity: −0.0161</title><rect x="220.7" y="129.0" width="46.6" height="32" rx="4" fill="#c58773"></rect><text class="t mono" x="244.0" y="148.5" font-size="9.5" fill="#fffaf1" text-anchor="middle">−0.0161</text></g><g><title>v4 Fidelity: −0.0268</title><rect x="269.3" y="129.0" width="46.6" height="32" rx="4" fill="#cc9583"></rect><text class="t mono" x="292.6" y="148.5" font-size="9.5" fill="#292722" text-anchor="middle">−0.0268</text></g><g><title>v5 Fidelity: −0.0252</title><rect x="317.9" y="129.0" width="46.6" height="32" rx="4" fill="#cb9380"></rect><text class="t mono" x="341.1" y="148.5" font-size="9.5" fill="#292722" text-anchor="middle">−0.0252</text></g><g><title>v6 Fidelity: −0.0836</title><rect x="366.4" y="129.0" width="46.6" height="32" rx="4" fill="#f0dfd4"></rect><text class="t mono" x="389.7" y="148.5" font-size="9.5" fill="#292722" text-anchor="middle">−0.0836</text></g><g><title>v7 Fidelity: ≈0.0080</title><rect x="415.0" y="129.0" width="46.6" height="32" rx="4" fill="#b56851"></rect><text class="t mono" x="438.3" y="148.5" font-size="9.5" fill="#fffaf1" text-anchor="middle">0.008</text></g><g><title>v8 Fidelity: 0.0172</title><rect x="463.6" y="129.0" width="46.6" height="32" rx="4" fill="#b05c44"></rect><text class="t mono" x="486.9" y="148.5" font-size="9.5" fill="#fffaf1" text-anchor="middle">0.0172</text></g><g><title>v9 Fidelity: 0.0170</title><rect x="512.1" y="129.0" width="46.6" height="32" rx="4" fill="#b05d44"></rect><text class="t mono" x="535.4" y="148.5" font-size="9.5" fill="#fffaf1" text-anchor="middle">0.0170</text></g><g><title>v10 Fidelity: 0.0275</title><rect x="560.7" y="129.0" width="46.6" height="32" rx="4" fill="#a94f35"></rect><text class="t mono" x="584.0" y="148.5" font-size="9.5" fill="#fffaf1" text-anchor="middle">0.0275</text></g><g><title>v11 Fidelity: 0.0224</title><rect x="609.3" y="129.0" width="46.6" height="32" rx="4" fill="#ac563c"></rect><text class="t mono" x="632.6" y="148.5" font-size="9.5" fill="#fffaf1" text-anchor="middle">0.0224</text></g><g><title>v12 Fidelity: 0.0145</title><rect x="657.9" y="129.0" width="46.6" height="32" rx="4" fill="#b16048"></rect><text class="t mono" x="681.1" y="148.5" font-size="9.5" fill="#fffaf1" text-anchor="middle">0.0145</text></g><g><title>v13 Fidelity: 0.0139</title><rect x="706.4" y="129.0" width="46.6" height="32" rx="4" fill="#b26148"></rect><text class="t mono" x="729.7" y="148.5" font-size="9.5" fill="#fffaf1" text-anchor="middle">0.0139</text></g><text class="t" x="66.0" y="183.0" font-size="11.5" fill="#292722" text-anchor="end" font-weight="400">Reach</text><g><title>v0 Reach: 0.1871</title><rect x="75.0" y="163.0" width="46.6" height="32" rx="4" fill="#b66a53"></rect><text class="t mono" x="98.3" y="182.5" font-size="9.5" fill="#fffaf1" text-anchor="middle">0.1871</text></g><g><title>v1 Reach: 0.1967</title><rect x="123.6" y="163.0" width="46.6" height="32" rx="4" fill="#a94f35"></rect><text class="t mono" x="146.9" y="182.5" font-size="9.5" fill="#fffaf1" text-anchor="middle">0.1967</text></g><g><title>v2 Reach: 0.1459</title><rect x="172.1" y="163.0" width="46.6" height="32" rx="4" fill="#f0dfd4"></rect><text class="t mono" x="195.4" y="182.5" font-size="9.5" fill="#292722" text-anchor="middle">0.1459</text></g><g><title>v3 Reach: 0.1494</title><rect x="220.7" y="163.0" width="46.6" height="32" rx="4" fill="#ebd5c9"></rect><text class="t mono" x="244.0" y="182.5" font-size="9.5" fill="#292722" text-anchor="middle">0.1494</text></g><g><title>v4 Reach: 0.1507</title><rect x="269.3" y="163.0" width="46.6" height="32" rx="4" fill="#e9d1c5"></rect><text class="t mono" x="292.6" y="182.5" font-size="9.5" fill="#292722" text-anchor="middle">0.1507</text></g><g><title>v5 Reach: 0.1790</title><rect x="317.9" y="163.0" width="46.6" height="32" rx="4" fill="#c2816c"></rect><text class="t mono" x="341.1" y="182.5" font-size="9.5" fill="#fffaf1" text-anchor="middle">0.1790</text></g><g><title>v6 Reach: 0.1678</title><rect x="366.4" y="163.0" width="46.6" height="32" rx="4" fill="#d1a190"></rect><text class="t mono" x="389.7" y="182.5" font-size="9.5" fill="#292722" text-anchor="middle">0.1678</text></g><g><title>v7 Reach: ≈0.1660</title><rect x="415.0" y="163.0" width="46.6" height="32" rx="4" fill="#d4a695"></rect><text class="t mono" x="438.3" y="182.5" font-size="9.5" fill="#292722" text-anchor="middle">0.166</text></g><g><title>v8 Reach: 0.1873</title><rect x="463.6" y="163.0" width="46.6" height="32" rx="4" fill="#b66a52"></rect><text class="t mono" x="486.9" y="182.5" font-size="9.5" fill="#fffaf1" text-anchor="middle">0.1873</text></g><g><title>v9 Reach: 0.1881</title><rect x="512.1" y="163.0" width="46.6" height="32" rx="4" fill="#b56750"></rect><text class="t mono" x="535.4" y="182.5" font-size="9.5" fill="#fffaf1" text-anchor="middle">0.1881</text></g><g><title>v10 Reach: 0.1755</title><rect x="560.7" y="163.0" width="46.6" height="32" rx="4" fill="#c78b77"></rect><text class="t mono" x="584.0" y="182.5" font-size="9.5" fill="#fffaf1" text-anchor="middle">0.1755</text></g><g><title>v11 Reach: 0.1760</title><rect x="609.3" y="163.0" width="46.6" height="32" rx="4" fill="#c68976"></rect><text class="t mono" x="632.6" y="182.5" font-size="9.5" fill="#fffaf1" text-anchor="middle">0.1760</text></g><g><title>v12 Reach: 0.1578</title><rect x="657.9" y="163.0" width="46.6" height="32" rx="4" fill="#dfbdaf"></rect><text class="t mono" x="681.1" y="182.5" font-size="9.5" fill="#292722" text-anchor="middle">0.1578</text></g><g><title>v13 Reach: 0.1683</title><rect x="706.4" y="163.0" width="46.6" height="32" rx="4" fill="#d19f8e"></rect><text class="t mono" x="729.7" y="182.5" font-size="9.5" fill="#292722" text-anchor="middle">0.1683</text></g><text class="t" x="66.0" y="217.0" font-size="11.5" fill="#292722" text-anchor="end" font-weight="400">Jaccard</text><g><title>v0 Jaccard: −0.0117</title><rect x="75.0" y="197.0" width="46.6" height="32" rx="4" fill="#dbb4a5"></rect><text class="t mono" x="98.3" y="216.5" font-size="9.5" fill="#292722" text-anchor="middle">−0.0117</text></g><g><title>v1 Jaccard: −0.0111</title><rect x="123.6" y="197.0" width="46.6" height="32" rx="4" fill="#d9b1a1"></rect><text class="t mono" x="146.9" y="216.5" font-size="9.5" fill="#292722" text-anchor="middle">−0.0111</text></g><g><title>v2 Jaccard: −0.0005</title><rect x="172.1" y="197.0" width="46.6" height="32" rx="4" fill="#b97059"></rect><text class="t mono" x="195.4" y="216.5" font-size="9.5" fill="#fffaf1" text-anchor="middle">−0.0005</text></g><g><title>v3 Jaccard: −0.0014</title><rect x="220.7" y="197.0" width="46.6" height="32" rx="4" fill="#bc755f"></rect><text class="t mono" x="244.0" y="216.5" font-size="9.5" fill="#fffaf1" text-anchor="middle">−0.0014</text></g><g><title>v4 Jaccard: 0.0048</title><rect x="269.3" y="197.0" width="46.6" height="32" rx="4" fill="#a94f35"></rect><text class="t mono" x="292.6" y="216.5" font-size="9.5" fill="#fffaf1" text-anchor="middle">0.0048</text></g><g><title>v5 Jaccard: −0.0004</title><rect x="317.9" y="197.0" width="46.6" height="32" rx="4" fill="#b96f58"></rect><text class="t mono" x="341.1" y="216.5" font-size="9.5" fill="#fffaf1" text-anchor="middle">−0.0004</text></g><g><title>v6 Jaccard: −0.0065</title><rect x="366.4" y="197.0" width="46.6" height="32" rx="4" fill="#cb9482"></rect><text class="t mono" x="389.7" y="216.5" font-size="9.5" fill="#292722" text-anchor="middle">−0.0065</text></g><g><title>v7 Jaccard: ≈−0.0160</title><rect x="415.0" y="197.0" width="46.6" height="32" rx="4" fill="#e8cfc2"></rect><text class="t mono" x="438.3" y="216.5" font-size="9.5" fill="#292722" text-anchor="middle">−0.016</text></g><g><title>v8 Jaccard: −0.0156</title><rect x="463.6" y="197.0" width="46.6" height="32" rx="4" fill="#e7ccc0"></rect><text class="t mono" x="486.9" y="216.5" font-size="9.5" fill="#292722" text-anchor="middle">−0.0156</text></g><g><title>v9 Jaccard: −0.0156</title><rect x="512.1" y="197.0" width="46.6" height="32" rx="4" fill="#e7ccc0"></rect><text class="t mono" x="535.4" y="216.5" font-size="9.5" fill="#292722" text-anchor="middle">−0.0156</text></g><g><title>v10 Jaccard: −0.0119</title><rect x="560.7" y="197.0" width="46.6" height="32" rx="4" fill="#dcb5a7"></rect><text class="t mono" x="584.0" y="216.5" font-size="9.5" fill="#292722" text-anchor="middle">−0.0119</text></g><g><title>v11 Jaccard: −0.0186</title><rect x="609.3" y="197.0" width="46.6" height="32" rx="4" fill="#f0dfd4"></rect><text class="t mono" x="632.6" y="216.5" font-size="9.5" fill="#292722" text-anchor="middle">−0.0186</text></g><g><title>v12 Jaccard: −0.0175</title><rect x="657.9" y="197.0" width="46.6" height="32" rx="4" fill="#edd8cd"></rect><text class="t mono" x="681.1" y="216.5" font-size="9.5" fill="#292722" text-anchor="middle">−0.0175</text></g><g><title>v13 Jaccard: −0.0170</title><rect x="706.4" y="197.0" width="46.6" height="32" rx="4" fill="#ebd5c9"></rect><text class="t mono" x="729.7" y="216.5" font-size="9.5" fill="#292722" text-anchor="middle">−0.0170</text></g><text class="t" x="66.0" y="261.0" font-size="11.5" fill="#292722" text-anchor="end" font-weight="700">Overall</text><g><title>v0 Overall: 0.1290</title><rect x="75.0" y="241.0" width="46.6" height="32" rx="4" fill="#f0dfd4"></rect><text class="t mono" x="98.3" y="260.5" font-size="9.5" fill="#292722" text-anchor="middle">0.1290</text></g><g><title>v1 Overall: 0.1338</title><rect x="123.6" y="241.0" width="46.6" height="32" rx="4" fill="#ecd7cb"></rect><text class="t mono" x="146.9" y="260.5" font-size="9.5" fill="#292722" text-anchor="middle">0.1338</text></g><g><title>v2 Overall: 0.1441</title><rect x="172.1" y="241.0" width="46.6" height="32" rx="4" fill="#e4c6b9"></rect><text class="t mono" x="195.4" y="260.5" font-size="9.5" fill="#292722" text-anchor="middle">0.1441</text></g><g><title>v3 Overall: 0.1482</title><rect x="220.7" y="241.0" width="46.6" height="32" rx="4" fill="#e0bfb1"></rect><text class="t mono" x="244.0" y="260.5" font-size="9.5" fill="#292722" text-anchor="middle">0.1482</text></g><g><title>v4 Overall: 0.1465</title><rect x="269.3" y="241.0" width="46.6" height="32" rx="4" fill="#e2c2b4"></rect><text class="t mono" x="292.6" y="260.5" font-size="9.5" fill="#292722" text-anchor="middle">0.1465</text></g><g><title>v5 Overall: 0.1507</title><rect x="317.9" y="241.0" width="46.6" height="32" rx="4" fill="#debbad"></rect><text class="t mono" x="341.1" y="260.5" font-size="9.5" fill="#292722" text-anchor="middle">0.1507</text></g><g><title>v6 Overall: 0.1705</title><rect x="366.4" y="241.0" width="46.6" height="32" rx="4" fill="#ce9b89"></rect><text class="t mono" x="389.7" y="260.5" font-size="9.5" fill="#292722" text-anchor="middle">0.1705</text></g><g><title>v7 Overall: ≈0.1937</title><rect x="415.0" y="241.0" width="46.6" height="32" rx="4" fill="#bc755f"></rect><text class="t mono" x="438.3" y="260.5" font-size="9.5" fill="#fffaf1" text-anchor="middle">0.194</text></g><g><title>v8 Overall: 0.2084</title><rect x="463.6" y="241.0" width="46.6" height="32" rx="4" fill="#b05c44"></rect><text class="t mono" x="486.9" y="260.5" font-size="9.5" fill="#fffaf1" text-anchor="middle">0.2084</text></g><g><title>v9 Overall: 0.2084</title><rect x="512.1" y="241.0" width="46.6" height="32" rx="4" fill="#b05c44"></rect><text class="t mono" x="535.4" y="260.5" font-size="9.5" fill="#fffaf1" text-anchor="middle">0.2084</text></g><g><title>v10 Overall: 0.1985</title><rect x="560.7" y="241.0" width="46.6" height="32" rx="4" fill="#b86d56"></rect><text class="t mono" x="584.0" y="260.5" font-size="9.5" fill="#fffaf1" text-anchor="middle">0.1985</text></g><g><title>v11 Overall: 0.2113</title><rect x="609.3" y="241.0" width="46.6" height="32" rx="4" fill="#ad583f"></rect><text class="t mono" x="632.6" y="260.5" font-size="9.5" fill="#fffaf1" text-anchor="middle">0.2113</text></g><g><title>v12 Overall: 0.2166</title><rect x="657.9" y="241.0" width="46.6" height="32" rx="4" fill="#a94f35"></rect><text class="t mono" x="681.1" y="260.5" font-size="9.5" fill="#fffaf1" text-anchor="middle">0.2166</text></g><g><title>v13 Overall: 0.2124</title><rect x="706.4" y="241.0" width="46.6" height="32" rx="4" fill="#ac563d"></rect><text class="t mono" x="729.7" y="260.5" font-size="9.5" fill="#fffaf1" text-anchor="middle">0.2124</text></g></svg>
 </div>
 <figcaption><span class="vcc-swipe">Swipe sideways to see every version. </span>Each row is one official metric, coloured from that metric's worst version (lightest) to its best (darkest), so you can see where each version won and lost. The numbers are the official scores. The test upload is left out, and v14 has no visible score yet.</figcaption>
 </figure>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 8%">
-<col style="width: 8%">
-<col style="width: 11%">
-<col style="width: 11%">
-<col style="width: 11%">
-<col style="width: 11%">
-<col style="width: 11%">
-<col style="width: 11%">
-<col style="width: 11%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Version</th>
-<th>Main idea</th>
-<th style="text-align: right;">PDS</th>
-<th style="text-align: right;">MSE</th>
-<th style="text-align: right;">NMAE</th>
-<th style="text-align: right;">Fidelity</th>
-<th style="text-align: right;">Reach</th>
-<th style="text-align: right;">Jaccard</th>
-<th style="text-align: right;">Overall</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>test</td>
-<td>Upload check (identity75)</td>
-<td style="text-align: right;">0.2345</td>
-<td style="text-align: right;">0.0000</td>
-<td style="text-align: right;">0.0427</td>
-<td style="text-align: right;">−0.2034</td>
-<td style="text-align: right;">0.0885</td>
-<td style="text-align: right;">−0.0243</td>
-<td style="text-align: right;">0.0230</td>
-</tr>
-<tr class="even">
-<td>v0</td>
-<td>Five-cell baseline (universal_5)</td>
-<td style="text-align: right;">0.5012</td>
-<td style="text-align: right;">0.0000</td>
-<td style="text-align: right;">0.1319</td>
-<td style="text-align: right;">−0.0344</td>
-<td style="text-align: right;">0.1871</td>
-<td style="text-align: right;">−0.0117</td>
-<td style="text-align: right;">0.1290</td>
-</tr>
-<tr class="odd">
-<td>v1</td>
-<td>Direction/size split</td>
-<td style="text-align: right;">0.5156</td>
-<td style="text-align: right;">0.0000</td>
-<td style="text-align: right;">0.1329</td>
-<td style="text-align: right;">−0.0312</td>
-<td style="text-align: right;">0.1967</td>
-<td style="text-align: right;">−0.0111</td>
-<td style="text-align: right;">0.1338</td>
-</tr>
-<tr class="even">
-<td>v2</td>
-<td>Wider source catalogue</td>
-<td style="text-align: right;">0.6012</td>
-<td style="text-align: right;">0.0000</td>
-<td style="text-align: right;">0.1333</td>
-<td style="text-align: right;">−0.0153</td>
-<td style="text-align: right;">0.1459</td>
-<td style="text-align: right;">−0.0005</td>
-<td style="text-align: right;">0.1441</td>
-</tr>
-<tr class="odd">
-<td>v3</td>
-<td>Published reference</td>
-<td style="text-align: right;">0.6128</td>
-<td style="text-align: right;">0.0000</td>
-<td style="text-align: right;">0.1442</td>
-<td style="text-align: right;">−0.0161</td>
-<td style="text-align: right;">0.1494</td>
-<td style="text-align: right;">−0.0014</td>
-<td style="text-align: right;">0.1482</td>
-</tr>
-<tr class="even">
-<td>v4</td>
-<td>Copula cell reshaping</td>
-<td style="text-align: right;">0.6012</td>
-<td style="text-align: right;">0.0000</td>
-<td style="text-align: right;">0.1493</td>
-<td style="text-align: right;">−0.0268</td>
-<td style="text-align: right;">0.1507</td>
-<td style="text-align: right;">0.0048</td>
-<td style="text-align: right;">0.1465</td>
-</tr>
-<tr class="odd">
-<td>v5</td>
-<td>Reshape weak effects only</td>
-<td style="text-align: right;">0.6012</td>
-<td style="text-align: right;">0.0000</td>
-<td style="text-align: right;">0.1493</td>
-<td style="text-align: right;">−0.0252</td>
-<td style="text-align: right;">0.1790</td>
-<td style="text-align: right;">−0.0004</td>
-<td style="text-align: right;">0.1507</td>
-</tr>
-<tr class="even">
-<td>v6</td>
-<td>Specialised branches</td>
-<td style="text-align: right;">0.6515</td>
-<td style="text-align: right;">0.1502</td>
-<td style="text-align: right;">0.1437</td>
-<td style="text-align: right;">−0.0836</td>
-<td style="text-align: right;">0.1678</td>
-<td style="text-align: right;">−0.0065</td>
-<td style="text-align: right;">0.1705</td>
-</tr>
-<tr class="odd">
-<td>v7</td>
-<td>Changed-gene floor</td>
-<td style="text-align: right;">0.660</td>
-<td style="text-align: right;">0.179</td>
-<td style="text-align: right;">0.165</td>
-<td style="text-align: right;">0.008</td>
-<td style="text-align: right;">0.166</td>
-<td style="text-align: right;">−0.016</td>
-<td style="text-align: right;">≈0.1937</td>
-</tr>
-<tr class="even">
-<td>v8</td>
-<td>A to H1 branch + Jurkat</td>
-<td style="text-align: right;">0.6533</td>
-<td style="text-align: right;">0.2209</td>
-<td style="text-align: right;">0.1872</td>
-<td style="text-align: right;">0.0172</td>
-<td style="text-align: right;">0.1873</td>
-<td style="text-align: right;">−0.0156</td>
-<td style="text-align: right;">0.2084</td>
-</tr>
-<tr class="odd">
-<td>v9</td>
-<td>Added Yao THP1</td>
-<td style="text-align: right;">0.6534</td>
-<td style="text-align: right;">0.2210</td>
-<td style="text-align: right;">0.1868</td>
-<td style="text-align: right;">0.0170</td>
-<td style="text-align: right;">0.1881</td>
-<td style="text-align: right;">−0.0156</td>
-<td style="text-align: right;">0.2084</td>
-</tr>
-<tr class="even">
-<td>v10</td>
-<td>Everything at once</td>
-<td style="text-align: right;">0.6420</td>
-<td style="text-align: right;">0.1694</td>
-<td style="text-align: right;">0.1884</td>
-<td style="text-align: right;">0.0275</td>
-<td style="text-align: right;">0.1755</td>
-<td style="text-align: right;">−0.0119</td>
-<td style="text-align: right;">0.1985</td>
-</tr>
-<tr class="odd">
-<td>v11</td>
-<td>Step back</td>
-<td style="text-align: right;">0.6547</td>
-<td style="text-align: right;">0.2389</td>
-<td style="text-align: right;">0.1943</td>
-<td style="text-align: right;">0.0224</td>
-<td style="text-align: right;">0.1760</td>
-<td style="text-align: right;">−0.0186</td>
-<td style="text-align: right;">0.2113</td>
-</tr>
-<tr class="even">
-<td>v12</td>
-<td>Remove 15 control patterns</td>
-<td style="text-align: right;">0.7426</td>
-<td style="text-align: right;">0.2114</td>
-<td style="text-align: right;">0.1909</td>
-<td style="text-align: right;">0.0145</td>
-<td style="text-align: right;">0.1578</td>
-<td style="text-align: right;">−0.0175</td>
-<td style="text-align: right;">0.2166</td>
-</tr>
-<tr class="odd">
-<td>v13</td>
-<td>Reliability + louder</td>
-<td style="text-align: right;">0.7573</td>
-<td style="text-align: right;">0.1918</td>
-<td style="text-align: right;">0.1604</td>
-<td style="text-align: right;">0.0139</td>
-<td style="text-align: right;">0.1683</td>
-<td style="text-align: right;">−0.0170</td>
-<td style="text-align: right;">0.2124</td>
-</tr>
-<tr class="even">
-<td>v14-DEF</td>
-<td>v12 recipe on D/E/F</td>
-<td style="text-align: right;">–</td>
-<td style="text-align: right;">–</td>
-<td style="text-align: right;">–</td>
-<td style="text-align: right;">–</td>
-<td style="text-align: right;">–</td>
-<td style="text-align: right;">–</td>
-<td style="text-align: right;">not visible</td>
-</tr>
-</tbody>
-</table>
+</section>
+<section id="data-models-and-links" class="level2">
+<h2 class="anchored" data-anchor-id="data-models-and-links">Data, models and links</h2>
+<p>These are the main public resources behind this project. I’m listing the ones I can link to with confidence; a few smaller sources in my banks (VIPerturb, PerturbME, Tian, DLD1 and some CD4 sets) aren’t linked here.</p>
+<div class="vcc-refs">
+<div>
+<section id="the-challenge" class="level4">
+<h4 class="anchored" data-anchor-id="the-challenge">The challenge</h4>
+<ul>
+<li><a href="https://virtualcellchallenge.org">Virtual Cell Challenge</a>, the competition site</li>
+<li><a href="https://arcinstitute.org/news/virtual-cell-challenge-2025">Arc Institute’s launch announcement</a> and the <a href="https://arcinstitute.org/virtual-cell-initiative">Virtual Cell Initiative</a></li>
+<li><a href="https://huggingface.co/blog/virtual-cell-challenge">A primer on the challenge</a> on the Hugging Face blog</li>
+</ul>
+</section>
+<section id="perturbation-datasets" class="level4">
+<h4 class="anchored" data-anchor-id="perturbation-datasets">Perturbation datasets</h4>
+<ul>
+<li>Replogle et al.&nbsp;2022, genome-wide Perturb-seq in K562 and RPE1 (<a href="https://doi.org/10.1016/j.cell.2022.05.013">Cell</a>)</li>
+<li>Nadig et al.&nbsp;2025, Perturb-seq in HepG2 and Jurkat (<a href="https://doi.org/10.1038/s41588-025-02169-3">Nature Genetics</a>)</li>
+<li>X-Atlas/Orion, genome-wide Perturb-seq from Xaira (<a href="https://doi.org/10.1101/2025.06.11.659105">preprint</a>, <a href="https://doi.org/10.25452/figshare.plus.29190726">data</a>)</li>
+<li><a href="https://huggingface.co/datasets/tahoebio/Tahoe-100M">Tahoe-100M</a>, the drug-perturbation atlas used in PIE training</li>
+<li>Jiang et al., perturbations across cell lines and cytokine contexts (<a href="https://doi.org/10.1101/2024.01.29.576933">preprint</a>)</li>
+<li>Frangieh et al.&nbsp;2021, Perturb-CITE-seq (<a href="https://doi.org/10.1038/s41588-021-00779-1">Nature Genetics</a>)</li>
+<li>Papalexi et al.&nbsp;2021, ECCITE-seq in THP-1 (<a href="https://doi.org/10.1038/s41588-021-00778-2">Nature Genetics</a>)</li>
+<li>Yao THP-1 with LPS (<a href="https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE221321">GEO GSE221321</a>) and genome-wide Jurkat (<a href="https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE249595">GEO GSE249595</a>)</li>
+<li>The eleven GEO banks: <a href="https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE103851">GSE103851</a>, <a href="https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE115784">GSE115784</a>, <a href="https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE163819">GSE163819</a>, <a href="https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE210093">GSE210093</a>, <a href="https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE30815">GSE30815</a>, <a href="https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE44601">GSE44601</a>, <a href="https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE58403">GSE58403</a>, <a href="https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE68297">GSE68297</a>, <a href="https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE79255">GSE79255</a>, <a href="https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE87428">GSE87428</a>, <a href="https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE89940">GSE89940</a></li>
+<li><a href="https://clue.io">L1000 / LINCS</a> banks for nine cell lines, and <a href="https://www.hipsci.org">HipSci</a> iPSC lines</li>
+</ul>
+</section>
+</div>
+<div>
+<section id="models-i-compared" class="level4">
+<h4 class="anchored" data-anchor-id="models-i-compared">Models I compared</h4>
+<ul>
+<li><a href="https://github.com/ArcInstitute/pie">PIE</a>, Arc Institute</li>
+<li><a href="https://github.com/ArcInstitute/state">STATE</a>, Arc Institute</li>
+<li><a href="https://github.com/theislab/cpa">CPA</a> and <a href="https://github.com/theislab/scgen">scGen</a>, Theis lab</li>
+<li><a href="https://github.com/snap-stanford/GEARS">GEARS</a>, Stanford</li>
+<li>PRESAGE (<a href="https://doi.org/10.1101/2025.06.03.657653">preprint</a>) and scLAMBDA (<a href="https://doi.org/10.1101/2024.12.04.626878">preprint</a>)</li>
+<li><a href="https://huggingface.co/ctheodoris/Geneformer">Geneformer</a> and <a href="https://github.com/bowang-lab/scGPT">scGPT</a></li>
+<li><a href="https://github.com/yiqunchen/GenePT">GenePT</a> gene embeddings</li>
+</ul>
+</section>
+<section id="knowledge-and-reference-resources" class="level4">
+<h4 class="anchored" data-anchor-id="knowledge-and-reference-resources">Knowledge and reference resources</h4>
+<ul>
+<li><a href="https://string-db.org">STRING</a> protein interactions</li>
+<li><a href="https://depmap.org">DepMap</a> gene dependency</li>
+<li><a href="https://www.gencodegenes.org">GENCODE</a> gene annotation</li>
+<li><a href="https://www.encodeproject.org">ENCODE</a> and <a href="https://maayanlab.cloud/archs4/">ARCHS4</a> expression references</li>
+</ul>
+</section>
+</div>
+</div>
 </section>
 <section id="glossary" class="level2">
 <h2 class="anchored" data-anchor-id="glossary">Glossary</h2>
