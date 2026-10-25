@@ -535,7 +535,7 @@ I compared twelve alternative routes, including several of the best-known single
   <article><h4>CPA</h4><p>Compositional perturbation autoencoder: separates basal cell state from the perturbation effect and recombines them. No MSE improvement over v11.</p></article>
   <article><h4>scGen</h4><p>Models a perturbation as a shift in a learned latent space. No improvement.</p></article>
   <article><h4>GEARS</h4><p>Uses a gene-interaction graph. Some fits completed, but the queue was stopped for cost and no complete comparison row exists.</p></article>
-  <article><h4>STATE</h4><p>Arc's model trained on sets of observed cells. Trained here on a subset of strata, with worse MSE than v11. A full-data run was prepared but not completed.</p></article>
+  <article><h4>STATE</h4><p>Arc's model trained on sets of observed cells. Trained here on seven selected strata, with worse MSE than v11. A full-data run over all 95 groups (338,676 cells) started on 24 October; three group fits completed before it was stopped, so no full comparison exists.</p></article>
   <article><h4>PRESAGE</h4><p>Predicts responses from aggregated gene-knowledge embeddings. Run with a reduced knowledge setup. No gain.</p></article>
   <article><h4>scLAMBDA</h4><p>Latent-space model for single and multi-gene perturbations. No gain.</p></article>
   <article><h4>Ridge</h4><p>A linear baseline on GenePT and source-PCA features, to test whether model complexity adds anything. No gain.</p></article>
