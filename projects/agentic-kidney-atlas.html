@@ -1,0 +1,1074 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-GB" xml:lang="en-GB"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.11.9">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="description" content="A step-by-step account of the evidence pipeline, five specialist LLM agents, scientific checks and all thirteen windows of the interactive ccRCC atlas.">
+
+<title>Agentic Multi-omics Target Atlas for Kidney Cancer – Rafael Soler Ortuño</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<link href="../assets/favicon.svg" rel="icon" type="image/svg+xml">
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/scrollable-regions/scrollable-regions.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-63b5708e65d6cd79cd7618c58d0c21e7.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-9c98f21c26e62cbdfc45883b480c3e02.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+
+
+<link rel="stylesheet" href="../styles.css">
+<link rel="stylesheet" href="../brand.css">
+<link rel="stylesheet" href="../role-fix.css">
+<link rel="stylesheet" href="../refine.css">
+<link rel="stylesheet" href="../nav.css">
+<link rel="stylesheet" href="../vcc.css">
+<link rel="stylesheet" href="../atlas.css">
+<meta property="og:title" content="Agentic Multi-omics Target Atlas for Kidney Cancer – Rafael Soler Ortuño">
+<meta property="og:description" content="A step-by-step account of the evidence pipeline, five specialist LLM agents, scientific checks and all thirteen windows of the interactive ccRCC atlas.">
+<meta property="og:image" content="https://rsolerortuno.github.io/assets/agentic-kidney-atlas/protein-viewer.png">
+<meta property="og:site_name" content="Rafael Soler Ortuño">
+<meta property="og:locale" content="en_GB">
+<meta property="og:image:alt" content="Screenshot of the CA9 protein viewer with grey molecular surface, red selected residues and structure controls.">
+<meta property="og:image:height" content="988">
+<meta property="og:image:width" content="1265">
+<meta name="twitter:title" content="Agentic Multi-omics Target Atlas for Kidney Cancer – Rafael Soler Ortuño">
+<meta name="twitter:description" content="A step-by-step account of the evidence pipeline, five specialist LLM agents, scientific checks and all thirteen windows of the interactive ccRCC atlas.">
+<meta name="twitter:image" content="https://rsolerortuno.github.io/assets/agentic-kidney-atlas/protein-viewer.png">
+<meta name="twitter:image:alt" content="Screenshot of the CA9 protein viewer with grey molecular surface, red selected residues and structure controls.">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+
+<body class="nav-fixed quarto-light"><a id="quarto-skip-link" class="visually-hidden-focusable" href="#quarto-document-content">Skip to main content</a>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark" aria-label="Site">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">RSO.</span>
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-projects" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Projects</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-projects">    
+        <li>
+    <a class="dropdown-item" href="../projects.html">
+ <span class="dropdown-text">All projects</span></a>
+  </li>  
+        <li><hr class="dropdown-divider"></li>
+        <li>
+    <a class="dropdown-item" href="../projects/agentic-kidney-atlas.html">
+ <span class="dropdown-text">Agentic Kidney Atlas</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../projects/virtual-cell-challenge.html">
+ <span class="dropdown-text">Virtual Cell Challenge 2026</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../projects/targetintel-io.html">
+ <span class="dropdown-text">TargetIntel-IO</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../projects/activation-liability.html">
+ <span class="dropdown-text">Activation Liability</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../projects/reach-gap.html">
+ <span class="dropdown-text">reach-gap</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../projects/segmentation-fragility.html">
+ <span class="dropdown-text">segmentation-fragility</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../projects/fm-value-audit.html">
+ <span class="dropdown-text">FM Value Audit</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../projects/drugmatch-confidence.html">
+ <span class="dropdown-text">DrugMatch-Confidence</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../projects/mtf-prediction.html">
+ <span class="dropdown-text">MTF Prediction</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../projects/dev-autopilot.html">
+ <span class="dropdown-text">Dev Autopilot</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="../about.html"> 
+<span class="menu-text">Experience</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/in/rafael-soler-ortuno/"> <i class="bi bi-linkedin" role="img" aria-label="LinkedIn profile">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="mailto:rafaelsolersanblas@gmail.com"> <i class="bi bi-envelope" role="img" aria-label="Email Rafael">
+</i> 
+<span class="menu-text"></span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" aria-labelledby="toc-title" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul class="collapse">
+  <li><a href="#the-question-what-deserves-another-experiment" id="toc-the-question-what-deserves-another-experiment" class="nav-link active" data-scroll-target="#the-question-what-deserves-another-experiment">The question: what deserves another experiment?</a></li>
+  <li><a href="#from-measurements-to-a-readable-argument" id="toc-from-measurements-to-a-readable-argument" class="nav-link" data-scroll-target="#from-measurements-to-a-readable-argument">From measurements to a readable argument</a></li>
+  <li><a href="#what-the-agents-actually-do" id="toc-what-the-agents-actually-do" class="nav-link" data-scroll-target="#what-the-agents-actually-do">What the agents actually do</a></li>
+  <li><a href="#a-guided-tour-of-all-thirteen-windows" id="toc-a-guided-tour-of-all-thirteen-windows" class="nav-link" data-scroll-target="#a-guided-tour-of-all-thirteen-windows">A guided tour of all thirteen windows</a></li>
+  <li><a href="#two-checks-that-change-how-i-read-the-shortlist" id="toc-two-checks-that-change-how-i-read-the-shortlist" class="nav-link" data-scroll-target="#two-checks-that-change-how-i-read-the-shortlist">Two checks that change how I read the shortlist</a></li>
+  <li><a href="#what-would-i-follow-up-biologically" id="toc-what-would-i-follow-up-biologically" class="nav-link" data-scroll-target="#what-would-i-follow-up-biologically">What would I follow up biologically?</a></li>
+  <li><a href="#what-this-demonstrates-about-agentic-ai" id="toc-what-this-demonstrates-about-agentic-ai" class="nav-link" data-scroll-target="#what-this-demonstrates-about-agentic-ai">What this demonstrates about agentic AI</a></li>
+  <li><a href="#reproduction-and-the-remaining-limits" id="toc-reproduction-and-the-remaining-limits" class="nav-link" data-scroll-target="#reproduction-and-the-remaining-limits">Reproduction and the remaining limits</a></li>
+  <li><a href="#source-record-and-further-reading" id="toc-source-record-and-further-reading" class="nav-link" data-scroll-target="#source-record-and-further-reading">Source record and further reading</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content" tabindex="-1">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Agentic Multi-omics Target Atlas for Kidney Cancer</h1>
+<p class="subtitle lead">From public multi-omics data to an inspectable shortlist: an agentic AI case study</p>
+</div>
+
+<div>
+  <div class="description">
+    A step-by-step account of the evidence pipeline, five specialist LLM agents, scientific checks and all thirteen windows of the interactive ccRCC atlas.
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="article-status">
+<span class="status-pill status-preview">Agentic AI · Computational oncology</span><span class="status-pill">Analysis snapshot · 3 November 2026</span>
+</div>
+<div class="vcc-intro">
+<p>I built this project around a practical question: when several datasets point to a gene in kidney cancer, what would make it worth following up? A large change in RNA is a starting point. It does not tell us whether the protein changes, which cells make it, whether normal tissues also need it, or what kind of treatment could reach it.</p>
+<p>The atlas brings those questions together. Python computes the measurements, a knowledge graph keeps their provenance, and five specialist LLM agents retrieve and interpret the evidence. The result is a browser report where a reader can move from a shortlist to the measurements behind it. This page explains how it works, how to read every window, and where the conclusions stop.</p>
+</div>
+<div class="button-row atlas-actions">
+<a class="button button-primary" href="https://rsolerortuno.github.io/agentic-kidney-atlas/">Explore the interactive atlas ↗</a>
+<a class="button button-secondary" href="https://github.com/rsolerortuno/agentic-kidney-atlas">Read the code ↗</a>
+</div>
+<p class="atlas-note">No installation needed. The report is a large, self-contained HTML file, so the first load may take a moment. This case study documents the saved analysis above; the live atlas may receive later updates.</p>
+<div class="vcc-stats" aria-label="Project scope">
+<div><strong>19,161</strong><span>genes in the convergence ranking</span></div>
+<div><strong>5</strong><span>specialist agents, plus an orchestrator</span></div>
+<div><strong>13</strong><span>report tabs, from candidates to evidence</span></div>
+<div><strong>1,000</strong><span>random re-weightings to assess rank stability</span></div>
+</div>
+<section id="the-question-what-deserves-another-experiment" class="level2">
+<h2 class="anchored" data-anchor-id="the-question-what-deserves-another-experiment">The question: what deserves another experiment?</h2>
+<p>The biological scope is <strong>clear cell renal cell carcinoma (ccRCC)</strong>, rather than every form of kidney cancer. The project combines tumour and matched normal tissue, additional patient cohorts, single cells, tissue sections, cell-line screens and published knowledge. These sources answer different questions and do not all measure the same patients.</p>
+<p>A <strong>target</strong> is something a treatment might act on. A <strong>biomarker</strong> is something we measure to distinguish biological or clinical states. A gene can be useful for both, but the evidence needed is different. A gene that falls as a tumour loses normal kidney identity may make a useful biomarker without being something we should inhibit.</p>
+<p>I therefore keep several rankings visible. The convergence score asks which genes have several supporting evidence streams. Separate target and biomarker profiles ask more specific questions. A discovery screen deliberately looks beyond well-studied genes, because a ranking that rewards existing papers will naturally favour familiar biology.</p>
+<p>The intended output is <strong>a set of hypotheses prioritised for experimental validation</strong>, with supporting evidence and gaps. It is not a list of proven new treatments.</p>
+</section>
+<section id="from-measurements-to-a-readable-argument" class="level2">
+<h2 class="anchored" data-anchor-id="from-measurements-to-a-readable-argument">From measurements to a readable argument</h2>
+<p>The workflow separates a measured result from a sentence about that result. This matters because a fluent explanation can remain wrong even when it contains a real citation.</p>
+<ol class="vcc-pipeline atlas-pipeline">
+<li><span class="vcc-step">1</span><h4 class="anchored">Measure</h4><p>Python computes differential expression, replication, dependency and clinical associations.</p><em>Deterministic analysis</em></li>
+<li><span class="vcc-step">2</span><h4 class="anchored">Record</h4><p>Results enter a graph with gene identity, source, metric and evidence identifiers.</p><em>SQLite + NetworkX</em></li>
+<li><span class="vcc-step">3</span><h4 class="anchored">Investigate</h4><p>Specialist agents call tools, compare evidence and produce structured findings.</p><em>Claude + MCP tools</em></li>
+<li><span class="vcc-step">4</span><h4 class="anchored">Check</h4><p>Code checks citations, numbers, direction and whether the cited data have changed.</p><em>Automatic verification</em></li>
+<li><span class="vcc-step">5</span><h4 class="anchored">Inspect</h4><p>The report combines computed figures with checked narrative and links back to evidence.</p><em>Interactive HTML</em></li>
+</ol>
+<p>The main discovery cohort is CPTAC ccRCC: 110 tumours, with matched normal samples available for subsets of the RNA, protein and phosphorylation measurements. TCGA-KIRC supplies RNA replication and survival information. A separate CPTAC proteomics cohort tests whether protein and phosphosite changes repeat. DepMap asks a different question: whether cancer cell lines lose fitness when a gene is disrupted.</p>
+<p>Single-cell datasets help identify the cells making a gene. Spatial data place expression within a tissue section. Treatment cohorts test associations with progression and response. Literature and external databases add prior knowledge, molecular interactions, normal-tissue context and drug information. The <a href="https://github.com/rsolerortuno/agentic-kidney-atlas#3-data-sources">repository’s source table</a> gives the individual datasets and sizes.</p>
+<section id="why-use-a-graph" class="level3">
+<h3 class="anchored" data-anchor-id="why-use-a-graph">Why use a graph?</h3>
+<p>Here, a knowledge graph is a way to keep biological relationships attached to their evidence. A gene can be linked to an expression change, a cell type, a drug or a disease. Each relationship points to an evidence record. SQLite stores the records and NetworkX supports graph operations.</p>
+<p>This is the GraphRAG part: the language model retrieves structured, connected evidence before writing. It does not have to reconstruct a gene’s measurements from memory. The graph also makes it possible to ask whether two statements refer to the same gene and to trace a report claim back to its source. A graph edge still means only what its underlying evidence supports; it is not automatically causal.</p>
+</section>
+</section>
+<section id="what-the-agents-actually-do" class="level2">
+<h2 class="anchored" data-anchor-id="what-the-agents-actually-do">What the agents actually do</h2>
+<p>The agentic layer uses Claude Code as an orchestrator. It starts from a deterministic integration of the evidence, delegates bounded questions to five specialist agents, checks their structured findings, and assembles an interpretation. The names below describe their roles in English.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Agent</th>
+<th>Question it investigates</th>
+<th>Evidence it contributes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Multi-omics Agent</strong></td>
+<td>Do the molecular measurements agree?</td>
+<td>RNA, protein, copy number and other quantitative evidence.</td>
+</tr>
+<tr class="even">
+<td><strong>Cellular &amp; Spatial Agent</strong></td>
+<td>Which cells make the candidate, and where?</td>
+<td>Single-cell attribution, tissue context, discovery-screen findings and descriptive structural context.</td>
+</tr>
+<tr class="odd">
+<td><strong>Literature Agent</strong></td>
+<td>What has already been reported?</td>
+<td>Retrieved literature relations linked to their source text.</td>
+</tr>
+<tr class="even">
+<td><strong>External Knowledge Agent</strong></td>
+<td>What do established resources say?</td>
+<td>Drug, interaction, function and tractability context.</td>
+</tr>
+<tr class="odd">
+<td><strong>Translational Analysis Agent</strong></td>
+<td>Does the candidate make sense in a treatment setting?</td>
+<td>Treatment associations, subtypes, antibody suitability, immune context and replication.</td>
+</tr>
+</tbody>
+</table>
+<p>The tools are exposed through four MCP servers: <code>omics-mcp</code>, <code>cell-mcp</code>, <code>kg-mcp</code> and <code>external-mcp</code>. MCP is the interface that lets an agent request a specific result from a defined tool. It is not another statistical model. The agent definitions, orchestration command and tool implementations are available in the <a href="https://github.com/rsolerortuno/agentic-kidney-atlas">source repository</a>.</p>
+<p>The LLM helps choose what to investigate and makes a written judgement from retrieved evidence. The numerical ranking, statistical tests, plotted values and tables come from code. A separate literature-extraction step produces constrained relations and checks their quoted support against the source text.</p>
+<section id="what-the-checker-can-establish" class="level3">
+<h3 class="anchored" data-anchor-id="what-the-checker-can-establish">What the checker can establish</h3>
+<p>For a supported statement, the cited record must exist and belong to the relevant gene. A number must match a specific evidence field, including its direction and unit; finding the same number somewhere in a record is insufficient. A stale-text guard checks whether the evidence changed after the narrative was written. Unsupported findings are removed from the verified output.</p>
+<p>For example, a sentence about a protein fold change should be checked against the protein fold-change field, not against an RNA value or a sample count that happens to match. This is an illustration of the checking rule, not a new biological finding.</p>
+<p>The saved run reports 116 checked statements with no failures detected by those checks. <strong>That does not establish that every scientific interpretation is correct.</strong> A sentence may cite accurate numbers yet overstate causality, therapeutic feasibility or the independence of two datasets. Those judgements still need review. The <a href="https://github.com/rsolerortuno/agentic-kidney-atlas/blob/main/docs/numeric-claims.md">verification limits</a> describe this boundary explicitly.</p>
+</section>
+</section>
+<section id="a-guided-tour-of-all-thirteen-windows" class="level2">
+<h2 class="anchored" data-anchor-id="a-guided-tour-of-all-thirteen-windows">A guided tour of all thirteen windows</h2>
+<p>Open the atlas alongside this page. Each heading below links directly to the corresponding report tab. The round <strong>?</strong> buttons inside the report explain individual plots and tables. Start with Overview, then follow one gene through Candidates, Cells &amp; space, Validation &amp; robustness and Methods &amp; evidence before reading a longer shortlist.</p>
+<section id="overview" class="level3">
+<h3 class="anchored" data-anchor-id="overview">01 · <a href="https://rsolerortuno.github.io/agentic-kidney-atlas/#tab=overview">Overview</a></h3>
+<p><strong>Question:</strong> what does this run conclude, and where should I start?</p>
+<p>This is the summary and navigation window. Read the project scope and the interpretation, then use its guided-tour cards to open the detailed analyses. The headline counters describe the available analysis, not a count of validated treatments. Read the limitations alongside the candidate summary: they determine how much weight the shortlist can carry.</p>
+</section>
+<section id="candidates" class="level3">
+<h3 class="anchored" data-anchor-id="candidates">02 · <a href="https://rsolerortuno.github.io/agentic-kidney-atlas/#tab=candidates">Candidates</a></h3>
+<p><strong>Question:</strong> why is a particular gene on the shortlist?</p>
+<p>This window combines the prioritised candidates with the convergence ranking and its component evidence. Inspect the evidence card for a gene before comparing its total score with another gene. A high aggregate can be driven by different combinations of measurements, prior literature and tractability.</p>
+<p>The cards distinguish support, non-favourable evidence and missing measurements, and describe a possible intervention route. An antibody, an enzyme inhibitor and a degrader require different evidence. A suggested modality is a research rationale, not proof that a drug with that mechanism will work. A blank replication result means it was not measured adequately; it is different from a measured change in the opposite direction.</p>
+</section>
+<section id="omics" class="level3">
+<h3 class="anchored" data-anchor-id="omics">03 · <a href="https://rsolerortuno.github.io/agentic-kidney-atlas/#tab=omics">Omics</a></h3>
+<p><strong>Question:</strong> what changes between tumour and healthy kidney?</p>
+<p>Compare RNA and protein differential-expression plots, then inspect the grade associations and the multi-omics findings. On a volcano plot, the horizontal axis describes the size and direction of the change; the vertical axis describes statistical evidence. A log2 fold change of +1 means twice the level, while −1 means half. A small adjusted p-value does not by itself imply a large or therapeutically useful effect.</p>
+<p>RNA and protein need not agree. Their disagreement is informative: transcription, translation, protein turnover and tissue composition all affect the measurements. Paired tests use matched patient samples where available, and multiple-testing correction accounts for the many genes examined.</p>
+</section>
+<section id="cells-space" class="level3">
+<h3 class="anchored" data-anchor-id="cells-space">04 · <a href="https://rsolerortuno.github.io/agentic-kidney-atlas/#tab=cells">Cells &amp; space</a></h3>
+<p><strong>Question:</strong> is the bulk signal made by tumour cells or by their neighbours?</p>
+<p>Use the cell-type summaries to identify the likely source of a candidate, then check the second single-cell dataset and spatial neighbourhood results. A strong bulk increase can come from infiltrating immune cells or stroma rather than the malignant compartment. That may change the therapeutic question rather than make the gene uninteresting.</p>
+<p>Read expression share and detection frequency separately. A large share of a gene’s transcripts coming from tumour cells does not mean that every tumour cell expresses it. The cell datasets also come from different patients from the bulk discovery cohort, and dissociation can distort the recovered cell mixture.</p>
+</section>
+<section id="structure-mgd" class="level3">
+<h3 class="anchored" data-anchor-id="structure-mgd">05 · <a href="https://rsolerortuno.github.io/agentic-kidney-atlas/#tab=structure">Structure &amp; MGD</a></h3>
+<p><strong>Question:</strong> what structural context can we inspect, and what is actually known about degradation?</p>
+<p>The 3D viewer draws a soft grey molecular surface. Red marks the selected pocket-wall residues or reference region. Choose a <strong>Protein</strong>, choose a <strong>Region</strong>, drag to rotate and scroll to zoom. <strong>Whole protein</strong> restores the overall view; <strong>Focus pocket</strong> centres the selected region. <strong>Opacity</strong> exposes internal context and <strong>Cut surface</strong> lets you look through the surface. <strong>Model confidence</strong> shows AlphaFold confidence for predicted monomers; it is not an experimental confidence score for deposited complexes.</p>
+<p>The highlighted surface comes from structure coordinates. It is not a simulated cloud of atoms, a measured binding affinity or proof that a compound can fit there. Pocket detection excluded low-confidence residues, and trimming can change the apparent cavities. Check the source and residue identifiers in the side panel.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../assets/agentic-kidney-atlas/protein-viewer.png" class="img-fluid figure-img" alt="Screenshot of the CA9 protein viewer with grey molecular surface, red selected residues and structure controls."></p>
+<figcaption>The live CA9 viewer: a grey molecular surface with selected pocket-wall residues in red, alongside the source and residue-level context. This is a screenshot of the report, not a binding prediction.</figcaption>
+</figure>
+</div>
+<p><strong>MGD means molecular glue degrader.</strong> A glue can promote an interaction between a target protein and an E3 ubiquitin ligase, enabling degradation. A degron is a recognition feature; a ternary complex contains the participating target, ligase machinery and compound. Geometry in a single predicted protein does not establish that whole mechanism.</p>
+<p>The atlas therefore separates descriptive pocket features from curated experimental degron and ternary-complex references. Experimental complexes illustrate known systems with their original proteins, ligases and compounds. They are not predicted complexes for the candidate genes. The useful outcome here is a better structural question for follow-up, not a claim that the atlas has designed a glue degrader.</p>
+</section>
+<section id="discovery" class="level3">
+<h3 class="anchored" data-anchor-id="discovery">06 · <a href="https://rsolerortuno.github.io/agentic-kidney-atlas/#tab=discovery">Discovery</a></h3>
+<p><strong>Question:</strong> which less-studied candidates deserve a closer look?</p>
+<p>The convergence ranking rewards existing evidence. This screen instead highlights genes with tumour-related expression, a defined cellular source, relatively little ccRCC literature and no clinical drug under its rules. Compare the tumour, stromal and immune tracks separately, since they represent different intervention settings.</p>
+<p>COL23A1 and RAB42 appear as exploratory tumour-cell candidates. Read the supporting RNA and cell-source evidence, then the missing normal-tissue protein, dependency and confirmatory-proteomics evidence. In particular, generic membrane annotation does not establish extracellular accessibility for an antibody.</p>
+<p>“Novel” in this screen is an operational filter—at most 15 ccRCC papers and no clinical drug—not a claim that nobody has studied the gene. Earlier preclinical work can already exist. The defensible statement is that the analysis prioritises hypotheses for validation.</p>
+</section>
+<section id="tissue-viewer" class="level3">
+<h3 class="anchored" data-anchor-id="tissue-viewer">07 · <a href="https://rsolerortuno.github.io/agentic-kidney-atlas/#tab=viewer">Tissue viewer</a></h3>
+<p><strong>Question:</strong> what sits next to the spots expressing a gene?</p>
+<p>Select a tissue section and gene. Four sections have their own stained H&amp;E images in this viewer. Colour spots by expression or estimated cell composition, and adjust opacity to compare the overlay with tissue morphology. Orange rings identify the highest tenth of expressing spots. Click a spot to inspect it and its six neighbours.</p>
+<p>The orange bars summarise the cell composition around high-expression spots; the blue bars show the section average. A longer orange bar suggests local enrichment. These live bars are descriptive. The separate permutation-test results across all 23 sections are the inferential evidence. Visium spots contain mixtures of cells, so a neighbourhood pattern does not prove a direct interaction between two individual cells.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="../assets/agentic-kidney-atlas/tissue-viewer.png" class="img-fluid figure-img" alt="Screenshot of the tissue viewer showing stained tumour tissue, ringed expression spots and cell-composition comparison bars."></p>
+<figcaption>A real section in the tissue viewer, with high-expression spots ringed on the stained image. The adjacent orange and blue bars compare neighbouring cell mixtures with the section average; they describe the selected view rather than prove an interaction.</figcaption>
+</figure>
+</div>
+</section>
+<section id="treatment-subtypes" class="level3">
+<h3 class="anchored" data-anchor-id="treatment-subtypes">08 · <a href="https://rsolerortuno.github.io/agentic-kidney-atlas/#tab=response">Treatment &amp; subtypes</a></h3>
+<p><strong>Question:</strong> does the candidate behave differently across treatment arms or tumour subgroups?</p>
+<p>First inspect the treatment controls, then the per-arm associations and between-arm comparison. An association with progression within one arm is not enough to show that a biomarker selects one treatment over another. That requires evidence that the relationship differs between treatments. In this run, no gene separates the main immunotherapy and sunitinib arms after multiple-testing correction.</p>
+<p>The subtype part compares mutation-defined groups, including VHL, PBRM1, BAP1 and SETD2, and the ccA/ccB expression classification. A subgroup difference can refine a hypothesis, but small groups, correlated features and infiltration can also influence it. Survival association does not establish that changing a gene will change survival.</p>
+</section>
+<section id="adc-immune" class="level3">
+<h3 class="anchored" data-anchor-id="adc-immune">09 · <a href="https://rsolerortuno.github.io/agentic-kidney-atlas/#tab=adcimmune">ADC &amp; immune</a></h3>
+<p><strong>Question:</strong> could a candidate be a delivery address, or an immune target?</p>
+<p>The antibody-drug conjugate and radioligand analysis asks about surface accessibility, tumour increase, expression across tumour cells and staining in vital normal tissues. An ADC delivers a payload through an antibody; a radioligand delivers radiation. Neither requires that the surface protein itself be a selective genetic dependency, but both need more than high RNA expression.</p>
+<p>Compare candidate positions with known-target controls, then inspect the normal-tissue evidence. No signal in the available data is not proof of safety. The immune profile asks a separate question about immune-cell biology and hot or cold tumours. Its controls perform unevenly: only one of seven checkpoint controls reaches the top 100. Treat that profile as exploratory rather than a validated ordering of immune targets.</p>
+</section>
+<section id="validation-robustness" class="level3">
+<h3 class="anchored" data-anchor-id="validation-robustness">10 · <a href="https://rsolerortuno.github.io/agentic-kidney-atlas/#tab=validation">Validation &amp; robustness</a></h3>
+<p><strong>Question:</strong> does the evidence survive another cohort or another reasonable scoring choice?</p>
+<p>Start with confirmatory proteomics. Directional replication supports a molecular observation; it does not validate a treatment. Missing measurements should remain separate from contradictory ones. CA9 and CD70 are too sparse in normal kidney in the label-free confirmatory data to support the same paired test, while HK2 is an example that does not replicate there.</p>
+<p>Next compare target and biomarker profiles and the rank intervals under random weights. The interval describes sensitivity to the scoring choices, not a confidence interval for treatment success. Finally inspect clinical-target benchmarks, baselines and repeated agent runs. These evaluate different properties and should not be collapsed into one “accuracy” number. The charts below explain two of those checks.</p>
+</section>
+<section id="literature-drugs" class="level3">
+<h3 class="anchored" data-anchor-id="literature-drugs">11 · <a href="https://rsolerortuno.github.io/agentic-kidney-atlas/#tab=literature">Literature &amp; drugs</a></h3>
+<p><strong>Question:</strong> what is established already, and what is only a database association?</p>
+<p>Inspect the extracted literature relations and external-knowledge tables. Follow the evidence behind an apparently strong claim: a paper may report expression, a perturbation experiment or a clinical association, and these are different levels of support. Source-text validation checks that the reported text is present; it does not establish the quality or generalisability of the study.</p>
+<p>Drug annotations are useful context, but a multi-target drug does not show that every listed protein drives its efficacy. The literature corpus is also a retrieved subset, not an exhaustive systematic review. A low paper count is a prompt to investigate, not proof of novelty.</p>
+</section>
+<section id="network" class="level3">
+<h3 class="anchored" data-anchor-id="network">12 · <a href="https://rsolerortuno.github.io/agentic-kidney-atlas/#tab=network">Network</a></h3>
+<p><strong>Question:</strong> how do the leading genes connect to drugs, disease and one another?</p>
+<p>Use the network to navigate relationships among top candidates. Click an edge to inspect its relation type and evidence identifier. The graph is a compact map of the stored evidence, not a complete model of the tumour. Node proximity comes from the layout; it does not represent physical distance, an effect size or a causal relationship.</p>
+</section>
+<section id="methods-evidence" class="level3">
+<h3 class="anchored" data-anchor-id="methods-evidence">13 · <a href="https://rsolerortuno.github.io/agentic-kidney-atlas/#tab=methods">Methods &amp; evidence</a></h3>
+<p><strong>Question:</strong> can I audit the argument?</p>
+<p>This is the place to inspect provenance, limitations, remaining gaps and the evidence records cited in the report. Follow an evidence identifier from a candidate or narrative statement and check the gene, source, metric and context. This is the most important final step before reusing a result in a proposal or experiment.</p>
+<p>The saved report validator resolves 449 claims and 1,646 cited evidence records, with no external resources needed by the report itself. Those counts describe traceability checks on this snapshot. They do not mean that 449 claims have been independently validated in the laboratory.</p>
+</section>
+</section>
+<section id="two-checks-that-change-how-i-read-the-shortlist" class="level2">
+<h2 class="anchored" data-anchor-id="two-checks-that-change-how-i-read-the-shortlist">Two checks that change how I read the shortlist</h2>
+<section id="a-strong-global-benchmark-can-hide-weak-early-retrieval" class="level3">
+<h3 class="anchored" data-anchor-id="a-strong-global-benchmark-can-hide-weak-early-retrieval">A strong global benchmark can hide weak early retrieval</h3>
+<p>The target profile has an AUROC of 0.895 against 75 clinical RCC targets. AUROC measures how well a score tends to order positive examples above background across all thresholds. It is not the fraction of candidates that will become successful drugs.</p>
+<p>Predicted tractability alone reaches 0.857, close to the full profile: clinical targets are already enriched for proteins that drugs can reach. But it puts none of the 75 clinical targets in its top 100, whereas the target profile retrieves 17%. Looking at both metrics makes the contribution of the other data more concrete.</p>
+<figure class="atlas-figure figure"><div class="atlas-chart-scroll"><svg viewbox="0 0 760 225" role="img" aria-label="Clinical-target benchmark: AUROC" xmlns="http://www.w3.org/2000/svg"><title>Clinical-target benchmark: AUROC</title><g font-family="Arial,sans-serif" fill="#292722">
+<path d="M255.0 25V165" stroke="#ded8ce"></path><text x="255.0" y="190" font-size="13" text-anchor="middle">0</text>
+<path d="M360.0 25V165" stroke="#ded8ce"></path><text x="360.0" y="190" font-size="13" text-anchor="middle">0.25</text>
+<path d="M465.0 25V165" stroke="#ded8ce"></path><text x="465.0" y="190" font-size="13" text-anchor="middle">0.5</text>
+<path d="M570.0 25V165" stroke="#ded8ce"></path><text x="570.0" y="190" font-size="13" text-anchor="middle">0.75</text>
+<path d="M675.0 25V165" stroke="#ded8ce"></path><text x="675.0" y="190" font-size="13" text-anchor="middle">1</text>
+<text x="242" y="63" font-size="15" text-anchor="end">Target profile</text><rect x="255" y="45" width="375.90000000000003" height="28" rx="3" fill="#c96545"></rect><text x="640.9000000000001" y="65" font-size="15">0.895</text>
+<text x="242" y="123" font-size="15" text-anchor="end">Tractability alone</text><rect x="255" y="105" width="359.94" height="28" rx="3" fill="#687f73"></rect><text x="624.94" y="125" font-size="15">0.857</text>
+</g></svg></div><figcaption>AUROC against 75 clinical RCC targets: 0.895 for the target profile and 0.857 for predicted tractability alone. Axis spans 0 to 1; chance ordering corresponds to 0.5. Source: saved evaluation, 3 November 2026.</figcaption></figure><figure class="atlas-figure figure"><div class="atlas-chart-scroll"><svg viewbox="0 0 760 225" role="img" aria-label="Clinical targets retrieved in the top 100" xmlns="http://www.w3.org/2000/svg"><title>Clinical targets retrieved in the top 100</title><g font-family="Arial,sans-serif" fill="#292722">
+<path d="M255.0 25V165" stroke="#ded8ce"></path><text x="255.0" y="190" font-size="13" text-anchor="middle">0%</text>
+<path d="M360.0 25V165" stroke="#ded8ce"></path><text x="360.0" y="190" font-size="13" text-anchor="middle">25%</text>
+<path d="M465.0 25V165" stroke="#ded8ce"></path><text x="465.0" y="190" font-size="13" text-anchor="middle">50%</text>
+<path d="M570.0 25V165" stroke="#ded8ce"></path><text x="570.0" y="190" font-size="13" text-anchor="middle">75%</text>
+<path d="M675.0 25V165" stroke="#ded8ce"></path><text x="675.0" y="190" font-size="13" text-anchor="middle">100%</text>
+<text x="242" y="63" font-size="15" text-anchor="end">Target profile</text><rect x="255" y="45" width="71.4" height="28" rx="3" fill="#c96545"></rect><text x="336.4" y="65" font-size="15">17%</text>
+<text x="242" y="123" font-size="15" text-anchor="end">Tractability alone</text><rect x="255" y="105" width="0.0" height="28" rx="3" fill="#687f73"></rect><text x="265.0" y="125" font-size="15">0%</text>
+</g></svg></div><figcaption>Recall among the same 75 clinical targets at a shortlist size of 100 genes. Rounded values from the evaluation. High global AUROC does not guarantee useful early retrieval.</figcaption></figure>
+<p>These are retrospective comparisons with a selected clinical-target reference set. The post-2016 subset is particularly small: six genes, including PARP1, PARP2 and PARP3 from one drug class. Features were not frozen before 2016. It cannot establish prospective prediction of future targets.</p>
+</section>
+<section id="a-high-rank-should-survive-reasonable-changes-in-weights" class="level3">
+<h3 class="anchored" data-anchor-id="a-high-rank-should-survive-reasonable-changes-in-weights">A high rank should survive reasonable changes in weights</h3>
+<p>The convergence score depends on the importance assigned to each evidence stream. The project repeats the ranking under 1,000 random weight choices, rather than reporting one ordering as inevitable. CA9 and COXFA4L2 (formerly NDUFA4L2) are the only genes in this run that remain in the top ten in at least 80% of those draws.</p>
+<figure class="atlas-figure figure"><div class="atlas-chart-scroll"><svg viewbox="0 0 760 225" role="img" aria-label="Frequency in the top ten across 1000 random weight draws" xmlns="http://www.w3.org/2000/svg"><title>Frequency in the top ten across 1000 random weight draws</title><g font-family="Arial,sans-serif" fill="#292722">
+<path d="M255.0 25V165" stroke="#ded8ce"></path><text x="255.0" y="190" font-size="13" text-anchor="middle">0%</text>
+<path d="M360.0 25V165" stroke="#ded8ce"></path><text x="360.0" y="190" font-size="13" text-anchor="middle">25%</text>
+<path d="M465.0 25V165" stroke="#ded8ce"></path><text x="465.0" y="190" font-size="13" text-anchor="middle">50%</text>
+<path d="M570.0 25V165" stroke="#ded8ce"></path><text x="570.0" y="190" font-size="13" text-anchor="middle">75%</text>
+<path d="M675.0 25V165" stroke="#ded8ce"></path><text x="675.0" y="190" font-size="13" text-anchor="middle">100%</text>
+<text x="242" y="63" font-size="15" text-anchor="end">CA9</text><rect x="255" y="45" width="373.8" height="28" rx="3" fill="#c96545"></rect><text x="638.8" y="65" font-size="15">89%</text>
+<text x="242" y="123" font-size="15" text-anchor="end">COXFA4L2 / NDUFA4L2</text><rect x="255" y="105" width="369.6" height="28" rx="3" fill="#687f73"></rect><text x="634.6" y="125" font-size="15">88%</text>
+</g></svg></div><figcaption>Top-ten frequency under 1,000 random re-weightings: CA9 89%, COXFA4L2 88%. These are weight-sensitivity results, not probabilities of therapeutic success. Source: saved README summary, 3 November 2026.</figcaption></figure>
+<p>These frequencies are rounded from the saved summary. They describe the sampled weight settings, not every possible weighting. No gene stays in the top ten in all draws. The alias matters too: the 3 November correction mapped TCGA’s NDUFA4L2 label to COXFA4L2 and recovered its RNA replication. An identifier mismatch can change a biological conclusion without any underlying measurement changing.</p>
+</section>
+</section>
+<section id="what-would-i-follow-up-biologically" class="level2">
+<h2 class="anchored" data-anchor-id="what-would-i-follow-up-biologically">What would I follow up biologically?</h2>
+<p>The atlas recovers familiar ccRCC biology, including strong hypoxia-related signals, and puts several candidates in a form that is easier to investigate. The useful next decision is what evidence to collect, rather than which gene to declare a discovery.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Example</th>
+<th>What makes it worth inspecting</th>
+<th>What I would need before a stronger claim</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>CA9</strong></td>
+<td>Strong convergent signal and relatively stable ranking; a useful known-biology reference.</td>
+<td>Modality-specific accessibility and safety evidence; its confirmatory paired-protein result is missing, not negative.</td>
+</tr>
+<tr class="even">
+<td><strong>NNMT</strong></td>
+<td>Consistent molecular evidence supports a metabolic hypothesis.</td>
+<td>Perturbation and pharmacology in appropriate models, plus normal-tissue context; expression alone does not establish selective dependency.</td>
+</tr>
+<tr class="odd">
+<td><strong>COL23A1</strong></td>
+<td>Exploratory expression and tumour-cell attribution make it worth examining beyond the familiar shortlist.</td>
+<td>Accessible protein and normal-tissue staining, coverage across tumour cells and functional experiments; prior work must be checked before any novelty claim.</td>
+</tr>
+<tr class="even">
+<td><strong>RAB42</strong></td>
+<td>A second exploratory tumour-cell hypothesis from the discovery track.</td>
+<td>Mechanistic and protein-level evidence; membrane association alone does not justify an antibody strategy.</td>
+</tr>
+<tr class="odd">
+<td><strong>PSAT1 / PCK1</strong></td>
+<td>Loss of kidney-associated expression can be informative as a biomarker.</td>
+<td>Independent biomarker evaluation for a defined use; downregulation does not imply that further inhibition would help.</td>
+</tr>
+</tbody>
+</table>
+<p>These are examples of how to use the atlas, not a new therapeutic ranking. A selective dependency, a surface delivery address and a prognostic marker are different hypotheses. A negative dependency screen does not rule out every possible modality, and a positive expression screen does not establish any of them.</p>
+</section>
+<section id="what-this-demonstrates-about-agentic-ai" class="level2">
+<h2 class="anchored" data-anchor-id="what-this-demonstrates-about-agentic-ai">What this demonstrates about agentic AI</h2>
+<p>The engineering contribution is a workflow in which agents investigate a shared body of evidence and leave inspectable outputs. The system combines tool calling, task decomposition, structured findings, evidence retrieval, deterministic scoring, claim checks and reproducible reporting.</p>
+<p>The strongest demonstrated benefit is <strong>traceable synthesis</strong>: it is possible to inspect why a candidate was discussed, which source supports a sentence and where evidence is missing. The project does not establish that adding agents discovers better therapies than the deterministic pipeline alone. Much of the agreement across agent runs comes from their shared numerical ranking.</p>
+<p>The memory-only baseline tends to return familiar textbook targets without the pipeline’s evidence trail. That comparison illustrates grounding, but it is not a matched clinical validation of agent reasoning. To measure the agents’ added value more rigorously, I would need a fixed set of scientific review tasks, blinded assessment and a comparison with the same retrieved evidence presented without agent synthesis.</p>
+<p>The most useful design decision was keeping failure modes visible. A changing identifier, an unsupported sentence, a weak immune-control result or an unmeasurable confirmatory protein should affect the interpretation. The pipeline should not turn those gaps into a confident paragraph.</p>
+</section>
+<section id="reproduction-and-the-remaining-limits" class="level2">
+<h2 class="anchored" data-anchor-id="reproduction-and-the-remaining-limits">Reproduction and the remaining limits</h2>
+<p>The deterministic rebuild uses retained local inputs with recorded hashes, a locked environment and saved model outputs. It refuses drift from the frozen input snapshot and rebuilds offline. This reproduces the analysis from the retained evidence; it does not guarantee that a fresh download from an evolving provider will yield the same bytes, or that a new LLM run will produce identical prose.</p>
+<p>The <a href="https://github.com/rsolerortuno/agentic-kidney-atlas/blob/main/docs/reproduction.md">reproduction guide</a> explains the required local data snapshot and commands. Cloning the code alone does not supply all downloaded datasets. The report itself can be explored immediately without that setup.</p>
+<p>The main scientific limitations remain the cohort sizes and composition, the imperfect correspondence between bulk, single-cell and spatial samples, cell-line conditions that differ from tumours, weak treatment-interaction evidence, and the absence of experimental validation of the proposed candidates. The structural layer is descriptive. Automatic checking reduces specific errors in narrative reporting; it does not replace scientific judgement.</p>
+</section>
+<section id="source-record-and-further-reading" class="level2">
+<h2 class="anchored" data-anchor-id="source-record-and-further-reading">Source record and further reading</h2>
+<p>This case study uses the saved <code>runs/2026-11-03</code> analysis and the repository state at <a href="https://github.com/rsolerortuno/agentic-kidney-atlas/tree/2300306ffa5ee0f5b40102ee0d6fabdf30a5cf18"><code>2300306</code></a>. The charts reproduce values in the saved evaluation and README; no new experiments or model runs were performed for this page.</p>
+<ul>
+<li><a href="https://rsolerortuno.github.io/agentic-kidney-atlas/">Interactive report</a> — the figures, controls, candidate cards and evidence records.</li>
+<li><a href="https://github.com/rsolerortuno/agentic-kidney-atlas/blob/2300306ffa5ee0f5b40102ee0d6fabdf30a5cf18/evals/results.md">Evaluation results at the documented snapshot</a> — benchmarks and baseline comparisons.</li>
+<li><a href="https://github.com/rsolerortuno/agentic-kidney-atlas/blob/2300306ffa5ee0f5b40102ee0d6fabdf30a5cf18/README.md">README at the documented snapshot</a> — datasets, methods and saved results.</li>
+<li><a href="https://github.com/rsolerortuno/agentic-kidney-atlas/tree/2300306ffa5ee0f5b40102ee0d6fabdf30a5cf18/.claude/agents">Agent definitions</a> and <a href="https://github.com/rsolerortuno/agentic-kidney-atlas/blob/2300306ffa5ee0f5b40102ee0d6fabdf30a5cf18/.claude/commands/informe.md">orchestration command</a> — the implemented roles and workflow.</li>
+<li><a href="https://github.com/rsolerortuno/agentic-kidney-atlas/blob/2300306ffa5ee0f5b40102ee0d6fabdf30a5cf18/docs/numeric-claims.md">Verification limits</a> and <a href="https://github.com/rsolerortuno/agentic-kidney-atlas/blob/2300306ffa5ee0f5b40102ee0d6fabdf30a5cf18/docs/reproduction.md">reproduction guide</a> — what can be checked and rebuilt.</li>
+</ul>
+<div class="button-row atlas-actions">
+<a class="button button-primary" href="https://rsolerortuno.github.io/agentic-kidney-atlas/">Open the atlas and follow one candidate ↗</a><a class="button button-secondary" href="../projects.html">Back to all projects</a>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script>
+// The Projects navbar item is a dropdown. On wide screens it opens on hover,
+// so a click on the label itself goes straight to the projects table.
+// On narrow screens it keeps Bootstrap's tap-to-open behaviour, and the
+// first menu item ("All projects") links to the table.
+(function () {
+  var menu = document.querySelector('.navbar .dropdown-menu a.dropdown-item');
+  if (!menu) return;
+  var toggle = menu.closest('.dropdown').querySelector('.dropdown-toggle');
+  if (!toggle) return;
+  toggle.setAttribute('href', menu.getAttribute('href'));
+  toggle.addEventListener('click', function (event) {
+    if (window.matchMedia('(min-width: 992px)').matches) {
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      window.location.href = toggle.href;
+    }
+  }, true);
+})();
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/rsolerortuno\.github\.io");
+      const newWindowLabel = "(opens in a new tab)";
+      const newWindowNoteId = "quarto-ext-newwindow-label";
+      // Links reference one hidden label through aria-describedby, so the
+      // announcement never changes their accessible name.
+      var describeNewWindow = (link) => {
+        if (!window.document.getElementById(newWindowNoteId)) {
+          var newWindowNote = window.document.createElement("span");
+          newWindowNote.id = newWindowNoteId;
+          newWindowNote.hidden = true;
+          newWindowNote.textContent = newWindowLabel;
+          window.document.body.appendChild(newWindowNote);
+        }
+        var describedBy = (link.getAttribute("aria-describedby") || "").split(/\s+/).filter(Boolean);
+        if (!describedBy.includes(newWindowNoteId)) {
+          describedBy.push(newWindowNoteId);
+          link.setAttribute("aria-describedby", describedBy.join(" "));
+        }
+      }
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+      window.quartoDecorateExternalLinks = function (root) {
+     var links = (root || window.document).querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+            describeNewWindow(link);
+          if (!link.classList.contains('no-external-icon')) {
+          }
+        }
+      }
+      };
+      window.quartoDecorateExternalLinks(window.document);
+    // Esc closes the popup (WCAG 1.4.13) and focus leaving both trigger and
+    // popup closes it (WCAG 2.4.11); tippy handles neither for interactive popups.
+    const hideOnEscAndFocusOut = {
+      name: 'hideOnEscAndFocusOut',
+      defaultValue: true,
+      fn(instance) {
+        const dismiss = () => {
+          // A show scheduled by the trigger delay would otherwise reopen it
+          instance.clearDelayTimeouts();
+          instance.hide();
+        };
+        const onKeyDown = (event) => {
+          if (event.key !== 'Escape') {
+            return;
+          }
+          // Keep Esc from also reaching page handlers (e.g. reveal.js overview),
+          // except an open reveal.js slide menu, which Esc should close too.
+          // The menu handles keys only when its keyboard option is on.
+          const menuHandlesEsc = window.Reveal?.getPlugin?.('menu')?.isOpen() &&
+            window.Reveal.getConfig().menu?.keyboard !== false;
+          if (!menuHandlesEsc) {
+            event.stopPropagation();
+          }
+          if (instance.popper.contains(window.document.activeElement)) {
+            // Disabled while refocusing so the focus trigger does not reopen it
+            instance.disable();
+            instance.reference.focus();
+            instance.enable();
+          }
+          dismiss();
+        };
+        const onFocusOut = (event) => {
+          const target = event.relatedTarget;
+          if (target && !instance.reference.contains(target) &&
+              !instance.popper.contains(target)) {
+            dismiss();
+          }
+        };
+        // On the trigger too: a click trigger (code-annotations: select) has no
+        // blur handling. Attached for the instance's lifetime so leaving the
+        // trigger also cancels a show still pending on the trigger delay.
+        instance.reference.addEventListener('focusout', onFocusOut);
+        return {
+          onShow() {
+            window.document.addEventListener('keydown', onKeyDown, true);
+            instance.popper.addEventListener('focusout', onFocusOut);
+          },
+          onHide() {
+            window.document.removeEventListener('keydown', onKeyDown, true);
+            instance.popper.removeEventListener('focusout', onFocusOut);
+          },
+          onDestroy() {
+            instance.reference.removeEventListener('focusout', onFocusOut);
+          },
+        };
+      },
+    };
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+        plugins: [hideOnEscAndFocusOut],
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          // Each band is positioned against its own containing block, which is
+          // not the offsetParent of the lines, so place it from client rects.
+          const placeBand = (band, firstEl, lastEl, codeBlock) => {
+            const container = band.offsetParent;
+            if (container === null) {
+              return;
+            }
+            const containerRect = container.getBoundingClientRect();
+            // Reveal.js scales slides with a transform, so convert client
+            // pixels back to the CSS pixels of the container.
+            const scale = containerRect.height / container.offsetHeight || 1;
+            const firstRect = firstEl.getBoundingClientRect();
+            const lastRect = lastEl.getBoundingClientRect();
+            const top = (firstRect.top - containerRect.top) / scale - container.clientTop + container.scrollTop;
+            const height = (lastRect.bottom - firstRect.top) / scale;
+            band.style.top = top - 2 + "px";
+            band.style.height = height + 4 + "px";
+            if (codeBlock) {
+              // Without the copy button wrapper, the containing block is wider
+              // than the code block, so span the code block explicitly.
+              const blockRect = codeBlock.getBoundingClientRect();
+              band.style.left = (blockRect.left - containerRect.left) / scale - container.clientLeft + container.scrollLeft + "px";
+              band.style.width = blockRect.width / scale + "px";
+            }
+          };
+          if (lineIds.length > 0) {
+            const el = window.document.getElementById(lineIds[0]);
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const parent = el.parentElement.parentElement;
+            // cook up a div (if necessary) and position it
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            placeBand(div, el, lastEl, parent.closest("div.sourceCode") || parent);
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            placeBand(gutterDiv, el, lastEl);
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+  <script type="application/javascript">
+  window.quartoScrollableRegionsLabels = {"code":"Scrollable code","output":"Scrollable output"};
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>© 2026 Rafael Soler Ortuño</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+<p>Computational biology · Translational science · Research software</p>
+</div>
+  </div>
+</footer>
+
+
+
+
+<script src="../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>
