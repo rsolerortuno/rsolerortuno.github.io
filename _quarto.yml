@@ -23,6 +23,8 @@ website:
       - href: projects.qmd
         text: All projects
       - text: "---"
+      - href: projects/agentic-kidney-atlas.qmd
+        text: Agentic Kidney Atlas
       - href: projects/virtual-cell-challenge.qmd
         text: Virtual Cell Challenge 2026
       - href: projects/targetintel-io.qmd

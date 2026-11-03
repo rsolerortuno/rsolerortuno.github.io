@@ -1,0 +1,10 @@
+/* Scoped additions to the existing editorial case-study style. */
+.atlas-actions { margin: 1.5rem 0 1rem; flex-wrap: wrap; }
+.atlas-note { color: var(--muted); font-size: .88rem; }
+.atlas-pipeline { grid-template-columns: repeat(auto-fit,minmax(150px,1fr)); }
+.atlas-figure { margin: 1.7rem 0 2rem; padding: 1.2rem; border: 1px solid var(--hairline); border-radius: 14px; background: var(--cream-card); }
+.atlas-figure svg { display:block; width:100%; height:auto; }
+.atlas-figure figcaption { margin-top:1rem; font-size:.85rem; color:var(--muted); }
+.atlas-figure .atlas-chart-scroll { overflow-x:auto; }
+.atlas-figure .atlas-chart-scroll svg { min-width:570px; }
+@media(max-width:600px) { .atlas-actions .button { width:100%; text-align:center; } .atlas-figure { padding:.7rem; } }
