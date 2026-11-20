@@ -43,7 +43,7 @@ ul.task-list li input[type="checkbox"] {
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-63b5708e65d6cd79cd7618c58d0c21e7.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-9c98f21c26e62cbdfc45883b480c3e02.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-86d01a451078f71662fa36760f71fc18.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "language": {
     "search-no-results-text": "No results",
@@ -190,6 +190,7 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#alternative-models" id="toc-alternative-models" class="nav-link" data-scroll-target="#alternative-models">Alternative models</a></li>
   <li><a href="#local-evaluation-versus-the-leaderboard" id="toc-local-evaluation-versus-the-leaderboard" class="nav-link" data-scroll-target="#local-evaluation-versus-the-leaderboard">Local evaluation versus the leaderboard</a></li>
   <li><a href="#engineering-and-ai-assistants" id="toc-engineering-and-ai-assistants" class="nav-link" data-scroll-target="#engineering-and-ai-assistants">Engineering and AI assistants</a></li>
+  <li><a href="#second-place" id="toc-second-place" class="nav-link" data-scroll-target="#second-place">Postscript: what the second-place model did differently</a></li>
   <li><a href="#data-models-and-links" id="toc-data-models-and-links" class="nav-link" data-scroll-target="#data-models-and-links">Data, models and links</a></li>
   <li><a href="#glossary" id="toc-glossary" class="nav-link" data-scroll-target="#glossary">Glossary</a></li>
   </ul>
@@ -244,6 +245,7 @@ ul.task-list li input[type="checkbox"] {
 <li><strong>Main trade-off.</strong> Methods that made targets easier to tell apart (PDS) tended to cost expression accuracy (MSE). v12 struck the best balance; v13 pushed discrimination further and lost overall.</li>
 <li><strong>Local evaluation was optimistic.</strong> In all three cases where a local estimate was recorded before the official score (v5, v10 and v11), the local number was higher, and one early local gain was produced by a bug in my own evaluator.</li>
 <li><strong>Alternative models.</strong> None of twelve alternative routes (CPA, scGen, STATE, Geneformer, scGPT and others) was clearly better than my v11 recipe on error in matched panels; on the H1 panel all but one were clearly worse, with 95% paired bootstrap intervals. PIE, tested end to end, reproduced its published benchmark but carried almost no target-specific signal on my data.</li>
+<li><strong>Second place.</strong> The runner-up trained one transfer model on 222 harmonised datasets with a per-gene response gate and held-out contexts. I tuned a fixed recipe on far fewer sources. See the <a href="#second-place">postscript</a>.</li>
 </ul>
 </section>
 <section id="the-task" class="level2">
@@ -833,6 +835,105 @@ ul.task-list li input[type="checkbox"] {
 <p>I used Codex and Claude extensively to find datasets, write extractors and adapters, propose ablations, coordinate audits and job queues, and prepare Colab notebooks. I also wrote self-contained prompts for ChatGPT Pro. Their suggestions were treated as hypotheses to test, not as evidence. I set the priorities and authorised every submission.</p>
 <p>A large share of the time went into engineering: incompatible package versions, Google Drive cache locks, lost state after Colab reconnects, repeated hashing of large files, slow graph preparation for GEARS and fits that did not finish. The fixes were isolated environments, checkpoints, content-based cache keys, per-phase logs, timing counters and reuse only of artefacts marked complete. A passing smoke test was never counted as a scientific result.</p>
 </section>
+<section id="second-place" class="level2">
+<h2 class="anchored" data-anchor-id="second-place">Postscript: what the second-place model did differently</h2>
+<p>After the challenge closed, Arc published its <a href="https://arcinstitute.org/news/virtual-cell-challenge-2026-wrap-up">wrap-up of the 2026 results</a>. The model in second place, FlowState, came from two independent researchers. I read its description with my own fourteen versions open next to it. This section is that comparison. It rests only on the public write-up and the team’s talk, so where I say why something worked, that is my reading and not their claim.</p>
+<section id="two-designs-side-by-side" class="level3">
+<h3 class="anchored" data-anchor-id="two-designs-side-by-side">Two designs side by side</h3>
+<p>The short version: FlowState trained one transfer model on a lot of harmonised data. I tuned a fixed recipe around a handful of hand-picked sources.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th></th>
+<th>FlowState</th>
+<th>My v12 / v14-DEF</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Data</td>
+<td>222 perturbation datasets from 128 studies, 86 cell contexts. About half single-cell screens, half bulk knockdown and knockout (CRISPRi, CRISPR knockout, siRNA, shRNA)</td>
+<td>A few dozen sources, most of them single-cell, chosen per hidden context. v10 added 11 GEO banks and 9 L1000 lines and lost score</td>
+</tr>
+<tr class="even">
+<td>Common format</td>
+<td>Per-gene change against the controls of the same experiment, plus its uncertainty. Corrected for coverage, depth and assay chemistry, with study effects reduced</td>
+<td>Per-source deltas, weighted by variance. A zero-variance effect took over a gene, so I added an uncertainty floor and stopped there</td>
+</tr>
+<tr class="odd">
+<td>Prediction</td>
+<td>Three heads: which genes respond, in which direction, by how much. The untreated cells of the new line are an input</td>
+<td>Direction and magnitude, but no “does this gene respond” step. Controls used by hand: baseline, carrier, similarity routing, 15 PCs removed</td>
+</tr>
+<tr class="even">
+<td>Training</td>
+<td>Every head trained with the predicted context held out. Datasets weighted by reliability, noisy estimates shrunk</td>
+<td>Source weights and amplitudes fitted on panels of 24 targets, then chosen among thousands of retrospective configurations</td>
+</tr>
+<tr class="odd">
+<td>Cells</td>
+<td>Control counts adjusted so the predicted effect holds for the population and for single cells</td>
+<td>A copula moved a carrier around. Gene totals stayed fixed, but cell-level distributions never matched real ones</td>
+</tr>
+<tr class="even">
+<td>Evaluation</td>
+<td>In-house, held-out line, calibrated against the leaderboard. About 40 test-round submissions, and AI agents in a loop that kept only significant gains</td>
+<td>A proxy checked against the leaderboard three times (v5, v10, v11), optimistic every time</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="where-my-score-actually-came-from" class="level3">
+<h3 class="anchored" data-anchor-id="where-my-score-actually-came-from">Where my score actually came from</h3>
+<p>The overall score is the plain mean of the six metrics. I checked it on three versions: v8 gives 1.2503 / 6 = 0.2084, v11 gives 1.2677 / 6 = 0.2113 and v12 gives 1.2997 / 6 = 0.2166. There are no weights, so each metric’s share of the score is easy to read off.</p>
+<figure class="vcc-chart vcc-chart-wide figure">
+<div class="vcc-scroll">
+<svg class="vcc-svg" viewbox="0 0 760 330" role="img" aria-label="v12 component scores against a ceiling of 1, with each metric's contribution to the overall 0.2166" xmlns="http://www.w3.org/2000/svg"><text class="t mono" x="12" y="20" font-size="11" fill="#6d675e" text-anchor="start">v12 score per metric, against a ceiling of 1</text><text class="t mono" x="752" y="20" font-size="11" fill="#6d675e" text-anchor="end">adds to the overall · share</text><line x1="131.4" x2="131.4" y1="36" y2="292" stroke="rgba(53,48,41,0.35)"></line><line x1="238.6" x2="238.6" y1="36" y2="292" stroke="rgba(53,48,41,0.12)"></line><line x1="345.7" x2="345.7" y1="36" y2="292" stroke="rgba(53,48,41,0.12)"></line><line x1="452.9" x2="452.9" y1="36" y2="292" stroke="rgba(53,48,41,0.12)"></line><line x1="560" x2="560" y1="36" y2="292" stroke="rgba(53,48,41,0.12)"></line><text class="t mono" x="131.4" y="310" font-size="10.5" fill="#6d675e" text-anchor="middle">0</text><text class="t mono" x="238.6" y="310" font-size="10.5" fill="#6d675e" text-anchor="middle">0.25</text><text class="t mono" x="345.7" y="310" font-size="10.5" fill="#6d675e" text-anchor="middle">0.5</text><text class="t mono" x="452.9" y="310" font-size="10.5" fill="#6d675e" text-anchor="middle">0.75</text><text class="t mono" x="560" y="310" font-size="10.5" fill="#6d675e" text-anchor="middle">1</text><g><title>PDS 0.7426: adds 0.1238 to the overall (57%), headroom 0.26</title><rect x="131.4" y="44" width="428.6" height="28" rx="5" fill="rgba(53,48,41,0.07)"></rect><rect x="131.4" y="44" width="318.3" height="28" rx="5" fill="#c96545"></rect><text class="t" x="96" y="62.5" font-size="11.5" fill="#292722" text-anchor="end">PDS</text><text class="t mono" x="457" y="62.5" font-size="10" fill="#292722" text-anchor="start">0.7426</text><text class="t mono" x="752" y="62.5" font-size="10.5" fill="#292722" text-anchor="end" font-weight="700">+0.1238 · 57%</text></g><g><title>MSE 0.2114: adds 0.0352 (16%), headroom 0.79</title><rect x="131.4" y="86" width="428.6" height="28" rx="5" fill="rgba(53,48,41,0.07)"></rect><rect x="131.4" y="86" width="90.6" height="28" rx="5" fill="#c96545"></rect><text class="t" x="96" y="104.5" font-size="11.5" fill="#292722" text-anchor="end">MSE</text><text class="t mono" x="230" y="104.5" font-size="10" fill="#292722" text-anchor="start">0.2114</text><text class="t mono" x="752" y="104.5" font-size="10.5" fill="#292722" text-anchor="end">+0.0352 · 16%</text></g><g><title>NMAE 0.1909: adds 0.0318 (15%), headroom 0.81</title><rect x="131.4" y="128" width="428.6" height="28" rx="5" fill="rgba(53,48,41,0.07)"></rect><rect x="131.4" y="128" width="81.8" height="28" rx="5" fill="#c96545"></rect><text class="t" x="96" y="146.5" font-size="11.5" fill="#292722" text-anchor="end">NMAE</text><text class="t mono" x="221" y="146.5" font-size="10" fill="#292722" text-anchor="start">0.1909</text><text class="t mono" x="752" y="146.5" font-size="10.5" fill="#292722" text-anchor="end">+0.0318 · 15%</text></g><g><title>Reach 0.1578: adds 0.0263 (12%), headroom 0.84</title><rect x="131.4" y="170" width="428.6" height="28" rx="5" fill="rgba(53,48,41,0.07)"></rect><rect x="131.4" y="170" width="67.6" height="28" rx="5" fill="#c96545"></rect><text class="t" x="96" y="188.5" font-size="11.5" fill="#292722" text-anchor="end">Reach</text><text class="t mono" x="207" y="188.5" font-size="10" fill="#292722" text-anchor="start">0.1578</text><text class="t mono" x="752" y="188.5" font-size="10.5" fill="#292722" text-anchor="end">+0.0263 · 12%</text></g><g><title>Fidelity 0.0145: adds 0.0024 (1%), headroom 0.99</title><rect x="131.4" y="212" width="428.6" height="28" rx="5" fill="rgba(53,48,41,0.07)"></rect><rect x="131.4" y="212" width="6.2" height="28" rx="3" fill="#c96545"></rect><text class="t" x="96" y="230.5" font-size="11.5" fill="#292722" text-anchor="end">Fidelity</text><text class="t mono" x="146" y="230.5" font-size="10" fill="#292722" text-anchor="start">0.0145</text><text class="t mono" x="752" y="230.5" font-size="10.5" fill="#292722" text-anchor="end">+0.0024 · 1%</text></g><g><title>Jaccard −0.0175: takes 0.0029 off the overall, headroom 1.02</title><rect x="131.4" y="254" width="428.6" height="28" rx="5" fill="rgba(53,48,41,0.07)"></rect><rect x="123.9" y="254" width="7.5" height="28" rx="3" fill="#a94f35"></rect><text class="t" x="96" y="272.5" font-size="11.5" fill="#292722" text-anchor="end">Jaccard</text><text class="t mono" x="139" y="272.5" font-size="10" fill="#292722" text-anchor="start">−0.0175</text><text class="t mono" x="752" y="272.5" font-size="10.5" fill="#292722" text-anchor="end">−0.0029 · −1%</text></g></svg>
+</div>
+<figcaption><span class="vcc-swipe">Swipe sideways to see the full chart. </span>Each bar is the v12 score for one metric. The grey track runs to 1, the most a normalised metric can reach. The right column is that metric's score divided by six, which is what it adds to the overall 0.2166.</figcaption>
+</figure>
+<p>PDS and MSE together carry about 73% of the score. The four cell-level DE metrics add 0.058 out of a possible 0.667. Fidelity and Jaccard stayed near zero in all fourteen versions.</p>
+<p>That changes how I read v12 and v13. Pushing PDS was the right move on the metric I already did best on, and it was paid for with MSE. The metrics with the most room, fidelity, Jaccard and reach, barely moved. I spent my effort where the ceiling was lowest.</p>
+</section>
+<section id="what-i-should-have-done-differently" class="level3">
+<h3 class="anchored" data-anchor-id="what-i-should-have-done-differently">What I should have done differently</h3>
+<p>I would rank these by how much score I think each one left behind. The order is my judgement, not a measurement.</p>
+<div class="vcc-cols">
+<section id="what-i-missed" class="level4 vcc-bad">
+<h4 class="anchored" data-anchor-id="what-i-missed">What I missed</h4>
+<ul>
+<li><strong>A gate for each gene.</strong> FlowState decides first whether a gene responds at all. I forced 3,000, then 6,000, then 8,000 genes to count as changed. That is tuning to the metric, not a per-gene decision, and it fits the near-zero Jaccard and fidelity.</li>
+<li><strong>Data made comparable before it was pooled.</strong> My v10 added 20 extra banks together with other changes and fell from 0.2084 to 0.1985. They pooled far more and gained, after converting everything to a change against each experiment’s own controls plus an uncertainty. The number of sources was not the difference. The preprocessing was.</li>
+<li><strong>Controls as an input.</strong> I used control cells four different ways, all by hand. When I tried a learned adaptation in v10, there was nothing training it, and v11 reverted it.</li>
+<li><strong>Held-out contexts in training.</strong> With a held-out context at every step, validation error is transfer error. I fitted amplitudes and weights on 24-target panels and then picked among thousands of retrospective configurations, which is closer to overfitting with extra steps.</li>
+</ul>
+</section>
+<section id="what-i-got-right" class="level4 vcc-good">
+<h4 class="anchored" data-anchor-id="what-i-got-right">What I got right</h4>
+<ul>
+<li>No pretrained model. They built theirs from scratch too, and my twelve alternative routes and the PIE audit pointed the same way.</li>
+<li>The simulator misleads. For them it ended up a debugging tool, not a pretraining source. For me it ordered several pieces backwards.</li>
+<li>Denoising removes real signal, and flow-matching did poorly on these metrics. Both match what I saw.</li>
+<li>A fixed fallback rule and honest negative results. That discipline was fine. It was applied to the wrong search.</li>
+</ul>
+</section>
+</div>
+<p>Three smaller gaps are worth a line each. They treat a change in expression as mostly downward, which they saw even with non-targeting guides, and they ranked genes accordingly. I treated up and down symmetrically and never tested the bias. They modelled guide-sequence off-targets, where the seed matches another gene’s promoter. My GENCODE-neighbour test (−0.0006, interval across zero) was a different idea and probably too crude. And they corrected explicitly for assay chemistry (Flex against polyA), while I avoided the problem by picking similar sources, even though K562 Flex and Replogle K562 3’ would have been the ideal pair for learning that correction.</p>
+</section>
+<section id="where-the-time-went" class="level3">
+<h3 class="anchored" data-anchor-id="where-the-time-went">Where the time went</h3>
+<p>About 21,000 retrospective search rows around one fixed recipe, plus the PIE audit, took most of my effort. Neither builds what separated the top entries, which was a transfer model trained on many harmonised datasets. Auditing someone else’s model and grid-searching around your own are both useful for knowing what not to trust. They do not produce a better predictor.</p>
+<div class="vcc-next">
+<p><strong>If I did it again.</strong> First, measure how many of the hidden targets have a published knockdown in any public dataset, bulk included. Second, build the common format with uncertainty before any modelling. Third, put a per-gene response head and a held-out-context loop on top. The first two need no new model. I would run them before touching an architecture.</p>
+</div>
+<p>Two caveats. I have not run any of this: the headroom numbers come from my own score table and the rest is a reading of a public description. And the contexts differ, so a method that worked for them is not guaranteed to work on my data.</p>
+</section>
+</section>
 <section id="data-models-and-links" class="level2">
 <h2 class="anchored" data-anchor-id="data-models-and-links">Data, models and links</h2>
 <p>The main public resources used in this project. Only links that could be confirmed are given; a few smaller sources in my banks (VIPerturb, PerturbME, Tian, DLD1 and some CD4 sets) are not linked.</p>
@@ -844,6 +945,7 @@ ul.task-list li input[type="checkbox"] {
 <li><a href="https://virtualcellchallenge.org">Virtual Cell Challenge</a>, the competition site</li>
 <li><a href="https://arcinstitute.org/news/virtual-cell-challenge-2025">Arc Institute’s launch announcement</a> and the <a href="https://arcinstitute.org/virtual-cell-initiative">Virtual Cell Initiative</a></li>
 <li><a href="https://huggingface.co/blog/virtual-cell-challenge">A primer on the challenge</a> on the Hugging Face blog</li>
+<li><a href="https://arcinstitute.org/news/virtual-cell-challenge-2026-wrap-up">Arc’s 2026 wrap-up</a>, with the winning and runner-up models</li>
 </ul>
 </section>
 <section id="perturbation-datasets" class="level4">
